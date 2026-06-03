@@ -1,0 +1,58 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+.envrc
+
+# --- Secrets ---
+.env
+.env.local
+
+# --- Build / install artefacts ---
+*.egg-info/
+build/
+dist/
+pip-wheel-metadata/
+
+# --- Data + runtime outputs (large or non-reproducible) ---
+data/*
+!data/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+results/*
+!results/.gitkeep
+logs/*
+!logs/.gitkeep
+*.tsv
+*.jsonl
+*.parquet
+*.pkl
+*.pickle
+*.pt
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- IDE ---
+.vscode/
+.idea/
+*.code-workspace
+
+# --- Plots / figures (regenerate from scripts) ---
+plots/
+*.png
+*.pdf
+!docs/**/*.png
+!docs/**/*.pdf

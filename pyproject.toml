@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "roundtrip-closure"
+version = "0.0.1"
+description = "Heterogeneous multi-SLM closure of the docstring-test-code triangle (PhD thesis Chapter 3)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Balaji Venktesh V", email = "balaji23610040@snuchennai.edu.in" },
+    { name = "Amsaprabhaa M", email = "amsaprabhaam@snuchennai.edu.in" },
+    { name = "Gireesh Sundaram", email = "gireesh23610036@snuchennai.edu.in" },
+]
+keywords = [
+    "small-language-models",
+    "mutation-testing",
+    "round-trip-closure",
+    "software-engineering",
+    "empirical-evaluation",
+]
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Science/Research",
+    "Topic :: Software Development :: Testing",
+    "License :: OSI Approved :: MIT License",
+]
+
+dependencies = [
+    # LLM client
+    "ollama>=0.4.0",
+
+    # Data + retrieval
+    "datasets>=2.20.0",
+    "sentence-transformers>=3.0.0",
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+
+    # AST + decontamination
+    "astor>=0.8.1",
+
+    # Statistical analysis (Chapter-2 carryover)
+    "scipy>=1.13.0",
+    "statsmodels>=0.14.0",
+    "scikit-learn>=1.5.0",
+
+    # Metrics
+    "rouge-score>=0.1.2",
+    "nltk>=3.9.0",
+    "bert-score>=0.3.13",
+
+    # Test execution
+    "pytest>=8.3.0",
+
+    # Env loading (for future API-key cells)
+    "python-dotenv>=1.0.0",
+
+    # Utilities
+    "tqdm>=4.66.0",
+    "tenacity>=8.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.6.0",
+    "mypy>=1.11.0",
+    "pytest-cov>=5.0.0",
+]
+
+[project.urls]
+Repository = "https://github.com/balajivenky06/roundtrip-closure"
+
+[tool.setuptools]
+py-modules = [
+    "config",
+    "doe",
+    "train_roundtrip",
+    "prepare_roundtrip",
+    "ollama_client",
+    "closure_cache",
+    "closure_paths",
+    "closure_metrics",
+    "judge_llm",
+    "decontaminate",
+    "mutation_testing",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
