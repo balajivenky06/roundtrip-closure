@@ -207,8 +207,8 @@ def call_llm(
 
     # ── Parse the response ────────────────────────────────────────────
     text = _extract_text(result)
-    prompt_tokens = int(result.get("prompt_eval_count", 0) or 0)
-    completion_tokens = int(result.get("eval_count", 0) or 0)
+    prompt_tokens = int(_get_field(result, "prompt_eval_count", 0) or 0)
+    completion_tokens = int(_get_field(result, "eval_count", 0) or 0)
     finish_reason = _determine_finish_reason(result, completion_tokens, max_tokens)
 
     response = LLMResponse(
@@ -268,40 +268,61 @@ def ensure_model_available(model: ModelSpec) -> bool:
 
 
 def list_available_models() -> list[str]:
-    """Return the list of Ollama tags currently pulled."""
+    """Return the list of Ollama tags currently pulled.
+
+    Handles both response shapes the Python client has used:
+      - v0.4+: Pydantic ListResponse with .models attribute, each Model has .model
+      - v0.3 : dict {"models": [{"model" / "name": ...}, ...]}
+    """
     try:
         result = _client.list()
     except Exception as exc:                                       # pragma: no cover
         logger.error(f"Failed to list Ollama models: {exc}")
         raise
 
-    models_field = result.get("models", []) if isinstance(result, dict) else []
-    tags: list[str] = []
-    for m in models_field:
-        # ollama's response shape changed across versions; handle both
-        tag = m.get("model") or m.get("name") or ""
-        if tag:
-            tags.append(tag)
-    return tags
+    # New-style: Pydantic object with .models attribute
+    if hasattr(result, "models"):
+        return [m.model for m in result.models if getattr(m, "model", "")]
+
+    # Old-style: dict with "models" key
+    if isinstance(result, dict):
+        tags: list[str] = []
+        for m in result.get("models", []):
+            if isinstance(m, dict):
+                tag = m.get("model") or m.get("name") or ""
+                if tag:
+                    tags.append(tag)
+        return tags
+
+    return []
 
 
 # ──────────────────────────────────────────────────────────────────────
 # Internal helpers
 # ──────────────────────────────────────────────────────────────────────
-def _extract_text(result: dict) -> str:
-    """Pull the assistant text out of an Ollama response dict, robustly."""
-    if not isinstance(result, dict):
-        return ""
-    msg = result.get("message", {})
-    if isinstance(msg, dict):
-        return msg.get("content", "") or ""
-    # Older Ollama responses used 'response' instead of 'message.content'
-    return result.get("response", "") or ""
+def _get_field(obj, name: str, default=None):
+    """Get a field from either a Pydantic model (attribute) or a dict (key)."""
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(name, default)
+    return getattr(obj, name, default)
 
 
-def _determine_finish_reason(result: dict, completion_tokens: int, max_tokens: int) -> str:
+def _extract_text(result) -> str:
+    """Pull assistant text from Ollama response (Pydantic v0.4+ or dict v0.3-)."""
+    msg = _get_field(result, "message", None)
+    if msg is not None:
+        content = _get_field(msg, "content", "")
+        if content:
+            return content
+    # Generate API (legacy) uses 'response' field at the top level
+    return _get_field(result, "response", "") or ""
+
+
+def _determine_finish_reason(result, completion_tokens: int, max_tokens: int) -> str:
     """Pick a reason: prefer Ollama's done_reason, else infer from token count."""
-    explicit = result.get("done_reason")
+    explicit = _get_field(result, "done_reason", None)
     if explicit in {"stop", "length", "error"}:
         return explicit
     if max_tokens > 0 and completion_tokens >= max_tokens:
@@ -344,21 +365,38 @@ def _self_test() -> None:                                          # pragma: no 
         return
 
     print(f"\nRound-trip test on {target.ollama_tag}…")
-    closure_cache.clear()  # Make sure we're testing a real call, not a cache hit
+    closure_cache.clear()  # Ensure first call is a real LLM invocation
+
+    import time
+    wall_start = time.perf_counter()
     resp = call_llm(target, "Say 'hi' in one word.",
                     role_hint="self_test", max_tokens=16, use_cache=True)
-    print(f"  text='{resp.text.strip()[:60]}'")
+    wall_first = time.perf_counter() - wall_start
+    print(f"  text={resp.text.strip()[:60]!r}")
     print(f"  cache_hit={resp.cache_hit}, finish={resp.finish_reason}, "
-          f"elapsed={resp.elapsed_s:.2f}s")
+          f"wall_clock={wall_first:.3f}s (inference={resp.elapsed_s:.3f}s)")
     print(f"  prompt_tokens={resp.prompt_tokens}, "
           f"completion_tokens={resp.completion_tokens}")
 
-    # Second call should hit cache
+    if not resp.text.strip():
+        print("\n✗ FAIL: response text is empty (parsing bug?)")
+        return
+    if resp.cache_hit:
+        print("\n✗ FAIL: first call should not be a cache hit")
+        return
+
+    # Second call: same args → should hit the disk cache (wall-clock ≈ ms)
+    wall_start = time.perf_counter()
     resp2 = call_llm(target, "Say 'hi' in one word.",
                      role_hint="self_test", max_tokens=16, use_cache=True)
+    wall_second = time.perf_counter() - wall_start
     print(f"\nSecond call: cache_hit={resp2.cache_hit}, "
-          f"elapsed={resp2.elapsed_s:.6f}s (should be much faster)")
+          f"wall_clock={wall_second*1000:.2f}ms")
+    print(f"  speed-up: {wall_first / max(wall_second, 0.0001):.0f}x")
+
     assert resp2.cache_hit is True, "Expected second call to be a cache hit"
+    assert resp2.text == resp.text, "Cached text differs from original"
+    assert wall_second < 1.0, f"Cache lookup too slow: {wall_second*1000:.0f}ms"
     print("\n✓ ollama_client self-test passed.")
 
 
