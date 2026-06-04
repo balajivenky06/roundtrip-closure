@@ -1,0 +1,8 @@
+Role,Ollama tag,Family,Size (B),Architecture,Year
+Pipeline,llama3.2:3b,Meta,3.0,dense,2024
+Pipeline,phi4:14b,Microsoft,14.0,dense,2024
+Pipeline,qwen3.6:27b,Alibaba,27.0,dense,2026
+Pipeline,gemma4:26b,Google,26.0,MoE,2026
+Pipeline,mistral-small3.2:24b,Mistral,24.0,dense,2025
+Pipeline,qwen3-coder:30b,Alibaba-coder,30.0,MoE,2025
+Judge,deepseek-r1:14b,DeepSeek,14.0,dense,2025
