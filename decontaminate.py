@@ -27,6 +27,7 @@ import ast
 import hashlib
 import json
 import logging
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -362,7 +363,11 @@ def build_humaneval_mutated_subset(
     each, EXCLUDE problems whose sanity check fails, write the resulting
     JSONL to `output_path`.
 
-    Returns a small summary dict for logging.
+    Resumability: writes each accepted sample to disk IMMEDIATELY (line-
+    by-line JSONL append with fsync), and skips any `original_id` that
+    is already present in the output file. Also persists rejected IDs
+    in `<output_path>.rejected.jsonl` so they aren't retried either.
+    A Colab disconnect mid-build never loses an already-accepted sample.
     """
     import random
 
@@ -370,18 +375,60 @@ def build_humaneval_mutated_subset(
     pool = list(humaneval_problems)
     rng.shuffle(pool)
 
-    kept = 0
-    rejected = 0
-    rejected_reasons: dict[str, int] = {}
-    out_records: list[dict] = []
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    rejected_path = output_path.with_suffix(output_path.suffix + ".rejected.jsonl")
 
+    # ── Resume: load any accepted IDs already on disk ────────────────
+    accepted_ids: set[str] = set()
+    existing_records: list[dict] = []
+    if output_path.exists():
+        with output_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                    existing_records.append(rec)
+                    accepted_ids.add(rec.get("original_id", ""))
+                except json.JSONDecodeError:
+                    continue
+    rejected_ids: set[str] = set()
+    rejected_reasons: dict[str, int] = {}
+    if rejected_path.exists():
+        with rejected_path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                    rejected_ids.add(rec.get("original_id", ""))
+                    reason = rec.get("reason", "unknown")
+                    rejected_reasons[reason] = rejected_reasons.get(reason, 0) + 1
+                except json.JSONDecodeError:
+                    continue
+
+    kept = len(accepted_ids)
+    rejected = len(rejected_ids)
+    if accepted_ids or rejected_ids:
+        logger.info(
+            f"  Resume: {kept} accepted, {rejected} rejected already on disk; "
+            f"continuing from there."
+        )
+
+    # ── Iterate, skipping seen IDs ───────────────────────────────────
     for problem in pool:
         if kept >= n:
             break
+        problem_id = problem.get("source", "")
+        if problem_id in accepted_ids or problem_id in rejected_ids:
+            continue
+
         result = decontaminate_problem(problem, paraphraser=paraphraser,
                                         use_cache=use_cache)
+
         if result.sanity_check_passed:
-            # Emit a sample record in the same schema as the core dataset
             sample = {
                 "sample_idx": kept,
                 "source": result.decontam_id,
@@ -393,18 +440,20 @@ def build_humaneval_mutated_subset(
                 "rename_mapping": result.rename_mapping,
                 "original_id": result.original_id,
             }
-            out_records.append(sample)
+            _append_jsonl_line(output_path, sample)
+            accepted_ids.add(problem_id)
             kept += 1
+            logger.info(f"  ✓ accepted [{kept}/{n}]: {result.original_id}")
         else:
-            rejected += 1
             reason = result.notes or "unknown"
+            _append_jsonl_line(rejected_path, {
+                "original_id": problem_id,
+                "reason": reason,
+            })
+            rejected_ids.add(problem_id)
+            rejected += 1
             rejected_reasons[reason] = rejected_reasons.get(reason, 0) + 1
-            logger.info(f"  REJECTED {result.original_id}: {reason}")
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_path.open("w", encoding="utf-8") as f:
-        for rec in out_records:
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            logger.info(f"  ✗ REJECTED {result.original_id}: {reason}")
 
     summary = {
         "n_requested": n,
@@ -413,12 +462,21 @@ def build_humaneval_mutated_subset(
         "rejected_reasons": rejected_reasons,
         "n_total_attempted": kept + rejected,
         "output_path": str(output_path),
+        "rejected_path": str(rejected_path),
     }
     logger.info(
-        f"\n  HumanEval-Mutated subset built: kept={kept}, rejected={rejected}, "
+        f"\n  HumanEval-Mutated subset: kept={kept}, rejected={rejected}, "
         f"yield={kept / max(kept + rejected, 1):.1%}"
     )
     return summary
+
+
+def _append_jsonl_line(path: Path, record: dict) -> None:
+    """Append one JSON record to a JSONL file with flush+fsync (durability)."""
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        f.flush()
+        os.fsync(f.fileno())
 
 
 def _extract_signature(code: str) -> str:

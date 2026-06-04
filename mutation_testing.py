@@ -332,13 +332,41 @@ def _strip_function_redefinition(test_code: str, fn_name: str) -> str:
 
 
 def run_tests_against_code(test_code: str, function_code: str,
-                           timeout: int = TIMEOUT_PER_TEST) -> str:
+                           timeout: int = TIMEOUT_PER_TEST,
+                           use_cache: bool = True) -> str:
     """
     Run test_code against function_code in isolated subprocess.
     Returns: "pass" | "fail" | "error" | "timeout"
+
+    When use_cache is True (default), the result is served from
+    pytest_cache (SHA-256 keyed on test_code + function_code + timeout).
+    This is the single biggest checkpointing improvement for Chapter 3:
+    evaluate_mutants runs ~15 pytest subprocesses per function; if Colab
+    disconnects mid-evaluation, we now only re-execute the in-flight
+    mutant on resume — the rest are free disk lookups.
+
+    Set use_cache=False to force a fresh subprocess (useful for
+    diagnosing environment drift).
     """
     if not test_code or not test_code.strip():
         return "error"
+
+    # Cache lookup — done BEFORE any of the parsing/cleanup steps because
+    # the cleanup is deterministic from (test_code, function_code).
+    if use_cache:
+        try:
+            import pytest_cache
+            cache_key = pytest_cache.make_key(test_code, function_code, timeout)
+            cached = pytest_cache.get(cache_key)
+            if cached is not None:
+                return cached
+        except ImportError:
+            # pytest_cache module not on path — fall through to live execution
+            pytest_cache = None
+            cache_key = None
+    else:
+        pytest_cache = None
+        cache_key = None
 
     # Wrap bare asserts for pytest compatibility
     test_code = _wrap_bare_asserts(test_code)
@@ -384,15 +412,26 @@ def run_tests_against_code(test_code: str, function_code: str,
 
             total = passed + failed + errors
             if total == 0:
-                return "error"
-            if failed > 0 or errors > 0:
-                return "fail"
-            return "pass"
+                result = "error"
+            elif failed > 0 or errors > 0:
+                result = "fail"
+            else:
+                result = "pass"
 
     except subprocess.TimeoutExpired:
-        return "timeout"
+        result = "timeout"
     except Exception:
-        return "error"
+        result = "error"
+
+    # Persist the result before returning so the next Colab session
+    # can serve it from disk if the same (test, function) pair recurs.
+    if pytest_cache is not None and cache_key is not None:
+        try:
+            pytest_cache.put(cache_key, result)
+        except Exception as exc:                                  # pragma: no cover
+            print(f"  [pytest_cache.put failed: {exc}]")
+
+    return result
 
 
 def _filter_passing_tests(test_code: str, function_code: str,

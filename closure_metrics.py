@@ -184,19 +184,42 @@ def _get_bertscore_scorer():
     return _bertscore_scorer
 
 
-def bert_similarity(text_a: str, text_b: str) -> float:
+def bert_similarity(text_a: str, text_b: str, *, use_cache: bool = True) -> float:
     """
     BERTScore F1 between two docstrings, rescaled with baseline.
     Returns a float in roughly [0.0, 1.0] (slight excursions possible
     because of the baseline rescaling).
 
+    Cached on (text_a, text_b) via closure_cache so each unique pair is
+    only scored once across the entire sweep — important on Colab where
+    bert_similarity is the slowest non-LLM step (~1-2 s/call after the
+    scorer is loaded).
+
     Returns 0.0 on empty/None inputs.
     """
     if not text_a or not text_b:
         return 0.0
+
+    if use_cache:
+        import closure_cache
+        cache_key = closure_cache.make_key(
+            model_tag="bertscore-roberta-large",
+            role_hint="bert_similarity",
+            prompt=text_a + "\x00" + text_b,
+            temperature=0.0,
+        )
+        cached = closure_cache.get(cache_key)
+        if cached is not None and "score" in cached:
+            return float(cached["score"])
+
     scorer = _get_bertscore_scorer()
     _p, _r, f1 = scorer.score([text_b], [text_a])
-    return float(f1[0])
+    score = float(f1[0])
+
+    if use_cache:
+        closure_cache.put(cache_key, {"score": score})
+
+    return score
 
 
 # ──────────────────────────────────────────────────────────────────────

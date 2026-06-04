@@ -84,12 +84,13 @@ roundtrip-closure/
 ├── prepare_roundtrip.py     ← one-time dataset prep
 │
 ├── ollama_client.py         ← Ollama wrapper with retry + rate limiting
-├── closure_cache.py         ← SHA256-keyed disk cache
+├── closure_cache.py         ← SHA-256 keyed disk cache for LLM calls
+├── pytest_cache.py          ← SHA-256 keyed disk cache for pytest subprocess results
 ├── closure_paths.py         ← Path-1/2/3 traversal drivers
-├── closure_metrics.py       ← kill rate / pass rate / BERTScore
+├── closure_metrics.py       ← kill rate / pass rate / BERTScore (BERTScore cached)
 ├── judge_llm.py             ← DeepSeek-R1 equivalence judge
-├── decontaminate.py         ← HumanEval-Mutated transform (AST + LLM)
-├── mutation_testing.py      ← copied from autoresearch (Chapter 2)
+├── decontaminate.py         ← HumanEval-Mutated transform (AST + LLM), resumable
+├── mutation_testing.py      ← Chapter-2 carryover; run_tests_against_code wrapped with pytest_cache
 │
 ├── scripts/
 │   └── run_pilot.py         ← driver for the 30-function pilot
@@ -102,23 +103,39 @@ roundtrip-closure/
 └── logs/                    ← per-cell run logs
 ```
 
-## Status (2026-06-03)
+## Status (2026-06-04)
 
-**Phase:** Scaffolding complete. Module bodies to be filled in.
+**Phase:** Implementation complete (Batches 1–5). Ready for Colab pilot.
 
 | Component | Status |
 |---|---|
-| Project structure | ✓ scaffold created |
-| `mutation_testing.py` | ✓ copied from autoresearch |
-| `config.py`, `doe.py` | ⏳ stub files with structure |
-| `ollama_client.py` | ⏳ stub |
-| `closure_*.py` | ⏳ stubs |
-| `judge_llm.py` | ⏳ stub |
-| `decontaminate.py` | ⏳ stub |
-| `prepare_roundtrip.py` | ⏳ stub |
-| `train_roundtrip.py` | ⏳ stub |
-| Pilot run | ⏳ blocked on module bodies |
-| Full sweep | ⏳ blocked on pilot |
+| Project structure | ✓ scaffold + complete implementations |
+| `config.py`, `doe.py` | ✓ live — 7-SLM lineup, 20-cell DOE |
+| `ollama_client.py` | ✓ live + Ollama v0.4 Pydantic verified |
+| `closure_cache.py` | ✓ live, fsync-durable; 1407× cache-hit speedup measured |
+| `pytest_cache.py` | ✓ live — caches per-mutant pytest subprocess results |
+| `closure_metrics.py` | ✓ live, BERTScore cached |
+| `judge_llm.py` | ✓ live — DeepSeek-R1 rubric judge with parser |
+| `closure_paths.py` | ✓ live — 3 closure paths, Path-1 verified on real Ollama |
+| `decontaminate.py` | ✓ live — incremental JSONL writes, resumable |
+| `prepare_roundtrip.py` | ✓ live — HumanEval + MBPP + LCB + HEM build |
+| `train_roundtrip.py` | ✓ live — 3-layer resume strategy (cache + TSV + fsync) |
+| `scripts/run_pilot.py` | ✓ live — 6 go/no-go checks |
+| `colab_pilot.ipynb` | ✓ live — Drive-symlinked persistent storage |
+| Pilot run | ⏳ ready — open `colab_pilot.ipynb` in Colab Pro+ A100 |
+| Full sweep | ⏳ after pilot GO verdict |
+
+## Checkpointing topology (5 layers; nothing is recomputed twice)
+
+| Layer | What it caches | Storage | Survives Colab disconnect? |
+|---|---|---|---|
+| 1 | Every LLM call (model × role × prompt × params) | `checkpoints/cache/` | ✓ via Drive symlink |
+| 2 | Every pytest subprocess (test × code × timeout) | `checkpoints/pytest_cache/` | ✓ |
+| 3 | BERTScore F1 per docstring pair | `checkpoints/cache/` (same store, judge-role key) | ✓ |
+| 4 | TSV resume — per `(cell, sample, path)` tuple | `results/results_roundtrip.tsv` | ✓ |
+| 5 | Decontamination — per-problem JSONL append | `data/humaneval_mutated_50.jsonl` + `.rejected.jsonl` | ✓ |
+
+All writes use atomic `.tmp → os.replace` and explicit `flush + fsync` to defend against Drive FUSE write-back lag.
 
 ## License
 

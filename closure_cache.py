@@ -129,6 +129,8 @@ def put(key: str, response_dict: dict) -> None:
     try:
         with tmp_path.open("w", encoding="utf-8") as f:
             json.dump(response_dict, f, ensure_ascii=False)
+            f.flush()
+            os.fsync(f.fileno())     # defends against FUSE / Drive write-back lag
         os.replace(tmp_path, path)
     except OSError as e:
         logger.error(f"Failed to write cache entry {key[:8]}…: {e}")
