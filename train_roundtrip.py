@@ -1,88 +1,285 @@
 """
-train_roundtrip.py — main experiment driver.
+train_roundtrip.py — main experiment driver with Colab-disconnect-safe resume.
 
-For one DOE cell (set via CELL_ID below), iterate over the dataset and
-execute all three closure paths per (cell, function) pair. Append one
-row per ClosureResult to results/results_roundtrip.tsv.
+Runs one DOE cell (set CELL_ID in the CONFIG block below) over a dataset
+and writes one TSV row per (cell, sample_idx, path). Resilient to mid-run
+process kills because:
 
-To run a different cell, edit the CONFIG block at the top of this file
-and re-run. The cell_id determines which (L_spec, L_test, L_code) triple
-is used.
+    1. The `closure_cache` (SHA256-keyed disk store) makes every identical
+       LLM call free on re-execution.
+    2. The results TSV is opened in append mode with fsync after each
+       row, so partial state survives a Colab kill.
+    3. Before processing each (cell, sample_idx, path) tuple we check
+       whether its key is already in the TSV — if yes we skip.
 
-Stub status: configuration + main loop signature; per-cell execution TBD.
+Run as:
+    python3 train_roundtrip.py             # uses CELL_ID below
+    CELL_ID=H1 python3 train_roundtrip.py  # override via env
 """
 
 from __future__ import annotations
+import json
 import logging
+import os
+import sys
+import time
 from pathlib import Path
 
 from config import (
-    PIPELINE_MODELS,
-    JUDGE_MODEL,
     CORE_SAMPLE_SIZE,
     DATA_DIR,
     LOGS_DIR,
     RESULTS_TSV,
+    DATASET_SEED,
 )
-from doe import get_cell, ALL_CELLS
+from doe import get_cell, ALL_CELLS, Cell
+import closure_cache
+import closure_paths
 
 
-# ─────────── CONFIGURATION (agent edits this block per cell) ────────────
-CELL_ID: str = "M3"              # DOE cell to run; see doe.py for the list
-DATASET: str = "core"            # "core" | "livecodebench" | "humaneval_mutated"
-PATHS_TO_RUN: tuple[int, ...] = (1, 2, 3)
-N_SAMPLES: int = CORE_SAMPLE_SIZE
-SHUFFLE_SEED: int = 42
-USE_CACHE: bool = True
-APPEND_TO_TSV: bool = True       # if False, overwrite the TSV
-RESUME_FROM_CHECKPOINT: bool = True  # skip (cell, sample_idx) pairs already in TSV
-# ────────────────────────────────────────────────────────────────────────
+# ════════════════════════════════════════════════════════════════════════
+# CONFIGURATION — edit per cell, or override via environment variables
+# ════════════════════════════════════════════════════════════════════════
+CELL_ID: str = os.environ.get("CELL_ID", "M1")
+DATASET: str = os.environ.get("DATASET", "core")     # core | livecodebench | humaneval_mutated
+PATHS_TO_RUN: tuple[int, ...] = tuple(
+    int(p) for p in os.environ.get("PATHS_TO_RUN", "1,2,3").split(",")
+)
+N_SAMPLES: int = int(os.environ.get("N_SAMPLES", CORE_SAMPLE_SIZE))
+USE_CACHE: bool = os.environ.get("USE_CACHE", "1") != "0"
+RESULTS_PATH: Path = Path(os.environ.get("RESULTS_PATH", str(RESULTS_TSV)))
+SHOW_PROGRESS_EVERY: int = int(os.environ.get("PROGRESS_EVERY", "5"))
+# ════════════════════════════════════════════════════════════════════════
 
 
 logger = logging.getLogger("roundtrip")
 
 
-def load_dataset(dataset_name: str, n: int, seed: int) -> list[dict]:
-    """Load one of: core / livecodebench / humaneval_mutated."""
-    raise NotImplementedError("Stub — implementation pending.")
+# ──────────────────────────────────────────────────────────────────────
+# TSV I/O with crash-safe writes
+# ──────────────────────────────────────────────────────────────────────
+def ensure_header(tsv_path: Path) -> None:
+    """Write the header row if the file doesn't exist or is empty."""
+    if not tsv_path.exists() or tsv_path.stat().st_size == 0:
+        with tsv_path.open("w", encoding="utf-8") as f:
+            f.write(closure_paths.ClosureResult.tsv_header())
+            f.flush()
+            os.fsync(f.fileno())
 
 
-def write_result_row(result: dict, tsv_path: Path, append: bool = True) -> None:
-    """Append one ClosureResult dict as a TSV row. Creates header on first write."""
-    raise NotImplementedError("Stub — implementation pending.")
+def load_completed_keys(tsv_path: Path) -> set[str]:
+    """
+    Scan the TSV once at startup and return the set of (cell|sample|path)
+    keys that already have a row. The set is used to skip already-processed
+    work on resume.
+    """
+    completed: set[str] = set()
+    if not tsv_path.exists():
+        return completed
+    with tsv_path.open("r", encoding="utf-8") as f:
+        header = f.readline()  # skip header
+        if not header:
+            return completed
+        # Column indices for the three resume-key fields
+        cols = header.rstrip("\n").split("\t")
+        try:
+            i_cell = cols.index("cell_id")
+            i_sample = cols.index("sample_idx")
+            i_path = cols.index("path")
+        except ValueError:
+            logger.warning("Results TSV has unexpected header; treating all rows as unknown.")
+            return completed
+        for line in f:
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) <= max(i_cell, i_sample, i_path):
+                continue
+            try:
+                key = closure_paths.ClosureResult.key(
+                    parts[i_cell], int(parts[i_sample]), int(parts[i_path])
+                )
+                completed.add(key)
+            except ValueError:
+                continue
+    return completed
 
 
-def already_processed(cell_id: str, sample_idx: int, path: int,
-                      tsv_path: Path) -> bool:
-    """Resume support: check if (cell, sample, path) is already in the TSV."""
-    raise NotImplementedError("Stub — implementation pending.")
+def write_result_row(result: closure_paths.ClosureResult, tsv_path: Path) -> None:
+    """Append one ClosureResult, flushed and fsynced for crash safety."""
+    with tsv_path.open("a", encoding="utf-8") as f:
+        f.write(result.to_tsv_row())
+        f.flush()
+        os.fsync(f.fileno())
 
 
+# ──────────────────────────────────────────────────────────────────────
+# Dataset loading
+# ──────────────────────────────────────────────────────────────────────
+def load_dataset(dataset_name: str, n: int) -> list[dict]:
+    """
+    Load one of: core / livecodebench / humaneval_mutated.
+
+    Expects pre-built JSONL files in data/:
+        data/core_sample_150.jsonl
+        data/livecodebench_25.jsonl
+        data/humaneval_mutated_50.jsonl
+
+    These are generated by prepare_roundtrip.py (Batch 4).
+    """
+    filename_map = {
+        "core": "core_sample_150.jsonl",
+        "livecodebench": "livecodebench_25.jsonl",
+        "humaneval_mutated": "humaneval_mutated_50.jsonl",
+    }
+    if dataset_name not in filename_map:
+        raise ValueError(
+            f"Unknown dataset {dataset_name!r}. "
+            f"Choose from: {sorted(filename_map.keys())}"
+        )
+
+    path = DATA_DIR / filename_map[dataset_name]
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Dataset file not built yet: {path}\n"
+            f"Run: python3 prepare_roundtrip.py"
+        )
+
+    samples: list[dict] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                samples.append(json.loads(line))
+    return samples[:n] if n > 0 else samples
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Main loop
+# ──────────────────────────────────────────────────────────────────────
+def run_cell(cell: Cell,
+             dataset: list[dict],
+             paths: tuple[int, ...],
+             results_path: Path,
+             completed_keys: set[str]) -> dict:
+    """
+    Process the dataset for one DOE cell. Returns a small summary dict
+    used by the caller for logging.
+    """
+    summary = {
+        "cell_id": cell.cell_id,
+        "n_samples_seen": 0,
+        "n_results_written": 0,
+        "n_results_skipped_resume": 0,
+        "n_errors": 0,
+        "elapsed_s": 0.0,
+    }
+    start = time.perf_counter()
+
+    for sample in dataset:
+        summary["n_samples_seen"] += 1
+        sample_idx = sample.get("sample_idx", -1)
+
+        for p in paths:
+            key = closure_paths.ClosureResult.key(cell.cell_id, sample_idx, p)
+            if key in completed_keys:
+                summary["n_results_skipped_resume"] += 1
+                continue
+
+            try:
+                # Each path returns ONE ClosureResult (see closure_paths.py)
+                if p == 1:
+                    result = closure_paths.run_path_1(cell, sample)
+                elif p == 2:
+                    result = closure_paths.run_path_2(cell, sample)
+                elif p == 3:
+                    result = closure_paths.run_path_3(cell, sample)
+                else:
+                    logger.warning(f"Unknown path id {p}; skipping.")
+                    continue
+            except Exception as exc:                              # pragma: no cover
+                summary["n_errors"] += 1
+                logger.exception(
+                    f"Cell {cell.cell_id} sample {sample_idx} path {p} crashed: {exc}"
+                )
+                continue
+
+            write_result_row(result, results_path)
+            completed_keys.add(key)
+            summary["n_results_written"] += 1
+
+            if summary["n_results_written"] % SHOW_PROGRESS_EVERY == 0:
+                cs = closure_cache.stats()
+                logger.info(
+                    f"  written={summary['n_results_written']} "
+                    f"skipped(resume)={summary['n_results_skipped_resume']} "
+                    f"errors={summary['n_errors']} "
+                    f"cache_hit_rate={cs['hit_rate']:.2%} "
+                    f"(hits={cs['hits']}, misses={cs['misses']})"
+                )
+
+    summary["elapsed_s"] = time.perf_counter() - start
+    return summary
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Entry point
+# ──────────────────────────────────────────────────────────────────────
 def main() -> int:
-    """Run one cell of the DOE end-to-end."""
-    # 1. Set up logging
     log_path = LOGS_DIR / f"cell_{CELL_ID}_{DATASET}.log"
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(log_path), logging.StreamHandler()],
+        handlers=[
+            logging.FileHandler(log_path),
+            logging.StreamHandler(sys.stdout),
+        ],
+        force=True,
     )
 
-    # 2. Look up the cell + load dataset
     cell = get_cell(CELL_ID)
-    logger.info(f"Running cell {cell.cell_id} [{cell.stratum}]: {cell.hypothesis}")
+    logger.info(f"=== Running cell {cell.cell_id} [{cell.stratum}] on {DATASET} ===")
+    logger.info(f"  Hypothesis: {cell.hypothesis}")
     logger.info(f"  L_spec = {cell.L_spec.ollama_tag if cell.L_spec else 'SKIP'}")
     logger.info(f"  L_test = {cell.L_test.ollama_tag if cell.L_test else 'SKIP'}")
     logger.info(f"  L_code = {cell.L_code.ollama_tag if cell.L_code else 'SKIP'}")
+    logger.info(f"  paths = {PATHS_TO_RUN}, n_samples = {N_SAMPLES}")
+    logger.info(f"  results -> {RESULTS_PATH}")
+    logger.info(f"  log     -> {log_path}")
 
-    # 3. Iterate over (sample, path)
-    #    for sample in dataset:
-    #       for path in PATHS_TO_RUN:
-    #          if RESUME_FROM_CHECKPOINT and already_processed(...): continue
-    #          result = run_path(cell, sample, path)
-    #          write_result_row(result, RESULTS_TSV)
+    # 1. Header + completed-key index (resume support)
+    ensure_header(RESULTS_PATH)
+    completed = load_completed_keys(RESULTS_PATH)
+    logger.info(f"  found {len(completed)} previously-completed (cell, sample, path) tuples")
 
-    raise NotImplementedError("Stub — main loop implementation pending.")
+    # 2. Load dataset
+    try:
+        dataset = load_dataset(DATASET, N_SAMPLES)
+    except FileNotFoundError as e:
+        logger.error(str(e))
+        return 1
+    logger.info(f"  loaded {len(dataset)} samples from {DATASET}")
+
+    # 3. Run the cell
+    try:
+        summary = run_cell(cell, dataset, PATHS_TO_RUN, RESULTS_PATH, completed)
+    except KeyboardInterrupt:                                     # pragma: no cover
+        logger.warning("Interrupted by user. State preserved in TSV + cache; re-run to resume.")
+        return 130
+
+    # 4. Final summary
+    cs = closure_cache.stats()
+    logger.info(
+        f"\n=== Cell {cell.cell_id} complete ===\n"
+        f"  samples_seen          = {summary['n_samples_seen']}\n"
+        f"  results_written       = {summary['n_results_written']}\n"
+        f"  results_skipped_resume = {summary['n_results_skipped_resume']}\n"
+        f"  errors                 = {summary['n_errors']}\n"
+        f"  elapsed                = {summary['elapsed_s']:.1f} s\n"
+        f"  cache_hits             = {cs['hits']}\n"
+        f"  cache_misses           = {cs['misses']}\n"
+        f"  cache_hit_rate         = {cs['hit_rate']:.2%}\n"
+        f"  cache_size             = {cs['size_mb']} MB ({cs['entry_count']} entries)"
+    )
+    return 0
 
 
 if __name__ == "__main__":
