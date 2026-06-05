@@ -271,27 +271,47 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
     fn_name = sample.get("entry_point", "")
     signature = sample.get("signature", "")
 
+    tag = f"[{cell.cell_id} s={sample_idx} p1]"
+    logger.info(f"{tag} START {source}")
+
     n_calls = 0
     n_hits = 0
 
     # Step 1: D' from code
     if cell.L_spec is None:                 # N2 ablation
         d_prime = ""
+        logger.info(f"{tag} step1 L_spec=SKIP (null ablation)")
     else:
+        t = time.perf_counter()
         d_prime, h = _call_doc_from_code(cell.L_spec, code)
         n_calls += 1
         n_hits += int(h)
+        logger.info(f"{tag} step1 L_spec={cell.L_spec.short_name} "
+                    f"-> D'={len(d_prime)}chars cache={'HIT' if h else 'miss'} "
+                    f"+{time.perf_counter()-t:.2f}s")
 
     # Step 2: T' from D'
     if cell.L_test is None or not d_prime:
         t_prime = ""
+        logger.info(f"{tag} step2 L_test=SKIP (no docstring or null ablation)")
     else:
+        t = time.perf_counter()
         t_prime, h = _call_tests_from_doc(cell.L_test, d_prime, fn_name, signature)
         n_calls += 1
         n_hits += int(h)
+        logger.info(f"{tag} step2 L_test={cell.L_test.short_name} "
+                    f"-> T'={len(t_prime)}chars cache={'HIT' if h else 'miss'} "
+                    f"+{time.perf_counter()-t:.2f}s")
 
     # Step 3: filter tests that fail on original C
-    filtered_tests = closure_metrics.test_filter(t_prime, code) if t_prime else ""
+    if t_prime:
+        t = time.perf_counter()
+        filtered_tests = closure_metrics.test_filter(t_prime, code)
+        logger.info(f"{tag} step3 test_filter -> "
+                    f"{len(filtered_tests)}/{len(t_prime)} chars retained "
+                    f"+{time.perf_counter()-t:.2f}s")
+    else:
+        filtered_tests = ""
 
     if not filtered_tests:
         elapsed = time.perf_counter() - t0
@@ -306,20 +326,27 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
         )
 
     # Step 4: mutation kill rate
+    t = time.perf_counter()
     kill_rate, breakdown = closure_metrics.mutation_kill_rate(filtered_tests, code)
+    logger.info(f"{tag} step4 mutation -> kill_rate={kill_rate:.3f} "
+                f"({breakdown.get('killed',0)}/{breakdown.get('total_mutants',0)} mutants) "
+                f"+{time.perf_counter()-t:.2f}s")
 
     # Step 5: judge equivalence of D' vs original docstring (if available)
     if orig_doc and d_prime:
+        t = time.perf_counter()
         j = judge_llm.judge_equivalence(orig_doc, d_prime, artefact_kind="docstring")
         rating, reason = j.rating, j.justification
         n_calls += 1
-        # judge_equivalence goes through ollama_client; cache hits already tracked
-        # but we don't easily get the cache_hit flag back from JudgeResult.
-        # That's a minor reporting gap; total LLM call count is still accurate.
+        logger.info(f"{tag} step5 judge={cell.L_spec.short_name if cell.L_spec else '?'} "
+                    f"-> rating={rating} +{time.perf_counter()-t:.2f}s")
     else:
         rating, reason = -1, "no_orig_docstring"
+        logger.info(f"{tag} step5 judge=SKIP (no original docstring)")
 
     elapsed = time.perf_counter() - t0
+    logger.info(f"{tag} DONE elapsed={elapsed:.2f}s kill_rate={kill_rate:.3f} "
+                f"calls={n_calls} hits={n_hits}")
     return ClosureResult(
         cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
         path=1, metric_name="mutation_kill_rate",
@@ -352,6 +379,9 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
     fn_name = sample.get("entry_point", "")
     signature = sample.get("signature", "")
 
+    tag = f"[{cell.cell_id} s={sample_idx} p2]"
+    logger.info(f"{tag} START {source}")
+
     if not docstring or not reference_tests:
         elapsed = time.perf_counter() - t0
         return ClosureResult(
@@ -370,18 +400,28 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
     # Step 1: T' from D
     if cell.L_test is None:
         t_prime = ""
+        logger.info(f"{tag} step1 L_test=SKIP")
     else:
+        t = time.perf_counter()
         t_prime, h = _call_tests_from_doc(cell.L_test, docstring, fn_name, signature)
         n_calls += 1
         n_hits += int(h)
+        logger.info(f"{tag} step1 L_test={cell.L_test.short_name} "
+                    f"-> T'={len(t_prime)}chars cache={'HIT' if h else 'miss'} "
+                    f"+{time.perf_counter()-t:.2f}s")
 
     # Step 2: C' from D + T'
     if cell.L_code is None or not t_prime:
         c_prime = ""
+        logger.info(f"{tag} step2 L_code=SKIP (no tests)")
     else:
+        t = time.perf_counter()
         c_prime, h = _call_code_from_doc_tests(cell.L_code, docstring, t_prime, fn_name, signature)
         n_calls += 1
         n_hits += int(h)
+        logger.info(f"{tag} step2 L_code={cell.L_code.short_name} "
+                    f"-> C'={len(c_prime)}chars cache={'HIT' if h else 'miss'} "
+                    f"+{time.perf_counter()-t:.2f}s")
 
     if not c_prime:
         elapsed = time.perf_counter() - t0
@@ -396,13 +436,21 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
         )
 
     # Step 3: original reference tests on C'
+    t = time.perf_counter()
     pass_rate = closure_metrics.reference_test_pass_rate(reference_tests, c_prime)
+    logger.info(f"{tag} step3 ref_tests -> pass_rate={pass_rate:.3f} "
+                f"+{time.perf_counter()-t:.2f}s")
 
     # Step 4: judge equivalence of C' vs original C
+    t = time.perf_counter()
     j = judge_llm.judge_equivalence(code, c_prime, artefact_kind="code")
     n_calls += 1
+    logger.info(f"{tag} step4 judge -> rating={j.rating} "
+                f"+{time.perf_counter()-t:.2f}s")
 
     elapsed = time.perf_counter() - t0
+    logger.info(f"{tag} DONE elapsed={elapsed:.2f}s pass_rate={pass_rate:.3f} "
+                f"calls={n_calls} hits={n_hits}")
     return ClosureResult(
         cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
         path=2, metric_name="reference_pass_rate",
@@ -431,6 +479,9 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
     sample_idx = sample["sample_idx"]
     source = sample.get("source", "")
 
+    tag = f"[{cell.cell_id} s={sample_idx} p3]"
+    logger.info(f"{tag} START {source}")
+
     if not orig_doc:
         elapsed = time.perf_counter() - t0
         return ClosureResult(
@@ -448,18 +499,28 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
     # Step 1: T' from C
     if cell.L_test is None:
         t_prime = ""
+        logger.info(f"{tag} step1 L_test=SKIP")
     else:
+        t = time.perf_counter()
         t_prime, h = _call_tests_from_code(cell.L_test, code)
         n_calls += 1
         n_hits += int(h)
+        logger.info(f"{tag} step1 L_test={cell.L_test.short_name} "
+                    f"-> T'={len(t_prime)}chars cache={'HIT' if h else 'miss'} "
+                    f"+{time.perf_counter()-t:.2f}s")
 
     # Step 2: D' from T'
     if cell.L_spec is None or not t_prime:
         d_prime = ""
+        logger.info(f"{tag} step2 L_spec=SKIP (no tests)")
     else:
+        t = time.perf_counter()
         d_prime, h = _call_doc_from_tests(cell.L_spec, t_prime)
         n_calls += 1
         n_hits += int(h)
+        logger.info(f"{tag} step2 L_spec={cell.L_spec.short_name} "
+                    f"-> D'={len(d_prime)}chars cache={'HIT' if h else 'miss'} "
+                    f"+{time.perf_counter()-t:.2f}s")
 
     if not d_prime:
         elapsed = time.perf_counter() - t0
@@ -473,16 +534,25 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
         )
 
     # Step 3: BERTScore
+    t = time.perf_counter()
     try:
         bert = closure_metrics.bert_similarity(orig_doc, d_prime)
+        logger.info(f"{tag} step3 BERTScore -> F1={bert:.3f} "
+                    f"+{time.perf_counter()-t:.2f}s")
     except ImportError:
-        bert = 0.0  # bert_score not installed; record 0 and continue
+        bert = 0.0
+        logger.warning(f"{tag} step3 BERTScore SKIP (bert-score not installed)")
 
     # Step 4: judge equivalence on the docstrings
+    t = time.perf_counter()
     j = judge_llm.judge_equivalence(orig_doc, d_prime, artefact_kind="docstring")
     n_calls += 1
+    logger.info(f"{tag} step4 judge -> rating={j.rating} "
+                f"+{time.perf_counter()-t:.2f}s")
 
     elapsed = time.perf_counter() - t0
+    logger.info(f"{tag} DONE elapsed={elapsed:.2f}s bertscore={bert:.3f} "
+                f"calls={n_calls} hits={n_hits}")
     return ClosureResult(
         cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
         path=3, metric_name="bertscore",

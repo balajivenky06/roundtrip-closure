@@ -48,7 +48,7 @@ PATHS_TO_RUN: tuple[int, ...] = tuple(
 N_SAMPLES: int = int(os.environ.get("N_SAMPLES", CORE_SAMPLE_SIZE))
 USE_CACHE: bool = os.environ.get("USE_CACHE", "1") != "0"
 RESULTS_PATH: Path = Path(os.environ.get("RESULTS_PATH", str(RESULTS_TSV)))
-SHOW_PROGRESS_EVERY: int = int(os.environ.get("PROGRESS_EVERY", "5"))
+SHOW_PROGRESS_EVERY: int = int(os.environ.get("PROGRESS_EVERY", "1"))    # per-result by default
 # ════════════════════════════════════════════════════════════════════════
 
 
@@ -225,12 +225,20 @@ def run_cell(cell: Cell,
 # ──────────────────────────────────────────────────────────────────────
 def main() -> int:
     log_path = LOGS_DIR / f"cell_{CELL_ID}_{DATASET}.log"
+
+    # Line-buffered stdout so Colab !python3 cells stream output in real
+    # time instead of buffering until the script exits.
+    sys.stdout.reconfigure(line_buffering=True)
+
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.flush = sys.stdout.flush  # extra-defensive
+
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
         handlers=[
             logging.FileHandler(log_path),
-            logging.StreamHandler(sys.stdout),
+            stream_handler,
         ],
         force=True,
     )

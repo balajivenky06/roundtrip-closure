@@ -76,6 +76,10 @@ def load_pilot_dataset() -> list[dict]:
 def run_pilot() -> dict:
     """Execute all 6 pilot cells. Returns aggregate summary."""
     pilot_log = LOGS_DIR / "pilot.log"
+
+    # Line-buffered stdout so Colab !python3 streams output in real time
+    sys.stdout.reconfigure(line_buffering=True)
+
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
