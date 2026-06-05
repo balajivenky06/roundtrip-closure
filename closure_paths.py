@@ -27,7 +27,7 @@ import time
 from dataclasses import dataclass, asdict
 from typing import Optional
 
-from config import ModelSpec, TEMPERATURE, MAX_OUTPUT_TOKENS
+from config import ModelSpec, TEMPERATURE, MAX_OUTPUT_TOKENS, JUDGE_MODEL
 from doe import Cell
 import ollama_client
 import closure_metrics
@@ -338,7 +338,7 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
         j = judge_llm.judge_equivalence(orig_doc, d_prime, artefact_kind="docstring")
         rating, reason = j.rating, j.justification
         n_calls += 1
-        logger.info(f"{tag} step5 judge={cell.L_spec.short_name if cell.L_spec else '?'} "
+        logger.info(f"{tag} step5 judge={JUDGE_MODEL.short_name} "
                     f"-> rating={rating} +{time.perf_counter()-t:.2f}s")
     else:
         rating, reason = -1, "no_orig_docstring"
@@ -445,7 +445,7 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
     t = time.perf_counter()
     j = judge_llm.judge_equivalence(code, c_prime, artefact_kind="code")
     n_calls += 1
-    logger.info(f"{tag} step4 judge -> rating={j.rating} "
+    logger.info(f"{tag} step4 judge={JUDGE_MODEL.short_name} -> rating={j.rating} "
                 f"+{time.perf_counter()-t:.2f}s")
 
     elapsed = time.perf_counter() - t0
@@ -547,7 +547,7 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
     t = time.perf_counter()
     j = judge_llm.judge_equivalence(orig_doc, d_prime, artefact_kind="docstring")
     n_calls += 1
-    logger.info(f"{tag} step4 judge -> rating={j.rating} "
+    logger.info(f"{tag} step4 judge={JUDGE_MODEL.short_name} -> rating={j.rating} "
                 f"+{time.perf_counter()-t:.2f}s")
 
     elapsed = time.perf_counter() - t0
