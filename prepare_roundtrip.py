@@ -96,12 +96,22 @@ def step_2_download_humaneval_mbpp() -> tuple[list[dict], list[dict]]:
     except ImportError as e:
         raise ImportError("Install: pip install datasets") from e
 
+    # HF deprecated bare namespace names — use canonical 'org/repo' form.
+    # Fallbacks below in case of further upstream renames.
     logger.info("  Downloading HumanEval…")
-    he_raw = load_dataset("openai_humaneval", split="test")
+    he_raw = _load_dataset_with_fallbacks(
+        load_dataset,
+        ["openai/openai_humaneval", "openai_humaneval"],
+        split="test",
+    )
     logger.info(f"    {len(he_raw)} problems")
 
     logger.info("  Downloading MBPP…")
-    mbpp_raw = load_dataset("mbpp", split="test")
+    mbpp_raw = _load_dataset_with_fallbacks(
+        load_dataset,
+        ["google-research-datasets/mbpp", "mbpp", "Muennighoff/mbpp"],
+        split="test",
+    )
     logger.info(f"    {len(mbpp_raw)} problems")
 
     he_norm = [_normalise_humaneval(p) for p in he_raw]
@@ -111,6 +121,27 @@ def step_2_download_humaneval_mbpp() -> tuple[list[dict], list[dict]]:
 
     logger.info(f"  Normalised: {len(he_norm)} HumanEval + {len(mbpp_norm)} MBPP")
     return he_norm, mbpp_norm
+
+
+def _load_dataset_with_fallbacks(load_dataset_fn, names: list[str], **kwargs):
+    """Try each name in order; return the first one that loads.
+
+    HuggingFace has been deprecating bare-namespace dataset IDs in favour
+    of 'org/name' form, and individual datasets sometimes get renamed.
+    We try the canonical name first and fall back to historic aliases so
+    a single HF rename doesn't brick the pipeline.
+    """
+    last_exc: Exception | None = None
+    for name in names:
+        try:
+            logger.info(f"    trying repo_id={name!r}…")
+            return load_dataset_fn(name, **kwargs)
+        except Exception as exc:
+            logger.warning(f"    {name!r} failed: {type(exc).__name__}: {str(exc)[:100]}")
+            last_exc = exc
+    raise RuntimeError(
+        f"All dataset names failed for {names}: {last_exc}"
+    ) from last_exc
 
 
 # ──────────────────────────────────────────────────────────────────────
