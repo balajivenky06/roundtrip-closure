@@ -167,7 +167,11 @@ def judge_equivalence(
         temperature=0.0,           # deterministic judging
         top_p=1.0,
         top_k=0,
-        max_tokens=256,            # short structured response is enough
+        max_tokens=2048,           # DeepSeek-R1 uses ~200-300 tokens of
+                                   # <think>...</think> reasoning before
+                                   # emitting RATING/REASON; 256 truncated.
+                                   # Measured ~248 tokens typical usage,
+                                   # 2048 gives 8x headroom for harder pairs.
         use_cache=use_cache,
     )
 
