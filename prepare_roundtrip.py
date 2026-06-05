@@ -32,6 +32,7 @@ Run as:  python3 prepare_roundtrip.py
 from __future__ import annotations
 import ast
 import json
+import os
 import logging
 import random
 import re
@@ -89,8 +90,27 @@ def step_1_verify_ollama_models() -> tuple[list[str], list[str]]:
 # ──────────────────────────────────────────────────────────────────────
 # Step 2 — Download HumanEval + MBPP
 # ──────────────────────────────────────────────────────────────────────
-def step_2_download_humaneval_mbpp() -> tuple[list[dict], list[dict]]:
-    """Return (humaneval_problems, mbpp_problems) — both pre-normalised."""
+def step_2_download_humaneval_mbpp(force: bool = False) -> tuple[list[dict], list[dict]]:
+    """Return (humaneval_problems, mbpp_problems) — both pre-normalised.
+
+    Caches the normalised lists to data/_humaneval_raw.jsonl and
+    data/_mbpp_raw.jsonl on Drive so the next session skips the HF
+    download and normalisation entirely.
+    """
+    he_cache = DATA_DIR / "_humaneval_raw.jsonl"
+    mbpp_cache = DATA_DIR / "_mbpp_raw.jsonl"
+
+    if not force and he_cache.exists() and mbpp_cache.exists():
+        try:
+            he_norm = [json.loads(line) for line in he_cache.open("r", encoding="utf-8") if line.strip()]
+            mbpp_norm = [json.loads(line) for line in mbpp_cache.open("r", encoding="utf-8") if line.strip()]
+            if he_norm and mbpp_norm:
+                logger.info(f"  ✓ Cached HE+MBPP found on Drive — "
+                            f"{len(he_norm)} HE + {len(mbpp_norm)} MBPP. Skipping HF download.")
+                return he_norm, mbpp_norm
+        except (json.JSONDecodeError, OSError) as e:
+            logger.warning(f"  Cache read failed ({e}); will re-download.")
+
     try:
         from datasets import load_dataset
     except ImportError as e:
@@ -120,7 +140,25 @@ def step_2_download_humaneval_mbpp() -> tuple[list[dict], list[dict]]:
     mbpp_norm = [p for p in mbpp_norm if p is not None]
 
     logger.info(f"  Normalised: {len(he_norm)} HumanEval + {len(mbpp_norm)} MBPP")
+
+    # Persist to Drive so the next session skips HF entirely
+    _save_jsonl(he_cache, he_norm)
+    _save_jsonl(mbpp_cache, mbpp_norm)
+    logger.info(f"  Cached on Drive: {he_cache.name}, {mbpp_cache.name}")
+
     return he_norm, mbpp_norm
+
+
+def _save_jsonl(path: Path, records: list[dict]) -> None:
+    """Atomic JSONL write with fsync."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with tmp.open("w", encoding="utf-8") as f:
+        for rec in records:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
 
 
 def _load_dataset_with_fallbacks(load_dataset_fn, names: list[str], **kwargs):
@@ -266,22 +304,38 @@ def _mbpp_assert_list_to_pytest(asserts: list, entry_point: str) -> str:
 # ──────────────────────────────────────────────────────────────────────
 def step_3_build_core_sample(humaneval: list[dict], mbpp: list[dict],
                              seed: int = DATASET_SEED,
-                             n: int = CORE_SAMPLE_SIZE) -> Path:
+                             n: int = CORE_SAMPLE_SIZE,
+                             force: bool = False) -> Path:
     """
     Stratified random sample of `n` problems from HumanEval ∪ MBPP,
     preserving the Chapter-2 ratio (~70% MBPP / 30% HumanEval per
     seed-42 shuffle). Writes JSONL to data/core_sample_150.jsonl.
+
+    Skips regeneration if the output already exists with the expected
+    number of records and `force=False`. Use force=True to overwrite.
     """
+    out_path = DATA_DIR / "core_sample_150.jsonl"
+
+    if out_path.exists() and not force:
+        try:
+            existing_n = sum(1 for _ in out_path.open("r", encoding="utf-8"))
+            if existing_n >= n:
+                logger.info(f"  ✓ {out_path.name} already has {existing_n} records — skipping.")
+                return out_path
+        except OSError:
+            pass
+
     rng = random.Random(seed)
     pool = [("humaneval", p) for p in humaneval] + [("mbpp", p) for p in mbpp]
     rng.shuffle(pool)
     selected = pool[:n]
 
-    out_path = DATA_DIR / "core_sample_150.jsonl"
     with out_path.open("w", encoding="utf-8") as f:
         for idx, (origin, problem) in enumerate(selected):
             sample = {"sample_idx": idx, **problem}
             f.write(json.dumps(sample, ensure_ascii=False) + "\n")
+        f.flush()
+        os.fsync(f.fileno())
 
     mbpp_count = sum(1 for o, _ in selected if o == "mbpp")
     he_count = sum(1 for o, _ in selected if o == "humaneval")
@@ -292,15 +346,27 @@ def step_3_build_core_sample(humaneval: list[dict], mbpp: list[dict],
 # ──────────────────────────────────────────────────────────────────────
 # Step 4 — LiveCodeBench post-cutoff subset (best effort, skip on fail)
 # ──────────────────────────────────────────────────────────────────────
-def step_4_download_livecodebench(n: int = LIVECODEBENCH_SAMPLE_SIZE) -> Optional[Path]:
+def step_4_download_livecodebench(n: int = LIVECODEBENCH_SAMPLE_SIZE,
+                                  force: bool = False) -> Optional[Path]:
     """
     Try to pull LiveCodeBench problems published after 2024-12-01.
     Returns the output path on success, None on failure.
 
     LiveCodeBench requires HuggingFace gated access in some versions;
     we fail gracefully if unavailable and instruct the user.
+
+    Skips if output exists and `force=False`.
     """
     out_path = DATA_DIR / "livecodebench_25.jsonl"
+
+    if out_path.exists() and not force:
+        try:
+            existing_n = sum(1 for _ in out_path.open("r", encoding="utf-8"))
+            if existing_n > 0:
+                logger.info(f"  ✓ {out_path.name} already has {existing_n} records — skipping.")
+                return out_path
+        except OSError:
+            pass
     try:
         from datasets import load_dataset
         logger.info("  Attempting LiveCodeBench…")
