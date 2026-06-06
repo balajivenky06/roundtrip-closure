@@ -133,8 +133,18 @@ TEMPERATURE: float    = 0.2
 TOP_P: float          = 0.95
 TOP_K: int            = 40
 REPEAT_PENALTY: float = 1.1
-NUM_CTX: int          = 4096
-MAX_OUTPUT_TOKENS: int = 2048
+# Context window must hold prompt + output. With MAX_OUTPUT_TOKENS=4096
+# (raised for qwen3.6 thinking-mode budget), NUM_CTX needs ~prompt_size
+# + 4096. Prompts for L_code (docstring + tests as input) can be ~1500
+# tokens. 8192 gives comfortable margin without paying for capacity we
+# don't use.
+NUM_CTX: int          = 8192
+# 4096 (was 2048) — reasoning-mode SLMs like qwen3.6:27b consume
+# 2000-2400 tokens of `message.thinking` on the test-generation stage,
+# leaving 2048 too tight to also emit content. 4096 gives ~1500-2000
+# tokens of headroom for content emission. Cost-neutral for
+# non-reasoning models which stop emitting well before the cap.
+MAX_OUTPUT_TOKENS: int = 4096
 
 TIME_BUDGET_S: int    = 600   # per (cell, function) wall-clock budget
 
