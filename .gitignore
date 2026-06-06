@@ -51,7 +51,8 @@ Thumbs.db
 *.code-workspace
 
 # --- Plots / figures (regenerate from scripts) ---
-plots/
+# Track the Python source under plots/*.py but not the regenerated PNGs.
+plots/output/
 *.png
 *.pdf
 !docs/**/*.png
