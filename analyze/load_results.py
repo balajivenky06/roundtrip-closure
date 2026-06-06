@@ -89,11 +89,16 @@ def _full_schema() -> list[str]:
 
 def _enrich(df: pd.DataFrame) -> pd.DataFrame:
     """Add derived columns. Operates in-place but returns the DataFrame."""
-    # Coerce types
-    df["sample_idx"] = pd.to_numeric(df["sample_idx"], errors="coerce").astype("Int64")
-    df["path"] = pd.to_numeric(df["path"], errors="coerce").astype("Int64")
+    # Coerce types. Use native int64 (not pandas nullable Int64) because
+    # statsmodels' formula API can't interpret Int64Dtype — it would
+    # fail with "Cannot interpret 'Int64Dtype()' as a data type" in
+    # anova_type3, mixed_effects_logit, etc. sample_idx and path are
+    # row-key fields that should never be NaN; judge_rating uses -1 as
+    # the parse-fail sentinel, which is a valid int.
+    df["sample_idx"] = pd.to_numeric(df["sample_idx"], errors="coerce").fillna(-1).astype("int64")
+    df["path"] = pd.to_numeric(df["path"], errors="coerce").fillna(-1).astype("int64")
     df["metric_value"] = pd.to_numeric(df["metric_value"], errors="coerce")
-    df["judge_rating"] = pd.to_numeric(df["judge_rating"], errors="coerce").astype("Int64")
+    df["judge_rating"] = pd.to_numeric(df["judge_rating"], errors="coerce").fillna(-1).astype("int64")
     df["valid"] = df["valid"].astype(str).str.lower().map(
         {"true": True, "false": False}
     ).fillna(False)
