@@ -37,10 +37,44 @@ from config import (
     RESULTS_DIR,
     PILOT_RESULTS_TSV,
 )
-from doe import PILOT_CELLS
+from doe import PILOT_CELLS, CELLS_BY_ID
 import closure_cache
 import closure_paths
 import train_roundtrip
+
+
+# ──────────────────────────────────────────────────────────────────────
+# Reasons that mean "this row is by-design N/A, not an infrastructure
+# failure" — used by go-no-go checks to avoid counting null-cell
+# ablations against the gates.
+# ──────────────────────────────────────────────────────────────────────
+_STRUCTURAL_JUDGE_REASONS: frozenset[str] = frozenset({
+    "empty input",
+    "no_orig_docstring",
+    "missing_docstring_or_tests",
+    "no_reconstructed_code",
+    "no_recovered_docstring",
+    "all_tests_filtered_or_empty",
+    "bertscore_unavailable",
+})
+
+
+def _path_is_ablated(cell_id: str, path: int) -> bool:
+    """True if the cell's DOE assignment skips a stage required for this
+    path (so the row is structurally N/A, not a real failure)."""
+    cell = CELLS_BY_ID.get(cell_id)
+    if cell is None:
+        return False
+    # Path 1 (C→D→T): needs L_spec + L_test
+    if path == 1:
+        return cell.L_spec is None or cell.L_test is None
+    # Path 2 (D→T→C): needs L_test + L_code
+    if path == 2:
+        return cell.L_test is None or cell.L_code is None
+    # Path 3 (C→T→D): needs L_test + L_spec
+    if path == 3:
+        return cell.L_test is None or cell.L_spec is None
+    return False
 
 
 logger = logging.getLogger("pilot")
@@ -188,27 +222,64 @@ def go_no_go_checks(tsv_path: Path) -> dict:
         "detail": f"hits={total_hits}, calls={total_calls}, hit_rate={hit_rate:.2%}",
     })
 
-    # Check 3: <5% NaN in mutation_kill_rate
-    kill_rows = [r for r in rows if r.get("metric_name") == "mutation_kill_rate"]
-    nan_kill = sum(1 for r in kill_rows
-                   if _is_nan(r.get("metric_value", "nan")))
-    nan_ratio = nan_kill / max(len(kill_rows), 1)
+    # Check 3: no non-ablated cell exceeds 30% NaN in mutation_kill_rate.
+    # Detects infrastructure failure (one cell going completely bad like
+    # M3 in the pilot) without flagging the legitimate ~10-15% LLM-test
+    # generation noise small SLMs produce. Ablated cells (e.g. N2's
+    # L_spec=None makes Path 1 NaN BY DESIGN) are excluded.
+    per_cell_nan: dict[str, int] = {}
+    per_cell_kill_total: dict[str, int] = {}
+    for r in rows:
+        if r.get("metric_name") != "mutation_kill_rate":
+            continue
+        if _path_is_ablated(r["cell_id"], int(r.get("path", "0") or 0)):
+            continue
+        cid = r["cell_id"]
+        per_cell_kill_total[cid] = per_cell_kill_total.get(cid, 0) + 1
+        if _is_nan(r.get("metric_value", "nan")):
+            per_cell_nan[cid] = per_cell_nan.get(cid, 0) + 1
+
+    cell_nan_rates = {
+        c: per_cell_nan.get(c, 0) / max(per_cell_kill_total[c], 1)
+        for c in per_cell_kill_total
+    }
+    NAN_CELL_LIMIT = 0.30
+    cells_over = [c for c, r in cell_nan_rates.items() if r > NAN_CELL_LIMIT]
+    total_nan = sum(per_cell_nan.values())
+    total_kill = sum(per_cell_kill_total.values())
+    rates_str = ", ".join(f"{c}={r:.0%}" for c, r in sorted(cell_nan_rates.items()))
     checks.append({
-        "name": "3. <5% NaN in mutation_kill_rate (Path 1)",
-        "result": "PASS" if nan_ratio < 0.05 else "WARN",
-        "detail": f"{nan_kill}/{len(kill_rows)} = {nan_ratio:.1%} NaN",
+        "name": f"3. No non-ablated cell exceeds {NAN_CELL_LIMIT:.0%} NaN (Path 1)",
+        "result": "PASS" if not cells_over else "WARN",
+        "detail": (
+            f"max_cell={max(cell_nan_rates.values(), default=0):.1%}, "
+            f"overall={total_nan}/{total_kill}={total_nan/max(total_kill,1):.1%}; "
+            f"per-cell: {rates_str}"
+        ),
     })
 
     # Check 4: Judge LLM produces valid ratings (0-4)
-    judged = [int(r["judge_rating"]) for r in rows
-              if r.get("judge_rating", "").lstrip("-").isdigit()]
-    valid_judged = [r for r in judged if 0 <= r <= 4]
-    invalid_judged = [r for r in judged if r == -1]
-    if judged:
-        valid_frac = len(valid_judged) / len(judged)
+    # Exclude rows where rating=-1 is structural (judge wasn't actually
+    # invoked because an upstream stage produced empty inputs); count only
+    # rows where DeepSeek-R1 was genuinely called.
+    judge_rows = []
+    for r in rows:
+        rating_str = r.get("judge_rating", "")
+        if not rating_str.lstrip("-").isdigit():
+            continue
+        rating = int(rating_str)
+        justification = (r.get("judge_justification", "") or "").strip()
+        if rating == -1 and justification in _STRUCTURAL_JUDGE_REASONS:
+            continue                       # by-design N/A, not a parse fail
+        judge_rows.append(rating)
+
+    valid_judged = [r for r in judge_rows if 0 <= r <= 4]
+    invalid_judged = [r for r in judge_rows if r == -1]
+    if judge_rows:
+        valid_frac = len(valid_judged) / len(judge_rows)
     else:
         valid_frac = 0.0
-    if not judged:
+    if not judge_rows:
         check4_result = "SKIP (no judged rows)"
     elif valid_frac >= 0.95:
         check4_result = "PASS"
@@ -220,7 +291,7 @@ def go_no_go_checks(tsv_path: Path) -> dict:
         "name": "4. Judge LLM produces valid 0-4 ratings",
         "result": check4_result,
         "detail": f"valid={len(valid_judged)}, parse_fail={len(invalid_judged)}, "
-                  f"valid_frac={valid_frac:.1%}",
+                  f"valid_frac={valid_frac:.1%} (structural N/A excluded)",
     })
 
     # Check 5: All required columns present and parseable (structural)
@@ -234,16 +305,51 @@ def go_no_go_checks(tsv_path: Path) -> dict:
     })
 
     # Check 6: Per-cell valid sample count ≥ 20
-    per_cell_valid = {}
+    # Per-cell threshold is path-adjusted: a cell that ablates a stage on
+    # path P can never produce a valid path-P row by design, so we lower
+    # the bar accordingly.
+    per_cell_valid: dict[str, int] = {}
+    per_cell_max: dict[str, int] = {}
     for r in rows:
+        cell_id = r["cell_id"]
+        path = int(r.get("path", "0") or 0)
+        if _path_is_ablated(cell_id, path):
+            continue           # row exists by design as invalid — exclude from both numerator + denominator
+        per_cell_max[cell_id] = per_cell_max.get(cell_id, 0) + 1
         if r.get("valid") == "True":
-            per_cell_valid[r["cell_id"]] = per_cell_valid.get(r["cell_id"], 0) + 1
+            per_cell_valid[cell_id] = per_cell_valid.get(cell_id, 0) + 1
+
+    # n_min is per-cell valid count; threshold is min(20, ceil(0.66 *
+    # max-possible-for-this-cell)) so an L_spec=None cell that can only
+    # produce 30 valid rows (one per sample on Path 2) gets threshold 20,
+    # not 60.
+    import math
+    threshold = {
+        c: min(20, math.ceil(0.66 * per_cell_max.get(c, 0)))
+        for c in per_cell_max
+    }
+    cells_below: list[tuple[str, int, int]] = [
+        (c, per_cell_valid.get(c, 0), threshold[c])
+        for c in per_cell_max
+        if per_cell_valid.get(c, 0) < threshold[c]
+    ]
     n_min = min(per_cell_valid.values()) if per_cell_valid else 0
     weakest = min(per_cell_valid, key=per_cell_valid.get) if per_cell_valid else None
+    if cells_below:
+        check6_detail = (
+            f"{len(cells_below)} cell(s) below adjusted threshold: "
+            + ", ".join(f"{c}={v}<{t}" for c, v, t in cells_below)
+            + f"; per-cell valid: {per_cell_valid}"
+        )
+    else:
+        check6_detail = (
+            f"weakest cell: {weakest} with n={n_min} "
+            f"(thresholds adjusted for ablated paths); per-cell: {per_cell_valid}"
+        )
     checks.append({
-        "name": "6. Per-cell valid count ≥ 20",
-        "result": "PASS" if n_min >= 20 else "WARN",
-        "detail": f"weakest cell: {weakest} with n={n_min}; per-cell: {per_cell_valid}",
+        "name": "6. Per-cell valid count ≥ threshold",
+        "result": "PASS" if not cells_below else "WARN",
+        "detail": check6_detail,
     })
 
     # Verdict

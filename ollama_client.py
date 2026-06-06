@@ -19,6 +19,7 @@ Public API:
 from __future__ import annotations
 import logging
 import os
+import re
 import time
 from dataclasses import asdict, dataclass
 from typing import Optional
@@ -223,7 +224,16 @@ def call_llm(
     )
 
     # ── Persist on success ────────────────────────────────────────────
-    if use_cache and finish_reason != "error":
+    # Skip the cache write for responses that are almost certainly garbage:
+    #   - "error"  : the call itself failed
+    #   - "length" : output was truncated mid-reasoning; usually unparseable
+    #   - empty text: model returned nothing useful (e.g. <think>-only output
+    #                 that got stripped to "")
+    # Caching these poisons the disk store for every future identical call
+    # and was responsible for ~150 of the pilot's judge parse-failures.
+    if (use_cache
+            and finish_reason == "stop"
+            and text.strip()):
         closure_cache.put(cache_key, asdict(response))
 
     logger.debug(
@@ -309,15 +319,28 @@ def _get_field(obj, name: str, default=None):
     return getattr(obj, name, default)
 
 
+_THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)
+
+
 def _extract_text(result) -> str:
-    """Pull assistant text from Ollama response (Pydantic v0.4+ or dict v0.3-)."""
+    """Pull assistant text from Ollama response (Pydantic v0.4+ or dict v0.3-).
+
+    Strips <think>...</think> reasoning blocks at the extraction layer so
+    every downstream consumer sees clean output. Reasoning-tuned SLMs
+    (qwen3.6:27b, deepseek-r1, etc.) wrap their internal reasoning in
+    <think> tags; if not stripped, those blocks either (a) leak into the
+    pipeline as if they were the actual response, or (b) consume the entire
+    max_tokens budget, leaving empty post-think output. Both modes broke
+    the M3 cell of the pilot (88/90 invalid). See pilot post-mortem.
+    """
     msg = _get_field(result, "message", None)
+    content = ""
     if msg is not None:
-        content = _get_field(msg, "content", "")
-        if content:
-            return content
-    # Generate API (legacy) uses 'response' field at the top level
-    return _get_field(result, "response", "") or ""
+        content = _get_field(msg, "content", "") or ""
+    if not content:
+        # Generate API (legacy) uses 'response' field at the top level
+        content = _get_field(result, "response", "") or ""
+    return _THINK_BLOCK_RE.sub("", content).strip()
 
 
 def _determine_finish_reason(result, completion_tokens: int, max_tokens: int) -> str:
