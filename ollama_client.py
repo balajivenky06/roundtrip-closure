@@ -325,22 +325,33 @@ _THINK_BLOCK_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)
 def _extract_text(result) -> str:
     """Pull assistant text from Ollama response (Pydantic v0.4+ or dict v0.3-).
 
-    Strips <think>...</think> reasoning blocks at the extraction layer so
-    every downstream consumer sees clean output. Reasoning-tuned SLMs
-    (qwen3.6:27b, deepseek-r1, etc.) wrap their internal reasoning in
-    <think> tags; if not stripped, those blocks either (a) leak into the
-    pipeline as if they were the actual response, or (b) consume the entire
-    max_tokens budget, leaving empty post-think output. Both modes broke
-    the M3 cell of the pilot (88/90 invalid). See pilot post-mortem.
+    Strips inline <think>...</think> tags (older reasoning models like
+    DeepSeek-R1 v1 use these inside `content`). For newer reasoning SLMs
+    (qwen3.6:27b), Ollama splits reasoning into `message.thinking` and the
+    answer into `message.content` — we return content only, but warn when
+    content is empty while thinking is populated (signals max_tokens was
+    too small; reasoning consumed the budget). See pilot post-mortem.
     """
     msg = _get_field(result, "message", None)
     content = ""
+    thinking = ""
     if msg is not None:
         content = _get_field(msg, "content", "") or ""
+        thinking = _get_field(msg, "thinking", "") or ""
     if not content:
         # Generate API (legacy) uses 'response' field at the top level
         content = _get_field(result, "response", "") or ""
-    return _THINK_BLOCK_RE.sub("", content).strip()
+
+    cleaned = _THINK_BLOCK_RE.sub("", content).strip()
+
+    # Diagnostic: budget-exhaustion fingerprint
+    if not cleaned and thinking.strip():
+        logger.warning(
+            f"Response had empty content but {len(thinking)} chars of "
+            f"`message.thinking` — likely max_tokens budget exhausted "
+            f"during reasoning. Bump max_tokens for this stage."
+        )
+    return cleaned
 
 
 def _determine_finish_reason(result, completion_tokens: int, max_tokens: int) -> str:

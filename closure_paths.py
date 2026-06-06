@@ -172,12 +172,19 @@ Tests:
 # Stage callers — every LLM call goes through ollama_client.call_llm
 # ──────────────────────────────────────────────────────────────────────
 def _call_doc_from_code(model: ModelSpec, code: str) -> tuple[str, bool]:
-    """L_spec(code) → docstring. Returns (docstring_text, was_cache_hit)."""
+    """L_spec(code) → docstring. Returns (docstring_text, was_cache_hit).
+
+    max_tokens=MAX_OUTPUT_TOKENS (2048) — small docstrings only need
+    ~30-100 tokens, but reasoning-mode SLMs (qwen3.6:27b) consume the
+    budget in message.thinking before emitting message.content. With the
+    old 512-token cap, qwen3.6 produced empty content. See pilot
+    post-mortem (commit d52ede3 / probe 2026-06-06).
+    """
     prompt = _PROMPT_DOC_FROM_CODE.format(code=code)
     resp = ollama_client.call_llm(
         model, prompt,
         role_hint="L_spec:doc_from_code",
-        temperature=TEMPERATURE, max_tokens=512,
+        temperature=TEMPERATURE, max_tokens=MAX_OUTPUT_TOKENS,
     )
     return resp.text.strip(), resp.cache_hit
 
@@ -210,12 +217,17 @@ def _call_tests_from_code(model: ModelSpec, code: str) -> tuple[str, bool]:
 
 
 def _call_doc_from_tests(model: ModelSpec, tests: str) -> tuple[str, bool]:
-    """L_spec(tests) → docstring. Used by Path 3."""
+    """L_spec(tests) → docstring. Used by Path 3.
+
+    max_tokens=MAX_OUTPUT_TOKENS for the same reason as _call_doc_from_code:
+    reasoning-mode SLMs need budget headroom for message.thinking before
+    message.content gets emitted.
+    """
     prompt = _PROMPT_DOC_FROM_TESTS.format(tests=tests)
     resp = ollama_client.call_llm(
         model, prompt,
         role_hint="L_spec:doc_from_tests",
-        temperature=TEMPERATURE, max_tokens=512,
+        temperature=TEMPERATURE, max_tokens=MAX_OUTPUT_TOKENS,
     )
     return resp.text.strip(), resp.cache_hit
 

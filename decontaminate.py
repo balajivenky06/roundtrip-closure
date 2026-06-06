@@ -227,7 +227,8 @@ def paraphrase_docstring(docstring: str,
         _PARAPHRASE_PROMPT.format(docstring=docstring),
         role_hint="decontam:paraphrase",
         temperature=0.0,           # deterministic
-        max_tokens=256,
+        max_tokens=2048,           # headroom for thinking-mode SLMs (qwen3.6
+                                   # uses message.thinking before content)
         use_cache=use_cache,
     )
     if resp.finish_reason == "error" or not resp.text.strip():
