@@ -133,18 +133,28 @@ TEMPERATURE: float    = 0.2
 TOP_P: float          = 0.95
 TOP_K: int            = 40
 REPEAT_PENALTY: float = 1.1
-# Context window must hold prompt + output. With MAX_OUTPUT_TOKENS=4096
-# (raised for qwen3.6 thinking-mode budget), NUM_CTX needs ~prompt_size
-# + 4096. Prompts for L_code (docstring + tests as input) can be ~1500
-# tokens. 8192 gives comfortable margin without paying for capacity we
-# don't use.
-NUM_CTX: int          = 8192
-# 4096 (was 2048) — reasoning-mode SLMs like qwen3.6:27b consume
-# 2000-2400 tokens of `message.thinking` on the test-generation stage,
-# leaving 2048 too tight to also emit content. 4096 gives ~1500-2000
-# tokens of headroom for content emission. Cost-neutral for
-# non-reasoning models which stop emitting well before the cap.
-MAX_OUTPUT_TOKENS: int = 4096
+# Context window must hold prompt + output. Doubled to 16384 after the
+# pilot showed qwen3.6 thinking depth is non-deterministic — observed
+# up to 14,665 chars (~4,200 tokens) on test-gen from a rich docstring.
+# Prompt (~1500-2000 tok) + MAX_OUTPUT_TOKENS (8192) ≈ 10k → 16384 has
+# headroom. KV cache for qwen3.6 27B at 16k ≈ 10 GB → total ~27 GB on
+# A100 (fits 40 GB).
+NUM_CTX: int          = 16384
+# 8192 (was 4096, was 2048) — qwen3.6:27b's thinking depth varies a lot
+# by prompt; observed 4,200 tokens of thinking on test-gen from a rich
+# docstring. 4096 still overflowed. 8192 covers worst case with ~3,500
+# token headroom. Cost-neutral for non-reasoning models which emit-and-
+# stop well below the cap.
+MAX_OUTPUT_TOKENS: int = 8192
+
+# Disable thinking-mode on chat calls when supported by the Ollama
+# client. Newer Ollama clients (v0.5+) accept `think: bool` at the
+# chat() level — when False, reasoning models like qwen3.6:27b skip
+# their <think> pass and emit message.content directly. Much faster
+# and more predictable. If the client is too old to recognise the
+# parameter, ollama_client catches the TypeError and falls back to the
+# enlarged MAX_OUTPUT_TOKENS budget above (both fixes are independent).
+DISABLE_THINKING_MODE: bool = True
 
 TIME_BUDGET_S: int    = 600   # per (cell, function) wall-clock budget
 

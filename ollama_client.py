@@ -48,6 +48,7 @@ from config import (
     REPEAT_PENALTY,
     NUM_CTX,
     MAX_OUTPUT_TOKENS,
+    DISABLE_THINKING_MODE,
 )
 
 
@@ -92,6 +93,9 @@ class LLMResponse:
 # ──────────────────────────────────────────────────────────────────────
 # Internal: retry-wrapped chat call
 # ──────────────────────────────────────────────────────────────────────
+_THINK_PARAM_SUPPORTED: bool | None = None     # detected lazily on first call
+
+
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=2, max=30),
@@ -100,7 +104,35 @@ class LLMResponse:
     before_sleep=before_sleep_log(logger, logging.WARNING),
 )
 def _ollama_chat(model_tag: str, messages: list[dict], options: dict) -> dict:
-    """Single Ollama chat call with retry. Raises on permanent failure."""
+    """Single Ollama chat call with retry. Raises on permanent failure.
+
+    When DISABLE_THINKING_MODE is True we try to pass `think=False` to the
+    chat() call so reasoning models (qwen3.6, deepseek-r1) skip their
+    <think> pass and emit content directly. Older Ollama clients don't
+    accept the parameter; we detect this once via TypeError and fall back
+    to the plain call thereafter (the larger MAX_OUTPUT_TOKENS budget is
+    the independent safety net).
+    """
+    global _THINK_PARAM_SUPPORTED
+    if DISABLE_THINKING_MODE and _THINK_PARAM_SUPPORTED is not False:
+        try:
+            result = _client.chat(model=model_tag, messages=messages,
+                                  options=options, think=False)
+            if _THINK_PARAM_SUPPORTED is None:
+                _THINK_PARAM_SUPPORTED = True
+                logger.info("Ollama client supports think=False — thinking-mode "
+                            "disabled for reasoning models.")
+            return result
+        except TypeError as exc:
+            if "think" in str(exc).lower() or "unexpected keyword" in str(exc).lower():
+                _THINK_PARAM_SUPPORTED = False
+                logger.warning(
+                    "Ollama client does not support think=False (older version). "
+                    "Falling back to MAX_OUTPUT_TOKENS budget for thinking models. "
+                    f"Underlying error: {exc}"
+                )
+            else:
+                raise
     return _client.chat(model=model_tag, messages=messages, options=options)
 
 
