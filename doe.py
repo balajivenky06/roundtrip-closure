@@ -52,6 +52,11 @@ class Cell:
     L_code: ModelSpec | None
     hypothesis: str
     is_pre_registered: bool = True  # all cells in this file are
+    corrupt_inputs: bool = False    # if True, the first-stage input of each
+                                    # path is deterministically word-shuffled
+                                    # before being passed to the SLM. Used by
+                                    # the N1 prompt-shuffled control: a sound
+                                    # closure metric should be ~0 on N1.
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -182,9 +187,11 @@ N1 = Cell(
     cell_id="N1",
     stratum="null",
     L_spec=LLAMA_3_2_3B, L_test=LLAMA_3_2_3B, L_code=LLAMA_3_2_3B,
-    hypothesis="Prompt-shuffled control (same as M1 but with stage inputs "
-               "corrupted): detects whether the closure metric is fooled "
-               "by trivial signals.",
+    hypothesis="Prompt-shuffled control (same models as M1 but with the "
+               "first-stage input of each path word-shuffled): detects "
+               "whether the closure metric is fooled by trivial signals. "
+               "Expected: closure metric ≈ 0 for a sound metric.",
+    corrupt_inputs=True,
 )
 N2 = Cell(
     cell_id="N2",

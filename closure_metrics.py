@@ -184,21 +184,21 @@ def _get_bertscore_scorer():
     return _bertscore_scorer
 
 
-def bert_similarity(text_a: str, text_b: str, *, use_cache: bool = True) -> float:
+def bert_similarity(text_a: str, text_b: str, *, use_cache: bool = True) -> tuple[float, bool]:
     """
     BERTScore F1 between two docstrings, rescaled with baseline.
-    Returns a float in roughly [0.0, 1.0] (slight excursions possible
-    because of the baseline rescaling).
+    Returns (score, was_cache_hit). Score is roughly in [0.0, 1.0]
+    (slight excursions possible because of the baseline rescaling).
 
     Cached on (text_a, text_b) via closure_cache so each unique pair is
     only scored once across the entire sweep — important on Colab where
     bert_similarity is the slowest non-LLM step (~1-2 s/call after the
     scorer is loaded).
 
-    Returns 0.0 on empty/None inputs.
+    Returns (0.0, False) on empty/None inputs.
     """
     if not text_a or not text_b:
-        return 0.0
+        return 0.0, False
 
     if use_cache:
         import closure_cache
@@ -210,7 +210,7 @@ def bert_similarity(text_a: str, text_b: str, *, use_cache: bool = True) -> floa
         )
         cached = closure_cache.get(cache_key)
         if cached is not None and "score" in cached:
-            return float(cached["score"])
+            return float(cached["score"]), True
 
     scorer = _get_bertscore_scorer()
     _p, _r, f1 = scorer.score([text_b], [text_a])
@@ -219,7 +219,7 @@ def bert_similarity(text_a: str, text_b: str, *, use_cache: bool = True) -> floa
     if use_cache:
         closure_cache.put(cache_key, {"score": score})
 
-    return score
+    return score, False
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -235,7 +235,7 @@ def test_filter(tests: str, original_code: str) -> str:
     """
     if not tests.strip() or not original_code.strip():
         return ""
-    return _get_mt()._filter_passing_tests(tests, original_code)
+    return _get_mt().filter_passing_tests(tests, original_code)
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -306,10 +306,10 @@ def _self_test() -> None:                                         # pragma: no c
     # BERTScore — only attempt if available
     print("\n5) bert_similarity…")
     try:
-        s_self = bert_similarity("Return True if s reads the same forwards and backwards.",
-                                  "Return True if s reads the same forwards and backwards.")
-        s_diff = bert_similarity("Return True if s reads the same forwards and backwards.",
-                                  "Compute the factorial of an integer.")
+        s_self, _ = bert_similarity("Return True if s reads the same forwards and backwards.",
+                                     "Return True if s reads the same forwards and backwards.")
+        s_diff, _ = bert_similarity("Return True if s reads the same forwards and backwards.",
+                                     "Compute the factorial of an integer.")
         print(f"   same-text  F1 = {s_self:.3f}")
         print(f"   diff-text  F1 = {s_diff:.3f}")
         assert s_self > s_diff, "Same text should score higher than different"

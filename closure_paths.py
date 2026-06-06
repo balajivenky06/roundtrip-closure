@@ -21,7 +21,9 @@ written to the TSV) is handled in train_roundtrip.py, not here.
 """
 
 from __future__ import annotations
+import hashlib
 import logging
+import random
 import re
 import time
 from dataclasses import dataclass, asdict
@@ -239,6 +241,7 @@ def _call_code_from_doc_tests(model: ModelSpec, docstring: str, tests: str,
 # Code-block extraction from LLM responses
 # ──────────────────────────────────────────────────────────────────────
 _CODE_FENCE = re.compile(r"```(?:python|py)?\s*\n(.*?)\n```", re.DOTALL | re.IGNORECASE)
+_DEF_TEST_RE = re.compile(r"(?m)^def test_[A-Za-z_0-9]+\s*\(")
 
 
 def _extract_python(text: str) -> str:
@@ -249,6 +252,38 @@ def _extract_python(text: str) -> str:
     if match:
         return match.group(1).strip()
     return text.strip()
+
+
+def _word_shuffle(text: str, seed: int) -> str:
+    """Deterministically shuffle whitespace-separated tokens within each
+    line, preserving line breaks and leading indentation.
+
+    Used by the N1 null cell to feed each path a structurally-valid but
+    semantically-mangled first-stage input. Same (text, seed) always
+    produces the same output (so the cache key is stable across reruns).
+    """
+    if not text:
+        return text
+    rng = random.Random(seed)
+    out_lines = []
+    for line in text.split("\n"):
+        stripped = line.lstrip()
+        indent = line[: len(line) - len(stripped)]
+        tokens = stripped.split()
+        rng.shuffle(tokens)
+        out_lines.append(indent + " ".join(tokens))
+    return "\n".join(out_lines)
+
+
+def _corrupt_seed(cell_id: str, sample_idx: int, stage: str) -> int:
+    """Stable per-(cell, sample, stage) seed for word-shuffle.
+
+    Uses SHA-256 (not Python's per-process-salted hash()) so the seed is
+    the same on every Colab session and the cache key for the corrupted
+    prompt stays stable across reruns.
+    """
+    h = hashlib.sha256(f"{cell_id}|{sample_idx}|{stage}".encode()).digest()
+    return int.from_bytes(h[:4], "big")
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -277,13 +312,22 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
     n_calls = 0
     n_hits = 0
 
+    # N1 control: word-shuffle the code before feeding it to L_spec.
+    # Mutation testing still runs against the ORIGINAL code so a sound
+    # closure metric should be ~0 on N1.
+    spec_input = code
+    if cell.corrupt_inputs:
+        spec_input = _word_shuffle(code, _corrupt_seed(cell.cell_id, sample_idx, "p1_spec_in"))
+        logger.info(f"{tag} corrupt_inputs=True — word-shuffled code "
+                    f"({len(code)}→{len(spec_input)} chars) before L_spec")
+
     # Step 1: D' from code
     if cell.L_spec is None:                 # N2 ablation
         d_prime = ""
         logger.info(f"{tag} step1 L_spec=SKIP (null ablation)")
     else:
         t = time.perf_counter()
-        d_prime, h = _call_doc_from_code(cell.L_spec, code)
+        d_prime, h = _call_doc_from_code(cell.L_spec, spec_input)
         n_calls += 1
         n_hits += int(h)
         logger.info(f"{tag} step1 L_spec={cell.L_spec.short_name} "
@@ -307,8 +351,11 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
     if t_prime:
         t = time.perf_counter()
         filtered_tests = closure_metrics.test_filter(t_prime, code)
+        n_before = len(_DEF_TEST_RE.findall(t_prime))
+        n_after = len(_DEF_TEST_RE.findall(filtered_tests))
         logger.info(f"{tag} step3 test_filter -> "
-                    f"{len(filtered_tests)}/{len(t_prime)} chars retained "
+                    f"{n_after}/{n_before} tests kept "
+                    f"({len(filtered_tests)}/{len(t_prime)} chars) "
                     f"+{time.perf_counter()-t:.2f}s")
     else:
         filtered_tests = ""
@@ -338,8 +385,10 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
         j = judge_llm.judge_equivalence(orig_doc, d_prime, artefact_kind="docstring")
         rating, reason = j.rating, j.justification
         n_calls += 1
+        n_hits += int(j.cache_hit)
         logger.info(f"{tag} step5 judge={JUDGE_MODEL.short_name} "
-                    f"-> rating={rating} +{time.perf_counter()-t:.2f}s")
+                    f"-> rating={rating} cache={'HIT' if j.cache_hit else 'miss'} "
+                    f"+{time.perf_counter()-t:.2f}s")
     else:
         rating, reason = -1, "no_orig_docstring"
         logger.info(f"{tag} step5 judge=SKIP (no original docstring)")
@@ -382,6 +431,17 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
     tag = f"[{cell.cell_id} s={sample_idx} p2]"
     logger.info(f"{tag} START {source}")
 
+    # N1 control: word-shuffle the docstring before feeding it to L_test.
+    # Reference tests still run against C' (which is reconstructed from
+    # the corrupted docstring) so a sound metric should be ~0 on N1.
+    test_input_doc = docstring
+    if cell.corrupt_inputs and docstring:
+        test_input_doc = _word_shuffle(
+            docstring, _corrupt_seed(cell.cell_id, sample_idx, "p2_test_in")
+        )
+        logger.info(f"{tag} corrupt_inputs=True — word-shuffled docstring "
+                    f"({len(docstring)}→{len(test_input_doc)} chars) before L_test")
+
     if not docstring or not reference_tests:
         elapsed = time.perf_counter() - t0
         return ClosureResult(
@@ -403,7 +463,7 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
         logger.info(f"{tag} step1 L_test=SKIP")
     else:
         t = time.perf_counter()
-        t_prime, h = _call_tests_from_doc(cell.L_test, docstring, fn_name, signature)
+        t_prime, h = _call_tests_from_doc(cell.L_test, test_input_doc, fn_name, signature)
         n_calls += 1
         n_hits += int(h)
         logger.info(f"{tag} step1 L_test={cell.L_test.short_name} "
@@ -416,7 +476,7 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
         logger.info(f"{tag} step2 L_code=SKIP (no tests)")
     else:
         t = time.perf_counter()
-        c_prime, h = _call_code_from_doc_tests(cell.L_code, docstring, t_prime, fn_name, signature)
+        c_prime, h = _call_code_from_doc_tests(cell.L_code, test_input_doc, t_prime, fn_name, signature)
         n_calls += 1
         n_hits += int(h)
         logger.info(f"{tag} step2 L_code={cell.L_code.short_name} "
@@ -445,7 +505,9 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
     t = time.perf_counter()
     j = judge_llm.judge_equivalence(code, c_prime, artefact_kind="code")
     n_calls += 1
+    n_hits += int(j.cache_hit)
     logger.info(f"{tag} step4 judge={JUDGE_MODEL.short_name} -> rating={j.rating} "
+                f"cache={'HIT' if j.cache_hit else 'miss'} "
                 f"+{time.perf_counter()-t:.2f}s")
 
     elapsed = time.perf_counter() - t0
@@ -482,6 +544,17 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
     tag = f"[{cell.cell_id} s={sample_idx} p3]"
     logger.info(f"{tag} START {source}")
 
+    # N1 control: word-shuffle the code before feeding it to L_test.
+    # BERTScore + judge still compare against the ORIGINAL docstring, so
+    # a sound metric should be ~0 on N1.
+    test_input_code = code
+    if cell.corrupt_inputs:
+        test_input_code = _word_shuffle(
+            code, _corrupt_seed(cell.cell_id, sample_idx, "p3_test_in")
+        )
+        logger.info(f"{tag} corrupt_inputs=True — word-shuffled code "
+                    f"({len(code)}→{len(test_input_code)} chars) before L_test")
+
     if not orig_doc:
         elapsed = time.perf_counter() - t0
         return ClosureResult(
@@ -502,7 +575,7 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
         logger.info(f"{tag} step1 L_test=SKIP")
     else:
         t = time.perf_counter()
-        t_prime, h = _call_tests_from_code(cell.L_test, code)
+        t_prime, h = _call_tests_from_code(cell.L_test, test_input_code)
         n_calls += 1
         n_hits += int(h)
         logger.info(f"{tag} step1 L_test={cell.L_test.short_name} "
@@ -535,32 +608,38 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
 
     # Step 3: BERTScore
     t = time.perf_counter()
+    bertscore_available = True
     try:
-        bert = closure_metrics.bert_similarity(orig_doc, d_prime)
+        bert, bert_hit = closure_metrics.bert_similarity(orig_doc, d_prime)
+        n_hits += int(bert_hit)
         logger.info(f"{tag} step3 BERTScore -> F1={bert:.3f} "
+                    f"cache={'HIT' if bert_hit else 'miss'} "
                     f"+{time.perf_counter()-t:.2f}s")
     except ImportError:
         bert = 0.0
+        bertscore_available = False
         logger.warning(f"{tag} step3 BERTScore SKIP (bert-score not installed)")
 
     # Step 4: judge equivalence on the docstrings
     t = time.perf_counter()
     j = judge_llm.judge_equivalence(orig_doc, d_prime, artefact_kind="docstring")
     n_calls += 1
+    n_hits += int(j.cache_hit)
     logger.info(f"{tag} step4 judge={JUDGE_MODEL.short_name} -> rating={j.rating} "
+                f"cache={'HIT' if j.cache_hit else 'miss'} "
                 f"+{time.perf_counter()-t:.2f}s")
 
     elapsed = time.perf_counter() - t0
     logger.info(f"{tag} DONE elapsed={elapsed:.2f}s bertscore={bert:.3f} "
-                f"calls={n_calls} hits={n_hits}")
+                f"valid={bertscore_available} calls={n_calls} hits={n_hits}")
     return ClosureResult(
         cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
         path=3, metric_name="bertscore",
-        metric_value=float(bert),
+        metric_value=float(bert) if bertscore_available else float("nan"),
         judge_rating=j.rating, judge_justification=j.justification,
-        valid=True, elapsed_s=elapsed,
+        valid=bertscore_available, elapsed_s=elapsed,
         cache_hits=n_hits, n_llm_calls=n_calls,
-        notes="",
+        notes="" if bertscore_available else "bertscore_unavailable",
     )
 
 

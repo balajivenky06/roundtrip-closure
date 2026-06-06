@@ -43,6 +43,7 @@ class JudgeResult:
     rating: int                  # 0-4; -1 means parse failure
     justification: str           # one-line natural-language reason
     raw_response: str            # full LLM response (for debugging / audit)
+    cache_hit: bool = False      # whether the underlying LLM call hit the cache
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -177,7 +178,10 @@ def judge_equivalence(
 
     if response.finish_reason == "error":
         logger.error(f"Judge LLM call failed: {response.error}")
-        return JudgeResult(rating=-1, justification="judge_error", raw_response=response.text)
+        return JudgeResult(
+            rating=-1, justification="judge_error",
+            raw_response=response.text, cache_hit=response.cache_hit,
+        )
 
     rating, reason = _parse_judge_response(response.text)
     if rating < 0:
@@ -186,7 +190,10 @@ def judge_equivalence(
             f"{response.text[:120]!r}"
         )
 
-    return JudgeResult(rating=rating, justification=reason, raw_response=response.text)
+    return JudgeResult(
+        rating=rating, justification=reason,
+        raw_response=response.text, cache_hit=response.cache_hit,
+    )
 
 
 # ──────────────────────────────────────────────────────────────────────

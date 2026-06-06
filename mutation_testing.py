@@ -491,6 +491,9 @@ def _filter_passing_tests(test_code: str, function_code: str,
     return preamble + "\n\n" + "\n\n".join(passing_blocks) + "\n"
 
 
+filter_passing_tests = _filter_passing_tests
+
+
 def evaluate_mutants(function_code: str, test_code: str,
                      ground_truth_tests: str = "") -> dict:
     """
