@@ -23,7 +23,7 @@ H8 & hetero & gemma4 & qwen3-coder & mistral-small3.2 & MoE → MoE → dense: d
 H9 & hetero & qwen3-coder & qwen3.6 & qwen3-coder & Strong-sandwich: MoE bookends dense for synthesis stability. \\
 H10 & hetero & mistral-small3.2 & phi4 & qwen3-coder & Best-of-each-family-stage: Mistral spec + Phi tests + Qwen-coder synth. \\
 H11 & hetero & phi4 & gemma4 & qwen3-coder & Phi spec + Gemma tests + Qwen-coder synth (alt family triple). \\
-N1 & null & llama3.2 & llama3.2 & llama3.2 & Prompt-shuffled control (same as M1 but with stage inputs corrupted): detects wh… \\
+N1 & null & llama3.2 & llama3.2 & llama3.2 & Prompt-shuffled control (same models as M1 but with the first-stage input of eac… \\
 N2 & null & (skip) & qwen3-coder & qwen3-coder & Spec-stage ablation: quantifies how much L_spec contributes. \\
 N3 & null & qwen3-coder & (skip) & qwen3-coder & Test-stage ablation: quantifies how much L_test contributes. \\
 \bottomrule

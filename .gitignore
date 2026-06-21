@@ -29,7 +29,6 @@ data/*
 !data/.gitkeep
 checkpoints/*
 !checkpoints/.gitkeep
-results/*
 !results/.gitkeep
 logs/*
 !logs/.gitkeep
