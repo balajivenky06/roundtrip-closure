@@ -139,7 +139,7 @@ REPEAT_PENALTY: float = 1.1
 # Prompt (~1500-2000 tok) + MAX_OUTPUT_TOKENS (8192) ≈ 10k → 16384 has
 # headroom. KV cache for qwen3.6 27B at 16k ≈ 10 GB → total ~27 GB on
 # A100 (fits 40 GB).
-NUM_CTX: int          = 16384
+NUM_CTX: int          = 8192
 # 8192 (was 4096, was 2048) — qwen3.6:27b's thinking depth varies a lot
 # by prompt; observed 4,200 tokens of thinking on test-gen from a rich
 # docstring. 4096 still overflowed. 8192 covers worst case with ~3,500
