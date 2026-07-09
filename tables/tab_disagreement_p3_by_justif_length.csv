@@ -1,0 +1,6 @@
+decision_reason,mean,median,count
+both_agree_invalid,109.90322580645162,111.5,62
+both_agree_valid,130.31505576208178,128.0,1076
+false_closure_candidate,111.95416666666667,111.0,480
+metric_false_negative,119.91907514450867,121.0,173
+structural_NA,21.35672514619883,22.0,171
