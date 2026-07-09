@@ -1,0 +1,6 @@
+Operator,Best mono cell,Best mono kill rate,H1 kill rate,$\Delta$ (H1 $-$ mono)
+Arith.,M3,0.806,0.939,+0.133
+Bound.,M3,0.748,0.844,+0.096
+Comp.,M3,0.912,1.000,+0.088
+Negate,M6,0.944,1.000,+0.056
+Ret.,M3,0.966,0.970,+0.004
