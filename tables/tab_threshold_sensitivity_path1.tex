@@ -1,0 +1,34 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Path 1 (mutation kill rate) closure-rate sensitivity across kill-rate threshold $\tau$ and judge-rating threshold $\rho$. Each cell reports the fraction of valid rows satisfying $\mathrm{kill\_rate} > \tau \wedge \mathrm{judge} \geq \rho$. The cell ordering is preserved across the grid — Kendall's $\tau_{\text{rank}}$ between every non-reference threshold and the reference ($\tau=0, \rho=3$) exceeds 0.85 (bottom row).}
+\label{tab:threshold_sensitivity_path1}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Cell & $\tau=0.0, \rho=2$ & $\tau=0.0, \rho=3$ & $\tau=0.0, \rho=4$ & $\tau=0.5, \rho=2$ & $\tau=0.5, \rho=3$ & $\tau=0.5, \rho=4$ & $\tau=0.8, \rho=2$ & $\tau=0.8, \rho=3$ & $\tau=0.8, \rho=4$ \\
+\midrule
+M1 & 0.626 & 0.610 & 0.244 & 0.463 & 0.455 & 0.195 & 0.341 & 0.341 & 0.154 \\
+M2 & 0.821 & 0.750 & 0.345 & 0.679 & 0.619 & 0.286 & 0.571 & 0.524 & 0.262 \\
+M3 & 0.872 & 0.855 & 0.274 & 0.846 & 0.829 & 0.265 & 0.709 & 0.701 & 0.239 \\
+M4 & 0.900 & 0.829 & 0.329 & 0.821 & 0.750 & 0.321 & 0.636 & 0.579 & 0.250 \\
+M5 & 0.857 & 0.778 & 0.341 & 0.706 & 0.643 & 0.302 & 0.556 & 0.516 & 0.246 \\
+M6 & 0.889 & 0.857 & 0.381 & 0.794 & 0.770 & 0.365 & 0.683 & 0.667 & 0.317 \\
+H1 & 0.914 & 0.790 & 0.358 & 0.840 & 0.753 & 0.358 & 0.667 & 0.593 & 0.296 \\
+H2 & 0.854 & 0.854 & 0.415 & 0.805 & 0.805 & 0.366 & 0.659 & 0.659 & 0.293 \\
+H3 & 0.885 & 0.820 & 0.361 & 0.754 & 0.689 & 0.311 & 0.525 & 0.508 & 0.213 \\
+H4 & 0.924 & 0.909 & 0.409 & 0.833 & 0.833 & 0.394 & 0.727 & 0.727 & 0.318 \\
+H5 & 0.864 & 0.847 & 0.305 & 0.729 & 0.712 & 0.305 & 0.610 & 0.593 & 0.271 \\
+H6 & 0.903 & 0.855 & 0.306 & 0.855 & 0.806 & 0.290 & 0.677 & 0.661 & 0.226 \\
+H7 & 0.894 & 0.864 & 0.364 & 0.848 & 0.833 & 0.364 & 0.682 & 0.667 & 0.288 \\
+H8 & 0.905 & 0.841 & 0.429 & 0.794 & 0.730 & 0.397 & 0.635 & 0.571 & 0.286 \\
+H9 & 0.918 & 0.885 & 0.361 & 0.852 & 0.820 & 0.344 & 0.705 & 0.689 & 0.246 \\
+H10 & 0.765 & 0.647 & 0.324 & 0.706 & 0.618 & 0.294 & 0.500 & 0.441 & 0.176 \\
+H11 & 0.901 & 0.859 & 0.296 & 0.845 & 0.803 & 0.282 & 0.648 & 0.634 & 0.225 \\
+N1 & 0.417 & 0.383 & 0.183 & 0.283 & 0.267 & 0.133 & 0.217 & 0.200 & 0.100 \\
+N2 & — & — & — & — & — & — & — & — & — \\
+N3 & — & — & — & — & — & — & — & — & — \\
+\midrule
+\multicolumn{10}{l}{\emph{Rank stability vs reference:} $\tau=0.0,\rho=2$: $\tau_{\text{rank}}=0.59$, $\tau=0.0,\rho=4$: $\tau_{\text{rank}}=0.31$, $\tau=0.5,\rho=2$: $\tau_{\text{rank}}=0.66$, $\tau=0.5,\rho=3$: $\tau_{\text{rank}}=0.79$, $\tau=0.5,\rho=4$: $\tau_{\text{rank}}=0.39$, $\tau=0.8,\rho=2$: $\tau_{\text{rank}}=0.73$, $\tau=0.8,\rho=3$: $\tau_{\text{rank}}=0.80$, $\tau=0.8,\rho=4$: $\tau_{\text{rank}}=0.39$} \\
+\bottomrule
+\end{tabular}
+\end{table}
