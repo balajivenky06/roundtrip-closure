@@ -78,6 +78,7 @@ def _full_schema() -> list[str]:
         "metric_name", "metric_value",
         "judge_rating", "judge_justification",
         "valid", "elapsed_s", "cache_hits", "n_llm_calls", "notes",
+        "decision_reason", "filter_reason",  # Algorithm 2/3 columns
         # Derived:
         "benchmark", "cell_stratum",
         "l_spec", "l_test", "l_code",
@@ -104,6 +105,19 @@ def _enrich(df: pd.DataFrame) -> pd.DataFrame:
     ).fillna(False)
     df["cache_hits"] = pd.to_numeric(df.get("cache_hits", 0), errors="coerce").fillna(0).astype(int)
     df["n_llm_calls"] = pd.to_numeric(df.get("n_llm_calls", 0), errors="coerce").fillna(0).astype(int)
+
+    # Algorithm 2/3 columns — schema-tolerant defaults for older TSVs that
+    # predate the wiring in closure_paths. Older rows get an empty string
+    # so analysis code can filter on `decision_reason != ""` to isolate
+    # natively-labeled rows.
+    if "decision_reason" not in df.columns:
+        df["decision_reason"] = ""
+    else:
+        df["decision_reason"] = df["decision_reason"].fillna("").astype(str)
+    if "filter_reason" not in df.columns:
+        df["filter_reason"] = ""
+    else:
+        df["filter_reason"] = df["filter_reason"].fillna("").astype(str)
 
     # benchmark
     df["benchmark"] = df["sample_source"].astype(str).str.split("/").str[0]

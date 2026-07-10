@@ -59,12 +59,88 @@ logger = logging.getLogger("roundtrip")
 # TSV I/O with crash-safe writes
 # ──────────────────────────────────────────────────────────────────────
 def ensure_header(tsv_path: Path) -> None:
-    """Write the header row if the file doesn't exist or is empty."""
+    """
+    Ensure the TSV has an up-to-date header.
+
+    Three cases:
+        1. File doesn't exist / is empty  → write full header, done.
+        2. File exists and header already matches ClosureResult.TSV_COLUMNS
+           exactly  → nothing to do.
+        3. File exists with an OLDER header (fewer columns; pre-Algorithm-2/3
+           schema)  → migrate: rewrite the header to the current schema and
+           append empty values for the missing columns to every existing row.
+           Migration is atomic — writes to a .tmp file then os.replace.
+    """
+    expected_cols = list(closure_paths.ClosureResult.TSV_COLUMNS)
+    expected_header = "\t".join(expected_cols) + "\n"
+
     if not tsv_path.exists() or tsv_path.stat().st_size == 0:
         with tsv_path.open("w", encoding="utf-8") as f:
-            f.write(closure_paths.ClosureResult.tsv_header())
+            f.write(expected_header)
             f.flush()
             os.fsync(f.fileno())
+        return
+
+    with tsv_path.open("r", encoding="utf-8") as f:
+        first_line = f.readline().rstrip("\n")
+    existing_cols = first_line.split("\t") if first_line else []
+
+    if existing_cols == expected_cols:
+        return  # already current schema
+
+    # Migrate: rewrite with new header + pad every existing row with empty
+    # values for the new columns. Preserve the old column order and append
+    # only the delta at the end.
+    if not existing_cols:
+        return  # empty / unreadable header — leave alone
+
+    missing_cols = [c for c in expected_cols if c not in existing_cols]
+    if not missing_cols:
+        # Header has all expected columns but in a different order — leave
+        # as-is (unusual; would break parsers if we reordered).
+        logger.warning(
+            f"TSV header columns match by set but not by order; "
+            f"leaving unchanged. header = {existing_cols!r}"
+        )
+        return
+
+    logger.info(
+        f"Migrating TSV schema: adding empty columns {missing_cols} to "
+        f"{tsv_path.name}"
+    )
+
+    tmp_path = tsv_path.with_suffix(tsv_path.suffix + ".migrating")
+    n_padded = 0
+    with tsv_path.open("r", encoding="utf-8") as src, \
+         tmp_path.open("w", encoding="utf-8") as dst:
+        src.readline()  # skip old header
+        # Write new header with old cols first (preserving order) then new cols
+        # at the end. This matches the append-at-end policy in ClosureResult.
+        new_header_cols = existing_cols + missing_cols
+        dst.write("\t".join(new_header_cols) + "\n")
+
+        # Sanity-check that missing_cols are appended (not interleaved)
+        # against expected_cols to detect drift.
+        if new_header_cols != expected_cols:
+            logger.warning(
+                f"Migrated header does not exactly match ClosureResult "
+                f"schema. Migrated: {new_header_cols}. Expected: "
+                f"{expected_cols}. Loader must map by name."
+            )
+
+        pad = "\t".join("" for _ in missing_cols)
+        for line in src:
+            line = line.rstrip("\n")
+            if not line:
+                dst.write("\n")
+                continue
+            dst.write(line + "\t" + pad + "\n")
+            n_padded += 1
+        dst.flush()
+        os.fsync(dst.fileno())
+
+    os.replace(tmp_path, tsv_path)
+    logger.info(f"TSV schema migration complete: {n_padded:,} rows padded.")
 
 
 def load_completed_keys(tsv_path: Path) -> set[str]:

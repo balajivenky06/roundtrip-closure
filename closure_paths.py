@@ -34,6 +34,7 @@ from doe import Cell
 import ollama_client
 import closure_metrics
 import judge_llm
+from closure_decision import decide_validity
 
 logger = logging.getLogger(__name__)
 
@@ -57,8 +58,19 @@ class ClosureResult:
     cache_hits: int          # how many of n_llm_calls were cache hits
     n_llm_calls: int         # pipeline + judge calls combined
     notes: str = ""
+    # Algorithm 2 (closure_decision.decide_validity) output. One of:
+    #   both_agree_valid, both_agree_invalid, false_closure_candidate,
+    #   metric_false_negative, structural_NA.
+    # Empty string on rows from pre-Algorithm-2 sweeps (backward compat).
+    decision_reason: str = ""
+    # Algorithm 3 (closure_metrics.filter_tests_with_reason) output. Only
+    # populated on Path 1 (where test filtering happens). One of:
+    #   empty_input, no_test_functions, all_dropped, kept_K_of_N.
+    filter_reason: str = ""
 
-    # Stable column order for the TSV
+    # Stable column order for the TSV. The two Algorithm 2/3 columns are
+    # appended at the end so that pre-existing 13-column TSVs remain readable
+    # by the schema-tolerant loader in analyze/load_results.
     TSV_COLUMNS = (
         "cell_id", "sample_idx", "sample_source", "path",
         "metric_name", "metric_value",
@@ -66,6 +78,7 @@ class ClosureResult:
         "valid", "elapsed_s",
         "cache_hits", "n_llm_calls",
         "notes",
+        "decision_reason", "filter_reason",
     )
 
     def to_tsv_row(self) -> str:
@@ -95,6 +108,22 @@ def _tsv_safe(s: str) -> str:
     if not s:
         return ""
     return s.replace("\t", " ").replace("\n", " ").replace("\r", " ")
+
+
+def _result(**kwargs) -> "ClosureResult":
+    """
+    Construct a ClosureResult, auto-computing decision_reason via Algorithm 2
+    if the caller didn't supply it. Central point for wiring in the closure
+    validity decision — every return site in run_path_1/2/3 goes through here.
+    """
+    if "decision_reason" not in kwargs or not kwargs.get("decision_reason"):
+        _, kwargs["decision_reason"] = decide_validity(
+            kwargs.get("metric_value"),
+            kwargs.get("judge_rating"),
+            kwargs["path"],
+        )
+    kwargs.setdefault("filter_reason", "")
+    return ClosureResult(**kwargs)
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -359,22 +388,24 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
                     f"-> T'={len(t_prime)}chars cache={'HIT' if h else 'miss'} "
                     f"+{time.perf_counter()-t:.2f}s")
 
-    # Step 3: filter tests that fail on original C
-    if t_prime:
-        t = time.perf_counter()
-        filtered_tests = closure_metrics.test_filter(t_prime, code)
-        n_before = len(_DEF_TEST_RE.findall(t_prime))
-        n_after = len(_DEF_TEST_RE.findall(filtered_tests))
-        logger.info(f"{tag} step3 test_filter -> "
-                    f"{n_after}/{n_before} tests kept "
-                    f"({len(filtered_tests)}/{len(t_prime)} chars) "
-                    f"+{time.perf_counter()-t:.2f}s")
-    else:
-        filtered_tests = ""
+    # Step 3: filter tests that fail on original C (Algorithm 3).
+    # filter_tests_with_reason handles empty t_prime internally and returns a
+    # machine-readable filter_reason label.
+    t = time.perf_counter()
+    filtered_tests, filter_reason = closure_metrics.filter_tests_with_reason(
+        t_prime, code
+    )
+    n_before = len(_DEF_TEST_RE.findall(t_prime)) if t_prime else 0
+    n_after = len(_DEF_TEST_RE.findall(filtered_tests))
+    logger.info(f"{tag} step3 test_filter -> "
+                f"{n_after}/{n_before} tests kept "
+                f"({len(filtered_tests)}/{len(t_prime)} chars) "
+                f"reason={filter_reason} "
+                f"+{time.perf_counter()-t:.2f}s")
 
     if not filtered_tests:
         elapsed = time.perf_counter() - t0
-        return ClosureResult(
+        return _result(
             cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
             path=1, metric_name="mutation_kill_rate",
             metric_value=float("nan"),
@@ -382,6 +413,7 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
             valid=False, elapsed_s=elapsed,
             cache_hits=n_hits, n_llm_calls=n_calls,
             notes="filter dropped all tests",
+            filter_reason=filter_reason,
         )
 
     # Step 4: mutation kill rate
@@ -408,7 +440,7 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
     elapsed = time.perf_counter() - t0
     logger.info(f"{tag} DONE elapsed={elapsed:.2f}s kill_rate={kill_rate:.3f} "
                 f"calls={n_calls} hits={n_hits}")
-    return ClosureResult(
+    return _result(
         cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
         path=1, metric_name="mutation_kill_rate",
         metric_value=float(kill_rate),
@@ -417,6 +449,7 @@ def run_path_1(cell: Cell, sample: dict) -> ClosureResult:
         cache_hits=n_hits, n_llm_calls=n_calls,
         notes=f"mutants={breakdown.get('total_mutants', 0)}"
               f",killed={breakdown.get('killed', 0)}",
+        filter_reason=filter_reason,
     )
 
 
@@ -456,7 +489,7 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
 
     if not docstring or not reference_tests:
         elapsed = time.perf_counter() - t0
-        return ClosureResult(
+        return _result(
             cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
             path=2, metric_name="reference_pass_rate",
             metric_value=0.0,
@@ -497,7 +530,7 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
 
     if not c_prime:
         elapsed = time.perf_counter() - t0
-        return ClosureResult(
+        return _result(
             cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
             path=2, metric_name="reference_pass_rate",
             metric_value=0.0,
@@ -525,7 +558,7 @@ def run_path_2(cell: Cell, sample: dict) -> ClosureResult:
     elapsed = time.perf_counter() - t0
     logger.info(f"{tag} DONE elapsed={elapsed:.2f}s pass_rate={pass_rate:.3f} "
                 f"calls={n_calls} hits={n_hits}")
-    return ClosureResult(
+    return _result(
         cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
         path=2, metric_name="reference_pass_rate",
         metric_value=float(pass_rate),
@@ -569,7 +602,7 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
 
     if not orig_doc:
         elapsed = time.perf_counter() - t0
-        return ClosureResult(
+        return _result(
             cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
             path=3, metric_name="bertscore", metric_value=0.0,
             judge_rating=-1, judge_justification="no_orig_docstring",
@@ -609,7 +642,7 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
 
     if not d_prime:
         elapsed = time.perf_counter() - t0
-        return ClosureResult(
+        return _result(
             cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
             path=3, metric_name="bertscore", metric_value=0.0,
             judge_rating=-1, judge_justification="no_recovered_docstring",
@@ -644,7 +677,7 @@ def run_path_3(cell: Cell, sample: dict) -> ClosureResult:
     elapsed = time.perf_counter() - t0
     logger.info(f"{tag} DONE elapsed={elapsed:.2f}s bertscore={bert:.3f} "
                 f"valid={bertscore_available} calls={n_calls} hits={n_hits}")
-    return ClosureResult(
+    return _result(
         cell_id=cell.cell_id, sample_idx=sample_idx, sample_source=source,
         path=3, metric_name="bertscore",
         metric_value=float(bert) if bertscore_available else float("nan"),
