@@ -37,28 +37,19 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import pandas as pd
 
 from analyze.load_results import load_tsv
+from closure_decision import RHO_DEFAULT, TAU_DEFAULT, decide_validity
 
-
-TAU = {1: 0.0, 2: 0.0, 3: 0.0}
-RHO = 3
+# Kept for backward-compat with older callers of this script
+TAU = TAU_DEFAULT
+RHO = RHO_DEFAULT
 
 
 def label_row(row) -> str:
-    m = row["metric_value"]
-    j = row["judge_rating"]
-    # structural_NA if either signal is missing
-    if pd.isna(m) or pd.isna(j) or j < 0:
-        return "structural_NA"
-    tau = TAU[int(row["path"])]
-    metric_ok = m > tau
-    judge_ok = j >= RHO
-    if metric_ok and judge_ok:
-        return "both_agree_valid"
-    if not metric_ok and not judge_ok:
-        return "both_agree_invalid"
-    if metric_ok and not judge_ok:
-        return "false_closure_candidate"
-    return "metric_false_negative"
+    """Delegate to closure_decision.decide_validity (Algorithm 2)."""
+    m = row["metric_value"] if not pd.isna(row["metric_value"]) else None
+    j = row["judge_rating"] if not pd.isna(row["judge_rating"]) else None
+    _, reason = decide_validity(m, j, path=int(row["path"]))
+    return reason
 
 
 CATEGORY_ORDER = [

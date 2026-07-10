@@ -238,6 +238,40 @@ def test_filter(tests: str, original_code: str) -> str:
     return _get_mt().filter_passing_tests(tests, original_code)
 
 
+_DEF_TEST_ANY_INDENT = re.compile(r"(?m)^\s*def\s+test_[A-Za-z_0-9]+\s*\(")
+
+
+def filter_tests_with_reason(tests: str, original_code: str) -> tuple[str, str]:
+    """
+    Algorithm 3: test-filter validity gate with a diagnostic label.
+
+    Wraps `test_filter` but also returns a `filter_reason` explaining what
+    happened. Used by future closure_paths runs to persist the reason
+    directly to the TSV, replacing the current "0/N tests kept" heuristic
+    log line with a machine-readable label.
+
+    Filter reasons:
+        empty_input           — inputs were empty strings
+        no_test_functions     — no ``def test_...`` matched in the input
+        all_dropped           — every test failed on the original code
+        kept_K_of_N           — K tests kept out of N candidate test functions
+    """
+    if not tests.strip() or not original_code.strip():
+        return "", "empty_input"
+
+    n_before = len(_DEF_TEST_ANY_INDENT.findall(tests))
+    if n_before == 0:
+        # No detectable test functions in the input at all.
+        return "", "no_test_functions"
+
+    filtered = _get_mt().filter_passing_tests(tests, original_code)
+    if not filtered.strip():
+        return "", "all_dropped"
+
+    n_after = len(_DEF_TEST_ANY_INDENT.findall(filtered))
+    return filtered, f"kept_{n_after}_of_{n_before}"
+
+
 # ──────────────────────────────────────────────────────────────────────
 # Sanity self-test
 # ──────────────────────────────────────────────────────────────────────
