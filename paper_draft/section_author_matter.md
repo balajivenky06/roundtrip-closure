@@ -1,0 +1,80 @@
+# Author Matter
+
+*The following blocks are typically placed after the conclusion in Springer/Elsevier LaTeX templates. Each is drafted as a template with placeholder fields (\PLACEHOLDER) that should be filled before final submission.*
+
+---
+
+## Acknowledgements
+
+We thank \PLACEHOLDER{colleagues and reviewers} at Shiv Nadar University, Chennai, for detailed feedback on the pre-registered design of experiments and on the interim gate-check results. We are indebted to the anonymous reviewers of the companion Chapters~1 and~2 submissions for feedback that shaped the human-evaluation protocol and threats-to-validity structure adopted here. We thank \PLACEHOLDER{annotator recruitment channel} for connecting us with the three independent annotators who conducted the human-evaluation study, and we thank the annotators themselves for the calibration and rating effort. This work would not have been feasible without the open-weight releases from Meta, Microsoft, Alibaba, Google, Mistral, and DeepSeek, and the maintainers of the Ollama runtime, the LangChain / LangGraph ecosystem, and the BERTScore, HumanEval, and MBPP benchmarks.
+
+## Funding
+
+This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors. The compute cost of the experimental sweep was covered by the corresponding author's personal Colab Pro+ subscription. Adjust to match actual funding once known: \PLACEHOLDER{grant identifier, agency, program name}.
+
+## Ethics statement
+
+**Data.** All datasets used in this study are publicly available prior work: HumanEval~(Chen et al., 2021), MBPP~(Austin et al., 2021), and LiveCodeBench~(Yang et al., 2025). No new function-level data was collected. The reference test suites, docstrings, and code accompanying these benchmarks are used as-is.
+
+**Human participants.** The 60-pair human-evaluation study described in §3 and reported in the pending addendum involves three independent human annotators rating pairs of \emph{code artefacts} (docstrings, code fragments, and test suites) --- no personally-identifying data, biometric data, health data, or demographic data is collected from annotators. Annotators are compensated at a rate consistent with regional software-engineering hourly rates. The annotation protocol was reviewed under the institutional research ethics framework at \PLACEHOLDER{institution}; the review determined that the study was exempt from full IRB review under the ``research involving benign educational tests or observations of public behavior'' category. Annotator identities are not linked to their ratings in any published artefact.
+
+**AI systems.** All experiments were conducted with open-weight language models. No closed-weight models were used in the primary results. LLM outputs were treated strictly as artefacts under evaluation --- the LLM systems themselves are not the subject of ethical claims. The judge SLM (DeepSeek-R1:14B) was used exclusively as an evaluation tool, not as a decision-maker for any human-consequential decision.
+
+**Environmental impact.** The experimental sweep consumed approximately 22~GPU-days on Google Colab hardware, split between A100 and T4 instances. Estimated CO$_2$-equivalent emissions: \PLACEHOLDER{compute using MLCO2 estimator}. We disclose this as a matter of methodological transparency and to enable readers to weight the environmental cost against the study's scientific yield.
+
+## Conflict of interest
+
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+## Author contributions
+
+**Balaji Venktesh V.** (corresponding author): conceptualisation, methodology, software, formal analysis, investigation, data curation, writing --- original draft, writing --- review \& editing, visualisation, project administration.
+
+**\PLACEHOLDER{Amsaprabhaa M} (supervisor):** conceptualisation, methodology, supervision, resources, writing --- review \& editing, project administration, funding acquisition where applicable.
+
+**\PLACEHOLDER{Gireesh Sundaram} (co-author):** methodology, software, validation, writing --- review \& editing.
+
+*Contributions follow the CRediT taxonomy~(Brand et al., 2015).*
+
+## Data availability statement
+
+The complete replication package for this study is publicly available at \url{\PLACEHOLDER{https://github.com/balajivenky06/roundtrip-closure}} under the MIT licence. The repository contains:
+
+\begin{itemize}
+  \item The full experimental sweep TSV (\texttt{results/results\_roundtrip.tsv}) with 5{,}890 measurement rows spanning all 20 cells of the pre-registered DOE.
+  \item The 30-function pilot TSV (\texttt{results/pilot\_results.tsv}) used to qualify the infrastructure prior to the full sweep.
+  \item The pre-registered DOE table (\texttt{doe.py}) and the model lineup (\texttt{config.py}).
+  \item The three closure-path drivers (\texttt{closure\_paths.py}), the closure-validity decision (\texttt{closure\_decision.py}, Algorithm~2), the test-filter validity gate (\texttt{closure\_metrics.filter\_tests\_with\_reason}, Algorithm~3), and the mutation-testing engine (\texttt{mutation\_testing.py}, inherited from Chapter~2).
+  \item The 51-test suite covering both algorithms (\texttt{tests/test\_closure\_decision.py}, \texttt{tests/test\_filter\_tests\_reason.py}).
+  \item The analysis pipeline (\texttt{scripts/run\_analysis.py}) and all G1--G6 gap-closer scripts (\texttt{scripts/build\_\*.py}).
+  \item All 11 LaTeX tables and 10 PNG figures used in this manuscript, reproducible from the sweep TSV via a single command.
+  \item The 60-pair human-evaluation worksheet (blinded) and pair de-blinding index (\texttt{results/human\_eval\_pairs\_60.tsv}, \texttt{results/human\_eval\_worksheet\_60.csv}).
+\end{itemize}
+
+The pre-processed HumanEval, MBPP, LiveCodeBench, and HumanEval-Mutated datasets are included in the \texttt{data/} directory as JSONL files. The five-layer checkpointing infrastructure (LLM call cache, pytest subprocess cache, BERTScore embedding cache, TSV row cache, JSONL decontamination cache) preserves every intermediate artefact and enables exact re-execution of any single path on any single sample without re-invoking the underlying SLMs.
+
+## Reproducibility statement
+
+The single command
+\begin{verbatim}
+python3 scripts/run_analysis.py --tsv results/results_roundtrip.tsv
+\end{verbatim}
+regenerates all 11 LaTeX tables and all 10 PNG figures from the sweep TSV. The following commands regenerate the six additional gap-closer artefacts described in \S{}5:
+\begin{itemize}
+  \item G1 (threshold sensitivity): \texttt{python3 scripts/build\_threshold\_sensitivity.py}
+  \item G2 (per-mutation-operator, requires LLM cache): \texttt{python3 scripts/regen\_per\_operator.py} followed by \texttt{python3 scripts/build\_per\_operator\_table.py}
+  \item G3 (judge-metric disagreement): \texttt{python3 scripts/build\_disagreement\_decomposition.py}
+  \item G4 (capability preservation): \texttt{python3 scripts/build\_capability\_preservation.py}
+  \item G5 (path~$\times$~cell interaction ANOVA): \texttt{python3 scripts/build\_path\_cell\_anova.py}
+  \item G6 (stage-contribution figure): \texttt{python3 scripts/build\_stage\_contribution\_figure.py}
+\end{itemize}
+
+Re-executing the full 20-cell experimental sweep from cold is possible via \texttt{python3 scripts/run\_pilot.py} (30-function pilot; qualifies the infrastructure) followed by \texttt{python3 train\_roundtrip.py} per cell. Full-sweep wall-clock cost on Colab Pro+ A100: approximately 15--22~hours; on T4: 60--90~hours. The five-layer checkpointing means partial re-execution is inexpensive.
+
+## Preprint disclosure
+
+An earlier version of this manuscript was made available as a preprint at \PLACEHOLDER{arXiv identifier or preprint URL} on \PLACEHOLDER{date}. This is the peer-review version; substantive changes from the preprint are: \PLACEHOLDER{list any changes prompted by feedback}.
+
+---
+
+*End of author matter.*
