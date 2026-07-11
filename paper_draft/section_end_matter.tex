@@ -16,10 +16,10 @@
 \textbf{Balaji Venktesh V.:} Conceptualization, Methodology, Software, Formal
 analysis, Investigation, Data curation, Writing --- original draft, Writing ---
 review \& editing, Visualization, Project administration.
-\textbf{\PLACEHOLDER{Amsaprabhaa M.}:} Conceptualization, Methodology,
+\textbf{Amsaprabhaa M.:} Conceptualization, Methodology,
 Supervision, Resources, Writing --- review \& editing, Project administration,
 Funding acquisition.
-\textbf{\PLACEHOLDER{Gireesh Sundaram}:} Methodology, Software, Validation,
+\textbf{Gireesh Sundaram:} Methodology, Software, Validation,
 Writing --- review \& editing.
 
 \section*{Declaration of Competing Interest}
@@ -30,14 +30,13 @@ in this paper.
 
 \section*{Acknowledgements}
 
-We thank \PLACEHOLDER{colleagues and reviewers} at Shiv Nadar University,
-Chennai, for detailed feedback on the pre-registered design of experiments and
-on the interim gate-check results. We are indebted to the anonymous reviewers
-of the companion Chapters~1 and~2 submissions for feedback that shaped the
-human-evaluation protocol and threats-to-validity structure adopted here. We
-thank \PLACEHOLDER{annotator recruitment channel} for connecting us with the
-three independent annotators who conducted the human-evaluation study, and we
-thank the annotators themselves for the calibration and rating effort. This
+We thank our colleagues at the Department of Computer Science and Engineering,
+Shiv Nadar University, Chennai, for detailed feedback on the pre-registered
+design of experiments and on the interim gate-check results. We are indebted to
+the anonymous reviewers of the companion Chapters~1 and~2 submissions for
+feedback that shaped the human-evaluation protocol and threats-to-validity
+structure adopted here. We thank the three independent annotators who
+conducted the human-evaluation study for their calibration and rating effort. This
 work would not have been feasible without the open-weight releases from Meta,
 Microsoft, Alibaba, Google, Mistral, and DeepSeek, and the maintainers of the
 Ollama runtime, the LangChain / LangGraph ecosystem, and the BERTScore,
@@ -48,7 +47,7 @@ HumanEval, and MBPP benchmarks.
 This research received no specific grant from any funding agency in the public,
 commercial, or not-for-profit sectors. The compute cost of the experimental
 sweep was covered by the corresponding author's personal Colab Pro+
-subscription. \PLACEHOLDER{Adjust to match actual funding once known.}
+subscription.
 
 \section*{Ethics statement}
 
@@ -65,7 +64,7 @@ suites) --- no personally-identifying data, biometric data, health data, or
 demographic data is collected from annotators. Annotators are compensated at a
 rate consistent with regional software-engineering hourly rates. The annotation
 protocol was reviewed under the institutional research ethics framework at
-\PLACEHOLDER{institution}; the review determined that the study was exempt from
+Shiv Nadar University, Chennai; the review determined that the study was exempt from
 full IRB review under the ``research involving benign educational tests or
 observations of public behavior'' category. Annotator identities are not linked
 to their ratings in any published artefact.
@@ -78,11 +77,17 @@ was used exclusively as an evaluation tool, not as a decision-maker for any
 human-consequential decision.
 
 \paragraph{Environmental impact.} The experimental sweep consumed approximately
-22~GPU-days on Google Colab hardware, split between A100 and T4 instances.
-Estimated CO$_2$-equivalent emissions:
-\PLACEHOLDER{compute using MLCO2 estimator}. We disclose this as a matter of
-methodological transparency and to enable readers to weight the environmental
-cost against the study's scientific yield.
+22~GPU-days on Google Colab hardware ($\sim$530~GPU-hours total), split roughly
+40\% on NVIDIA A100 (initial mono sweep and pilot) and 60\% on NVIDIA T4
+(majority of hetero and null cells). Assuming sustained-load power draws of
+$\sim$350~W (A100) and $\sim$70~W (T4), a data-centre PUE of $1.10$, and the
+Google Cloud global-average grid intensity of $\sim$240~gCO$_2$-eq/kWh, we
+estimate total emissions of approximately \textbf{25~kg~CO$_2$-equivalent},
+with an uncertainty range of $\sim$20--50~kg CO$_2$-equivalent depending on
+regional grid mix. We disclose this as a matter of methodological transparency
+and to enable readers to weigh the environmental cost against the study's
+scientific yield. All numbers were computed following the MLCO$_2$
+estimator~\citep{Lacoste2019MLCO2Emissions} methodology.
 
 \section*{Data availability}
 
@@ -143,9 +148,6 @@ Re-executing the full 20-cell experimental sweep from cold is possible via
 Colab Pro+ A100: approximately 15--22~hours; on T4: 60--90~hours. The
 five-layer checkpointing means partial re-execution is inexpensive.
 
-\section*{Preprint disclosure}
-
-An earlier version of this manuscript was made available as a preprint at
-\PLACEHOLDER{arXiv identifier or preprint URL} on \PLACEHOLDER{date}. This is
-the peer-review version; substantive changes from the preprint are:
-\PLACEHOLDER{list any changes prompted by feedback}.
+%% Preprint disclosure section omitted: no preprint has been posted.
+%% If a preprint is posted later (e.g. arXiv), reinstate this block with
+%% the preprint URL, posting date, and a list of substantive changes.
