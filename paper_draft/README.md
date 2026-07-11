@@ -6,12 +6,13 @@ Assembly directory for the Chapter 3 manuscript LaTeX source.
 
 ```
 paper_draft/
-  main.tex                        # top-level document; \input's the sections
+  main.tex                        # elsarticle top-level document
   references.bib                  # bibliography (fill placeholders before submit)
-  Makefile                        # build targets: all / quick / watch / clean / regen / wc
+  Makefile                        # all / quick / watch / clean / regen / polish / wc
   README.md                       # this file
   build/
     md_to_tex.py                  # Markdown -> LaTeX converter
+    polish_tex.py                 # Elsevier polish: §X -> Section~X, [Author]->\citep
 
   # Body sections (edit .md; regenerate .tex via `make regen`)
   section_1_introduction.md/.tex
@@ -21,9 +22,29 @@ paper_draft/
   section_5_discussion.md/.tex
   section_6_threats.md/.tex
   section_7_conclusion.md/.tex
-  section_author_matter.md/.tex   # acknowledgements / funding / ethics / data avail.
+  section_end_matter.tex          # CRediT / CoI / Ethics / Data availability / Reproducibility
+                                  #   (Elsevier-mandatory end-of-paper blocks)
   equations_and_algorithms.tex    # 20+ equations + Algorithms 1/2/3 (drop-in)
 ```
+
+## Elsevier structure
+
+`main.tex` uses the `elsarticle` document class and follows the standard Elsevier submission layout, mirroring the reference paper (Anonymous 2026, IPM submission) that was marked as the target style:
+
+1. **Highlights** (3–5 bullet points, ≤ 85 chars each; mandatory)
+2. **Title / authors / affiliations** with `\corref` for corresponding author
+3. **Abstract + Keywords** (using elsarticle's `\begin{keyword}...\sep...` env)
+4. **Numbered body sections** 1–7 (Introduction, Related Work, Methods, Results, Discussion, Threats, Conclusion)
+5. **End matter** (`section_end_matter.tex`):
+   - CRediT authorship contribution statement
+   - Declaration of Competing Interest (mandatory)
+   - Acknowledgements
+   - Funding statement (mandatory since 2018)
+   - Ethics statement (data / human / AI / environmental)
+   - Data availability statement (mandatory since 2019)
+   - Code and reproducibility
+   - Preprint disclosure
+6. **References** via `elsarticle-harv` (author-year) or `elsarticle-num`
 
 ## Build
 

@@ -103,9 +103,9 @@ and analogously for Paths 2 and 3:
   \label{eq:valid3}
 \end{equation}
 
-The two-signal \emph{strict-AND} policy is deliberate: it prevents metric noise or judge parse failures from spuriously inflating closure rates. We adopt the strict policy because the alternative --- single-signal validity --- was the failure mode responsible for inflated closure rates observed in the 30-function pilot; the strict policy also makes the false-closure rate (§5) well-defined.
+The two-signal \emph{strict-AND} policy is deliberate: it prevents metric noise or judge parse failures from spuriously inflating closure rates. We adopt the strict policy because the alternative --- single-signal validity --- was the failure mode responsible for inflated closure rates observed in the 30-function pilot; the strict policy also makes the false-closure rate (Section~5) well-defined.
 
-Every closure row is additionally categorised by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in §5 for characterising \emph{where} the automated metric and the judge diverge.
+Every closure row is additionally categorised by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in Section~5 for characterising \emph{where} the automated metric and the judge diverge.
 
 \begin{algorithm}[h]
 \caption{Closure validity decision (implements Eq.~\ref{eq:valid1}--\ref{eq:valid3})}
@@ -141,7 +141,7 @@ Before computing the mutation kill rate, we discard generated tests that fail on
   \label{eq:filter}
 \end{equation}
 
-The filter is implemented as Algorithm~\ref{alg:test_filter}, which additionally emits a machine-readable \textsf{filter\_reason} label recording \emph{why} the filter output was empty when it was. This label appears in every closure row in the results TSV and is used in §5 to distinguish rows where the LLM produced no tests at all (\textsf{empty\_input}) from rows where every generated test failed on the ground truth (\textsf{all\_dropped}) --- a distinction that matters for the phi-4-in-test-stage analysis in §5.3.
+The filter is implemented as Algorithm~\ref{alg:test_filter}, which additionally emits a machine-readable \textsf{filter\_reason} label recording \emph{why} the filter output was empty when it was. This label appears in every closure row in the results TSV and is used in Section~5 to distinguish rows where the LLM produced no tests at all (\textsf{empty\_input}) from rows where every generated test failed on the ground truth (\textsf{all\_dropped}) --- a distinction that matters for the phi-4-in-test-stage analysis in Section~5.3.
 
 \begin{algorithm}[h]
 \caption{Test-filter validity gate (implements Eq.~\ref{eq:filter})}
@@ -196,7 +196,7 @@ Let $T = \{t_1, \ldots, t_k\}$ be the ground-truth reference suite. The pass rat
   \label{eq:passrate}
 \end{equation}
 
-In this experiment we use a binary indicator ($R \in \{0, 1\}$: the suite either fully passes or does not) for the §4 statistical analysis.
+In this experiment we use a binary indicator ($R \in \{0, 1\}$: the suite either fully passes or does not) for the Section~4 statistical analysis.
 
 \subsubsection{Path 3: BERTScore F1}
 
@@ -297,11 +297,11 @@ To defend against threshold-choice attacks, closure rates are computed and repor
 
 \subsubsection{Post-processing categorisation}
 
-Every closure row is post-hoc labelled with the Algorithm~\ref{alg:validity} decision reason and the Algorithm~\ref{alg:test_filter} filter reason. The distribution of decision reasons per path (§5.2) is our primary judge--metric disagreement diagnostic; the distribution of filter reasons per (cell, path) triple (§5.3) is our primary diagnostic for the phi-4-in-test-stage attribution.
+Every closure row is post-hoc labelled with the Algorithm~\ref{alg:validity} decision reason and the Algorithm~\ref{alg:test_filter} filter reason. The distribution of decision reasons per path (Section~5.2) is our primary judge--metric disagreement diagnostic; the distribution of filter reasons per (cell, path) triple (Section~5.3) is our primary diagnostic for the phi-4-in-test-stage attribution.
 
 \subsubsection{Capability preservation}
 
 For each path, we identify the strongest mono baseline (M4 for Paths~1 and~3; M3 for Path~2) and restrict analysis to samples on which that baseline achieves valid closure. For every other cell, the \emph{capability-preservation rate} is the fraction of those same samples on which the cell also achieves valid closure. Values near~$1$ indicate that the cell does not sacrifice mono strengths; substantially lower values expose cells where specialisation costs capability on samples the strongest mono handles cleanly.
 
 
-\emph{End of §3 Methods.} Section~4 presents results anchored to Eqs.~\ref{eq:killrate}--\ref{eq:corr} and Table~\ref{tab:doe_summary}, organised by research question.
+\emph{End of Section~3 Methods.} Section~4 presents results anchored to Eqs.~\ref{eq:killrate}--\ref{eq:corr} and Table~\ref{tab:doe_summary}, organised by research question.

@@ -1,10 +1,10 @@
 \section{Conclusion}
 
-We introduced the first cross-LLM, cross-stage empirical evaluation of round-trip closure in a software-engineering pipeline, evaluated under a pre-registered 20-cell design of experiments spanning six open-weight Small Language Models across the docstring--test--code triangle. The study answers the practitioner-facing question motivated in §1: \emph{when the pipeline is composed of multiple SLMs, does it matter which SLM sits at which stage?}
+We introduced the first cross-LLM, cross-stage empirical evaluation of round-trip closure in a software-engineering pipeline, evaluated under a pre-registered 20-cell design of experiments spanning six open-weight Small Language Models across the docstring--test--code triangle. The study answers the practitioner-facing question motivated in Section~1: \emph{when the pipeline is composed of multiple SLMs, does it matter which SLM sits at which stage?}
 
 \subsection{Summary of contributions}
 
-Five empirical contributions emerge from the 5{,}890-row sweep and the six post-hoc analyses (§5).
+Five empirical contributions emerge from the 5{,}890-row sweep and the six post-hoc analyses (Section~5).
 
 \begin{enumerate}
   \item \textbf{Pre-registered hypothesis validation at per-operator resolution.} The H1 cell (phi-4 as $L_{\textsf{spec}}$, qwen-coder as $L_{\textsf{test}}$ and $L_{\textsf{code}}$) was assigned in the pre-registered DOE based on Chapter~2's per-mutation-operator capability map. Section~4.4 shows that H1 dominates four of five mutation operators empirically, with the largest gain (arithmetic, $\Delta = +0.133$) matching Chapter~2's finding that phi-4 wins on predicate reasoning. Pre-registered stage compositions can be empirically validated by data at the operator level.
@@ -13,9 +13,9 @@ Five empirical contributions emerge from the 5{,}890-row sweep and the six post-
 
   \item \textbf{BERTScore is a surface-form similarity signal on our data.} Section~4.6 reports that BERTScore F1 is statistically uncorrelated with the judge SLM's semantic-equivalence rating on Path~3 ($r_3 = 0.022$, $p = 0.359$, $n = 1{,}791$). Section~5.2 stratifies this by benchmark and shows the disagreement flips direction: MBPP over-credits equivalence in $29\%$ of rows; HumanEval under-credits in $30\%$ of rows. This structural directional signature supports the specific claim that BERTScore behaves as a surface-form similarity signal rather than a semantic-equivalence signal on the docstring--docstring closure path.
 
-  \item \textbf{The three-path framework carries non-redundant information.} Section~4.7 reports the cell~$\times$~path interaction ANOVA (Eq.~\ref{eq:anova_interact}): $F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$. Cells respond \emph{differently} to different closure paths, not with a constant offset. The three-path framework of §3.2 is empirically justified rather than merely stipulated.
+  \item \textbf{The three-path framework carries non-redundant information.} Section~4.7 reports the cell~$\times$~path interaction ANOVA (Eq.~\ref{eq:anova_interact}): $F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$. Cells respond \emph{differently} to different closure paths, not with a constant offset. The three-path framework of Section~3.2 is empirically justified rather than merely stipulated.
 
-  \item \textbf{Capability preservation is not uniform.} Section~4.3 and §5.5 report that well-composed hetero cells (H11, H7, H9, H1) preserve $78$--$91\%$ of the strongest mono baseline's capability, while wrong-model-at-wrong-stage cells sacrifice materially (H10 preserves $34.9\%$ of Path~1 reference capability; H4 preserves $56.5\%$ of Path~2). Heterogeneity is not free; the stage assignment must match the demanded per-stage strength.
+  \item \textbf{Capability preservation is not uniform.} Section~4.3 and Section~5.5 report that well-composed hetero cells (H11, H7, H9, H1) preserve $78$--$91\%$ of the strongest mono baseline's capability, while wrong-model-at-wrong-stage cells sacrifice materially (H10 preserves $34.9\%$ of Path~1 reference capability; H4 preserves $56.5\%$ of Path~2). Heterogeneity is not free; the stage assignment must match the demanded per-stage strength.
 \end{enumerate}
 
 \subsection{Design guidelines for practitioners}
@@ -23,21 +23,21 @@ Five empirical contributions emerge from the 5{,}890-row sweep and the six post-
 Three guidelines follow from the empirical findings, targeted at practitioners assembling multi-SLM SE pipelines:
 
 \begin{itemize}
-  \item \textbf{G1: Place the strongest available model at the bottleneck stage.} The stage-attribution decomposition (§4.3) and the per-operator table (§4.4) both identify per-stage strengths that dominate closure success. Selecting stage models based on the pipeline's bottleneck --- rather than on aggregate model capability --- consistently produces higher closure rates.
+  \item \textbf{G1: Place the strongest available model at the bottleneck stage.} The stage-attribution decomposition (Section~4.3) and the per-operator table (Section~4.4) both identify per-stage strengths that dominate closure success. Selecting stage models based on the pipeline's bottleneck --- rather than on aggregate model capability --- consistently produces higher closure rates.
 
-  \item \textbf{G2: Match test-generation choice to the docstring style upstream, not to the model's general capability.} The phi-4-in-test-stage pathology (§5.3) shows that a model's test-generation capability \emph{de novo} does not transfer when the test model is downstream of a docstring produced by a different model. Stage models should be chosen jointly, not marginally.
+  \item \textbf{G2: Match test-generation choice to the docstring style upstream, not to the model's general capability.} The phi-4-in-test-stage pathology (Section~5.3) shows that a model's test-generation capability \emph{de novo} does not transfer when the test model is downstream of a docstring produced by a different model. Stage models should be chosen jointly, not marginally.
 
-  \item \textbf{G3: Use two-signal validity when reporting closure rates.} No single automated metric was found to correlate reliably with judge semantic equivalence on all three paths (§4.6). The strict-AND validity policy of Algorithm~\ref{alg:validity} produces conservative closure counts with interpretable disagreement modes (§5.2). Single-signal validity risks systematic misestimation.
+  \item \textbf{G3: Use two-signal validity when reporting closure rates.} No single automated metric was found to correlate reliably with judge semantic equivalence on all three paths (Section~4.6). The strict-AND validity policy of Algorithm~\ref{alg:validity} produces conservative closure counts with interpretable disagreement modes (Section~5.2). Single-signal validity risks systematic misestimation.
 \end{itemize}
 
 \subsection{Future work}
 
-Three directions extend this study, all foreshadowed in §6 (Threats to Validity) as deferred deviations from the concept-note pre-registration.
+Three directions extend this study, all foreshadowed in Section~6 (Threats to Validity) as deferred deviations from the concept-note pre-registration.
 
 \begin{itemize}
   \item \textbf{RQ4 open-weight versus closed-weight ceiling comparison.} The pre-registered closed-weight cells (M5, H2, H8 in the original concept note) were deferred due to API-cost budget constraints. A follow-up study substituting Claude Sonnet~4.6 and GPT-4o-mini at the pre-registered slots would answer whether the closure-rate ceiling identified here for open-weight SLMs approaches, matches, or falls short of a closed-weight frontier ceiling. The pre-registered cells remain in \texttt{doe.py} with a \texttt{is\_deferred = True} marker; the DOE table is committed and unchanged.
 
-  \item \textbf{Human-evaluation addendum.} The 60-pair stratified human-evaluation study described in §3.9 will report Cohen's $\kappa$ (Eq.~\ref{eq:kappa}) and Krippendorff's $\alpha$ (Eq.~\ref{eq:alpha}) between the judge SLM (DeepSeek-R1) and three independent human annotators, directly quantifying the judge's own validity. This addendum will also report the false-closure rate against the three-annotator human ground truth --- distinct from the metric-vs-judge false-closure rate of §5.4. The annotation worksheet is prepared (\texttt{results/human\_eval\_worksheet\_60.csv}) with 20~frontier + 20~agreement + 20~disputed pairs stratified per the pre-registered sampling strategy.
+  \item \textbf{Human-evaluation addendum.} The 60-pair stratified human-evaluation study described in Section~3.9 will report Cohen's $\kappa$ (Eq.~\ref{eq:kappa}) and Krippendorff's $\alpha$ (Eq.~\ref{eq:alpha}) between the judge SLM (DeepSeek-R1) and three independent human annotators, directly quantifying the judge's own validity. This addendum will also report the false-closure rate against the three-annotator human ground truth --- distinct from the metric-vs-judge false-closure rate of Section~5.4. The annotation worksheet is prepared (\texttt{results/human\_eval\_worksheet\_60.csv}) with 20~frontier + 20~agreement + 20~disputed pairs stratified per the pre-registered sampling strategy.
 
   \item \textbf{Held-out contamination sensitivity.} The 25-problem LiveCodeBench subset with publication date $\geq$ 2024-12-01 (post-training-cutoff for all pipeline SLMs) and the 50-problem HumanEval-Mutated subset (function-rename + docstring-paraphrase transformations) were prepared as pre-registered contamination-sensitivity subsets. A held-out sweep on both subsets will report whether the phi-4-in-test-stage pathology and the H1 per-operator dominance persist on samples that pipeline SLMs are unlikely to have seen during pre-training.
 \end{itemize}
