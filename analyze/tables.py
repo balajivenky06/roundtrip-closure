@@ -255,8 +255,9 @@ def tab_false_closure(false_df: pd.DataFrame, top_n: int = 15) -> tuple[str, str
     if false_df.empty:
         return "(no data)", ""
     fmt = false_df.sort_values("false_closure_rate", ascending=False).head(top_n).copy()
+    # LaTeX-escape the % sign so pdflatex doesn't treat it as a comment start.
     fmt["false_closure_rate"] = fmt["false_closure_rate"].apply(
-        lambda x: f"{x:.1%}" if pd.notna(x) else "—"
+        lambda x: f"{x:.1%}".replace("%", r"\%") if pd.notna(x) else "—"
     )
     fmt = fmt[["cell_id", "path", "n", "n_closure_success",
                "n_false_closure", "false_closure_rate"]]
@@ -301,12 +302,15 @@ def tab_cache_efficiency(cache_dict: dict) -> tuple[str, str]:
     if per_cell.empty:
         return "(no data)", ""
     fmt = per_cell.copy()
-    fmt["hit_rate"] = fmt["hit_rate"].apply(lambda x: f"{x:.1%}")
+    # LaTeX-escape the % so pdflatex doesn't treat it as a comment start.
+    fmt["hit_rate"] = fmt["hit_rate"].apply(
+        lambda x: f"{x:.1%}".replace("%", r"\%")
+    )
     fmt = fmt[["cell_id", "n_calls", "n_hits", "hit_rate"]]
     fmt.columns = ["Cell", "LLM calls", "Cache hits", "Hit rate"]
     latex = _df_to_latex(fmt, caption=(
         "Per-cell cache efficiency. Total cache hit rate across the sweep is "
-        f"{cache_dict.get('hit_rate', 0):.1%} "
+        f"{cache_dict.get('hit_rate', 0):.1%}".replace("%", r"\%") + " "
         f"(${cache_dict.get('cache_hits', 0):,}$ hits / "
         f"${cache_dict.get('total_calls', 0):,}$ calls)."),
         label="tab:cache_efficiency")

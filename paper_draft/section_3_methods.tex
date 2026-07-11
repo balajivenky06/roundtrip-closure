@@ -295,6 +295,48 @@ The Pearson correlation between the automated metric $Y$ and the judge rating $J
 
 quantifies the extent to which each path's automated metric agrees with the judge SLM's semantic-equivalence rating. Rows with parse failures ($J = -1$) are excluded.
 
+\subsubsection{Mixed-effects logit for per-stage decomposition}
+
+To isolate which stage assignment drives closure, we treat each cell as the product of three stage choices and fit a generalised linear mixed model. Let $\text{closure}_{ij} \in \{0, 1\}$ denote whether function $j$ closed under cell $i$. We model
+
+\begin{equation}
+  \text{logit}\bigl(\Pr[\text{closure}_{ij} = 1]\bigr)
+  \;=\;
+  \beta_0
+  + \beta_1 \cdot a_i(\textsf{spec})
+  + \beta_2 \cdot a_i(\textsf{test})
+  + \beta_3 \cdot a_i(\textsf{code})
+  + \gamma_j,
+  \label{eq:mixedlogit}
+\end{equation}
+
+where $\gamma_j \sim \mathcal{N}(0, \sigma_{\textsf{sample}}^2)$ is a random intercept for sample. Estimates $\hat{\beta}_1, \hat{\beta}_2, \hat{\beta}_3$ quantify each stage's contribution to closure odds.
+
+\subsubsection{Judge--human agreement (pending addendum)}
+
+For each binarised rating (judge threshold $J \geq \rho$ versus $J < \rho$), Cohen's $\kappa$ is
+
+\begin{equation}
+  \kappa
+  \;=\;
+  \frac{p_o - p_e}{1 - p_e},
+  \label{eq:kappa}
+\end{equation}
+
+where $p_o$ is the observed agreement proportion between the judge SLM and a human annotator and $p_e$ is the chance-expected proportion under independence. Values follow Landis and Koch's bands: $\kappa > 0.6$ substantial, $\kappa > 0.8$ almost perfect. For the three-annotator (judge + two human) setting, we additionally compute Krippendorff's $\alpha$ for ordinal ratings $r_{ij}$ from rater $i$ on item $j$:
+
+\begin{equation}
+  \alpha
+  \;=\;
+  1 \;-\; \frac{D_o}{D_e},
+  \quad
+  D_o \;=\; \tfrac{1}{n}\sum_{j} \tfrac{1}{\binom{m_j}{2}}
+            \sum_{i_1 < i_2} \delta(r_{i_1 j}, r_{i_2 j})^2,
+  \label{eq:alpha}
+\end{equation}
+
+where $\delta$ is the ordinal-difference metric and $D_e$ is the expected disagreement under random pairing. Values $\alpha > 0.667$ are considered acceptable for inferential use. Both $\kappa$ and $\alpha$ will be reported in the pending human-evaluation addendum described in Section~7.3.
+
 \subsubsection{Sensitivity analysis}
 
 To defend against threshold-choice attacks, closure rates are computed and reported at multiple $(\tau, \rho)$ combinations. For the mutation kill rate on Path~1, $\tau \in \{0, 0.5, 0.8\}$; for the judge threshold, $\rho \in \{2, 3, 4\}$. Ordinal stability of the per-cell ranking across thresholds is quantified using Kendall's $\tau_{\textsf{rank}}$ between the reference threshold $(\tau=0, \rho=3)$ and each alternative.

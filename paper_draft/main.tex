@@ -165,10 +165,11 @@ open-weight language models
 \input{section_1_introduction.tex}
 \input{section_2_related_work.tex}
 
-%% Equations + algorithm boxes are defined here (before the sections that
-%% cross-reference them). Placing the block between §2 and §3 lets §3 through
-%% §5 reference eq: and alg: labels that are already defined.
-\input{equations_and_algorithms.tex}
+%% Equations and Algorithm boxes are defined INLINE in section_3_methods.tex.
+%% The standalone file equations_and_algorithms.tex is kept in the repo as an
+%% author-facing reference sheet listing all 20+ equations + 3 algorithms in
+%% one place, but is NOT \input here — the equations that appear in the paper
+%% live in §3, and this avoids duplicate \label warnings.
 
 \input{section_3_methods.tex}
 \input{section_4_results.tex}
