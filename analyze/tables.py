@@ -60,7 +60,7 @@ def tab_model_lineup() -> tuple[str, str]:
     latex = _df_to_latex(df, caption=(
         "Small Language Models in the Chapter-3 pipeline. All models are "
         "open-weight and served via Ollama; total parameter count is "
-        "$<30$ B per the §1.1 SLM definition."), label="tab:slm-lineup")
+        "$<30$ B per the §1.1 SLM definition."), label="tab:model_lineup")
     return latex, df.to_csv(index=False)
 
 
@@ -85,7 +85,7 @@ def tab_doe_summary() -> tuple[str, str]:
     latex = _df_to_latex(df, caption=(
         "Pre-registered $4{\\times}4{\\times}4$ fractional factorial DOE. "
         "20 cells in three strata: 6 mono, 11 hetero, 3 null. Hypothesis "
-        "is the rationale recorded at design time."), label="tab:doe")
+        "is the rationale recorded at design time."), label="tab:doe_summary")
     return latex, csv
 
 
@@ -98,7 +98,7 @@ def tab_closure_rate_matrix(df: pd.DataFrame) -> tuple[str, str]:
     valid = filter_valid(df)
     if valid.empty:
         empty = pd.DataFrame()
-        return _df_to_latex(empty, caption="(no data)", label="tab:closure-matrix"), ""
+        return _df_to_latex(empty, caption="(no data)", label="tab:closure_rate_matrix"), ""
 
     mean = valid.pivot_table(index="cell_id", columns="path",
                               values="metric_value", aggfunc="mean")
@@ -113,7 +113,7 @@ def tab_closure_rate_matrix(df: pd.DataFrame) -> tuple[str, str]:
     latex = _df_to_latex(out, caption=(
         "Mean closure rate per cell $\\times$ path with $n_{\\text{valid}}$ "
         "in parentheses. Path 1: mutation kill rate; Path 2: reference-test "
-        "pass rate; Path 3: BERTScore F1."), label="tab:closure-matrix")
+        "pass rate; Path 3: BERTScore F1."), label="tab:closure_rate_matrix")
     return latex, out.to_csv(index=False)
 
 
@@ -154,7 +154,7 @@ def tab_tukey_significant(tukey_df: pd.DataFrame,
     latex = _df_to_latex(sig, caption=(
         f"Tukey HSD post-hoc — significant pairs at $\\alpha = {alpha}$, "
         f"top {top_n} by $p_{{\\text{{adj}}}}$. Bonferroni-corrected across "
-        "the full 190-pair family."), label="tab:tukey")
+        "the full 190-pair family."), label="tab:tukey_significant")
     return latex, sig.to_csv(index=False)
 
 
@@ -183,7 +183,7 @@ def tab_per_stage_bottleneck(bottleneck_df: pd.DataFrame) -> tuple[str, str]:
         "the bottleneck stage is the one whose mono-cell mean is lowest. "
         "$\\Delta$ to bottleneck = hetero\\_mean $-$ mono(bottleneck) — "
         "positive means the hetero pipeline outperformed the bottleneck "
-        "stage alone."), label="tab:bottleneck")
+        "stage alone."), label="tab:per_stage_bottleneck")
     return latex, fmt.to_csv(index=False)
 
 
@@ -213,7 +213,7 @@ def tab_per_benchmark(per_bench: dict) -> tuple[str, str]:
     latex = _df_to_latex(df, caption=(
         "Per-benchmark Type-III ANOVA on closure rate. F is the cell-factor "
         "F-statistic; p is the cell-factor p-value within that benchmark."),
-        label="tab:per-benchmark")
+        label="tab:per_benchmark")
     return latex, df.to_csv(index=False)
 
 
@@ -244,7 +244,7 @@ def tab_judge_correlation(judge_corr: dict) -> tuple[str, str]:
     latex = _df_to_latex(df, caption=(
         "Pearson correlation between the automated closure metric and the "
         "external SLM judge's 0--4 equivalence rating. RQ2: do these two "
-        "signals agree?"), label="tab:judge-corr")
+        "signals agree?"), label="tab:judge_correlation")
     return latex, df.to_csv(index=False)
 
 
@@ -265,7 +265,7 @@ def tab_false_closure(false_df: pd.DataFrame, top_n: int = 15) -> tuple[str, str
     latex = _df_to_latex(fmt, caption=(
         "False-closure rate per cell $\\times$ path — fraction of rows where "
         "the automated metric reports SUCCESS but the judge SLM disagrees "
-        "(rating $< 3$). Top 15 by rate."), label="tab:false-closure")
+        "(rating $< 3$). Top 15 by rate."), label="tab:false_closure")
     return latex, fmt.to_csv(index=False)
 
 
@@ -309,7 +309,7 @@ def tab_cache_efficiency(cache_dict: dict) -> tuple[str, str]:
         f"{cache_dict.get('hit_rate', 0):.1%} "
         f"(${cache_dict.get('cache_hits', 0):,}$ hits / "
         f"${cache_dict.get('total_calls', 0):,}$ calls)."),
-        label="tab:cache")
+        label="tab:cache_efficiency")
     return latex, fmt.to_csv(index=False)
 
 

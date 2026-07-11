@@ -18,11 +18,17 @@ The RQ1 answer therefore has two parts: heterogeneity does not improve \emph{agg
 
 \textbf{RQ2 answer.} The external judge SLM correlates with mutation kill rate ($r_1 = 0.192$, weak but significant) and reference pass rate ($r_2 = 0.523$, moderate), but is uncorrelated with BERTScore ($r_3 = 0.022$, $p = 0.359$). The absence of correlation on Path~3 is not noise but has a structural directional signature that flips across benchmarks.
 
+\input{../tables/tab_disagreement_by_path.tex}
+
 Stratifying the Path~3 rows by Algorithm~\ref{alg:validity} decision reason (Table~\ref{tab:disagreement_by_path}) shows that $24.5\%$ of all Path~3 rows are \textsf{false\_closure\_candidate}: the BERTScore threshold is met but the judge rating is below $\rho$. A further $8.8\%$ are \textsf{metric\_false\_negative}: the judge accepts the docstring pair but the BERTScore threshold is not met. Path~3 exhibits the highest disagreement of any path, more than double Path~1's rate ($11.3\%$ false-closure candidates).
 
-Table~\ref{tab:disagreement_p3_by_benchmark} decomposes this disagreement by source benchmark:
+Table~\ref{tab:disagreement_p3_by_benchmark} decomposes this disagreement by source benchmark.
 
-\begin{center}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Path~3 judge--metric disagreement by source benchmark. \textbf{The disagreement flips direction across benchmarks}: MBPP over-credits equivalence (BERTScore high but judge disagrees), HumanEval under-credits (judge accepts but BERTScore does not).}
+\label{tab:disagreement_p3_by_benchmark}
 \begin{tabular}{lrrr}
 \toprule
 Benchmark & Both agree valid & \textsf{false\_closure\_candidate} & \textsf{metric\_false\_negative} \\
@@ -31,7 +37,7 @@ HumanEval ($n = 550$) & $39.6\%$ & $12.2\%$ & $\mathbf{30.0\%}$ \\
 MBPP ($n = 1{,}412$) & $60.8\%$ & $\mathbf{29.2\%}$ & $0.6\%$ \\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
 \textbf{The disagreement flips direction across benchmarks.} On MBPP, BERTScore over-credits equivalence in $29.2\%$ of rows; on HumanEval, BERTScore under-credits in $30.0\%$ of rows. The two rates are of comparable magnitude and opposite direction. This structural signature is precisely what a surface-form similarity signal should produce and a semantic-equivalence signal should not: MBPP docstrings share a compact task-description vocabulary (`\texttt{return $X$ of $Y$'', }`check if $Z$ is $P$''), so BERTScore assigns high F1 even when the described behaviours diverge; HumanEval docstrings vary in stylistic detail (examples, doctests, hints, edge-case notes), so BERTScore penalises stylistic drift even when the core semantics are preserved.
 
@@ -51,6 +57,8 @@ The practical implication for pipeline design is that per-model capability, as m
 
 \textbf{RQ5 answer.} The mean false-closure rate across cells is $7.7\%$; the maximum non-null-cell rate is $28.6\%$ (H10 on Path~1); the null cell N1 (word-shuffled input) exhibits a rate of $26.3\%$, which serves as an empirical noise floor.
 
+\input{../tables/tab_false_closure.tex}
+
 The false-closure rate is defined as the fraction of rows within a (cell, path) group where the automated metric threshold is met but the judge rating is below $\rho$: it equals the empirical rate of the \textsf{false\_closure\_candidate} decision reason from Algorithm~\ref{alg:validity}. Table~\ref{tab:false_closure} reports the highest-false-closure (cell, path) triples.
 
 The N1 rate of $26.3\%$ on Path~1 is important as a metric-soundness diagnostic. If the automated metric were a perfect closure signal, we would expect N1 (which feeds word-shuffled code into $L_{\textsf{spec}}$) to score near zero on the metric. It does not: $\sim$$26\%$ of N1 rows still exhibit metric $> \tau$. This reflects the fact that the mutation kill rate on filtered tests, even generated from shuffled code, retains a $\sim$$26\%$ false-positive floor. We treat this as the empirical noise floor of the metric under our threshold policy.
@@ -67,6 +75,8 @@ The false-closure result is therefore not a limitation but a \emph{characterisat
 
 \subsection{Capability preservation}
 
+\input{../tables/tab_capability_preservation.tex}
+
 Table~\ref{tab:capability_preservation} reports the capability-preservation rate: for each path, the fraction of samples on which the strongest mono baseline (M4 for Paths~1 and~3, M3 for Path~2) achieves valid closure, restricted to those on which each other cell also achieves closure. Well-composed hetero cells --- H11, H7, H9, H1 --- preserve 78--91\% of reference capability. Two cells sacrifice materially:
 
 \begin{itemize}
@@ -77,6 +87,8 @@ Table~\ref{tab:capability_preservation} reports the capability-preservation rate
 This analysis quantifies a design tension: heterogeneity offers gains via specialisation but incurs losses when a stage's model is inadequate for that stage. The design implication is that heterogeneous pipelines are not uniformly ``better'' than the strongest mono baseline; they should be selected based on the target sample distribution and the availability of a strong-enough model at each stage.
 
 \subsection{Threshold sensitivity}
+
+\input{../tables/tab_threshold_sensitivity_path1.tex}
 
 Table~\ref{tab:threshold_sensitivity_path1} presents Path~1 closure rates at every $(\tau, \rho)$ combination in $\{0, 0.5, 0.8\} \times \{2, 3, 4\}$. Two robustness findings emerge.
 

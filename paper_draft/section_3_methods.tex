@@ -236,6 +236,10 @@ A cell is a stage-to-model assignment $a : \mathcal{S} \to \mathcal{M} \cup \{\b
   \label{eq:doe}
 \end{equation}
 
+\input{../tables/tab_doe_summary.tex}
+
+\input{../tables/tab_model_lineup.tex}
+
 Table~\ref{tab:doe_summary} presents the complete DOE with the pre-registered hypothesis for each cell. The full 5-model $\times$ 3-stage design space contains $6^3 = 216$ cells; we sample 20 as a hypothesis-driven fractional factorial. The mono stratum establishes each SLM's self-consistency floor as a baseline. The hetero stratum assigns three different SLMs across the three stages based on per-stage strengths derived from Chapter~2's per-operator capability map (phi-4 dominates predicate reasoning; qwen-coder dominates comparison operators). The null stratum comprises three control cells: N1 (word-shuffled input; expected metric $\approx 0$ if the closure metric is sound), N2 (spec-stage ablated; $L_{\textsf{spec}} = \bot$), and N3 (test-stage ablated; $L_{\textsf{test}} = \bot$).
 
 The six pipeline SLMs (Table~\ref{tab:model_lineup}) are all open-weight and under 30~B parameters, ensuring the entire experiment fits within a single Colab~Pro+ A100/T4 monthly allowance. Five distinct model families are represented (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). DeepSeek-R1:14B serves as the family-disjoint judge $L_J$.
