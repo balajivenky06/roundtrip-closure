@@ -1,0 +1,160 @@
+%% ============================================================================
+%% main.tex — Chapter 3 manuscript for the Springer / Elsevier submission.
+%%
+%% Target venue: primary EMSE (Springer Nature Empirical Software Engineering);
+%%               secondary IEEE TSE.
+%%
+%% Build:
+%%     make            # pdflatex + bibtex + pdflatex + pdflatex
+%%     make clean      # remove build artefacts
+%%     make watch      # continuous rebuild via latexmk
+%%
+%% Structure (all inputs assembled from paper_draft/):
+%%     §1  Introduction                      section_1_introduction.tex
+%%     §2  Related Work                      section_2_related_work.tex
+%%     §3  Methods                           section_3_methods.tex
+%%     §4  Results                           section_4_results.tex
+%%     §5  Discussion                        section_5_discussion.tex
+%%     §6  Threats to Validity               section_6_threats.tex
+%%     §7  Conclusion                        section_7_conclusion.tex
+%%     Equations + Algorithms (drop-in)      equations_and_algorithms.tex
+%%     Author matter (acks, funding, ethics) section_author_matter.tex
+%% ============================================================================
+
+\documentclass[10pt,a4paper]{article}
+
+%% -- Fonts, encoding, geometry -----------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{microtype}
+
+%% -- Math -------------------------------------------------------------------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{dsfont}         % for \mathds{1}
+
+%% -- Algorithms -------------------------------------------------------------
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+%% -- Figures + tables -------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf}
+
+%% -- Hyperref (load last of the URL/link packages) ---------------------------
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{cleveref}       % \Cref{eq:...}, \Cref{fig:...}
+
+%% -- Bibliography -----------------------------------------------------------
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+
+%% -- Placeholder command for TODO fill-ins -----------------------------------
+\newcommand{\PLACEHOLDER}[1]{\textcolor{red!70!black}{\textbf{[TODO: #1]}}}
+\usepackage{xcolor}
+
+%% ============================================================================
+%% Title block
+%% ============================================================================
+
+\title{%
+Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle:\\
+A Mutation-Testing Study
+}
+
+\author{%
+Balaji Venktesh V.\thanks{Corresponding author. Email: \texttt{balaji23610040@snuchennai.edu.in}}\\
+\PLACEHOLDER{Amsaprabhaa M.} \\
+\PLACEHOLDER{Gireesh Sundaram}\\[0.5em]
+\normalfont Department of Computer Science and Engineering,\\
+\normalfont Shiv Nadar University, Chennai, Tamil Nadu, India
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+%% ============================================================================
+%% Abstract
+%% ============================================================================
+
+\begin{abstract}
+Practitioners deploying multi-stage Small-Language-Model (SLM) pipelines for
+software engineering face an unanswered empirical question: does it matter
+which SLM sits at which stage of the pipeline? We report the first cross-LLM
+$\times$ cross-stage evaluation of round-trip closure on the docstring--test--code
+triangle, evaluated under a pre-registered 20-cell design of experiments
+spanning six open-weight SLMs (all under 30~B parameters) traversing three
+closure paths on 150 HumanEval and MBPP functions. Closure is measured under
+a strict two-signal validity policy combining an SE-validated automated metric
+(mutation kill rate, reference test pass rate, BERTScore F1) with an
+external judge SLM's semantic-equivalence rating (DeepSeek-R1). Five findings
+emerge. First, the pre-registered H1 composition (phi-4 spec + qwen-coder
+test/code) dominates four of five mutation operators empirically, matching
+its pre-registered per-operator prediction from a companion mutation-testing
+study. Second, phi-4 as the test-generation stage produces filter-failing
+tests on approximately half of samples across three independent cells, a
+cross-stage pathology invisible in single-stage evaluations. Third, BERTScore
+F1 is statistically uncorrelated ($r = 0.02$, $p = 0.359$, $n = 1{,}791$)
+with the judge SLM's semantic-equivalence rating on the docstring--docstring
+closure path, and the disagreement flips direction across benchmarks in a
+signature characteristic of a surface-form similarity signal. Fourth, the
+three closure paths carry non-redundant information about cell performance
+($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$). Fifth,
+heterogeneity is not free: well-composed hetero cells preserve $78$--$91\%$
+of the strongest mono baseline's capability, while wrong-model-at-wrong-stage
+cells sacrifice materially. We derive three design guidelines for practitioners
+and release an open replication package including 51 unit tests covering the
+closure-validity decision and test-filter validity gate.
+\end{abstract}
+
+\vspace{1em}
+\noindent\textbf{Keywords:} unit test generation; mutation testing;
+retrieval-augmented generation; Small Language Models; software engineering;
+docstring generation; multi-agent architectures; LLM-as-judge; empirical software
+engineering; open-weight language models.
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+%% ============================================================================
+%% Body sections
+%% ============================================================================
+
+\input{section_1_introduction.tex}
+\input{section_2_related_work.tex}
+
+%% Section 3 references equations + algorithms defined in the block below.
+%% Include the equations/algorithms file INSIDE section_3_methods.tex once
+%% the labels are stable; for now, place them here so \label targets exist
+%% before §4 and §5 reference them.
+\input{equations_and_algorithms.tex}
+
+\input{section_3_methods.tex}
+\input{section_4_results.tex}
+\input{section_5_discussion.tex}
+\input{section_6_threats.tex}
+\input{section_7_conclusion.tex}
+
+%% ============================================================================
+%% Author matter (acknowledgements, funding, ethics, etc.)
+%% ============================================================================
+
+\input{section_author_matter.tex}
+
+%% ============================================================================
+%% Bibliography
+%% ============================================================================
+
+\bibliography{references}
+
+\end{document}

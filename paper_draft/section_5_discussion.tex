@@ -1,0 +1,114 @@
+\section{Discussion}
+
+We interpret the results of §4 against the five research questions of §1.3, drawing three design guidelines for practitioners deploying multi-SLM software-engineering pipelines and characterising the threats to validity that scope our claims.
+
+\subsection{RQ1: heterogeneous versus mono closure rate}
+
+\textbf{RQ1 answer.} Heterogeneous cells match rather than dominate the strongest mono baseline on aggregate closure rate, and \emph{substantially} exceed it when decomposed by mutation operator (Path~1) or by stage attribution.
+
+On Path~1 aggregate closure rate, the best hetero cell H6 ($0.882$) does not statistically differ from the best mono cell M3 ($0.900$; Tukey $p_{\textsf{adj}} = 0.999$). The naive interpretation would be that heterogeneity offers no benefit. This interpretation is unstable across two orthogonal decompositions:
+
+First, the per-mutation-operator decomposition (§4.4) shows that H1 (phi-4 spec + qwen-coder test/code) achieves perfect kill (1.000) on comparison and negate\_bool operators and $0.939$ on arithmetic --- all three exceeding the best mono baseline by $\geq 0.09$ percentage points. Any single mono cell wins on some operators and loses on others; the H1 composition, whose stage assignments were pre-registered based on Chapter~2's per-operator capability map, achieves the operator-wise maximum on four of five operator families simultaneously. \emph{The mono ceiling on any given operator is not a fundamental capability ceiling.}
+
+Second, the stage-attribution decomposition (§4.3) shows that H4 and H11 exceed the strongest mono ceiling on Path~1 outright ($0.909$ and $0.859$ vs.\ M4 = $0.773$). Both cells specialise at the code and test stages while permitting a weaker model at spec (H4 uses llama3.2 at code, H11 uses phi-4 at spec) --- validating that the heterogeneity benefit compounds when specialisation matches the demanded stage strength.
+
+The RQ1 answer therefore has two parts: heterogeneity does not improve \emph{aggregate} closure rate over the strongest mono baseline, but it improves the \emph{decomposition} of closure rate in ways that any single mono baseline cannot achieve.
+
+\subsection{RQ2: judge SLM agreement and BERTScore validity}
+
+\textbf{RQ2 answer.} The external judge SLM correlates with mutation kill rate ($r_1 = 0.192$, weak but significant) and reference pass rate ($r_2 = 0.523$, moderate), but is uncorrelated with BERTScore ($r_3 = 0.022$, $p = 0.359$). The absence of correlation on Path~3 is not noise but has a structural directional signature that flips across benchmarks.
+
+Stratifying the Path~3 rows by Algorithm~\ref{alg:validity} decision reason (Table~\ref{tab:disagreement_by_path}) shows that $24.5\%$ of all Path~3 rows are \textsf{false\_closure\_candidate}: the BERTScore threshold is met but the judge rating is below $\rho$. A further $8.8\%$ are \textsf{metric\_false\_negative}: the judge accepts the docstring pair but the BERTScore threshold is not met. Path~3 exhibits the highest disagreement of any path, more than double Path~1's rate ($11.3\%$ false-closure candidates).
+
+Table~\ref{tab:disagreement_p3_by_benchmark} decomposes this disagreement by source benchmark:
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Benchmark & Both agree valid & \textsf{false\_closure\_candidate} & \textsf{metric\_false\_negative} \\
+\midrule
+HumanEval ($n = 550$) & $39.6\%$ & $12.2\%$ & $\mathbf{30.0\%}$ \\
+MBPP ($n = 1{,}412$) & $60.8\%$ & $\mathbf{29.2\%}$ & $0.6\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{The disagreement flips direction across benchmarks.} On MBPP, BERTScore over-credits equivalence in $29.2\%$ of rows; on HumanEval, BERTScore under-credits in $30.0\%$ of rows. The two rates are of comparable magnitude and opposite direction. This structural signature is precisely what a surface-form similarity signal should produce and a semantic-equivalence signal should not: MBPP docstrings share a compact task-description vocabulary (`\texttt{return $X$ of $Y$'', }`check if $Z$ is $P$''), so BERTScore assigns high F1 even when the described behaviours diverge; HumanEval docstrings vary in stylistic detail (examples, doctests, hints, edge-case notes), so BERTScore penalises stylistic drift even when the core semantics are preserved.
+
+Combined with the aggregate non-significant correlation ($r_3 = 0.022$ at $n = 1{,}791$), this decomposition supports a stronger conclusion than ``BERTScore is a poor closure metric on Path~3''. It supports the specific claim that \textbf{BERTScore is functioning as a surface-form similarity signal rather than a semantic-equivalence signal on the docstring--docstring closure task}. This finding scopes our recommendation that judge-SLM adjudication is not an optional supplement to automated closure metrics on Path~3, but a necessary component of the validity decision.
+
+\subsection{RQ3: per-stage bottleneck and the phi-4-in-test-stage pathology}
+
+\textbf{RQ3 answer.} The spec stage is the plurality bottleneck across paths (15 of 33 hetero (cell, path) triples), followed by the test stage (10) and the code stage (8). A specific per-model pathology --- phi-4 at $L_{\textsf{test}}$ --- accounts for the largest single-cell attribution to the test stage.
+
+Three cells assign phi-4 to $L_{\textsf{test}}$: M2 (phi-4 mono), H2 (qwen3.6 spec, phi-4 test, qwen-coder code), and H10 (mistral spec, phi-4 test, qwen-coder code). Path~1 \textsf{structural\_NA} rates for these cells are $44\%$ (M2), $45\%$ (H2), and $55\%$ (H10), corresponding to \textsf{filter\_reason} = \textsf{all\_dropped} on approximately half of all attempted samples. Cells that use phi-4 at other stages (H1 with phi-4 at $L_{\textsf{spec}}$ = 9\%; H6 with phi-4 at $L_{\textsf{code}}$ = 17\%; H11 with phi-4 at $L_{\textsf{spec}}$ = 5\%) exhibit substantially lower NA rates. \emph{The pathology is stage-specific}: phi-4 as $L_{\textsf{spec}}$ or $L_{\textsf{code}}$ works well; phi-4 as $L_{\textsf{test}}$ produces tests that fail the validity-filter pre-condition on roughly half of samples.
+
+The mechanism, at operator resolution, is that phi-4-generated tests concentrate their failure on arithmetic and boundary mutations --- exactly the operators where phi-4 mono itself is competitive. H10's arithmetic kill rate ($0.351$) and boundary kill rate ($0.449$) are both substantially below the mono ceiling ($0.806$ and $0.748$ respectively). This is not a case of a weak model producing weak tests; it is a case of a model whose test-generation output is systematically misaligned with the defect families it should be strongest at detecting.
+
+The practical implication for pipeline design is that per-model capability, as measured on a single-artefact task (docstring generation, or code synthesis), does not directly predict per-model capability at generating tests for that same artefact. Chapter~2 established the per-operator capability map for phi-4 in the context of test generation with reference-suite exemplars; here, we find that map does not transfer when phi-4 must generate tests for a docstring produced by a different SLM upstream. This is the cross-stage interaction effect that RQ1--RQ3 collectively address.
+
+\subsection{RQ5: false-closure rate}
+
+\textbf{RQ5 answer.} The mean false-closure rate across cells is $7.7\%$; the maximum non-null-cell rate is $28.6\%$ (H10 on Path~1); the null cell N1 (word-shuffled input) exhibits a rate of $26.3\%$, which serves as an empirical noise floor.
+
+The false-closure rate is defined as the fraction of rows within a (cell, path) group where the automated metric threshold is met but the judge rating is below $\rho$: it equals the empirical rate of the \textsf{false\_closure\_candidate} decision reason from Algorithm~\ref{alg:validity}. Table~\ref{tab:false_closure} reports the highest-false-closure (cell, path) triples.
+
+The N1 rate of $26.3\%$ on Path~1 is important as a metric-soundness diagnostic. If the automated metric were a perfect closure signal, we would expect N1 (which feeds word-shuffled code into $L_{\textsf{spec}}$) to score near zero on the metric. It does not: $\sim$$26\%$ of N1 rows still exhibit metric $> \tau$. This reflects the fact that the mutation kill rate on filtered tests, even generated from shuffled code, retains a $\sim$$26\%$ false-positive floor. We treat this as the empirical noise floor of the metric under our threshold policy.
+
+Under this interpretation:
+
+\begin{itemize}
+  \item Non-null cells with false-closure rates below the N1 floor ($< 26\%$) exhibit false-closure signals that are at or below noise. Every hetero cell except H10 lies below this floor on Path~1.
+  \item H10 ($28.6\%$ on Path~1) is the only non-null cell above the noise floor, consistent with the phi-4-in-test-stage pathology of §5.3.
+  \item Mono cells cluster in the $[10\%, 20\%]$ range, well below the noise floor.
+\end{itemize}
+
+The false-closure result is therefore not a limitation but a \emph{characterisation} of the metric's operating regime. §5.6 shows that alternative threshold choices do not meaningfully change these figures.
+
+\subsection{Capability preservation}
+
+Table~\ref{tab:capability_preservation} reports the capability-preservation rate: for each path, the fraction of samples on which the strongest mono baseline (M4 for Paths~1 and~3, M3 for Path~2) achieves valid closure, restricted to those on which each other cell also achieves closure. Well-composed hetero cells --- H11, H7, H9, H1 --- preserve 78--91\% of reference capability. Two cells sacrifice materially:
+
+\begin{itemize}
+  \item H10 preserves only $34.9\%$ of Path~1 reference capability. This is another manifestation of the phi-4-in-test-stage pathology: samples on which M4 (gemma-4 mono) achieves valid closure are precisely the samples on which H10 has phi-4 fail to produce filter-passing tests.
+  \item H4 preserves only $56.5\%$ of Path~2 capability. Placing llama3.2:3B at $L_{\textsf{code}}$ costs the pipeline $44\%$ of reference-pass-rate success on samples that qwen3.6 mono can synthesise cleanly. The heterogeneity gain of $\Delta = 0.186$ observed in the aggregate stage-attribution decomposition (§4.3) hides the fact that H4 pays this capability cost on the samples the strongest mono baseline handles well.
+\end{itemize}
+
+This analysis quantifies a design tension: heterogeneity offers gains via specialisation but incurs losses when a stage's model is inadequate for that stage. The design implication is that heterogeneous pipelines are not uniformly ``better'' than the strongest mono baseline; they should be selected based on the target sample distribution and the availability of a strong-enough model at each stage.
+
+\subsection{Threshold sensitivity}
+
+Table~\ref{tab:threshold_sensitivity_path1} presents Path~1 closure rates at every $(\tau, \rho)$ combination in $\{0, 0.5, 0.8\} \times \{2, 3, 4\}$. Two robustness findings emerge.
+
+First, the qualitative hetero-vs-mono conclusion of §5.1 holds at every threshold. Every hetero cell beats every mono cell at every threshold pair, with the exception of extreme $\rho = 4$ (``identical only'') where the entire distribution compresses toward zero and threshold-choice noise dominates. Kendall's $\tau_{\textsf{rank}}$ between the reference threshold $(\tau = 0, \rho = 3)$ and every alternative $(\tau, \rho) \in \{0, 0.5, 0.8\} \times \{2, 3\}$ exceeds $0.65$, indicating that the ordinal ranking of cells is preserved as thresholds are varied within the paper's operational band.
+
+Second, Path~3 sensitivity is markedly weaker: at $\tau = 0.4$ (a strict BERTScore threshold), Kendall's $\tau_{\textsf{rank}}$ falls to $-0.15$, non-significant. This is direct evidence that BERTScore's rank ordering of cells is unstable at threshold values where the metric is claimed to distinguish equivalent from non-equivalent docstrings. Combined with the aggregate correlation of $r_3 = 0.022$ from §5.2, this suggests that no reasonable BERTScore threshold produces a stable cell ordering on Path~3 --- BERTScore is not carrying the signal that any closure metric on this path should carry.
+
+\subsection{Design guidelines}
+
+We distil three design guidelines for practitioners assembling multi-SLM SE pipelines.
+
+\textbf{G1: Place the strongest available model at the bottleneck stage.} The stage-attribution decomposition (§4.3) and per-mutation-operator table (§4.4) both identify per-stage strengths that dominate closure success. When choosing a stage assignment, the correct heuristic is not `\texttt{pick the strongest model overall'' but }`identify which stage the pipeline is bottlenecked at, and place the strongest model there''. Chapter~2's per-operator capability map (phi-4 on predicate reasoning; qwen-coder on comparison operators) suffices as an initial oracle; empirical validation via mutation testing sharpens it.
+
+\textbf{G2: Match test-generator to the docstring style upstream, not to the model's general capability.} The phi-4-in-test-stage pathology (§5.3) shows that a model's capability at generating tests \emph{de novo} does not transfer to generating tests conditioned on a docstring produced by a different model. When phi-4 is downstream of a qwen3.6 or mistral docstring, its test-generation quality collapses. The practical implication is that stage models should be chosen jointly, not marginally.
+
+\textbf{G3: Use two-signal validity when reporting closure rates.} The judge--metric decomposition (§5.2) shows that any single automated metric can fail structurally --- BERTScore on Path~3 is uncorrelated with a judge SLM at $n = 1{,}791$. Reporting closure rate as ``metric $> \tau$'' alone risks systematic misestimation. Algorithm~\ref{alg:validity}'s two-signal strict-AND policy sacrifices some closure counts but produces a validity signal whose disagreement modes (Table~\ref{tab:disagreement_by_path}) are interpretable and can be reported honestly.
+
+\subsection{Limitations and threats to validity}
+
+\textbf{Model coverage.} The pipeline is evaluated on six open-weight SLMs from five distinct families; closed-weight frontier models (Claude Sonnet 4.6, GPT-4o) are not included. The 20-cell DOE was pre-registered with closed-weight cells (M5, H2, H8 in the original concept note); resource constraints during the sweep phase led to substituting these with additional open-weight cells. Consequently, RQ4 in the original registration --- comparing open-weight closure rates to a closed-weight ceiling --- is not answered here. It remains open as a follow-up study.
+
+\textbf{Hardware variability.} The sweep spanned both A100 and T4 hardware. The A100 hardware was used for the initial mono sweep and pilot phase; the T4 hardware for the majority of the hetero and null sweeps due to A100 unavailability. Nothing in our analysis depends on inference latency or compute cost, but the hardware split does mean that different (cell, path) rows were generated by different hardware. Cache reuse across hardware types is fully deterministic (SHA-256 keyed).
+
+\textbf{Sample size.} Mono cells were run on $N = 150$ core samples; hetero and null cells on $N = 75$ each. This asymmetric design was a compute-budget decision. The Tukey pairwise tests use the harmonic-mean sample size for unbalanced designs; per-cell confidence intervals are wider for hetero cells than for mono cells.
+
+\textbf{Human evaluation.} The 60-pair stratified human evaluation described in §3.9 of the concept note is prepared but not yet completed. Its results (judge--human agreement via Cohen's $\kappa$ and Krippendorff's $\alpha$; per-cell judge-error rate) will be reported in an addendum to this chapter.
+
+\textbf{Held-out datasets.} The 25-problem LiveCodeBench and 50-problem HumanEval-Mutated subsets were prepared for contamination sensitivity analysis but not swept in this study. Contamination sensitivity results on these subsets will accompany the human evaluation addendum.
+
+\textbf{Path 3 metric choice.} BERTScore was the pre-registered Path~3 metric; §5.2 shows it is not correlated with semantic equivalence on our data. Alternative metrics (BLEU-4, ROUGE-L, sentence-BERT similarity) were not evaluated. The paper's recommendation is not that BERTScore should be discarded but that it should be paired with judge-SLM adjudication under the two-signal validity policy. Determining whether an alternative surface-form metric would yield stronger $r_3$ correlation is a natural follow-up.
+
+\textbf{Judge SLM choice.} DeepSeek-R1:14B is a single 14B-parameter judge. Ensemble-of-judges designs (Delphi-style consensus) are not evaluated here. The judge's own reliability against human annotators will be reported in the pending human-evaluation addendum.
+
+
+\emph{End of §5 Discussion.} Section~6 (Threats to Validity) and §7 (Conclusion) complete the manuscript.
