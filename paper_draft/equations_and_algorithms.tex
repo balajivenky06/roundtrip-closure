@@ -1,0 +1,502 @@
+%% paper_draft/equations_and_algorithms.tex
+%%
+%% Paste-ready LaTeX source for the Chapter 3 manuscript. Contains:
+%%   - 21 numbered equations (Eq. 1 .. Eq. 21)
+%%   - 3 algorithm boxes (Alg. 1 path execution, Alg. 2 validity, Alg. 3 filter)
+%%   - a notation table
+%%
+%% Preamble packages required in the main document:
+%%   \usepackage{amsmath, amssymb}
+%%   \usepackage{dsfont}                     % for \mathds{1}
+%%   \usepackage{booktabs}                    % table rules
+%%   \usepackage{algorithm}                   % algorithm float
+%%   \usepackage{algpseudocode}               % pseudocode syntax
+%%
+%% Each block is preceded by a %% SECTION comment indicating where it belongs
+%% in the final manuscript. Equation labels use the eq: prefix; algorithm
+%% labels use alg:.
+
+%% ============================================================================
+%% §3.1 Notation
+%% ============================================================================
+
+\begin{table}[h]
+\centering
+\small
+\caption{Notation used in the round-trip closure formalism.}
+\label{tab:notation}
+\begin{tabular}{ll}
+\toprule
+Symbol & Meaning \\
+\midrule
+$C, D, T$ & original code, docstring, and reference test suite \\
+$C', D', T'$ & pipeline-reconstructed artefacts \\
+$L_{\textsf{spec}}, L_{\textsf{test}}, L_{\textsf{code}}$ & SLMs assigned to the three pipeline stages \\
+$L_J$ & external judge SLM (DeepSeek-R1, family-disjoint) \\
+$\mathcal{M} = \{m_1, \ldots, m_6\}$ & six pipeline SLMs (Table~\ref{tab:model_lineup}) \\
+$\mathcal{S} = \{\textsf{spec}, \textsf{test}, \textsf{code}\}$ & pipeline stages \\
+$a : \mathcal{S} \to \mathcal{M} \cup \{\bot\}$ & cell assignment ($\bot$ = ablated stage) \\
+$K(T', C)$ & mutation kill rate (Eq.~\ref{eq:killrate}) \\
+$R(C', T)$ & reference test pass rate (Eq.~\ref{eq:passrate}) \\
+$B(D_1, D_2)$ & BERTScore-F1 between two docstrings (Eq.~\ref{eq:bertscore}) \\
+$J(x, y) \in \{-1, 0, 1, 2, 3, 4\}$ & judge equivalence rating; $-1$ = parse failure \\
+$\tau$ & metric-validity threshold (path-specific; default $= 0$) \\
+$\rho$ & judge-validity threshold (default $= 3$) \\
+$\mathds{1}[\cdot]$ & indicator function \\
+$N$ & per-cell sample size ($150$ mono, $75$ hetero/null) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ============================================================================
+%% §3.2 Closure paths — Eq. 1 (three closure paths)
+%% ============================================================================
+
+\textbf{Round-trip closure paths.} Let $a$ be a cell assignment.
+The three closure paths are defined as
+\begin{align}
+  \text{Path 1 (}C \to D \to T\text{):} \quad
+  T' &\;=\; L_{\textsf{test}}\bigl(L_{\textsf{spec}}(C)\bigr), \label{eq:path1}\\
+  \text{Path 2 (}D \to T \to C\text{):} \quad
+  C' &\;=\; L_{\textsf{code}}\bigl(D,\; L_{\textsf{test}}(D)\bigr), \label{eq:path2}\\
+  \text{Path 3 (}C \to T \to D\text{):} \quad
+  D' &\;=\; L_{\textsf{spec}}\bigl(L_{\textsf{test}}(C)\bigr). \label{eq:path3}
+\end{align}
+
+%% ============================================================================
+%% §3.3 Closure validity — Eq. 2 (Path 1 validity), Eq. 3 (Paths 2 & 3)
+%% ============================================================================
+
+\textbf{Closure validity.} For Path 1, given mutation kill rate
+$K(T', C)$ and judge rating $J(D, D')$:
+\begin{equation}
+  \text{valid}_1(C, D, D', T')
+  \;=\;
+  \mathds{1}\!\bigl[\, K(T', C) > \tau \,\bigr]
+  \;\wedge\;
+  \mathds{1}\!\bigl[\, J(D, D') \geq \rho \,\bigr].
+  \label{eq:valid1}
+\end{equation}
+
+Analogous definitions hold for Path 2 (with reference pass rate $R$) and
+Path 3 (with BERTScore $B$):
+\begin{equation}
+  \text{valid}_2 \;=\; \mathds{1}\!\bigl[R(C', T) > 0\bigr] \,\wedge\, \mathds{1}\!\bigl[J(C, C') \geq \rho\bigr],
+  \label{eq:valid2}
+\end{equation}
+\begin{equation}
+  \text{valid}_3 \;=\; \mathds{1}\!\bigl[B(D, D') > 0\bigr] \,\wedge\, \mathds{1}\!\bigl[J(D, D') \geq \rho\bigr].
+  \label{eq:valid3}
+\end{equation}
+
+%% ============================================================================
+%% §3.4 Test filter — Eq. 4 (filtered test suite)
+%% ============================================================================
+
+\textbf{Test filter.} Let $T' = \{t_1, t_2, \ldots\}$ be the candidate test
+set. The filtered suite is
+\begin{equation}
+  T'_{\textsf{filt}}(C)
+  \;=\;
+  \bigl\{\, t \in T' \;:\; \textsf{exec}(t, C) = \textsf{pass} \,\bigr\}.
+  \label{eq:filter}
+\end{equation}
+
+%% ============================================================================
+%% §3.6 DOE — Eq. 5 (DOE stratification)
+%% ============================================================================
+
+\textbf{Cell assignment.} A cell is a function
+$a : \mathcal{S} \to \mathcal{M} \cup \{\bot\}$
+assigning each pipeline stage to an SLM or to $\bot$ (ablation). The DOE
+specifies 20 such cells:
+\begin{equation}
+  \mathcal{C}_{\textsf{DOE}} \;=\;
+  \underbrace{\bigl\{a : a(\textsf{spec}) = a(\textsf{test}) = a(\textsf{code})\bigr\}}_{\text{Mono (6)}}
+  \;\cup\;
+  \underbrace{\bigl\{a : |\{a(s) : s \in \mathcal{S}\}| = 3\bigr\}}_{\text{Hetero (11)}}
+  \;\cup\;
+  \underbrace{\mathcal{C}_{\textsf{null}}}_{\text{Null (3)}}.
+  \label{eq:doe}
+\end{equation}
+
+%% ============================================================================
+%% §3.5.1 Path 1 metric — Eq. 6 (mutation kill rate)
+%% ============================================================================
+
+\textbf{Mutation kill rate.} Given the filtered test suite
+$T'_{\textsf{filt}}$ and mutant set $\mathcal{M}_C = \{m_1, \ldots, m_n\}$:
+\begin{equation}
+  K(T', C)
+  \;=\;
+  \frac{\bigl|\{\, m \in \mathcal{M}_C \;:\; \exists t \in T'_{\textsf{filt}}(C),\; \textsf{exec}(t, m) = \textsf{fail} \,\}\bigr|}{\bigl|\mathcal{M}_C\bigr| \;-\; \bigl|\mathcal{M}_C^{\textsf{equiv}}\bigr|}.
+  \label{eq:killrate}
+\end{equation}
+Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ are excluded from the
+denominator following Chapter~2's protocol.
+
+%% ============================================================================
+%% §3.5.2 Path 2 metric — Eq. 7 (reference pass rate)
+%% ============================================================================
+
+\textbf{Reference test pass rate.} Let $T = \{t_1, \ldots, t_k\}$ be the
+ground-truth reference suite:
+\begin{equation}
+  R(C', T)
+  \;=\;
+  \frac{1}{|T|}\sum_{i=1}^{|T|} \mathds{1}\!\bigl[\,\textsf{exec}(t_i, C') = \textsf{pass}\,\bigr].
+  \label{eq:passrate}
+\end{equation}
+The main analysis uses the binary form $R \in \{0, 1\}$; the fractional
+per-test version (Eq.~\ref{eq:passrate_fine}) appears in Appendix.
+
+%% ============================================================================
+%% §3.5.3 Path 3 metric — Eq. 8-10 (BERTScore precision, recall, F1)
+%% ============================================================================
+
+\textbf{Docstring BERTScore.} For docstrings $D_1, D_2$, let $\phi(D)$
+denote their RoBERTa-large contextual token embeddings. Precision and
+recall under cosine similarity are
+\begin{align}
+  P(D_1, D_2) &\;=\; \frac{1}{|\phi(D_2)|} \sum_{x \in \phi(D_2)} \max_{y \in \phi(D_1)} \cos(x, y), \label{eq:bert_p}\\
+  R(D_1, D_2) &\;=\; \frac{1}{|\phi(D_1)|} \sum_{y \in \phi(D_1)} \max_{x \in \phi(D_2)} \cos(x, y), \label{eq:bert_r}
+\end{align}
+and the BERTScore F1 we report is
+\begin{equation}
+  B(D_1, D_2)
+  \;=\;
+  \frac{2 \cdot P(D_1, D_2) \cdot R(D_1, D_2)}{P(D_1, D_2) + R(D_1, D_2)}.
+  \label{eq:bertscore}
+\end{equation}
+Baseline-rescaled scores give $B \in (-\infty, 1]$ with $B = 0$ denoting
+``no better than random pairing''.
+
+%% ============================================================================
+%% §3.8.1 ANOVA — Eq. 11 (main-effects model)
+%% ============================================================================
+
+\textbf{Type-III ANOVA.} For each closure metric $Y$ we fit
+\begin{equation}
+  Y_{ij} \;=\; \mu \;+\; \alpha_i \;+\; \beta_j \;+\; \varepsilon_{ij},
+  \quad \varepsilon_{ij} \sim \mathcal{N}(0, \sigma^2),
+  \label{eq:anova}
+\end{equation}
+where $\alpha_i$ is the cell effect, $\beta_j$ the sample effect, and
+$\varepsilon_{ij}$ residual. Fitted values on our data: $F_{\text{cell}} =
+17.45$ on $(13, 3918)$ degrees of freedom, $p < 0.001$, partial $\eta^2 =
+0.068$.
+
+%% ============================================================================
+%% §3.8.1 Interaction ANOVA — Eq. 12 (extended model with path)
+%% ============================================================================
+
+\textbf{Path~$\times$~cell interaction.} To test whether the three closure
+paths carry non-redundant information, we extend Eq.~\ref{eq:anova}:
+\begin{equation}
+  Y_{ijk} \;=\; \mu \;+\; \alpha_i \;+\; \eta_k \;+\; (\alpha \cdot \eta)_{ik} \;+\; \beta_j \;+\; \varepsilon_{ijk},
+  \label{eq:anova_interact}
+\end{equation}
+where $\eta_k$ is the path effect and $(\alpha \cdot \eta)_{ik}$ the
+cell-path interaction. Fitted values: $F_{\text{interaction}} = 6.21$ on
+$(34, 4865)$ degrees of freedom, $p < 0.001$, partial $\eta^2 = 0.042$.
+The interaction is significant --- cells respond differently to different
+paths, not with a constant offset.
+
+%% ============================================================================
+%% §3.8.2 F-statistic — Eq. 13 (cell effect test)
+%% ============================================================================
+
+\textbf{F-statistic for cell effect.} The F-statistic
+\begin{equation}
+  F_{\textsf{cell}}
+  \;=\;
+  \frac{MS_{\textsf{cell}}}{MS_{\textsf{within}}}
+  \;\sim\; F(d_{\textsf{cell}}, d_{\textsf{err}})
+  \label{eq:fstat}
+\end{equation}
+under $H_0: \alpha_1 = \cdots = \alpha_{|\mathcal{C}_{\textsf{DOE}}|}$.
+
+%% ============================================================================
+%% §3.8.2 Tukey HSD — Eq. 14 (pairwise cell comparisons)
+%% ============================================================================
+
+\textbf{Tukey honest significant difference.} Pairwise mean differences
+between cells $i$ and $k$ are tested via
+\begin{equation}
+  q_{ik}
+  \;=\;
+  \frac{\bar{Y}_i - \bar{Y}_k}{\sqrt{MS_{\textsf{within}} / n_h}},
+  \label{eq:tukey}
+\end{equation}
+where $n_h$ is the harmonic mean of per-cell sample sizes for the
+unbalanced-design extension. Family-wise error is controlled by
+Bonferroni correction over the $20 \times 19 / 2 = 190$ pairwise
+comparisons at $\alpha = 0.05$.
+
+%% ============================================================================
+%% §3.8.3 Judge-metric correlation — Eq. 15 (Pearson r per path)
+%% ============================================================================
+
+\textbf{Judge--metric correlation.} The Pearson correlation between the
+automated metric $Y$ and the judge rating $J$ on path $p$ is
+\begin{equation}
+  r_p \;=\; \frac{\sum_r (Y_r - \bar{Y})(J_r - \bar{J})}{\sqrt{\sum_r (Y_r - \bar{Y})^2 \cdot \sum_r (J_r - \bar{J})^2}}.
+  \label{eq:corr}
+\end{equation}
+Rows with $J = -1$ (parse failure) are excluded. Fitted values:
+$r_1 = 0.19\ (p = 2.12 \times 10^{-13},\ n = 1{,}441)$,
+$r_2 = 0.52\ (p = 1.19 \times 10^{-129},\ n = 1{,}839)$,
+$r_3 = 0.02\ (p = 0.359,\ n = 1{,}791)$.
+Path 3's correlation is not statistically significant.
+
+%% ============================================================================
+%% §3.8.4 Sensitivity analysis — Eq. 16 (Kendall tau_rank)
+%% ============================================================================
+
+\textbf{Ordinal rank stability.} For threshold sensitivity, we compute
+Kendall's $\tau_{\textsf{rank}}$ between the reference-threshold cell
+ranking $(\tau = 0, \rho = 3)$ and the ranking at each alternative
+$(\tau, \rho)$:
+\begin{equation}
+  \tau_{\textsf{rank}}
+  \;=\;
+  \frac{n_{\textsf{concordant}} - n_{\textsf{discordant}}}{\binom{|\mathcal{C}_{\textsf{DOE}}|}{2}}.
+  \label{eq:kendall}
+\end{equation}
+Values close to $1$ indicate stable rankings; values near $0$ or below
+indicate the ranking is threshold-artefactual.
+
+%% ============================================================================
+%% §4.4 Mixed-effects logit — Eq. 17 (per-stage decomposition)
+%% ============================================================================
+
+\textbf{Mixed-effects logit for stage attribution.} Let
+$\text{closure}_{ij} \in \{0, 1\}$ denote whether function $j$ closed
+under cell $i$. We model
+\begin{equation}
+  \text{logit}\bigl(\Pr[\text{closure}_{ij} = 1]\bigr)
+  \;=\;
+  \beta_0
+  + \beta_1 \cdot a_i(\textsf{spec})
+  + \beta_2 \cdot a_i(\textsf{test})
+  + \beta_3 \cdot a_i(\textsf{code})
+  + \gamma_j,
+  \label{eq:mixedlogit}
+\end{equation}
+where $\gamma_j \sim \mathcal{N}(0, \sigma_{\textsf{sample}}^2)$ is a random
+intercept for sample. Estimates $\hat\beta_1, \hat\beta_2, \hat\beta_3$
+quantify each stage's contribution to closure odds.
+
+%% ============================================================================
+%% §5.5 Judge-human agreement — Eq. 18-19 (Cohen's kappa, Krippendorff alpha)
+%% ============================================================================
+
+\textbf{Judge--human agreement.} For each binarised rating
+($J \geq \rho$ vs $J < \rho$), Cohen's $\kappa$ is
+\begin{equation}
+  \kappa
+  \;=\;
+  \frac{p_o - p_e}{1 - p_e},
+  \label{eq:kappa}
+\end{equation}
+where $p_o$ is observed agreement and $p_e$ chance-expected agreement.
+Values interpretation: $\kappa > 0.6$ substantial, $\kappa > 0.8$
+almost-perfect.
+
+\textbf{Inter-rater reliability (multi-rater).} For ordinal ratings
+$r_{ij}$ from rater $i$ on item $j$,
+\begin{equation}
+  \alpha
+  \;=\;
+  1 \;-\; \frac{D_o}{D_e},
+  \quad
+  D_o \;=\; \tfrac{1}{n}\sum_{j} \tfrac{1}{\binom{m_j}{2}}
+            \sum_{i_1 < i_2} \delta(r_{i_1 j}, r_{i_2 j})^2,
+  \label{eq:alpha}
+\end{equation}
+where $\delta$ is the ordinal-difference metric and $D_e$ expected
+disagreement under random pairing. $\alpha > 0.667$ is acceptable for
+inferential use.
+
+%% ============================================================================
+%% §5.2 Stage-strength score — Eq. 20 (novel formalism)
+%% ============================================================================
+
+\textbf{Stage-strength score.} For model $m$ and stage $s$,
+\begin{equation}
+  S(m, s)
+  \;=\;
+  \frac{1}{|\mathcal{C}_{m,s}|}
+  \sum_{a \in \mathcal{C}_{m,s}}
+  \;
+  \mathbb{E}_{j}\!\bigl[\text{valid}(a, j) \;\big|\; a(s) = m\bigr],
+  \label{eq:stagestrength}
+\end{equation}
+where $\mathcal{C}_{m,s} = \{a \in \mathcal{C}_{\textsf{DOE}} : a(s) = m\}$
+is the set of cells assigning $m$ to stage $s$, and expectation is over
+the $N$ sampled functions. $S(m, s) \in [0, 1]$; the marginal effect of
+moving $m$ from stage $s$ to $s'$ is $S(m, s) - S(m, s')$.
+
+%% ============================================================================
+%% §5.1 Heterogeneity gain — Eq. 21 (novel formalism, the paper's thesis)
+%% ============================================================================
+
+\textbf{Heterogeneity gain.} The heterogeneity gain is
+\begin{equation}
+  G
+  \;=\;
+  \max_{a \in \mathcal{C}_{\textsf{hetero}}}
+  \;
+  \mathbb{E}_{j}\!\bigl[\text{valid}(a, j)\bigr]
+  \;-\;
+  \max_{a \in \mathcal{C}_{\textsf{mono}}}
+  \;
+  \mathbb{E}_{j}\!\bigl[\text{valid}(a, j)\bigr].
+  \label{eq:heterogain}
+\end{equation}
+$G > 0$ confirms the heterogeneity thesis; $G \approx 0$ indicates the
+best hetero assignment merely matches the best mono baseline. Confidence
+intervals are bootstrapped over functions.
+
+%% ============================================================================
+%% Appendix — Eq. 22 (per-test pass rate; refinement of Eq. 7)
+%% Note: numbering above stops at Eq. 21; this appendix equation is 22.
+%% ============================================================================
+
+\textbf{Per-test pass rate (Appendix variant).}
+\begin{equation}
+  R_{\textsf{per-test}}(C', T)
+  \;=\;
+  \frac{1}{|T|}
+  \sum_{t \in T}
+  \mathds{1}\!\bigl[\textsf{exec}(t, C') = \textsf{pass}\bigr].
+  \label{eq:passrate_fine}
+\end{equation}
+
+%% ============================================================================
+%% Algorithm 1: Round-trip closure path execution
+%% Goes in: §3.2 (right after Eq. 1-3)
+%% ============================================================================
+
+\begin{algorithm}[htbp]
+\caption{Round-trip closure path execution.}
+\label{alg:path_execution}
+\begin{algorithmic}[1]
+\Require cell $a = (L_{\textsf{spec}}, L_{\textsf{test}}, L_{\textsf{code}})$, sample $s = (C, D, T)$
+\Ensure closure result $r_p$ for each path $p \in \{1, 2, 3\}$
+\For{$p \in \{1, 2, 3\}$}
+  \If{$p = 1$} \Comment{$C \to D \to T$}
+    \State $D' \gets L_{\textsf{spec}}(C)$
+    \State $T' \gets L_{\textsf{test}}(D', \textsf{entry\_point}, \textsf{signature})$
+    \State $T'_{\textsf{filt}} \gets \textsc{TestFilter}(T', C)$ \Comment{Algorithm~\ref{alg:test_filter}}
+    \State $K \gets \textsc{MutationKillRate}(T'_{\textsf{filt}}, C)$
+    \State $J \gets \textsc{Judge}(D, D', \text{kind}{=}\textsc{docstring})$
+    \State $r_1 \gets (\text{metric}{=}K,\; \text{judge}{=}J)$
+  \ElsIf{$p = 2$} \Comment{$D \to T \to C$}
+    \State $T' \gets L_{\textsf{test}}(D, \textsf{entry\_point}, \textsf{signature})$
+    \State $C' \gets L_{\textsf{code}}(D, T', \textsf{entry\_point}, \textsf{signature})$
+    \State $R \gets \textsc{ReferencePassRate}(T, C')$
+    \State $J \gets \textsc{Judge}(C, C', \text{kind}{=}\textsc{code})$
+    \State $r_2 \gets (\text{metric}{=}R,\; \text{judge}{=}J)$
+  \Else \Comment{$p = 3$, $C \to T \to D$}
+    \State $T' \gets L_{\textsf{test}}(C)$
+    \State $D' \gets L_{\textsf{spec}}(T')$
+    \State $B \gets \textsc{BERTScore}(D, D')$
+    \State $J \gets \textsc{Judge}(D, D', \text{kind}{=}\textsc{docstring})$
+    \State $r_3 \gets (\text{metric}{=}B,\; \text{judge}{=}J)$
+  \EndIf
+\EndFor
+\State \Return $[r_1, r_2, r_3]$
+\end{algorithmic}
+\end{algorithm}
+
+%% ============================================================================
+%% Algorithm 2: Closure validity decision
+%% Goes in: §3.3 (right after Eq. 2-4)
+%% Reference implementation: closure_decision.decide_validity
+%% Unit tests: tests/test_closure_decision.py (43 tests, all 5 categories)
+%% ============================================================================
+
+\begin{algorithm}[htbp]
+\caption{Closure validity decision (implements Eqs.~\ref{eq:valid1}--\ref{eq:valid3}).}
+\label{alg:validity}
+\begin{algorithmic}[1]
+\Require metric value $m$, judge rating $J \in \{-1, 0, 1, 2, 3, 4\}$, thresholds $\tau$, $\rho$
+\Ensure validity $\in \{\text{valid}, \text{invalid}\}$, \textsf{decision\_reason} in five categories
+\If{$m$ is missing \textbf{or} $J = -1$}
+  \State \Return $(\text{invalid},\; \textsf{structural\_NA})$ \Comment{Ablated stage or empty artefact}
+\EndIf
+\If{$m > \tau$ \textbf{and} $J \geq \rho$}
+  \State \Return $(\text{valid},\; \textsf{both\_agree\_valid})$
+\ElsIf{$m \leq \tau$ \textbf{and} $J < \rho$}
+  \State \Return $(\text{invalid},\; \textsf{both\_agree\_invalid})$
+\ElsIf{$m > \tau$ \textbf{and} $J < \rho$}
+  \State \Return $(\text{invalid},\; \textsf{false\_closure\_candidate})$ \Comment{Metric over-credits}
+\Else \Comment{$m \leq \tau$ and $J \geq \rho$}
+  \State \Return $(\text{invalid},\; \textsf{metric\_false\_negative})$ \Comment{Metric under-credits}
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+%% ============================================================================
+%% Algorithm 3: Test-filter validity gate
+%% Goes in: §3.4 (right after Eq. 5)
+%% Reference implementation: closure_metrics.filter_tests_with_reason
+%% Unit tests: tests/test_filter_tests_reason.py (8 tests, all 4 reasons)
+%% ============================================================================
+
+\begin{algorithm}[htbp]
+\caption{Test-filter validity gate (implements Eq.~\ref{eq:filter}).}
+\label{alg:test_filter}
+\begin{algorithmic}[1]
+\Require candidate test suite $T'$, original code $C$
+\Ensure filtered suite $T'_{\textsf{filt}} \subseteq T'$, \textsf{filter\_reason} label
+\If{$T'$ or $C$ is empty}
+  \State \Return $(\emptyset,\; \textsf{empty\_input})$
+\EndIf
+\State $N \gets$ number of \texttt{def test\_*} functions in $T'$
+\If{$N = 0$}
+  \State \Return $(\emptyset,\; \textsf{no\_test\_functions})$
+\EndIf
+\State $T'_{\textsf{filt}} \gets \emptyset$
+\For{each test $t$ in $\textsc{SplitTestFunctions}(T')$}
+  \State $\textsf{status} \gets \textsc{PytestSubprocess}(t, C, \textsf{timeout} = 10\text{s})$
+  \If{$\textsf{status} = \textsf{pass}$}
+    \State $T'_{\textsf{filt}} \gets T'_{\textsf{filt}} \cup \{t\}$
+  \EndIf
+\EndFor
+\If{$|T'_{\textsf{filt}}| = 0$}
+  \State \Return $(\emptyset,\; \textsf{all\_dropped})$ \Comment{Row written with NaN metric}
+\EndIf
+\State \Return $(T'_{\textsf{filt}},\; \textsf{kept}\_K\_\textsf{of}\_N)$
+\end{algorithmic}
+\end{algorithm}
+
+%% ============================================================================
+%% END equations_and_algorithms.tex
+%%
+%% Cross-reference summary (label -> paper section)
+%%
+%%   eq:path1 eq:path2 eq:path3     §3.2  Closure paths
+%%   eq:valid1 eq:valid2 eq:valid3  §3.3  Closure validity
+%%   eq:filter                      §3.4  Test filter
+%%   eq:doe                         §3.6  DOE stratification
+%%   eq:killrate                    §3.5.1 Path 1 metric
+%%   eq:passrate                    §3.5.2 Path 2 metric
+%%   eq:bert_p eq:bert_r eq:bertscore §3.5.3 Path 3 metric
+%%   eq:anova                       §3.8.1 ANOVA main model
+%%   eq:anova_interact              §3.8.1 ANOVA with interaction (§4.7 fits)
+%%   eq:fstat                       §3.8.2 F-statistic
+%%   eq:tukey                       §3.8.2 Tukey pairwise
+%%   eq:corr                        §3.8.3 Judge-metric correlation
+%%   eq:kendall                     §3.8.4 Threshold sensitivity
+%%   eq:mixedlogit                  §4.4   Per-stage decomposition
+%%   eq:kappa eq:alpha              §5.5   Judge-human agreement
+%%   eq:stagestrength               §5.2   Stage strength (novel formalism)
+%%   eq:heterogain                  §5.1   Heterogeneity gain (novel formalism)
+%%   eq:passrate_fine               App A  Per-test pass rate
+%%
+%%   alg:path_execution             §3.2   Algorithm 1
+%%   alg:validity                   §3.3   Algorithm 2
+%%   alg:test_filter                §3.4   Algorithm 3
+%% ============================================================================
