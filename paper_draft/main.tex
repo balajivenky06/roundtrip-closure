@@ -116,31 +116,30 @@
 \begin{abstract}
 Practitioners deploying multi-stage Small-Language-Model (SLM) pipelines for
 software engineering face an unanswered empirical question: does it matter
-which SLM sits at which stage of the pipeline? We report the first cross-LLM
-$\times$ cross-stage evaluation of round-trip closure on the docstring--test--code
-triangle, evaluated under a pre-registered 20-cell design of experiments
-spanning six open-weight SLMs (all under 30~B parameters) traversing three
-closure paths on 150 HumanEval and MBPP functions. Closure is measured under
-a strict two-signal validity policy combining an SE-validated automated metric
-(mutation kill rate, reference test pass rate, BERTScore F1) with an
-external judge SLM's semantic-equivalence rating (DeepSeek-R1). Five findings
-emerge. First, the pre-registered H1 composition (phi-4 spec + qwen-coder
-test/code) dominates four of five mutation operators empirically, matching
-its pre-registered per-operator prediction from a companion mutation-testing
-study. Second, phi-4 as the test-generation stage produces filter-failing
-tests on approximately half of samples across three independent cells, a
-cross-stage pathology invisible in single-stage evaluations. Third, BERTScore
-F1 is statistically uncorrelated ($r = 0.02$, $p = 0.359$, $n = 1{,}791$)
-with the judge SLM's semantic-equivalence rating on the docstring--docstring
-closure path, and the disagreement flips direction across benchmarks in a
-signature characteristic of a surface-form similarity signal. Fourth, the
-three closure paths carry non-redundant information about cell performance
-($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$). Fifth,
-heterogeneity is not free: well-composed hetero cells preserve $78$--$91\%$
-of the strongest mono baseline's capability, while wrong-model-at-wrong-stage
-cells sacrifice materially. We derive three design guidelines for practitioners
-and release an open replication package including 51 unit tests covering the
-closure-validity decision and test-filter validity gate.
+which SLM sits at which stage? We report the first cross-LLM $\times$
+cross-stage evaluation of round-trip closure on the docstring--test--code
+triangle, using a pre-registered 20-cell design spanning six open-weight
+SLMs under 30~B parameters, three closure paths, and 150 HumanEval and MBPP
+functions. Closure is decided under a strict two-signal policy combining an
+SE-validated metric (mutation kill rate, reference test pass rate, or
+BERTScore F1) with an external judge SLM (DeepSeek-R1). Five findings emerge. First, the pre-registered H1
+composition (phi-4 spec + qwen-coder test/code) dominates four of five
+mutation operators, matching its per-operator prediction from a companion
+mutation-testing study. Second, phi-4 as the test-generation stage produces
+filter-failing tests on approximately half of samples across three
+independent cells---a cross-stage pathology invisible in single-stage
+evaluations. Third, BERTScore F1 is statistically uncorrelated
+($r = 0.02$, $p = 0.359$, $n = 1{,}791$) with the judge's semantic rating
+on the docstring--docstring path, and the disagreement flips direction
+across benchmarks, consistent with a surface-form signal.
+Fourth, the three closure paths carry non-redundant information about cell
+performance ($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$).
+Fifth, heterogeneity is not free: well-composed hetero cells preserve
+$78$--$91\%$ of the strongest mono baseline, while wrong-model-at-wrong-stage
+cells collapse. We derive three design guidelines and release an open
+replication package including 67 unit tests covering the closure-validity
+decision, the test-filter validity gate, and their integration into the
+sweep pipeline.
 \end{abstract}
 
 \begin{keyword}
