@@ -2,7 +2,10 @@
 
 **Heterogeneous Multi-SLM Closure of the Docstring–Test–Code Triangle: A Mutation-Testing Study**
 
-Chapter 3 of the PhD thesis on Small Language Models for Software Engineering.
+Chapter 3 of the PhD thesis:
+
+> **Small Language Models for Software Engineering: Retrieval-Augmented Documentation, Mutation-Tested Generation, and Heterogeneous Round-Trip Closure**
+
 Companion to:
 
 - Chapter 1 — Docstring generation (under review at Springer-Nature *Automated Software Engineering*)

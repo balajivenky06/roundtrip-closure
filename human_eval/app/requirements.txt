@@ -1,0 +1,7 @@
+# human_eval/app/requirements.txt — pinned lower bounds for the annotation app.
+#
+# Install with:
+#     pip install -r human_eval/app/requirements.txt
+
+streamlit>=1.30.0
+pygments>=2.17.0        # (used indirectly by st.code for syntax highlighting)
