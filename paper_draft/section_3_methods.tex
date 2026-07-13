@@ -1,4 +1,5 @@
 \section{Methods}
+\label{sec:methods}
 
 \subsection{Notation and problem setup}
 
@@ -312,7 +313,7 @@ To isolate which stage assignment drives closure, we treat each cell as the prod
 
 where $\gamma_j \sim \mathcal{N}(0, \sigma_{\textsf{sample}}^2)$ is a random intercept for sample. Estimates $\hat{\beta}_1, \hat{\beta}_2, \hat{\beta}_3$ quantify each stage's contribution to closure odds.
 
-\subsubsection{Judge--human agreement (pending addendum)}
+\subsubsection{Judge--human agreement (reported in Section~\ref{sec:human_eval_addendum})}
 
 For each binarised rating (judge threshold $J \geq \rho$ versus $J < \rho$), Cohen's $\kappa$ is
 
@@ -335,7 +336,7 @@ where $p_o$ is the observed agreement proportion between the judge SLM and a hum
   \label{eq:alpha}
 \end{equation}
 
-where $\delta$ is the ordinal-difference metric and $D_e$ is the expected disagreement under random pairing. Values $\alpha > 0.667$ are considered acceptable for inferential use. Both $\kappa$ and $\alpha$ will be reported in the pending human-evaluation addendum described in Section~7.3.
+where $\delta$ is the ordinal-difference metric and $D_e$ is the expected disagreement under random pairing. Values $\alpha > 0.667$ are considered acceptable for inferential use. Both $\kappa$ and $\alpha$ are reported in the human-evaluation addendum (Section~\ref{sec:human_eval_addendum}); the headline numbers on the 60-pair three-annotator sample are $\alpha_{\textsf{ord}} = 0.376$ across the three human annotators and $\kappa_{\textsf{quad}} = 0.138$ between the judge SLM and the majority human rating.
 
 \subsubsection{Sensitivity analysis}
 

@@ -54,7 +54,7 @@ External-validity threats concern the generalisation of the findings beyond the 
 
 \textbf{Threat.} The core dataset comprises 150~functions from HumanEval and MBPP. Both benchmarks are Python-only, function-level (not multi-file or class-level), and drawn from a corpus that appeared in the training data of many of the pipeline SLMs. The results may not transfer to other benchmarks, other languages, or to multi-file / class-level SE tasks.
 
-\textbf{Mitigation.} Two held-out subsets (25 LiveCodeBench problems with publication date $\geq$ 2024-12-01, post-training-cutoff for all evaluated SLMs; 50 HumanEval-Mutated problems with function-rename + docstring-paraphrase transformations) were prepared but not swept in this study. Contamination sensitivity results on these subsets will be reported in a pending addendum. The cross-benchmark decomposition in Section~4.5 documents that per-cell effects are significant on both HumanEval and MBPP with different F-values, suggesting the effects generalise across the two benchmarks.
+\textbf{Mitigation.} Two held-out subsets (25 LiveCodeBench problems with publication date $\geq$ 2024-12-01, post-training-cutoff for all evaluated SLMs; 50 HumanEval-Mutated problems with function-rename + docstring-paraphrase transformations) were prepared but not swept in this study. Contamination sensitivity results on these subsets remain future work. The cross-benchmark decomposition in Section~4.5 documents that per-cell effects are significant on both HumanEval and MBPP with different F-values, suggesting the effects generalise across the two benchmarks.
 
 \textbf{Residual risk.} Substantial for languages other than Python and for tasks that require multi-file understanding. This is a well-known limitation of function-level LLM-SE evaluation.
 
@@ -82,9 +82,9 @@ Construct-validity threats concern whether the operational definitions of `\text
 
 \textbf{Threat.} DeepSeek-R1:14B is used as the external judge SLM. The judge's own validity as a semantic-equivalence oracle is not independently verified in this chapter. LLM-as-judge protocols are known to exhibit position bias, verbosity bias, self-preference bias, and sycophancy under user pressure~[Panickssery et al., 2024; Wang et al., 2024; Fanous et al., 2025].
 
-\textbf{Mitigation.} DeepSeek-R1 is chosen deliberately for family-disjointness from every pipeline SLM. The 60-pair stratified human-evaluation study (Section~3.9, pending addendum) will report Cohen's $\kappa$ (Eq.~\ref{eq:kappa}) between the judge and three independent human annotators, quantifying the judge's own validity. All disagreements documented in Section~5.2 include the judge as one signal; disagreements are attributed to the judge--metric pair, not to the judge alone.
+\textbf{Mitigation.} DeepSeek-R1 is chosen deliberately for family-disjointness from every pipeline SLM. The 60-pair stratified three-annotator human evaluation (Section~\ref{sec:human_eval_addendum}) reports $\kappa_{\textsf{quad}} = 0.138$ between the judge and the majority human rating, placing the judge in Landis and Koch's ``slight'' band at fine resolution while it matches the pairwise human within-1 agreement rate ($91.7\%$) at coarser resolution. All disagreements documented in Section~5.2 include the judge as one signal; disagreements are attributed to the judge--metric pair, not to the judge alone.
 
-\textbf{Residual risk.} Until the human-evaluation addendum is complete, the judge's absolute reliability is not quantified. All claims in this chapter that depend on the judge's rating (Section~5.2, Section~5.4) are stated as `\texttt{the judge disagrees with the metric'' or }\texttt{the judge accepts equivalence'' rather than as }`the artefacts are semantically equivalent''.
+\textbf{Residual risk.} The judge's category-exact reliability against humans is weak ($\kappa_{\textsf{quad}} = 0.138$); the strict-AND policy that pairs judge and metric on every closure decision is the mitigation. Claims in this chapter that depend on the judge's rating (Section~5.2, Section~5.4) are stated as ``the judge disagrees with the metric'' or ``the judge accepts equivalence'' rather than as ``the artefacts are semantically equivalent''.
 
 \subsubsection{The strict-AND validity policy}
 
@@ -130,8 +130,8 @@ Conclusion-validity threats concern whether the statistical inferences reported 
   \item \textbf{Closed-weight cells deferred.} M5, H2, H8 pre-registered as closed-weight; run as open-weight variants (M5 as Mistral, H2 as qwen3.6/phi-4/qwen-coder, H8 as gemma-4/qwen-coder/mistral). RQ4 correspondingly deferred to follow-up study.
   \item \textbf{Model family lineup.} The concept note listed qwen3.5:9B, llama3.3:70B; the swept lineup uses qwen3.6:27B, gemma4:26B, mistral-small3.2:24B. The change reflects the models available at sweep time (2026-06 to 2026-07).
   \item \textbf{Sample size asymmetric.} Concept note specified 150 per cell across all strata; swept as 150 mono, 75 hetero and null.
-  \item \textbf{Held-out subsets prepared but not fully swept.} The 25-problem LiveCodeBench and 50-problem HumanEval-Mutated subsets were prepared per pre-registration; contamination sensitivity results are pending in the addendum.
-  \item \textbf{Human evaluation pending.} The 60-pair three-annotator study is prepared (worksheet released) but not yet conducted; results in pending addendum.
+  \item \textbf{Held-out subsets prepared but not fully swept.} The 25-problem LiveCodeBench and 50-problem HumanEval-Mutated subsets were prepared per pre-registration; contamination sensitivity results are deferred to future work.
+  \item \textbf{Human evaluation reported in addendum.} The 60-pair three-annotator study is reported in Section~\ref{sec:human_eval_addendum}, which post-dates the initial revision.
 \end{itemize}
 
 Every deviation is disclosed in this chapter and reflected in the source-controlled DOE table (\texttt{doe.py}), the pre-registered concept note (\texttt{chapter3\_concept\_note.md}), and the sweep TSV timestamps. No results were re-planned in light of the observed data.

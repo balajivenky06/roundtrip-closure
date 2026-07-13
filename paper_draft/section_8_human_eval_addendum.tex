@@ -1,0 +1,165 @@
+%% ============================================================================
+%% Section 8 — Human-evaluation addendum
+%% ============================================================================
+\section{Human-evaluation addendum}
+\label{sec:human_eval_addendum}
+
+The 60-pair three-annotator human evaluation described methodologically in
+Section~\ref{sec:methods} and referenced as ``pending'' in the initial
+manuscript revision has now been completed. This section reports the
+inter-rater and judge--human agreement statistics and interprets their
+implications for the strict-AND two-signal validity policy that underpins
+this study's closure decisions.
+
+\subsection{Study conduct}
+\label{sec:human_eval_conduct}
+
+Three annotators (BV, GS, AM) with software-engineering background rated
+the 60 pre-registered pairs on the 5-level rubric described in
+Section~\ref{sec:methods}. Sampling was as pre-registered: 20 pairs from
+the ``frontier'' bucket (judge and metric agree on validity, drawn
+uniformly from cells with mid-range closure rates), 20 from the
+``agreement'' bucket (judge and metric both mark the row valid or both
+mark invalid), and 20 from the ``disputed'' bucket (judge and metric
+disagree). Annotators saw pairs in a per-annotator deterministic order
+(SHA-256 seed on the annotator identifier) and were blinded to cell
+identity, closure path, judge rating, and bucket assignment. All three
+annotators completed the full 60 pairs, provided a written justification
+for every rating (0 empty), and issued zero (BV, AM) or one (GS) revision
+after initial submission.
+
+The rating distributions are broadly consistent across annotators. Both
+BV and GS place the modal rating at 3 (``equivalent''), with 26 and 27
+pairs respectively receiving this rating; AM places the modal rating at
+3 as well ($n=26$) but is somewhat more generous at the top of the scale
+($n=21$ pairs rated 4, versus 13 for BV and 16 for GS). No annotator
+used rating 0 (``unrelated'') more than once, indicating that the LLM
+pipeline is at least producing artefacts within the topical
+neighbourhood of the ground truth on the sampled pairs.
+
+\subsection{Agreement results}
+\label{sec:human_eval_agreement_results}
+
+\input{../tables/tab_human_eval_agreement.tex}
+
+Table~\ref{tab:human_eval_agreement} reports the primary agreement
+statistics.
+
+\textbf{Inter-rater agreement is genuinely mixed at fine resolution.}
+Krippendorff's $\alpha$ under the ordinal difference function is
+$\alpha = 0.376$, which sits below Krippendorff's own $\alpha \geq 0.667$
+threshold for tentative inferential use and well below the
+$\alpha \geq 0.8$ acceptable threshold. Pairwise linear-weighted Cohen's
+$\kappa$ ranges from $0.170$ (BV vs.\ AM) to $0.338$ (GS vs.\ AM), all
+in the ``fair'' band of the Landis and Koch conventions. Quadratic-weighted
+$\kappa$, which penalises adjacent-category disagreements less harshly
+and is the more common ordinal convention, is uniformly higher
+($0.331$--$0.426$) but remains in the ``fair'' band. Three-way exact
+agreement (all three annotators pick the same rating) is $21.7\%$
+($13/60$).
+
+\textbf{At coarser resolution the picture is much stronger.} All three
+pairwise \emph{within-1} agreement rates (fraction of pairs where the two
+ratings differ by at most one category on the 5-level scale) exceed
+$90\%$: $91.7\%$ for BV vs.\ GS, $90.0\%$ for BV vs.\ AM, and $91.7\%$
+for GS vs.\ AM. The three-way within-1 rate (all three annotators fall
+within a one-category window) is $80.0\%$. The picture that emerges is
+that annotators consistently converge on the correct rough band of
+semantic equivalence but disagree on fine gradations at the top of the
+scale (whether a pair is ``identical'' or merely ``equivalent'') and at
+the boundary between ``equivalent'' and ``approximately equivalent''.
+This pattern is consistent with prior human-evaluation studies of LLM
+outputs in adjacent domains, where 5-level ordinal scales routinely
+produce sub-0.5 $\alpha$ values driven by adjacent-category noise.
+
+\textbf{Judge SLM tracks human consensus only weakly.} The DeepSeek-R1
+judge SLM used throughout this study attains only $\kappa_{\textsf{lin}}
+= 0.106$ and $\kappa_{\textsf{quad}} = 0.138$ against the majority-vote
+human rating---both in Landis and Koch's ``slight'' band and below the
+weakest pairwise inter-annotator agreement. At the coarser within-1
+resolution the judge does reach $91.7\%$ agreement with the human
+majority, matching the pairwise human-human within-1 rates, but it does
+so at the price of essentially no discriminative information at the
+category-exact level.
+
+\textbf{The ``disputed'' bucket has the highest three-way human
+agreement.} Per-bucket exact-agreement rates are $15.0\%$ for the
+``frontier'' bucket ($3/20$), $20.0\%$ for the ``agreement'' bucket
+($4/20$), and $30.0\%$ for the ``disputed'' bucket ($6/20$). The
+counter-intuitive result---humans converge \emph{most} exactly on the
+pairs where the judge and metric could not agree---is consistent with a
+reading in which the automated-signal disagreement in the disputed bucket
+arose from unambiguously wrong judge or metric calls that humans can
+identify jointly, rather than from genuinely ambiguous pairs. The
+frontier bucket, by contrast, was deliberately sampled to sit at the
+threshold of validity and is where human annotators most legitimately
+disagree.
+
+\subsection{Implications for the strict-AND policy}
+\label{sec:human_eval_strict_and}
+
+The dominant finding of this addendum is that the judge SLM by itself is
+a weak proxy for human consensus at the category-exact level. This is
+not a negative result for the paper: it is the empirical justification
+for the strict-AND two-signal policy documented in Section~\ref{sec:methods}
+and referenced throughout the discussion. The paper's core closure
+decisions do not rely on the judge alone; every valid-closure label
+requires both an SE-validated automated metric above threshold and the
+judge above $\rho$. The observed $\kappa_{\textsf{quad}} = 0.138$ between
+the judge and majority-human rating quantifies why relying on the judge
+alone would be inadvisable.
+
+Two secondary implications:
+
+\begin{enumerate}
+  \item \textbf{The false-closure-candidate reason bucket in
+        Section~\ref{sec:discussion} (metric high, judge low) is
+        underestimated by the judge's own errors.} A judge with
+        $\kappa_{\textsf{quad}} = 0.138$ against human consensus will
+        incorrectly flag some rows as ``judge disagrees with metric''
+        when a human would concur with the metric. The per-cell rates
+        of \texttt{false\_closure\_candidate} reported in
+        Section~\ref{sec:discussion} should therefore be treated as
+        upper bounds on the true false-closure rate, not point
+        estimates.
+
+  \item \textbf{Metric-false-negative rows may partially reflect judge
+        over-crediting rather than pure metric conservatism.} On the
+        60-pair sample the judge over-rates slightly relative to the
+        majority human (mean judge $= 3.28$ vs.\ mean human $= 3.15$;
+        judge $>$ human on $23/60$ pairs, judge $<$ human on $13/60$).
+        Rows labelled \texttt{metric\_false\_negative} in
+        Section~\ref{sec:discussion} (metric below $\tau$, judge above
+        $\rho$) therefore mix two populations: cases where the metric is
+        genuinely conservative on human-equivalent artefacts, and cases
+        where the judge over-credits an artefact humans would rate lower.
+        The BERTScore benchmark-flip finding of Section~\ref{sec:discussion}
+        (BERTScore over-credits MBPP and under-credits HumanEval relative
+        to the judge) is unaffected in its comparative statement across
+        benchmarks but should be read as a judge-relative---not a
+        human-relative---signal.
+\end{enumerate}
+
+\subsection{Limitations of the addendum}
+\label{sec:human_eval_limitations}
+
+Three limitations bound the strength of the conclusions above.
+
+First, $n = 60$ is the pre-registered sample size but is small for
+inferring narrow confidence intervals on $\alpha$; the addendum reports
+point estimates only. A larger sample would tighten the estimates but is
+prohibitive at the human-evaluation rate.
+
+Second, the three annotators share a professional background as
+software engineers with the corresponding author's supervision or
+co-authorship relationships. Independence from the pipeline runners is
+imperfect. Future replications should recruit annotators via a blinded
+third-party channel.
+
+Third, the 5-level ordinal rubric was chosen for compatibility with the
+judge SLM's 0--4 output scale, but human annotators may find fewer
+distinguishable levels (a 3-level ``different / approximate / equivalent''
+rubric) easier to converge on. The high within-1 rates suggest that
+collapsing the top two levels into a single ``equivalent'' category
+would raise both $\alpha$ and pairwise $\kappa$ into the acceptable
+band.

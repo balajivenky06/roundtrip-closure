@@ -1,4 +1,5 @@
 \section{Discussion}
+\label{sec:discussion}
 
 We interpret the results of Section~4 against the five research questions of Section~1.3, drawing three design guidelines for practitioners deploying multi-SLM software-engineering pipelines and characterising the threats to validity that scope our claims.
 
@@ -114,13 +115,13 @@ We distil three design guidelines for practitioners assembling multi-SLM SE pipe
 
 \textbf{Sample size.} Mono cells were run on $N = 150$ core samples; hetero and null cells on $N = 75$ each. This asymmetric design was a compute-budget decision. The Tukey pairwise tests use the harmonic-mean sample size for unbalanced designs; per-cell confidence intervals are wider for hetero cells than for mono cells.
 
-\textbf{Human evaluation.} The 60-pair stratified human evaluation described in Section~3.9 of the concept note is prepared but not yet completed. Its results (judge--human agreement via Cohen's $\kappa$ and Krippendorff's $\alpha$; per-cell judge-error rate) will be reported in an addendum to this chapter.
+\textbf{Human evaluation.} The 60-pair three-annotator human evaluation is reported in Section~\ref{sec:human_eval_addendum}. Headline: inter-rater $\alpha_{\textsf{ord}} = 0.376$ (below Krippendorff's acceptability threshold at fine resolution, but three-way within-1 agreement is $80.0\%$) and judge-vs-majority-human $\kappa_{\textsf{quad}} = 0.138$---the empirical justification for the strict-AND two-signal policy adopted throughout this study.
 
-\textbf{Held-out datasets.} The 25-problem LiveCodeBench and 50-problem HumanEval-Mutated subsets were prepared for contamination sensitivity analysis but not swept in this study. Contamination sensitivity results on these subsets will accompany the human evaluation addendum.
+\textbf{Held-out datasets.} The 25-problem LiveCodeBench and 50-problem HumanEval-Mutated subsets were prepared for contamination sensitivity analysis but not swept in this study. Contamination sensitivity results on these subsets remain future work.
 
 \textbf{Path 3 metric choice.} BERTScore was the pre-registered Path~3 metric; Section~5.2 shows it is not correlated with semantic equivalence on our data. Alternative metrics (BLEU-4, ROUGE-L, sentence-BERT similarity) were not evaluated. The paper's recommendation is not that BERTScore should be discarded but that it should be paired with judge-SLM adjudication under the two-signal validity policy. Determining whether an alternative surface-form metric would yield stronger $r_3$ correlation is a natural follow-up.
 
-\textbf{Judge SLM choice.} DeepSeek-R1:14B is a single 14B-parameter judge. Ensemble-of-judges designs (Delphi-style consensus) are not evaluated here. The judge's own reliability against human annotators will be reported in the pending human-evaluation addendum.
+\textbf{Judge SLM choice.} DeepSeek-R1:14B is a single 14B-parameter judge. Ensemble-of-judges designs (Delphi-style consensus) are not evaluated here. The judge's own reliability against three independent human annotators is $\kappa_{\textsf{quad}} = 0.138$ on the 60-pair pre-registered sample (Section~\ref{sec:human_eval_addendum}).
 
 
 \emph{End of Section~5 Discussion.} Section~6 (Threats to Validity) and Section~7 (Conclusion) complete the manuscript.
