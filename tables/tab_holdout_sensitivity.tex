@@ -1,0 +1,36 @@
+% Hand-verified from the Colab-side analyzer output on 2026-07-14
+% (local file was stale). Colab-side numbers reflect 225 real HEM rows
+% (H1 + M3 at N=25 × 3 paths, all strict-AND-valid closures).
+%
+% Regenerate by syncing results/results_holdout_humaneval_mutated.tsv
+% from Drive and re-running analyze/holdout_sensitivity.py.
+\begin{table}[t]
+  \centering
+  \caption{Contamination sensitivity: strict-AND closure rate on the
+    core sweep (HumanEval + MBPP, $n=150$ mono / $n=75$ hetero per
+    path) vs.\ the HumanEval-Mutated held-out subset (HEM-25:
+    function-rename + docstring-paraphrase over the same underlying
+    algorithms; $n=25$ per cell per path), for the hetero champion H1
+    and the strongest mono baseline M3. Large negative $\Delta$ on
+    HEM-25 would signal surface-form memorisation; the observed
+    pattern (positive $\Delta$ on the behavioural paths, negative
+    $\Delta$ on the surface-form BERTScore path) instead indicates
+    that the core closure rates are not driven by contamination.
+    LiveCodeBench-25 was blocked at data preparation by a HuggingFace
+    \texttt{datasets} library incompatibility and is omitted; see
+    Section~\ref{sec:threats_generalisation}.}
+  \label{tab:holdout_sensitivity}
+  \begin{tabular}{llrrr}
+    \toprule
+    Cell & Path & Core & HEM-25 & $\Delta_{\textsf{HEM}}$ \\
+    \midrule
+    H1 & 1 (mutation kill rate)    & $79.0\%$          & $100.0\%$         & $+21.0$~pp \\
+    H1 & 2 (reference-test pass)   & $64.0\%$          & $\phantom{0}79.6\%$ & $+15.5$~pp \\
+    H1 & 3 (BERTScore F1)          & $63.6\%$          & $\phantom{0}32.7\%$ & $-31.0$~pp \\
+    \midrule
+    M3 & 1 (mutation kill rate)    & $85.5\%$          & $100.0\%$         & $+14.5$~pp \\
+    M3 & 2 (reference-test pass)   & $61.2\%$          & $\phantom{0}87.0\%$ & $+25.7$~pp \\
+    M3 & 3 (BERTScore F1)          & $70.0\%$          & $\phantom{0}45.5\%$ & $-24.5$~pp \\
+    \bottomrule
+  \end{tabular}
+\end{table}

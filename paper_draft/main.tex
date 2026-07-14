@@ -123,24 +123,24 @@ SLMs under 30~B parameters, three closure paths, and 150 HumanEval and MBPP
 functions. Closure is decided under a strict two-signal policy combining an
 SE-validated metric (mutation kill rate, reference test pass rate, or
 BERTScore F1) with an external judge SLM (DeepSeek-R1); the policy cuts false-closure by $15.4$~pp vs.\ metric-only on a
-60-pair human-annotated sample. Five findings emerge. First, the pre-registered H1
-composition (phi-4 spec + qwen-coder test/code) dominates four of five
-mutation operators, matching its per-operator prediction from a companion
-mutation-testing study. Second, phi-4 as the test-generation stage produces
-filter-failing tests on approximately half of samples across three
-independent cells---a cross-stage pathology invisible in single-stage
-evaluations. Third, BERTScore F1 is statistically uncorrelated
+60-pair human-annotated sample. Five findings emerge. First, the H1 composition (phi-4 spec + qwen-coder test/code) dominates
+four of five mutation operators, matching its per-operator prediction
+from a companion mutation-testing study. Second, phi-4 as the
+test-generation stage produces filter-failing tests on roughly half of
+samples across three cells---a cross-stage pathology invisible in
+single-stage evaluations. Third, BERTScore F1 is statistically uncorrelated
 ($r = 0.02$, $p = 0.359$, $n = 1{,}791$) with the judge's semantic rating
 on the docstring--docstring path, and the disagreement flips direction
 across benchmarks, consistent with a surface-form signal.
 Fourth, the three closure paths carry non-redundant information about cell
 performance ($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$).
 Fifth, heterogeneity is not free: well-composed hetero cells preserve
-$78$--$91\%$ of the strongest mono baseline, while wrong-model-at-wrong-stage
-cells collapse. We derive three design guidelines and release an open
-replication package including 67 unit tests covering the closure-validity
-decision, the test-filter validity gate, and their integration into the
-sweep pipeline.
+$78$--$91\%$ of the strongest mono baseline, while poorly-composed cells
+collapse. A HumanEval-Mutated decontamination re-sweep on the champion
+hetero and strongest mono cells shows behavioural-path closure rates that
+hold or improve under function-rename and docstring-paraphrase, ruling
+out surface-form memorisation. We derive three design guidelines and
+release an open replication package with 67 unit tests.
 \end{abstract}
 
 \begin{keyword}

@@ -31,6 +31,7 @@ Internal-validity threats concern whether the observed effects are attributable 
 \textbf{Residual risk.} None; this is an efficiency mechanism, not a source of bias.
 
 \subsection{External validity}
+\label{sec:threats_generalisation}
 
 External-validity threats concern the generalisation of the findings beyond the specific experimental setup.
 
@@ -54,7 +55,7 @@ External-validity threats concern the generalisation of the findings beyond the 
 
 \textbf{Threat.} The core dataset comprises 150~functions from HumanEval and MBPP. Both benchmarks are Python-only, function-level (not multi-file or class-level), and drawn from a corpus that appeared in the training data of many of the pipeline SLMs. The results may not transfer to other benchmarks, other languages, or to multi-file / class-level SE tasks.
 
-\textbf{Mitigation.} Two held-out subsets (25 LiveCodeBench problems with publication date $\geq$ 2024-12-01, post-training-cutoff for all evaluated SLMs; 50 HumanEval-Mutated problems with function-rename + docstring-paraphrase transformations) were prepared but not swept in this study. Contamination sensitivity results on these subsets remain future work. The cross-benchmark decomposition in Section~4.5 documents that per-cell effects are significant on both HumanEval and MBPP with different F-values, suggesting the effects generalise across the two benchmarks.
+\textbf{Mitigation.} The 25-sample HumanEval-Mutated subset (function-rename + docstring-paraphrase) was swept on the hetero champion H1 and the strongest mono baseline M3; results are reported in Section~\ref{sec:results_contamination}. Both cells show behavioural-path (Paths~1 and~2) closure rates that are as high on the surface-form-varied subset as on the core sweep or higher, indicating that the core closure rates are not driven by memorised HumanEval solutions. The complementary LiveCodeBench-25 post-cutoff subset was blocked at data preparation by the removal of script-based dataset loaders from the current HuggingFace \texttt{datasets} library; a fully independent post-cutoff replication remains future work. The cross-benchmark decomposition in Section~4.5 additionally documents that per-cell effects are significant on both HumanEval and MBPP with different F-values, suggesting the effects generalise across the two benchmarks.
 
 \textbf{Residual risk.} Substantial for languages other than Python and for tasks that require multi-file understanding. This is a well-known limitation of function-level LLM-SE evaluation.
 
@@ -130,7 +131,7 @@ Conclusion-validity threats concern whether the statistical inferences reported 
   \item \textbf{Closed-weight cells deferred.} M5, H2, H8 pre-registered as closed-weight; run as open-weight variants (M5 as Mistral, H2 as qwen3.6/phi-4/qwen-coder, H8 as gemma-4/qwen-coder/mistral). RQ4 correspondingly deferred to follow-up study.
   \item \textbf{Model family lineup.} The concept note listed qwen3.5:9B, llama3.3:70B; the swept lineup uses qwen3.6:27B, gemma4:26B, mistral-small3.2:24B. The change reflects the models available at sweep time (2026-06 to 2026-07).
   \item \textbf{Sample size asymmetric.} Concept note specified 150 per cell across all strata; swept as 150 mono, 75 hetero and null.
-  \item \textbf{Held-out subsets prepared but not fully swept.} The 25-problem LiveCodeBench and 50-problem HumanEval-Mutated subsets were prepared per pre-registration; contamination sensitivity results are deferred to future work.
+  \item \textbf{Held-out subsets partially swept.} The 25-sample HumanEval-Mutated subset was swept on H1 and M3 (Section~\ref{sec:results_contamination}). The complementary 25-problem LiveCodeBench post-cutoff subset was prepared per pre-registration but blocked at load time by a HuggingFace \texttt{datasets} library incompatibility; a full post-cutoff replication remains future work.
   \item \textbf{Human evaluation reported in addendum.} The 60-pair three-annotator study is reported in Section~\ref{sec:human_eval_addendum}, which post-dates the initial revision.
 \end{itemize}
 
