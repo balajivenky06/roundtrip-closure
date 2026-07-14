@@ -3,7 +3,7 @@
 
 \subsection{Notation and problem setup}
 
-The docstring--test--code triangle comprises three artefacts associated with a single Python function: the code $C$, its docstring $D$, and its reference test suite $T$. A closure operator traverses two edges of the triangle, generating a reconstructed artefact from the third; the pipeline is \emph{closed} on this traversal when the reconstruction is semantically equivalent to the original. Table~\ref{tab:notation} summarises the notation used throughout this chapter.
+The docstring--test--code triangle comprises three artefacts associated with a single Python function: the code $C$, its docstring $D$, and its reference test suite $T$. A closure operator traverses two edges of the triangle, generating a reconstructed artefact from the third; the pipeline is \emph{closed} on this traversal when the reconstruction is semantically equivalent to the original. Table~\ref{tab:notation} summarises the notation used throughout this paper.
 
 \begin{table}[h]
 \centering
@@ -184,7 +184,7 @@ Given the filtered test suite $T'_{\textsf{filt}}$ and the set of mutants $\math
   \label{eq:killrate}
 \end{equation}
 
-A mutant is \emph{killed} if at least one filtered test fails on it. Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ (mutants whose observable behaviour matches the original) are excluded from the denominator following Chapter~2's protocol. Five mutation operators are applied: arithmetic (e.g. $\texttt{+} \to \texttt{-}$), boundary ($\texttt{<} \to \texttt{<=}$), comparison ($\texttt{<} \to \texttt{>}$), negate\_bool, and return\_none. Up to 15 mutants are generated per function.
+A mutant is \emph{killed} if at least one filtered test fails on it. Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ (mutants whose observable behaviour matches the original) are excluded from the denominator following the second companion paper's protocol. Five mutation operators are applied: arithmetic (e.g. $\texttt{+} \to \texttt{-}$), boundary ($\texttt{<} \to \texttt{<=}$), comparison ($\texttt{<} \to \texttt{>}$), negate\_bool, and return\_none. Up to 15 mutants are generated per function.
 
 \subsubsection{Path 2: reference test pass rate}
 
@@ -241,13 +241,13 @@ A cell is a stage-to-model assignment $a : \mathcal{S} \to \mathcal{M} \cup \{\b
 
 \input{../tables/tab_model_lineup.tex}
 
-Table~\ref{tab:doe_summary} presents the complete DOE with the pre-registered hypothesis for each cell. The full 5-model $\times$ 3-stage design space contains $6^3 = 216$ cells; we sample 20 as a hypothesis-driven fractional factorial. The mono stratum establishes each SLM's self-consistency floor as a baseline. The hetero stratum assigns three different SLMs across the three stages based on per-stage strengths derived from Chapter~2's per-operator capability map (phi-4 dominates predicate reasoning; qwen-coder dominates comparison operators). The null stratum comprises three control cells: N1 (word-shuffled input; expected metric $\approx 0$ if the closure metric is sound), N2 (spec-stage ablated; $L_{\textsf{spec}} = \bot$), and N3 (test-stage ablated; $L_{\textsf{test}} = \bot$).
+Table~\ref{tab:doe_summary} presents the complete DOE with the pre-registered hypothesis for each cell. The full 5-model $\times$ 3-stage design space contains $6^3 = 216$ cells; we sample 20 as a hypothesis-driven fractional factorial. The mono stratum establishes each SLM's self-consistency floor as a baseline. The hetero stratum assigns three different SLMs across the three stages based on per-stage strengths derived from the second companion paper's per-operator capability map (phi-4 dominates predicate reasoning; qwen-coder dominates comparison operators). The null stratum comprises three control cells: N1 (word-shuffled input; expected metric $\approx 0$ if the closure metric is sound), N2 (spec-stage ablated; $L_{\textsf{spec}} = \bot$), and N3 (test-stage ablated; $L_{\textsf{test}} = \bot$).
 
 The six pipeline SLMs (Table~\ref{tab:model_lineup}) are all open-weight and under 30~B parameters, ensuring the entire experiment fits within a single Colab~Pro+ A100/T4 monthly allowance. Five distinct model families are represented (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). DeepSeek-R1:14B serves as the family-disjoint judge $L_J$.
 
 \subsection{Datasets}
 
-The primary dataset (\emph{core}) is a stratified 150-function sample from HumanEval (45~functions) and MBPP (105~functions), drawn with seed~42. This preserves the MBPP/HumanEval ratio of the 300-function Chapter~2 sample and enables direct cross-paper comparisons via shared per-function difficulty draws.
+The primary dataset (\emph{core}) is a stratified 150-function sample from HumanEval (45~functions) and MBPP (105~functions), drawn with seed~42. This preserves the MBPP/HumanEval ratio of the 300-function second-paper sample and enables direct cross-paper comparisons via shared per-function difficulty draws.
 
 Two held-out subsets were prepared for contamination sensitivity analysis: a 25-problem LiveCodeBench subset with publication date $\geq$ 2024-12-01 (post-training-cutoff for all evaluated SLMs) and a 50-problem HumanEval-Mutated subset obtained by applying function-rename, docstring-paraphrase, and parameter-permutation transformations to a subset of HumanEval. The held-out subsets were prepared but not fully swept in this study; contamination sensitivity results on them will be reported in an addendum.
 
@@ -313,7 +313,7 @@ To isolate which stage assignment drives closure, we treat each cell as the prod
 
 where $\gamma_j \sim \mathcal{N}(0, \sigma_{\textsf{sample}}^2)$ is a random intercept for sample. Estimates $\hat{\beta}_1, \hat{\beta}_2, \hat{\beta}_3$ quantify each stage's contribution to closure odds.
 
-\subsubsection{Judge--human agreement (reported in Section~\ref{sec:human_eval_addendum})}
+\subsubsection{Judge--human agreement}
 
 For each binarised rating (judge threshold $J \geq \rho$ versus $J < \rho$), Cohen's $\kappa$ is
 
