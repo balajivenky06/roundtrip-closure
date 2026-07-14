@@ -255,7 +255,7 @@ def render_latex_table(report: dict) -> str:
         r"\begin{table}[t]",
         r"  \centering",
         r"  \caption{Inter-rater and judge--human agreement on the 60-pair"
-        r" human-evaluation sample ($n=60$, three annotators).",
+        f"    human-evaluation sample ($n=60$, {len(report['annotators'])} annotators).",
         r"    Cohen's $\kappa$ is reported with both linear and quadratic"
         r" weighting; the latter is the more common convention for ordinal"
         r" scales in human-evaluation work.",
@@ -308,7 +308,10 @@ def build_report(
 ) -> dict:
     # Common pair IDs across all annotators
     common_ids = sorted(set.intersection(*(set(t.keys()) for t in tables)))
-    triples = [(tables[0][p], tables[1][p], tables[2][p]) for p in common_ids]
+    # tuples[i] is the full rating tuple across all N annotators for pair common_ids[i]
+    tuples = [tuple(t[p] for t in tables) for p in common_ids]
+    # For backward-name compatibility below (triples is used elsewhere but is generic now)
+    triples = tuples
 
     # Pairwise κ (linear + quadratic) and within-1 rate
     pairwise_linear: dict[str, float] = {}
@@ -379,11 +382,13 @@ def build_report(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--annotators", nargs=3, metavar="ID",
+        "--annotators", nargs="+", metavar="ID",
         default=["ann_alpha", "ann_beta", "ann_gamma"],
-        help="Three annotator IDs (default: ann_alpha ann_beta ann_gamma)",
+        help="Two or more annotator IDs (default: ann_alpha ann_beta ann_gamma)",
     )
     args = parser.parse_args()
+    if len(args.annotators) < 2:
+        parser.error("At least two annotator IDs required")
 
     tables = [load_annotator(a) for a in args.annotators]
     pairs = load_pairs()
