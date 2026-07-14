@@ -19,11 +19,30 @@
 #
 # Skip livecodebench sweep by exporting SKIP_LCB=1 before running.
 # Skip a specific dataset by exporting SKIP_HEM=1 or SKIP_LCB=1.
+# Override cells via CELLS_OVERRIDE="H1 M3 M4" if you want to widen scope.
+# Override sample count via N_SAMPLES_HEM=50 for a fuller sweep.
 set -euo pipefail
 
-CELLS=("H1" "M3" "M4")
+# Default: H1 (hetero champion) + M3 (strongest Path-2/3 mono baseline).
+# M4 (strongest Path-1 mono) is a nice-to-have but not essential for the
+# reviewer's ask — add via CELLS_OVERRIDE="H1 M3 M4".
+if [[ -n "${CELLS_OVERRIDE:-}" ]]; then
+    read -r -a CELLS <<<"$CELLS_OVERRIDE"
+else
+    CELLS=("H1" "M3")
+fi
+
+N_SAMPLES_HEM="${N_SAMPLES_HEM:-25}"
 RESULTS_HEM="results/results_holdout_humaneval_mutated.tsv"
 RESULTS_LCB="results/results_holdout_livecodebench.tsv"
+
+echo "W3 sweep config:"
+echo "  cells:                 ${CELLS[*]}"
+echo "  humaneval_mutated N:   $N_SAMPLES_HEM"
+echo "  livecodebench N:       25"
+echo "  results HEM:           $RESULTS_HEM"
+echo "  results LCB:           $RESULTS_LCB"
+echo ""
 
 # ── humaneval_mutated_50 sweep ────────────────────────────────────────
 if [[ "${SKIP_HEM:-0}" != "1" ]]; then
@@ -38,7 +57,7 @@ if [[ "${SKIP_HEM:-0}" != "1" ]]; then
         echo "════════════════════════════════════════════════════════════"
         CELL_ID="$cell" \
         DATASET=humaneval_mutated \
-        N_SAMPLES=50 \
+        N_SAMPLES="$N_SAMPLES_HEM" \
         RESULTS_PATH="$RESULTS_HEM" \
             python3 train_roundtrip.py
     done
