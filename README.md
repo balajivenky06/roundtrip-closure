@@ -14,18 +14,47 @@ Companion to:
 ## What this experiment measures
 
 For each function `f` in HumanEval + MBPP, we traverse the
-docstring–test–code triangle with **3 different Small Language Models
-assigned to 3 stages**:
+docstring–test–code triangle via one of three **closure paths**, each
+composed of two SLM stages. The closure decision combines an
+SE-validated automated metric with an external judge SLM's semantic
+rating under a strict-AND policy.
 
-```
-Stage 1  L_spec :  code C → docstring D'
-Stage 2  L_test :  docstring D' → test suite T'
-Stage 3  L_code :  (D' + T') → reconstructed code C'
+```mermaid
+flowchart LR
+    classDef orig fill:#e5e5e5,stroke:#333,stroke-width:1.5px,font-weight:bold
+    classDef recon fill:#dbeafe,stroke:#1e40af,stroke-width:1.5px,font-weight:bold
+    classDef metric fill:#eff6ff,stroke:#1e40af,stroke-width:1px
+    classDef judge fill:#fff7ed,stroke:#c2410c,stroke-width:1px
+    classDef decision fill:#f5f5f5,stroke:#333,stroke-width:1.5px,stroke-dasharray:4 3
 
-Closure metric:  did the round-trip preserve semantics?
-                  measured by mutation kill rate (T' against C),
-                  reference-test pass rate (original tests on C'),
-                  and judge-LLM equivalence (D' vs original D).
+    subgraph Path1 ["<b>Path 1</b>&nbsp;&nbsp;C → D → T"]
+        direction LR
+        C1[C] -->|L_spec| D1["D'"]
+        D1 -->|L_test| T1["T'"]
+        T1 --> M1["mutation kill<br/>rate K(T', C)"]:::metric
+        M1 --> J1["judge SLM<br/>J(D, D')"]:::judge
+    end
+    subgraph Path2 ["<b>Path 2</b>&nbsp;&nbsp;D → T → C"]
+        direction LR
+        D2[D] -->|L_test| T2["T'"]
+        T2 -->|L_code| C2["C'"]
+        C2 --> M2["reference-test<br/>pass rate R(C', T)"]:::metric
+        M2 --> J2["judge SLM<br/>J(C, C')"]:::judge
+    end
+    subgraph Path3 ["<b>Path 3</b>&nbsp;&nbsp;C → T → D"]
+        direction LR
+        C3[C] -->|L_test| T3["T'"]
+        T3 -->|L_spec| D3["D'"]
+        D3 --> M3["BERTScore F1<br/>B(D, D')"]:::metric
+        M3 --> J3["judge SLM<br/>J(D, D')"]:::judge
+    end
+
+    J1 -.-> V["<b>Strict-AND validity (Algorithm 2)</b><br/>valid ⇔ (metric &gt; τ) ∧ (judge ≥ ρ)"]:::decision
+    J2 -.-> V
+    J3 -.-> V
+
+    class C1,C3,D2 orig
+    class D1,T1,T2,C2,T3,D3 recon
 ```
 
 The central question: **does closure rate improve when each stage is

@@ -1,9 +1,32 @@
-\section{Methods}
-\label{sec:methods}
+\section{Framework}
+\label{sec:framework}
+
+The docstring--test--code closure framework consists of three components:
+(i)~the \emph{docstring--test--code triangle} of artefacts associated with a
+Python function, (ii)~three \emph{closure paths} that each reconstruct one
+artefact from the other two via a sequence of two SLM stages, and
+(iii)~a \emph{strict-AND validity policy} that pairs an SE-validated
+automated metric with an external judge SLM's semantic-equivalence rating
+to decide whether a reconstruction counts as closed. Figure~\ref{fig:framework}
+gives the overall picture; the remainder of this section formalises each
+component. The experimental instantiation of the framework (which SLMs sit
+at which stages, which benchmark functions, and how statistical inference
+is drawn) is deferred to Section~\ref{sec:experiment_setup}.
+
+\input{figures/fig_framework.tex}
 
 \subsection{Notation and problem setup}
+\label{sec:framework_notation}
 
-The docstring--test--code triangle comprises three artefacts associated with a single Python function: the code $C$, its docstring $D$, and its reference test suite $T$. A closure operator traverses two edges of the triangle, generating a reconstructed artefact from the third; the pipeline is \emph{closed} on this traversal when the reconstruction is semantically equivalent to the original. Table~\ref{tab:notation} summarises the notation used throughout this paper.
+Table~\ref{tab:notation} summarises the notation used throughout this
+paper. In brief: uppercase italic letters $C, D, T$ denote the original
+Python code, its docstring, and its reference test suite; primed
+variants $C', D', T'$ denote SLM-reconstructed artefacts; $L_{\mathsf{spec}},
+L_{\mathsf{test}}, L_{\mathsf{code}}$ denote the pipeline SLMs assigned to
+the three stages by the current DOE cell; $L_J$ denotes the external
+judge SLM. A closure operator is a two-step composition of two of these
+SLMs; the pipeline is \emph{closed} on a given (path, sample) pair when
+the reconstruction is semantically equivalent to the original.
 
 \begin{table}[h]
 \centering
@@ -142,7 +165,7 @@ Before computing the mutation kill rate, we discard generated tests that fail on
   \label{eq:filter}
 \end{equation}
 
-The filter is implemented as Algorithm~\ref{alg:test_filter}, which additionally emits a machine-readable \textsf{filter\_reason} label recording \emph{why} the filter output was empty when it was. This label appears in every closure row in the results TSV and is used in Section~5 to distinguish rows where the LLM produced no tests at all (\textsf{empty\_input}) from rows where every generated test failed on the ground truth (\textsf{all\_dropped}) --- a distinction that matters for the phi-4-in-test-stage analysis in Section~5.3.
+The filter is implemented as Algorithm~\ref{alg:test_filter}, which additionally emits a machine-readable \textsf{filter\_reason} label recording \emph{why} the filter output was empty when it was. This label appears in every closure row in the results TSV and is used in Section~5 to distinguish rows where the LLM produced no tests at all (\textsf{empty\_input}) from rows where every generated test failed on the ground truth (\textsf{all\_dropped}) --- a distinction that matters for the phi-4-in-test-stage analysis in Section~\ref{sec:discussion_rq3}.
 
 \begin{algorithm}[h]
 \caption{Test-filter validity gate (implements Eq.~\ref{eq:filter})}
@@ -223,132 +246,3 @@ We use baseline-rescaled scores so $B \in (-\infty, 1]$ with $B = 0$ denoting ``
 
 The judge SLM $L_J$ = DeepSeek-R1:14B is prompted with a 5-level behaviourally-anchored rubric: 4 = identical, 3 = equivalent (same observable behaviour), 2 = approximately equivalent, 1 = clearly different, 0 = unrelated. A rating of $-1$ denotes parse failure --- the judge is treated as absent for that row. DeepSeek-R1 is deliberately chosen because it belongs to a family (DeepSeek) disjoint from every pipeline SLM, avoiding self-evaluation bias.
 
-\subsection{Design of experiments}
-
-A cell is a stage-to-model assignment $a : \mathcal{S} \to \mathcal{M} \cup \{\bot\}$, where $\bot$ denotes an ablated stage. The DOE consists of 20 pre-registered cells across three strata:
-
-\begin{equation}
-  \mathcal{C}_{\textsf{DOE}} \;=\;
-  \underbrace{\bigl\{a : a(\textsf{spec}) = a(\textsf{test}) = a(\textsf{code})\bigr\}}_{\text{Mono stratum (6 cells)}}
-  \;\cup\;
-  \underbrace{\bigl\{a : |\{a(s) : s \in \mathcal{S}\}| = 3\bigr\}}_{\text{Hetero stratum (11 cells)}}
-  \;\cup\;
-  \underbrace{\mathcal{C}\emph{{\textsf{null}}}}{\text{Null stratum (3 cells)}}.
-  \label{eq:doe}
-\end{equation}
-
-\input{../tables/tab_doe_summary.tex}
-
-\input{../tables/tab_model_lineup.tex}
-
-Table~\ref{tab:doe_summary} presents the complete DOE with the pre-registered hypothesis for each cell. The full 5-model $\times$ 3-stage design space contains $6^3 = 216$ cells; we sample 20 as a hypothesis-driven fractional factorial. The mono stratum establishes each SLM's self-consistency floor as a baseline. The hetero stratum assigns three different SLMs across the three stages based on per-stage strengths derived from the second companion paper's per-operator capability map (phi-4 dominates predicate reasoning; qwen-coder dominates comparison operators). The null stratum comprises three control cells: N1 (word-shuffled input; expected metric $\approx 0$ if the closure metric is sound), N2 (spec-stage ablated; $L_{\textsf{spec}} = \bot$), and N3 (test-stage ablated; $L_{\textsf{test}} = \bot$).
-
-The six pipeline SLMs (Table~\ref{tab:model_lineup}) are all open-weight and under 30~B parameters, ensuring the entire experiment fits within a single Colab~Pro+ A100/T4 monthly allowance. Five distinct model families are represented (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). DeepSeek-R1:14B serves as the family-disjoint judge $L_J$.
-
-\subsection{Datasets}
-
-The primary dataset (\emph{core}) is a stratified 150-function sample from HumanEval (45~functions) and MBPP (105~functions), drawn with seed~42. This preserves the MBPP/HumanEval ratio of the 300-function second-paper sample and enables direct cross-paper comparisons via shared per-function difficulty draws.
-
-Two held-out subsets were prepared for contamination sensitivity analysis: a 25-problem LiveCodeBench subset with publication date $\geq$ 2024-12-01 (post-training-cutoff for all evaluated SLMs) and a 50-problem HumanEval-Mutated subset obtained by applying function-rename, docstring-paraphrase, and parameter-permutation transformations to a subset of HumanEval. The held-out subsets were prepared but not fully swept in this study; contamination sensitivity results on them will be reported in an addendum.
-
-\subsection{Statistical methodology}
-
-\subsubsection{Analysis of variance}
-
-For each closure metric $Y$ (kill rate, pass rate, BERTScore stacked across paths), we fit a Type-III analysis-of-variance model
-
-\begin{equation}
-  Y_{ij} \;=\; \mu \;+\; \alpha_i \;+\; \beta_j \;+\; \varepsilon_{ij},
-  \quad \varepsilon_{ij} \sim \mathcal{N}(0, \sigma^2),
-  \label{eq:anova}
-\end{equation}
-
-where $\alpha_i$ is the fixed effect of cell $i \in \mathcal{C}_{\textsf{DOE}}$, $\beta_j$ is the fixed effect of sample $j$, and $\varepsilon_{ij}$ is residual error. To further test whether the three closure paths carry non-redundant information about cell performance, we extend Eq.~\ref{eq:anova} to include a path factor and its interaction with cell:
-
-\begin{equation}
-  Y_{ijk} \;=\; \mu \;+\; \alpha_i \;+\; \eta_k \;+\; (\alpha \cdot \eta)_{ik} \;+\; \beta_j \;+\; \varepsilon_{ijk},
-  \label{eq:anova_interact}
-\end{equation}
-
-where $\eta_k$ is the fixed effect of path $k \in \{1, 2, 3\}$ and $(\alpha \cdot \eta)_{ik}$ is the interaction. A significant interaction validates that closure paths are not merely substitutable measurements of the same underlying quantity. Because \texttt{scipy.stats}--\texttt{statsmodels} version drift blocked the standard OLS route on the analysis host, we implement Eq.~\ref{eq:anova_interact} directly using QR-based least squares and Type-I sequential sums of squares in pure NumPy.
-
-\subsubsection{Pairwise cell comparisons}
-
-Pairwise mean differences between cells $i$ and $k$ are tested via Tukey's honest significant difference:
-
-\begin{equation}
-  q_{ik}
-  \;=\;
-  \frac{\bar{Y}_i - \bar{Y}\emph{k}{\sqrt{MS}{\textsf{within}} / n_h}},
-  \label{eq:tukey}
-\end{equation}
-
-where $n_h$ is the harmonic mean of per-cell sample sizes (mono cells have $n = 150$; hetero and null cells have $n = 75$). A pair is significant at family-wise $\alpha = 0.05$ after Bonferroni correction over the $20 \times 19 / 2 = 190$ pairwise comparisons.
-
-\subsubsection{Judge--metric correlation}
-
-The Pearson correlation between the automated metric $Y$ and the judge rating $J$ per path,
-
-\begin{equation}
-  r_p \;=\; \frac{\textstyle\sum_{r} (Y_r - \bar{Y})(J_r - \bar{J})}{\sqrt{\textstyle\sum_r (Y_r - \bar{Y})^2 \cdot \textstyle\sum_r (J_r - \bar{J})^2}},
-  \label{eq:corr}
-\end{equation}
-
-quantifies the extent to which each path's automated metric agrees with the judge SLM's semantic-equivalence rating. Rows with parse failures ($J = -1$) are excluded.
-
-\subsubsection{Mixed-effects logit for per-stage decomposition}
-
-To isolate which stage assignment drives closure, we treat each cell as the product of three stage choices and fit a generalised linear mixed model. Let $\text{closure}_{ij} \in \{0, 1\}$ denote whether function $j$ closed under cell $i$. We model
-
-\begin{equation}
-  \text{logit}\bigl(\Pr[\text{closure}_{ij} = 1]\bigr)
-  \;=\;
-  \beta_0
-  + \beta_1 \cdot a_i(\textsf{spec})
-  + \beta_2 \cdot a_i(\textsf{test})
-  + \beta_3 \cdot a_i(\textsf{code})
-  + \gamma_j,
-  \label{eq:mixedlogit}
-\end{equation}
-
-where $\gamma_j \sim \mathcal{N}(0, \sigma_{\textsf{sample}}^2)$ is a random intercept for sample. Estimates $\hat{\beta}_1, \hat{\beta}_2, \hat{\beta}_3$ quantify each stage's contribution to closure odds.
-
-\subsubsection{Judge--human agreement}
-
-For each binarised rating (judge threshold $J \geq \rho$ versus $J < \rho$), Cohen's $\kappa$ is
-
-\begin{equation}
-  \kappa
-  \;=\;
-  \frac{p_o - p_e}{1 - p_e},
-  \label{eq:kappa}
-\end{equation}
-
-where $p_o$ is the observed agreement proportion between the judge SLM and a human annotator and $p_e$ is the chance-expected proportion under independence. Values follow Landis and Koch's bands: $\kappa > 0.6$ substantial, $\kappa > 0.8$ almost perfect. For the three-annotator (judge + two human) setting, we additionally compute Krippendorff's $\alpha$ for ordinal ratings $r_{ij}$ from rater $i$ on item $j$:
-
-\begin{equation}
-  \alpha
-  \;=\;
-  1 \;-\; \frac{D_o}{D_e},
-  \quad
-  D_o \;=\; \tfrac{1}{n}\sum_{j} \tfrac{1}{\binom{m_j}{2}}
-            \sum_{i_1 < i_2} \delta(r_{i_1 j}, r_{i_2 j})^2,
-  \label{eq:alpha}
-\end{equation}
-
-where $\delta$ is the ordinal-difference metric and $D_e$ is the expected disagreement under random pairing. Values $\alpha > 0.667$ are considered acceptable for inferential use. Both $\kappa$ and $\alpha$ are reported in the human-evaluation addendum (Section~\ref{sec:human_eval_addendum}); the headline numbers on the 60-pair five-annotator sample are $\alpha_{\textsf{ord}} = 0.193$ across the three human annotators and $\kappa_{\textsf{quad}} = 0.074$ between the judge SLM and the majority human rating.
-
-\subsubsection{Sensitivity analysis}
-
-To defend against threshold-choice attacks, closure rates are computed and reported at multiple $(\tau, \rho)$ combinations. For the mutation kill rate on Path~1, $\tau \in \{0, 0.5, 0.8\}$; for the judge threshold, $\rho \in \{2, 3, 4\}$. Ordinal stability of the per-cell ranking across thresholds is quantified using Kendall's $\tau_{\textsf{rank}}$ between the reference threshold $(\tau=0, \rho=3)$ and each alternative.
-
-\subsubsection{Post-processing categorisation}
-
-Every closure row is post-hoc labelled with the Algorithm~\ref{alg:validity} decision reason and the Algorithm~\ref{alg:test_filter} filter reason. The distribution of decision reasons per path (Section~5.2) is our primary judge--metric disagreement diagnostic; the distribution of filter reasons per (cell, path) triple (Section~5.3) is our primary diagnostic for the phi-4-in-test-stage attribution.
-
-\subsubsection{Capability preservation}
-
-For each path, we identify the strongest mono baseline (M4 for Paths~1 and~3; M3 for Path~2) and restrict analysis to samples on which that baseline achieves valid closure. For every other cell, the \emph{capability-preservation rate} is the fraction of those same samples on which the cell also achieves valid closure. Values near~$1$ indicate that the cell does not sacrifice mono strengths; substantially lower values expose cells where specialisation costs capability on samples the strongest mono handles cleanly.
-
-
-\emph{End of Section~3 Methods.} Section~4 presents results anchored to Eqs.~\ref{eq:killrate}--\ref{eq:corr} and Table~\ref{tab:doe_summary}, organised by research question.

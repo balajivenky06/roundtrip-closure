@@ -1,0 +1,423 @@
+\section{Results}
+\label{sec:results}
+
+We report closure rates across the 20-cell DOE on the 150-function core dataset, comprising 5{,}890 measurement rows (150 mono samples $\times$ 3 paths $\times$ 6 mono cells $+$ 75 hetero samples $\times$ 3 paths $\times$ 11 hetero cells $+$ 75 null samples $\times$ 3 paths $\times$ 3 null cells). Results are organised by research question. Every closure rate reported here uses the strict two-signal validity policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3} with default thresholds $\tau_1 = \tau_2 = \tau_3 = 0$ and $\rho = 3$; the sensitivity analysis (Section~\ref{sec:experiment_setup_sensitivity}) confirms every headline finding survives alternative threshold choices.
+
+\subsection{Overall closure rates per cell and path}
+\label{sec:results_closure_matrix}
+
+Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present the mean closure rate for every cell $\times$ path combination. Three high-level patterns emerge.
+
+\input{../tables/tab_closure_rate_matrix.tex}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\linewidth]{../plots/output/fig2_closure_heatmap.png}
+  \caption{Mean closure rate per cell $\times$ path (heatmap). Cell strata are (top to bottom) mono (M1--M6), hetero (H1--H11), and null (N1--N3). Values are computed under the strict two-signal validity policy of Eqs.~\ref{eq:valid1}--\ref{eq:valid3}.}
+  \label{fig:closure_heatmap}
+\end{figure}
+
+First, Path~1 (mutation kill rate) closure rates cluster in the $[0.7, 0.9]$ range for all non-ablated cells, with a mean of $0.831$. The strongest mono baseline is M3 (qwen3.6:27B, all stages) at $0.900$; the strongest hetero cell is H6 (phi-4/qwen3.6/phi-4) at $0.882$. The single mono failure is M1 (llama3.2:3B mono) at $0.577$.
+
+Second, Path~2 (reference test pass rate) closure rates are systematically lower than Path~1, averaging $0.630$ across non-ablated cells. This reflects the harder nature of the code-synthesis task: passing the reference tests requires reconstructing the function's behaviour exactly rather than merely covering it. Notably, the spec-stage-ablated null cell N2 (Path~2 closure rate $= 0.667$) ties or exceeds every mono baseline (M1 $= 0.367$, M2 $= 0.547$, others $\in [0.533, 0.647]$). We return to the implications of this in Section~\ref{sec:discussion_rq3}.
+
+Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.211$ across non-ablated cells, and vary in a compressed range $[0.17, 0.28]$. This is an artefact of BERTScore's rescaled value distribution on our data --- the natural distribution of BERTScore F1 values between original and reconstructed docstrings clusters in $[-0.1, 0.5]$. The compressed range does not indicate poor pipeline performance; Section~\ref{sec:discussion_rq2} shows that judge equivalence ratings on the same rows tell an entirely different story.
+
+\subsection{Mono versus heterogeneous cells}
+\label{sec:results_mono_vs_hetero}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{../plots/output/fig3_mono_vs_hetero.png}
+  \caption{Distribution of Path~1 closure rates across strata (mono, hetero, null). Each violin summarises the per-cell mean closure rates within a stratum.}
+  \label{fig:mono_vs_hetero}
+\end{figure}
+
+Fig.~\ref{fig:mono_vs_hetero} presents the per-strand distribution of closure rates on Path~1. The distributions overlap substantially: the median hetero cell ($0.862$) is competitive with the median mono cell ($0.807$), but the ceiling of each strand differs. The best mono cell (M3, kill rate $= 0.900$) exceeds the median hetero cell but not the best hetero cell (H6, $0.882$).
+
+\input{../tables/tab_anova.tex}
+
+To test whether cell-mean differences are statistically significant, we fit the ANOVA model of Eq.~\ref{eq:anova}; Table~\ref{tab:anova} presents the fitted terms. Cell is a significant predictor of closure rate ($F(13, 3918) = 17.45$, $p < 0.001$, partial $\eta^2 = 0.068$) after adjusting for per-sample difficulty. Tukey's HSD (Eq.~\ref{eq:tukey}) with Bonferroni correction over 190 pairs identifies 35 pairs significant at $p_{\textsf{adj}} < 0.05$ and 33 significant at $p_{\textsf{adj}} < 0.01$ (Table~\ref{tab:tukey_significant}). The strongest single contrasts are:
+
+\input{../tables/tab_tukey_significant.tex}
+
+\begin{itemize}
+  \item H1 vs.\ M1: $\Delta = -0.182$ ($p_{\textsf{adj}} < 0.001$) --- phi-4 in the spec stage plus qwen-coder in test/code stages substantially outperforms llama3.2 mono.
+  \item H4 vs.\ N1: $\Delta = -0.262$ ($p_{\textsf{adj}} < 0.001$) --- every hetero cell beats the word-shuffled control by $> 0.25$, confirming that hetero closure signal is not a metric artefact.
+  \item M1 vs.\ N2: $\Delta = +0.282$ ($p_{\textsf{adj}} < 0.001$) --- the spec-stage-ablated null cell N2 beats M1 mono; skipping the docstring stage and reusing the ground-truth docstring works better than generating a weak docstring in the first place.
+\end{itemize}
+
+The strongest non-directional finding is that the M3 mono ceiling and the best hetero cells cluster within $0.05$ of each other on Path~1. Section~\ref{sec:discussion_rq1} develops the interpretation that hetero pipelines \emph{match} rather than \emph{dominate} the strongest mono baseline on aggregate closure rate, and the more interesting stage-attribution structure emerges in the per-operator decomposition (Section~\ref{sec:results_per_operator}).
+
+\subsection{Per-stage bottleneck attribution}
+\label{sec:results_stage_attribution}
+
+Each hetero cell composes three models $(m_{\textsf{spec}}, m_{\textsf{test}}, m_{\textsf{code}})$.
+
+\input{../tables/tab_per_stage_bottleneck.tex}
+
+Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's closure rate to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{Y}_{a,s}$ is the closure rate of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = \bar{Y}_a - \min_s \hat{Y}_{a,s}$ is the improvement from specialising the other two stages.
+
+Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (cell $\times$ path) triples; test-stage 10; code-stage 8. The most striking single-stage attributions are:
+
+\begin{itemize}
+  \item \textbf{H5 spec attribution, $\Delta = 0.267$} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $27$ percentage points of closure rate that llama3.2 mono cannot achieve alone.
+  \item \textbf{H4 code attribution, $\Delta = 0.186$} --- qwen-coder at $L_{\textsf{spec}}$ and $L_{\textsf{test}}$, llama3.2 at $L_{\textsf{code}}$. Even the ``cheap drafter at the code stage'' composition recovers $\Delta = 0.186$ over the llama3.2 mono baseline, suggesting that spec and test quality can compensate substantially for weak synthesis.
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\linewidth]{../plots/output/fig10_stage_contribution.png}
+  \caption{Per-hetero-cell stage-contribution decomposition on Path~1. Blue segment: worst-stage mono baseline (floor). Orange segment: heterogeneity gain over that baseline. Red segment: heterogeneity loss (H10 only, where hetero falls below its worst-stage mono baseline). Dashed line: strongest mono ceiling (M4 $= 0.773$).}
+  \label{fig:stage_contribution}
+\end{figure}
+
+Fig.~\ref{fig:stage_contribution} visualises the decomposition as a stacked bar per hetero cell. Cells H4 and H11 exceed the strongest mono ceiling (M4 = $0.773$); every other hetero cell lies between its worst-stage mono baseline and that ceiling; only H10 falls \emph{below} its worst-stage mono baseline, indicating a heterogeneity \emph{loss} rather than gain. Section~\ref{sec:discussion_rq3} develops this into a design guideline.
+
+\subsection{Per-mutation-operator kill rate}
+\label{sec:results_per_operator}
+
+The aggregate Path~1 kill rate averages across five mutation operators (arithmetic, boundary, comparison, negate\_bool, return\_none). Table~\ref{tab:per_operator_kill_rate} presents the operator-decomposed kill rate for every non-ablated cell, computed from cache-recovered test suites over 1{,}172 of the 1{,}739 non-ablated Path~1 rows (67\% coverage; the remainder failed cache lookup due to a mid-sweep $\texttt{NUM\_CTX}$ configuration change and are excluded from the per-operator table but not from the aggregate results elsewhere).
+
+\input{../tables/tab_per_operator_kill_rate.tex}
+
+Two structural findings emerge. First, mono baselines exhibit different operator strengths: M3 (qwen3.6) dominates 4 of 5 operators; M6 (qwen-coder) wins negate\_bool. Second, hetero cells inherit the operator-specific ceilings:
+
+\begin{itemize}
+  \item Arithmetic: mono ceiling M3 $= 0.806$; hetero winner \textbf{H1} $= 0.939$, $\Delta = +0.133$.
+  \item Boundary: mono ceiling M3 $= 0.748$; hetero winner \textbf{H1} $= 0.844$, $\Delta = +0.096$.
+  \item Comparison: mono ceiling M3 $= 0.912$; hetero winners \textbf{H1} and \textbf{H4} $= 1.000$, $\Delta = +0.088$.
+  \item Negate\_bool: mono ceiling M6 $= 0.944$; hetero winners \textbf{H1}, \textbf{H4}, \textbf{H8} $= 1.000$, $\Delta = +0.056$.
+  \item Return\_none: mono ceiling M3 $= 0.966$; hetero winner \textbf{H6} $= 0.976$, $\Delta = +0.010$.
+\end{itemize}
+
+\input{../tables/tab_per_operator_headline.tex}
+
+Table~\ref{tab:per_operator_headline} summarises these findings. \textbf{H1 (phi-4 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$) is the single strongest cell on 4 of 5 mutation operators}, beating the best mono baseline by $\Delta \geq 0.056$ on all four and by $\Delta = 0.133$ on arithmetic. This finding directly validates H1's pre-registered hypothesis in the DOE table: H1 was assigned this composition based on the second companion paper's finding that phi-4 dominates predicate reasoning (the second companion paper (§4.4)) and qwen-coder dominates comparison operators (the second companion paper's Table 13). The per-operator data confirms the hypothesis at the resolution of individual defect families.
+
+Two outliers merit specific attention. H10 (mistral spec + phi-4 test + qwen-coder code) achieves arithmetic $= 0.351$ and boundary $= 0.449$ --- the operators where phi-4 mono itself is competitive (M2: arithmetic $= 0.580$, boundary $= 0.653$). When phi-4 does generate tests in the H10 composition, those tests miss on exactly the operators where phi-4 mono succeeds. Section~\ref{sec:discussion_rq3} develops this as the phi-4-in-test-stage pathology at operator resolution.
+
+\subsection{Per-benchmark decomposition}
+\label{sec:results_per_benchmark_decomp}
+
+\input{../tables/tab_per_benchmark.tex}
+
+Table~\ref{tab:per_benchmark} decomposes the cell effect by source benchmark. On HumanEval ($n = 1{,}652$), $F(19, 1632) = 5.06$, $p < 0.001$; on MBPP ($n = 4{,}238$), $F(19, 4218) = 8.91$, $p < 0.001$. Cell assignment is a significant predictor on both benchmarks, with MBPP showing a stronger effect --- consistent with MBPP's shorter and more uniform problem structure making per-cell differences more measurable.
+
+The most striking benchmark-specific effect surfaces not in the aggregate closure rate but in the Path~3 judge--metric decomposition (Section~\ref{sec:discussion_rq2}), which flips direction between HumanEval and MBPP.
+
+\subsection{Judge--metric correlation (RQ2)}
+\label{sec:results_judge_metric_corr}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\linewidth]{../plots/output/fig7_judge_corr.png}
+  \caption{Judge SLM rating vs.\ automated closure metric per path. Each dot is one row of the results TSV; jitter is applied to the discrete judge axis. Path~1: mutation kill rate. Path~2: reference test pass rate (binary). Path~3: BERTScore F1. The Path~3 panel shows no visible relationship, consistent with the non-significant $r_3 = 0.022$ ($p = 0.359$, $n = 1{,}791$).}
+  \label{fig:judge_corr}
+\end{figure}
+
+\input{../tables/tab_judge_correlation.tex}
+
+Fig.~\ref{fig:judge_corr} plots the automated closure metric against the judge rating for each path, with per-path Pearson correlations reported in Table~\ref{tab:judge_correlation}. The three paths yield markedly different agreement:
+
+\begin{itemize}
+  \item Path~1 (mutation kill rate vs.\ judge): $r_1 = 0.192$, $p = 2.12 \times 10^{-13}$, $n = 1{,}441$. Statistically significant but weak.
+  \item Path~2 (pass rate vs.\ judge): $r_2 = 0.523$, $p = 1.19 \times 10^{-129}$, $n = 1{,}839$. Strong and highly significant.
+  \item Path~3 (BERTScore vs.\ judge, aggregate): $r_3 = 0.022$, $p = 0.359$, $n = 1{,}791$. \textbf{Not significant} in aggregate. Stratifying by source benchmark, $r_3^{\textsf{HE}} = 0.153$ ($p = 0.0006$, $n = 501$) and $r_3^{\textsf{MBPP}} = 0.212$ ($p < 0.0001$, $n = 1{,}290$); both are weak-but-significant positive correlations. A Fisher-$z$ test for equality of the two per-benchmark correlations yields $z = -1.16$ ($p = 0.24$), so the correlations do not differ significantly. The aggregate near-zero $r_3$ is therefore a Simpson's-paradox attenuation from pooling two benchmarks with different mean judge ratings, not a genuine zero relationship. Within either benchmark BERTScore captures only a small share of variance in the judge rating ($r^2 \leq 0.045$), which is the finding this paper builds on rather than the ostensibly cleaner ``uncorrelated'' aggregate.
+\end{itemize}
+
+Path~3's very weak per-benchmark correlations (both $r^2 \leq 0.045$) are the paper's strongest single validity finding on BERTScore. Standard practice in NLP evaluation (Zhang et al., 2020) treats BERTScore F1 as a semantic-equivalence proxy; our result shows it captures at most a small share of variance in an LLM-based semantic-equivalence judgement, and does so identically weakly on both benchmarks. Section~\ref{sec:discussion_rq2} stratifies the direction of the residual disagreement by benchmark, showing that even though the correlation strengths are indistinguishable, the disagreement \emph{type} (over-crediting versus under-crediting) flips categorically across benchmarks --- a structural signature consistent with BERTScore functioning as a surface-form similarity signal.
+
+\subsection{Path $\times$ cell interaction}
+
+\input{../tables/tab_anova_interaction.tex}
+
+To test whether the three closure paths carry non-redundant information, we fit the interaction ANOVA of Eq.~\ref{eq:anova_interact}. Table~\ref{tab:anova_interaction} presents the results for $n = 5{,}068$ rows after excluding structural NaN entries and cells present only on a subset of paths.
+
+The cell $\times$ path interaction is significant ($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$). The effect is statistically robust given the large sample ($n = 4{,}900$) but small in Cohen's conventional bands ($\eta^2_p \in [0.01, 0.06]$~=~small; $[0.06, 0.14]$~=~medium; $\geq 0.14$~=~large). We interpret this as: the three-path framework is not redundant, but path assignment accounts for a small (not dominant) share of variance in closure rate once cell and sample are controlled. This is nonetheless a substantive finding for practitioners deploying pipelines: cells respond \emph{differently} to different closure paths rather than paths adding a constant offset. Concretely, the ranking of cells is not preserved across paths --- Table~\ref{tab:closure_rate_matrix} shows M3 (best Path~1) is not the best Path~3 performer; N2 (spec-ablated) is competitive with any mono cell on Path~2 but structural NA on Paths~1 and~3.
+
+The largest main effect is path itself (partial $\eta^2 = 0.388$), reflecting that Path~1, Path~2, and Path~3 metrics inhabit different value scales; the cell main effect ($\eta^2 = 0.068$) captures aggregate composition quality; and sample difficulty ($\eta^2 = 0.227$) is a substantial random-intercept-equivalent term. All four effects are significant at $p < 0.001$.
+
+\subsection{Cache efficiency and computational cost}
+
+\input{../tables/tab_cache_efficiency.tex}
+
+Table~\ref{tab:cache_efficiency} reports the closure-call cache hit rate per cell. Because the LLM cache is keyed on (model, role, prompt, generation-parameters), cells that reuse the same model at overlapping stages achieve high hit rates through cross-cell reuse. Mono cells run first and see near-zero hit rates ($\leq 0.6\%$ for M1, M2, M4, M5, M6); M3 achieves 21.5\% because it was re-run after a mid-sweep configuration change. Hetero cells run subsequently and inherit substantial hit rates: H4 achieves 89.2\% because its qwen-coder stages reuse M6 cache entries directly. N2 and N3 achieve 100\% because their surviving stages are identical to earlier cells.
+
+The full 20-cell sweep consumed 16{,}302 SLM calls, of which 3{,}706 were served from cache ($22.7\%$ hit rate). The total wall-clock time on Google Colab hardware was approximately 22 GPU-days accumulated over 23~calendar days, spanning both A100 and T4 hardware.
+
+\subsection{Contamination sensitivity on HumanEval-Mutated}
+\label{sec:results_contamination}
+
+\input{../tables/tab_holdout_sensitivity.tex}
+
+Because HumanEval and MBPP predate the training cut-offs of all six pipeline SLMs, closure rates on the core sweep are potentially inflated by memorised solutions. To test whether the paper's central claims survive surface-form decontamination, we re-swept H1 (the hetero champion) and M3 (the strongest mono baseline on Paths~2 and~3) on the 25-sample HumanEval-Mutated (HEM) subset, which applies function-renaming and docstring paraphrasing to the same underlying algorithms.\footnote{A LiveCodeBench-25 post-cutoff subset was also intended per pre-registration but blocked at the data-preparation step by the removal of script-based dataset loaders from the current HuggingFace \texttt{datasets} library (see Section~\ref{sec:limitations_external}). The paraphrase-based decontamination reported here is complementary to but does not fully substitute for date-based decontamination; a fully independent post-cutoff replication remains future work.} Table~\ref{tab:holdout_sensitivity} reports the strict-AND closure rate per cell per path on the core and HEM sweeps and the corresponding delta.
+
+Three findings emerge.
+
+\textbf{First: the behavioural paths (Paths~1 and~2) show no evidence of contamination-driven inflation on the core sweep.} Both cells improve on HEM by $+15$ to $+26$~pp on the two paths whose metrics measure real behaviour (mutation kill rate; reference-test pass rate). If core closure rates were driven by memorised HumanEval solutions, we would expect the opposite --- surface-form-varied inputs would degrade the memorisation shortcut. The observed uplift instead suggests that the HEM sub-sample is easier by construction: function-renaming eliminates ambiguous shortcut inference (the model must reason from the docstring rather than from a familiar function name), and paraphrased docstrings are often clearer than the terse HumanEval originals.
+
+\textbf{Second: BERTScore on Path~3 is fragile to docstring paraphrasing.} Both cells lose $25$--$31$~pp on Path~3 HEM. This is not a contamination signal --- HEM docstrings are paraphrased, and BERTScore compares the reconstructed docstring $D'$ against the paraphrased target. Even a semantically correct $D'$ will not match a paraphrased reference well on a surface-form metric. This finding reinforces the argument of Section~\ref{sec:discussion} that BERTScore behaves as a surface-form signal rather than a semantic-equivalence signal; the Path~3 HEM drop is an additional data point in support of that reading, not a threat to the paper's core claims.
+
+\textbf{Third: the H1-vs-M3 comparison holds under decontamination.} On Path~1, both cells reach $100\%$ HEM closure --- H1 gains $+21.0$~pp, M3 gains $+14.5$~pp. On Path~2, M3 gains $+25.7$~pp and H1 gains $+15.5$~pp. On Path~3, M3 degrades slightly less than H1 ($-24.5$ vs.\ $-31.0$~pp), consistent with M3's higher core-sweep Path~3 rate ($70.0\%$ vs.\ $63.6\%$). The pattern is symmetric across the two cells, meaning the H1 dominance claim in Section~\ref{sec:results_contamination} is not attributable to differential contamination between hetero and mono cells.
+
+The absence of contamination-driven inflation on the behavioural paths, together with the H1--M3 pattern preservation on HEM, materially strengthens the paper's central claim that the observed cross-stage composition effects reflect genuine capability differences rather than dataset-memorisation artefacts.
+
+
+\subsection{Human-evaluation results}
+\label{sec:results_human_eval}
+
+The human-evaluation protocol pre-registered in
+Section~\ref{sec:experiment_setup_human_eval} was executed with five
+annotators: three from the author team (BV, GS, AM) and two recruited
+independently and calibrated on the shared rubric (DR, RR). This
+subsection reports the inter-rater and judge--human agreement
+statistics on the full five-way sample, contrasts them with the
+three-way (author-team-only) numbers, and interprets the implications
+for the strict-AND two-signal validity policy that underpins this
+study's closure decisions.
+
+\subsubsection{Study conduct}
+\label{sec:human_eval_conduct}
+
+Five annotators rated the 60 pre-registered pairs on the 5-level rubric
+described in Section~\ref{sec:framework}. Three (BV, GS, AM) are members
+of the author team; two additional annotators (DR, RR) were recruited
+independently of the pipeline runners and attended the shared calibration
+session on the ten rubric anchor items. Sampling was as pre-registered:
+20 pairs from the ``frontier'' bucket (judge and metric agree on
+validity, drawn uniformly from cells with mid-range closure rates), 20
+from the ``agreement'' bucket, and 20 from the ``disputed'' bucket.
+Annotators saw pairs in a per-annotator deterministic order (SHA-256
+seed on the annotator identifier) and were blinded to cell identity,
+closure path, judge rating, and bucket assignment. All five annotators
+completed the full 60 pairs and provided a written justification for
+every rating (0 empty across all $60 \times 5 = 300$ ratings). Only
+one revision was issued in total (by GS).
+
+The rating distributions differ meaningfully between the author-team and
+external annotators. All five annotators place the modal rating at~3
+(``equivalent''), but external annotator DR uses the low end of the
+scale more aggressively (six ratings at $0$ or $1$ versus $1$--$5$ for
+the other four), and external annotator RR is more permissive at the
+top of the scale (20~ratings at~$4$, similar to AM's~21 but higher than
+BV/GS/DR at $11$--$16$). The external annotators are therefore not
+outliers as much as they occupy a wider band on the ordinal scale than
+the more clustered author-team ratings.
+
+\subsubsection{Agreement results}
+\label{sec:human_eval_agreement_results}
+
+\input{../tables/tab_human_eval_agreement.tex}
+
+Table~\ref{tab:human_eval_agreement} reports the primary agreement
+statistics on the full five-way sample.
+
+\textbf{Adding independent annotators materially lowers Krippendorff's
+$\alpha$.} On the three author-team annotators alone (BV, GS, AM), the
+ordinal $\alpha$ was $0.376$ --- itself below Krippendorff's
+$\alpha \geq 0.667$ threshold for tentative inferential use but at least
+weakly positive. Adding DR alone drops $\alpha$ to $0.244$; adding RR as
+well drops it further to $\alpha = 0.193$. This monotonic decline is
+consistent with the interpretation that the author-team-only $\alpha$
+was inflated by shared calibration (all three share supervisory or
+co-authorship relationships and had similar prior exposure to the
+pipeline design); independent annotators, even after attending the same
+calibration session, exercise the rubric differently. We adopt the
+five-way $\alpha = 0.193$ as the more honest headline number and report
+the three-way as a documented contrast.
+
+\textbf{Pairwise Cohen's $\kappa$ shows the same pattern.} Pairwise
+linear-weighted $\kappa$ within the author team ranges $0.170$--$0.338$;
+between author-team and external annotators it drops to $-0.017$--$0.185$
+(with BV-vs-RR marginally negative). Quadratic-weighted $\kappa$, which
+penalises adjacent-category disagreements less harshly and is the more
+common ordinal convention, follows the same ordering but at somewhat
+higher values ($0.334$--$0.426$ within team; $0.009$--$0.263$
+across team-vs-external). All within-team pairs are in the ``fair'' band
+of the Landis and Koch conventions; team-vs-external pairs mostly fall
+in ``slight'' to ``fair''.
+
+\textbf{At coarser resolution the picture remains strong.} All ten
+pairwise \emph{within-1} agreement rates (fraction of pairs where the
+two ratings differ by at most one category on the 5-level scale) fall
+in $[75.0\%, 91.7\%]$. Notably, team-vs-external pairs still achieve
+$75\%$--$85\%$ within-1 agreement. Annotators converge on the rough
+band of semantic equivalence while genuinely disagreeing at the fine
+gradations of the top of the scale (whether a pair is ``identical'' or
+merely ``equivalent'') and at the ``equivalent'' vs.\ ``approximately
+equivalent'' boundary. This pattern is consistent with prior
+human-evaluation studies of LLM outputs where 5-level ordinal scales
+routinely produce sub-$0.5$ $\alpha$ values driven by
+adjacent-category noise.
+
+\textbf{Judge SLM tracks human consensus only weakly, even more so
+against the five-way majority.} The DeepSeek-R1 judge SLM used
+throughout this study attains
+$\kappa_{\textsf{lin}} = 0.081$ and $\kappa_{\textsf{quad}} = 0.074$
+against the five-way majority-vote human rating---both in Landis and
+Koch's ``slight'' band, and materially weaker than the same judge
+scored against the author-team-only majority
+($\kappa_{\textsf{quad}} = 0.138$ at three annotators). At the coarser
+within-1 resolution the judge does reach $91.7\%$ agreement with the
+five-way majority, matching the pairwise inter-annotator within-1 rates,
+but at the price of essentially no discriminative information at the
+category-exact level.
+
+\textbf{The ``disputed'' bucket has the highest five-way human
+agreement, though at low absolute values.} Per-bucket exact-agreement
+rates (all five annotators pick the same rating) are $5.0\%$
+(``frontier''), $0.0\%$ (``agreement''), and $10.0\%$ (``disputed'').
+While the absolute rates are low, the counter-intuitive ordering
+observed in the three-way analysis persists at five: humans converge
+most exactly on the pairs where the judge and metric could not agree.
+The reading in which the automated-signal disagreement in the disputed
+bucket arose from unambiguously wrong judge or metric calls that humans
+identify jointly remains supported.
+
+\subsubsection{Empirical value of the strict-AND policy}
+\label{sec:human_eval_strict_and}
+
+We recompute the false-closure ablation against the updated five-way
+majority-vote human ground truth. Ground truth is defined as
+majority-vote human rating $\geq 3$ (equivalent-or-better); positive-class
+prevalence on this sample is $86.7\%$ (up from $78.3\%$ on the
+three-way ground truth --- majority ties, broken toward the higher
+rating following the pre-registered convention, more often land at
+$\geq 3$ with five raters).
+Table~\ref{tab:strict_and_ablation} reports the false-closure rate (FPR)
+and false-reject rate (FNR) at the paper's default operating point
+($\tau = 0$, $\rho = 3$) and at two more conservative metric thresholds.
+
+\begin{table}[t]
+  \centering
+  \caption{False-closure and false-reject rates under three decision
+    policies on the 60-pair five-annotator-majority sample. Ground truth:
+    5-way majority human rating $\geq 3$ (positive-class prevalence
+    $86.7\%$). Judge threshold $\rho = 3$ throughout. Columns report
+    false-closure rate (FPR: fraction of human-negative pairs incorrectly
+    labelled valid), false-reject rate (FNR: fraction of human-positive
+    pairs incorrectly labelled invalid), and overall accuracy.}
+  \label{tab:strict_and_ablation}
+  \begin{tabular}{lrrrrrrrrr}
+    \toprule
+    & \multicolumn{3}{c}{Metric-only}
+    & \multicolumn{3}{c}{Judge-only}
+    & \multicolumn{3}{c}{Strict-AND} \\
+    \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+    $\tau$
+    & FPR & FNR & Acc & FPR & FNR & Acc & FPR & FNR & Acc \\
+    \midrule
+    $0.0$ & $87.5\%$ & $13.5\%$ & $76.7\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
+          & $75.0\%$ & $19.2\%$ & $73.3\%$ \\
+    $0.5$ & $50.0\%$ & $23.1\%$ & $73.3\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
+          & $37.5\%$ & $28.8\%$ & $70.0\%$ \\
+    $0.8$ & $37.5\%$ & $28.8\%$ & $70.0\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
+          & $25.0\%$ & $32.7\%$ & $68.3\%$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Three empirical findings emerge from Table~\ref{tab:strict_and_ablation}.
+
+\textbf{First: at every threshold combination, strict-AND achieves the
+lowest false-closure rate of the three policies.} At the paper's
+default $\tau = 0$, adding the judge to the metric reduces FPR from
+$87.5\%$ to $75.0\%$---a $12.5$-percentage-point reduction. At
+$\tau = 0.5$ the reduction is $12.5$~pp ($50.0\% \to 37.5\%$); at
+$\tau = 0.8$ it is again $12.5$~pp ($37.5\% \to 25.0\%$). The exact
+$12.5$~pp constancy across thresholds is a small-sample coincidence
+(the reduction corresponds to a single-pair swap at $n = 8$ negatives)
+but the direction is robust: the judge contributes usable signal in
+the AND composition even at the low $\kappa_{\textsf{quad}} = 0.074$
+against individual human ratings.
+
+\textbf{Second: the reduction in false-closure is bought at the cost
+of higher false-reject.} Adding the judge to metric-only raises FNR
+by $5.8$--$5.7$--$3.9$~pp across $\tau \in \{0, 0.5, 0.8\}$. The
+trade-off is favourable: strict-AND buys $2$--$3\times$ more FPR
+reduction than the FNR rise it costs, so the policy is justified
+under any loss function weighting false-closure at least as heavily
+as false-reject.
+
+\textbf{Third: judge-only at $\rho = 3$ has the best accuracy of any
+single policy on this sample ($83.3\%$).} This is not evidence that the
+judge alone is preferable in practice: at $\rho = 3$ the judge is
+highly permissive on this sample, and its overall accuracy is dominated
+by the elevated positive-class prevalence ($86.7\%$ under the 5-way
+majority). Metric-only and strict-AND achieve their accuracy through
+substantive discrimination; judge-only at $\rho = 3$ largely predicts
+positive.
+
+The strict-AND policy is therefore \emph{empirically supported}, not
+merely \emph{motivated}, by the human-evaluation data. The point
+estimate of a $12.5$~pp reduction in false-closure at the paper's
+default operating point should nonetheless be read with a $n = 8$
+negatives caveat: the $95\%$ Wilson confidence interval on the observed
+FPR reduction spans roughly $\pm 25$~pp on this small negative-class
+sample, so the effect is directionally established but the magnitude
+is imprecise.
+
+Two secondary implications:
+
+\begin{enumerate}
+  \item \textbf{The \texttt{false\_closure\_candidate} bucket in
+        Section~\ref{sec:discussion} is likely upper-bounded rather
+        than point-estimated.} A judge with $\kappa_{\textsf{quad}}
+        = 0.074$ against human consensus will incorrectly flag some
+        rows as ``judge disagrees with metric'' when a human would
+        concur with the metric. The per-cell rates of
+        \texttt{false\_closure\_candidate} reported in
+        Section~\ref{sec:discussion} should therefore be treated as
+        upper bounds on the true false-closure rate.
+
+  \item \textbf{Metric-false-negative rows may partially reflect
+        judge over-crediting rather than pure metric conservatism.}
+        On the 60-pair sample the judge slightly over-rates relative
+        to the 5-way majority human (mean judge~$= 3.28$ vs.\ mean
+        human~$= 3.20$). Rows labelled \texttt{metric\_false\_negative}
+        in Section~\ref{sec:discussion} (metric below $\tau$, judge
+        above $\rho$) therefore mix two populations: cases where the
+        metric is genuinely conservative on human-equivalent artefacts,
+        and cases where the judge over-credits an artefact humans would
+        rate lower. The BERTScore benchmark-flip finding of
+        Section~\ref{sec:discussion} is unaffected in its comparative
+        statement across benchmarks but should be read as a
+        judge-relative---not a human-relative---signal.
+\end{enumerate}
+
+\subsubsection{Limitations of the human-evaluation results}
+\label{sec:human_eval_limitations}
+
+Three limitations bound the strength of the conclusions above.
+
+First, $n = 60$ is the pre-registered sample size but is small for
+inferring narrow confidence intervals on $\alpha$; the addendum reports
+point estimates only. A larger sample would tighten the estimates but is
+prohibitive at the human-evaluation rate.
+
+Second, the annotator pool has \emph{partial} independence from the
+author team: two of five annotators (DR, RR) are independent of the
+pipeline runners, but three (BV, GS, AM) share supervisory or
+co-authorship relationships. The direct effect of this partial
+independence is quantified in Section~\ref{sec:human_eval_agreement_results}
+(three-way $\alpha = 0.376$ collapses to five-way $\alpha = 0.193$ when
+independent annotators are added). A fully independent replication with
+three or more annotators recruited via a blinded third-party channel
+remains future work; the direction of expected drift is now empirically
+established.
+
+Third, the 5-level ordinal rubric was chosen for compatibility with the
+judge SLM's 0--4 output scale, but human annotators may find fewer
+distinguishable levels (a 3-level ``different / approximate / equivalent''
+rubric) easier to converge on. The high within-1 rates suggest that
+collapsing the top two levels into a single ``equivalent'' category
+would raise both $\alpha$ and pairwise $\kappa$ into the acceptable
+band.
+
+
+
+\emph{End of Section~\ref{sec:results}.}
+Section~\ref{sec:discussion} interprets these findings against RQ1--RQ5,
+derives three design guidelines, and folds in the threats-to-validity
+analysis as its final subsection.

@@ -47,6 +47,8 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds}
 
 %% -- Hyperlinks + cleveref (after amsmath, before hyperref) ------------------
 \usepackage[hidelinks]{hyperref}
@@ -165,18 +167,20 @@ open-weight language models
 \input{section_1_introduction.tex}
 \input{section_2_related_work.tex}
 
-%% Equations and Algorithm boxes are defined INLINE in section_3_methods.tex.
-%% The standalone file equations_and_algorithms.tex is kept in the repo as an
-%% author-facing reference sheet listing all 20+ equations + 3 algorithms in
-%% one place, but is NOT \input here — the equations that appear in the paper
-%% live in §3, and this avoids duplicate \label warnings.
+%% §3 Framework (paths, validity, filter, metrics) and §4 Experiment Setup
+%% (DOE, datasets, statistics, sensitivity, human-eval protocol) are separated
+%% following Elsevier convention. equations_and_algorithms.tex is kept in the
+%% repo as an author-facing reference sheet but NOT \input here — the
+%% equations that appear in the paper live in §3 and §4.
 
-\input{section_3_methods.tex}
-\input{section_4_results.tex}
-\input{section_5_discussion.tex}
-\input{section_6_threats.tex}
+\input{section_3_framework.tex}
+\input{section_4_experiment_setup.tex}
+\input{section_5_results.tex}
+\input{section_6_discussion.tex}
 \input{section_7_conclusion.tex}
-\input{section_8_human_eval_addendum.tex}
+%% §6 Threats and §8 Human-eval addendum previously stood alone; their content
+%% is now folded into §6.5 (Limitations) and §5.10 (Human evaluation results)
+%% respectively.
 
 %% ============================================================================
 %% End matter (Elsevier mandatory sections)

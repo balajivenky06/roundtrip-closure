@@ -1,0 +1,95 @@
+% Framework figure — three closure paths on the docstring–test–code triangle.
+% Rendered natively in TikZ; no external image dependency.
+\begin{figure*}[t]
+  \centering
+  \begin{tikzpicture}[
+    node distance=1.4cm and 1.1cm,
+    orig/.style   ={rectangle, draw, thick, minimum height=0.9cm, minimum width=1.0cm, font=\bfseries, fill=gray!8},
+    recon/.style  ={rectangle, draw, thick, minimum height=0.9cm, minimum width=1.0cm, font=\bfseries, fill=blue!8},
+    slm/.style    ={-{Latex[length=2.2mm]}, thick},
+    metric/.style ={rectangle, draw=blue!60!black, thick, rounded corners=2pt,
+                    minimum height=0.9cm, text width=3.2cm, align=center,
+                    font=\footnotesize, fill=blue!5},
+    judge/.style  ={rectangle, draw=orange!70!black, thick, rounded corners=2pt,
+                    minimum height=0.9cm, text width=3.2cm, align=center,
+                    font=\footnotesize, fill=orange!8},
+    pathlabel/.style={font=\bfseries\small},
+  ]
+
+    %% ------------------- Path 1: C -> D -> T -------------------
+    \node[orig]  (P1C)  at (0,3)     {$C$};
+    \node[recon,right=of P1C] (P1D)  {$D'$};
+    \node[recon,right=of P1D] (P1T)  {$T'$};
+    \node[metric,right=of P1T] (P1M)
+      {mutation kill rate\\$K(T', C)$};
+    \node[judge, right=of P1M] (P1J)
+      {judge SLM rating\\$J(D, D')$};
+
+    \draw[slm] (P1C) -- node[above, font=\scriptsize]{$L_{\mathsf{spec}}$}  (P1D);
+    \draw[slm] (P1D) -- node[above, font=\scriptsize]{$L_{\mathsf{test}}$}  (P1T);
+    \draw[slm] (P1T) -- (P1M);
+    \draw[slm] (P1M) -- (P1J);
+    \node[pathlabel, left=0.15cm of P1C]{Path 1};
+
+    %% ------------------- Path 2: D -> T -> C -------------------
+    \node[orig,  below=1.5cm of P1C] (P2D)  {$D$};
+    \node[recon, right=of P2D]       (P2T)  {$T'$};
+    \node[recon, right=of P2T]       (P2C)  {$C'$};
+    \node[metric,right=of P2C]       (P2M)
+      {reference-test\\pass rate $R(C', T)$};
+    \node[judge, right=of P2M]       (P2J)
+      {judge SLM rating\\$J(C, C')$};
+
+    \draw[slm] (P2D) -- node[above, font=\scriptsize]{$L_{\mathsf{test}}$}  (P2T);
+    \draw[slm] (P2T) -- node[above, font=\scriptsize]{$L_{\mathsf{code}}$}  (P2C);
+    \draw[slm] (P2C) -- (P2M);
+    \draw[slm] (P2M) -- (P2J);
+    \node[pathlabel, left=0.15cm of P2D]{Path 2};
+
+    %% ------------------- Path 3: C -> T -> D -------------------
+    \node[orig,  below=1.5cm of P2D] (P3C)  {$C$};
+    \node[recon, right=of P3C]       (P3T)  {$T'$};
+    \node[recon, right=of P3T]       (P3D)  {$D'$};
+    \node[metric,right=of P3D]       (P3M)
+      {BERTScore F1\\$B(D, D')$};
+    \node[judge, right=of P3M]       (P3J)
+      {judge SLM rating\\$J(D, D')$};
+
+    \draw[slm] (P3C) -- node[above, font=\scriptsize]{$L_{\mathsf{test}}$}  (P3T);
+    \draw[slm] (P3T) -- node[above, font=\scriptsize]{$L_{\mathsf{spec}}$}  (P3D);
+    \draw[slm] (P3D) -- (P3M);
+    \draw[slm] (P3M) -- (P3J);
+    \node[pathlabel, left=0.15cm of P3C]{Path 3};
+
+    %% -- Strict-AND validity decision (rounded box below) -------
+    \node[draw=black!70, thick, dashed, rounded corners, fill=black!3,
+          below=1.0cm of P3M, minimum width=13.5cm, minimum height=0.9cm, font=\small,
+          align=center] (validity)
+      {\textbf{Strict-AND validity decision (Algorithm~\ref{alg:validity})}:\;
+       $\text{valid} \iff (\text{metric} > \tau) \;\wedge\; (\text{judge rating} \geq \rho)$};
+
+    \draw[->, dashed, gray!70] (P1J.south) -- ++(0,-0.15) |- (validity.east);
+    \draw[->, dashed, gray!70] (P2J.south) -- ++(0,-0.15) |- (validity.east);
+    \draw[->, dashed, gray!70] (P3J.south) -- (validity.north);
+
+    %% -- Legend -----------------------------------------------------
+    \node[draw, fill=white, font=\scriptsize, below=0.4cm of validity,
+          text width=13cm, align=left, inner sep=4pt]
+      {Grey nodes: original artefacts (input). Blue nodes: reconstructed artefacts. Blue box:
+       SE-validated automated closure metric. Orange box: external judge SLM rating on
+       $\{-1, 0, 1, 2, 3, 4\}$ (DeepSeek-R1:14B, family-disjoint). $L_{\mathsf{spec}}$,
+       $L_{\mathsf{test}}$, $L_{\mathsf{code}}$ are the three pipeline SLMs assigned by
+       the DOE cell (six candidates; see Table~\ref{tab:doe_summary}). Thresholds are the
+       paper defaults $\tau = 0$ and $\rho = 3$.};
+  \end{tikzpicture}
+  \caption{Round-trip closure framework. Each closure path takes two of the three
+    triangle artefacts ($C$: code, $D$: docstring, $T$: reference tests) as
+    input and reconstructs the third via two SLM stages. The automated closure
+    metric (Path 1: mutation kill rate; Path 2: reference-test pass rate; Path 3:
+    BERTScore F1) is paired with an external judge SLM's semantic-equivalence
+    rating under the strict-AND validity policy (Algorithm~\ref{alg:validity}).
+    Different DOE cells (Section~\ref{sec:experiment_setup}) instantiate
+    $L_{\mathsf{spec}}$, $L_{\mathsf{test}}$, $L_{\mathsf{code}}$ with the same
+    or different open-weight SLMs.}
+  \label{fig:framework}
+\end{figure*}
