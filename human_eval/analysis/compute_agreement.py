@@ -283,15 +283,16 @@ def render_latex_table(report: dict) -> str:
         f"{fmt(report['judge_vs_human_kappa_quadratic'])} & "
         f"{pct(report['judge_vs_human_within1_rate'])} \\\\"
     )
+    n_ann = len(report["annotators"])
     lines += [
         r"    \midrule",
         r"    \multicolumn{4}{l}{\emph{Krippendorff's $\alpha$ (ordinal, "
-        r"3-way):} " + fmt(report["krippendorff_alpha_ordinal"])
+        + f"{n_ann}-way):}} " + fmt(report["krippendorff_alpha_ordinal"])
         + r" \quad(" + interpret_alpha(report["krippendorff_alpha_ordinal"])
         + r")} \\",
-        r"    \multicolumn{4}{l}{\emph{3-way exact agreement:} "
+        r"    \multicolumn{4}{l}{\emph{" + f"{n_ann}-way exact agreement:" + r"} "
         + pct(report["exact_agreement_rate_all_three"])
-        + r" \quad \emph{3-way within-1:} "
+        + r" \quad \emph{" + f"{n_ann}-way within-1:" + r"} "
         + pct(report["within1_rate_all_three"]) + r"} \\",
         r"    \bottomrule",
         r"  \end{tabular}",

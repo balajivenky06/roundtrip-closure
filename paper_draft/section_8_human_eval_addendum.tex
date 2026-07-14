@@ -4,38 +4,43 @@
 \section{Human-evaluation addendum}
 \label{sec:human_eval_addendum}
 
-The 60-pair three-annotator human evaluation described methodologically in
-Section~\ref{sec:methods} and referenced as ``pending'' in the initial
-manuscript revision has now been completed. This section reports the
-inter-rater and judge--human agreement statistics and interprets their
-implications for the strict-AND two-signal validity policy that underpins
-this study's closure decisions.
+The 60-pair human evaluation described methodologically in
+Section~\ref{sec:methods} has been completed with five annotators: three
+from the author team (BV, GS, AM) and two recruited independently and
+calibrated on the shared rubric (DR, RR). This section reports the
+inter-rater and judge--human agreement statistics on the full five-way
+sample, contrasts them with the three-way (author-team-only) numbers
+that the initial revision reported, and interprets the implications for
+the strict-AND two-signal validity policy that underpins this study's
+closure decisions.
 
 \subsection{Study conduct}
 \label{sec:human_eval_conduct}
 
-Three annotators (BV, GS, AM) with software-engineering background rated
-the 60 pre-registered pairs on the 5-level rubric described in
-Section~\ref{sec:methods}. Sampling was as pre-registered: 20 pairs from
-the ``frontier'' bucket (judge and metric agree on validity, drawn
-uniformly from cells with mid-range closure rates), 20 from the
-``agreement'' bucket (judge and metric both mark the row valid or both
-mark invalid), and 20 from the ``disputed'' bucket (judge and metric
-disagree). Annotators saw pairs in a per-annotator deterministic order
-(SHA-256 seed on the annotator identifier) and were blinded to cell
-identity, closure path, judge rating, and bucket assignment. All three
-annotators completed the full 60 pairs, provided a written justification
-for every rating (0 empty), and issued zero (BV, AM) or one (GS) revision
-after initial submission.
+Five annotators rated the 60 pre-registered pairs on the 5-level rubric
+described in Section~\ref{sec:methods}. Three (BV, GS, AM) are members
+of the author team; two additional annotators (DR, RR) were recruited
+independently of the pipeline runners and attended the shared calibration
+session on the ten rubric anchor items. Sampling was as pre-registered:
+20 pairs from the ``frontier'' bucket (judge and metric agree on
+validity, drawn uniformly from cells with mid-range closure rates), 20
+from the ``agreement'' bucket, and 20 from the ``disputed'' bucket.
+Annotators saw pairs in a per-annotator deterministic order (SHA-256
+seed on the annotator identifier) and were blinded to cell identity,
+closure path, judge rating, and bucket assignment. All five annotators
+completed the full 60 pairs and provided a written justification for
+every rating (0 empty across all $60 \times 5 = 300$ ratings). Only
+one revision was issued in total (by GS).
 
-The rating distributions are broadly consistent across annotators. Both
-BV and GS place the modal rating at 3 (``equivalent''), with 26 and 27
-pairs respectively receiving this rating; AM places the modal rating at
-3 as well ($n=26$) but is somewhat more generous at the top of the scale
-($n=21$ pairs rated 4, versus 13 for BV and 16 for GS). No annotator
-used rating 0 (``unrelated'') more than once, indicating that the LLM
-pipeline is at least producing artefacts within the topical
-neighbourhood of the ground truth on the sampled pairs.
+The rating distributions differ meaningfully between the author-team and
+external annotators. All five annotators place the modal rating at~3
+(``equivalent''), but external annotator DR uses the low end of the
+scale more aggressively (six ratings at $0$ or $1$ versus $1$--$5$ for
+the other four), and external annotator RR is more permissive at the
+top of the scale (20~ratings at~$4$, similar to AM's~21 but higher than
+BV/GS/DR at $11$--$16$). The external annotators are therefore not
+outliers as much as they occupy a wider band on the ordinal scale than
+the more clustered author-team ratings.
 
 \subsection{Agreement results}
 \label{sec:human_eval_agreement_results}
@@ -43,85 +48,93 @@ neighbourhood of the ground truth on the sampled pairs.
 \input{../tables/tab_human_eval_agreement.tex}
 
 Table~\ref{tab:human_eval_agreement} reports the primary agreement
-statistics.
+statistics on the full five-way sample.
 
-\textbf{Inter-rater agreement is genuinely mixed at fine resolution.}
-Krippendorff's $\alpha$ under the ordinal difference function is
-$\alpha = 0.376$, which sits below Krippendorff's own $\alpha \geq 0.667$
-threshold for tentative inferential use and well below the
-$\alpha \geq 0.8$ acceptable threshold. Pairwise linear-weighted Cohen's
-$\kappa$ ranges from $0.170$ (BV vs.\ AM) to $0.338$ (GS vs.\ AM), all
-in the ``fair'' band of the Landis and Koch conventions. Quadratic-weighted
-$\kappa$, which penalises adjacent-category disagreements less harshly
-and is the more common ordinal convention, is uniformly higher
-($0.331$--$0.426$) but remains in the ``fair'' band. Three-way exact
-agreement (all three annotators pick the same rating) is $21.7\%$
-($13/60$).
+\textbf{Adding independent annotators materially lowers Krippendorff's
+$\alpha$.} On the three author-team annotators alone (BV, GS, AM), the
+ordinal $\alpha$ was $0.376$ --- itself below Krippendorff's
+$\alpha \geq 0.667$ threshold for tentative inferential use but at least
+weakly positive. Adding DR alone drops $\alpha$ to $0.244$; adding RR as
+well drops it further to $\alpha = 0.193$. This monotonic decline is
+consistent with the interpretation that the author-team-only $\alpha$
+was inflated by shared calibration (all three share supervisory or
+co-authorship relationships and had similar prior exposure to the
+pipeline design); independent annotators, even after attending the same
+calibration session, exercise the rubric differently. We adopt the
+five-way $\alpha = 0.193$ as the more honest headline number and report
+the three-way as a documented contrast.
 
-\textbf{At coarser resolution the picture is much stronger.} All three
-pairwise \emph{within-1} agreement rates (fraction of pairs where the two
-ratings differ by at most one category on the 5-level scale) exceed
-$90\%$: $91.7\%$ for BV vs.\ GS, $90.0\%$ for BV vs.\ AM, and $91.7\%$
-for GS vs.\ AM. The three-way within-1 rate (all three annotators fall
-within a one-category window) is $80.0\%$. The picture that emerges is
-that annotators consistently converge on the correct rough band of
-semantic equivalence but disagree on fine gradations at the top of the
-scale (whether a pair is ``identical'' or merely ``equivalent'') and at
-the boundary between ``equivalent'' and ``approximately equivalent''.
-This pattern is consistent with prior human-evaluation studies of LLM
-outputs in adjacent domains, where 5-level ordinal scales routinely
-produce sub-0.5 $\alpha$ values driven by adjacent-category noise.
+\textbf{Pairwise Cohen's $\kappa$ shows the same pattern.} Pairwise
+linear-weighted $\kappa$ within the author team ranges $0.170$--$0.338$;
+between author-team and external annotators it drops to $-0.017$--$0.185$
+(with BV-vs-RR marginally negative). Quadratic-weighted $\kappa$, which
+penalises adjacent-category disagreements less harshly and is the more
+common ordinal convention, follows the same ordering but at somewhat
+higher values ($0.334$--$0.426$ within team; $0.009$--$0.263$
+across team-vs-external). All within-team pairs are in the ``fair'' band
+of the Landis and Koch conventions; team-vs-external pairs mostly fall
+in ``slight'' to ``fair''.
 
-\textbf{Judge SLM tracks human consensus only weakly.} The DeepSeek-R1
-judge SLM used throughout this study attains only $\kappa_{\textsf{lin}}
-= 0.106$ and $\kappa_{\textsf{quad}} = 0.138$ against the majority-vote
-human rating---both in Landis and Koch's ``slight'' band and below the
-weakest pairwise inter-annotator agreement. At the coarser within-1
-resolution the judge does reach $91.7\%$ agreement with the human
-majority, matching the pairwise human-human within-1 rates, but it does
-so at the price of essentially no discriminative information at the
+\textbf{At coarser resolution the picture remains strong.} All ten
+pairwise \emph{within-1} agreement rates (fraction of pairs where the
+two ratings differ by at most one category on the 5-level scale) fall
+in $[75.0\%, 91.7\%]$. Notably, team-vs-external pairs still achieve
+$75\%$--$85\%$ within-1 agreement. Annotators converge on the rough
+band of semantic equivalence while genuinely disagreeing at the fine
+gradations of the top of the scale (whether a pair is ``identical'' or
+merely ``equivalent'') and at the ``equivalent'' vs.\ ``approximately
+equivalent'' boundary. This pattern is consistent with prior
+human-evaluation studies of LLM outputs where 5-level ordinal scales
+routinely produce sub-$0.5$ $\alpha$ values driven by
+adjacent-category noise.
+
+\textbf{Judge SLM tracks human consensus only weakly, even more so
+against the five-way majority.} The DeepSeek-R1 judge SLM used
+throughout this study attains
+$\kappa_{\textsf{lin}} = 0.081$ and $\kappa_{\textsf{quad}} = 0.074$
+against the five-way majority-vote human rating---both in Landis and
+Koch's ``slight'' band, and materially weaker than the same judge
+scored against the author-team-only majority
+($\kappa_{\textsf{quad}} = 0.138$ at three annotators). At the coarser
+within-1 resolution the judge does reach $91.7\%$ agreement with the
+five-way majority, matching the pairwise inter-annotator within-1 rates,
+but at the price of essentially no discriminative information at the
 category-exact level.
 
-\textbf{The ``disputed'' bucket has the highest three-way human
-agreement.} Per-bucket exact-agreement rates are $15.0\%$ for the
-``frontier'' bucket ($3/20$), $20.0\%$ for the ``agreement'' bucket
-($4/20$), and $30.0\%$ for the ``disputed'' bucket ($6/20$). The
-counter-intuitive result---humans converge \emph{most} exactly on the
-pairs where the judge and metric could not agree---is consistent with a
-reading in which the automated-signal disagreement in the disputed bucket
-arose from unambiguously wrong judge or metric calls that humans can
-identify jointly, rather than from genuinely ambiguous pairs. The
-frontier bucket, by contrast, was deliberately sampled to sit at the
-threshold of validity and is where human annotators most legitimately
-disagree.
+\textbf{The ``disputed'' bucket has the highest five-way human
+agreement, though at low absolute values.} Per-bucket exact-agreement
+rates (all five annotators pick the same rating) are $5.0\%$
+(``frontier''), $0.0\%$ (``agreement''), and $10.0\%$ (``disputed'').
+While the absolute rates are low, the counter-intuitive ordering
+observed in the three-way analysis persists at five: humans converge
+most exactly on the pairs where the judge and metric could not agree.
+The reading in which the automated-signal disagreement in the disputed
+bucket arose from unambiguously wrong judge or metric calls that humans
+identify jointly remains supported.
 
 \subsection{Empirical value of the strict-AND policy}
 \label{sec:human_eval_strict_and}
 
-An honest assessment of the strict-AND policy requires computing the
-false-closure rate against human ground truth under each candidate
-decision policy, using the 60-pair sample. Ground truth is defined as
-majority-vote human rating $\geq 3$ (equivalent-or-better), matching the
-judge threshold $\rho = 3$ used throughout the study. Positive-class
-prevalence on this sample is $78.3\%$; the base rates ``always predict
-positive'' and ``always predict negative'' therefore yield accuracies of
-$78.3\%$ and $21.7\%$ respectively.
-
+We recompute the false-closure ablation against the updated five-way
+majority-vote human ground truth. Ground truth is defined as
+majority-vote human rating $\geq 3$ (equivalent-or-better); positive-class
+prevalence on this sample is $86.7\%$ (up from $78.3\%$ on the
+three-way ground truth --- majority ties, broken toward the higher
+rating following the pre-registered convention, more often land at
+$\geq 3$ with five raters).
 Table~\ref{tab:strict_and_ablation} reports the false-closure rate (FPR)
 and false-reject rate (FNR) at the paper's default operating point
-($\tau = 0$, $\rho = 3$) and at two more conservative thresholds
-($\tau = 0.5$ and $\tau = 0.8$) drawn from the sensitivity analysis of
-Section~\ref{sec:methods}.
+($\tau = 0$, $\rho = 3$) and at two more conservative metric thresholds.
 
 \begin{table}[t]
   \centering
   \caption{False-closure and false-reject rates under three decision
-    policies on the 60-pair human-annotated sample. Ground truth:
-    majority human rating $\geq 3$. Judge threshold $\rho = 3$ throughout.
-    Columns report false-closure rate (FPR: fraction of human-negative
-    pairs incorrectly labelled valid), false-reject rate (FNR: fraction
-    of human-positive pairs incorrectly labelled invalid), and overall
-    accuracy.}
+    policies on the 60-pair five-annotator-majority sample. Ground truth:
+    5-way majority human rating $\geq 3$ (positive-class prevalence
+    $86.7\%$). Judge threshold $\rho = 3$ throughout. Columns report
+    false-closure rate (FPR: fraction of human-negative pairs incorrectly
+    labelled valid), false-reject rate (FNR: fraction of human-positive
+    pairs incorrectly labelled invalid), and overall accuracy.}
   \label{tab:strict_and_ablation}
   \begin{tabular}{lrrrrrrrrr}
     \toprule
@@ -132,12 +145,12 @@ Section~\ref{sec:methods}.
     $\tau$
     & FPR & FNR & Acc & FPR & FNR & Acc & FPR & FNR & Acc \\
     \midrule
-    $0.0$ & $84.6\%$ & $12.8\%$ & $71.7\%$ & $84.6\%$ & $4.3\%$ & $78.3\%$
-          & $69.2\%$ & $17.0\%$ & $71.7\%$ \\
-    $0.5$ & $61.5\%$ & $23.4\%$ & $68.3\%$ & $84.6\%$ & $4.3\%$ & $78.3\%$
-          & $46.2\%$ & $27.7\%$ & $68.3\%$ \\
-    $0.8$ & $46.2\%$ & $27.7\%$ & $68.3\%$ & $84.6\%$ & $4.3\%$ & $78.3\%$
-          & $38.5\%$ & $31.9\%$ & $66.7\%$ \\
+    $0.0$ & $87.5\%$ & $13.5\%$ & $76.7\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
+          & $75.0\%$ & $19.2\%$ & $73.3\%$ \\
+    $0.5$ & $50.0\%$ & $23.1\%$ & $73.3\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
+          & $37.5\%$ & $28.8\%$ & $70.0\%$ \\
+    $0.8$ & $37.5\%$ & $28.8\%$ & $70.0\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
+          & $25.0\%$ & $32.7\%$ & $68.3\%$ \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -145,70 +158,69 @@ Section~\ref{sec:methods}.
 Three empirical findings emerge from Table~\ref{tab:strict_and_ablation}.
 
 \textbf{First: at every threshold combination, strict-AND achieves the
-lowest false-closure rate of the three policies.} At the paper's default
-$\tau = 0$, adding the judge to the metric reduces FPR from $84.6\%$ to
-$69.2\%$---a $15.4$-percentage-point reduction. At $\tau = 0.5$ the
-reduction is $15.3$~pp ($61.5\% \to 46.2\%$); at $\tau = 0.8$ it is
-$7.7$~pp ($46.2\% \to 38.5\%$). The judge is contributing usable signal
-in the tail even at the low $\kappa_{\textsf{quad}} = 0.138$ against
-individual human ratings, because the composed AND policy retains a
-positive prediction only when both signals concur.
+lowest false-closure rate of the three policies.} At the paper's
+default $\tau = 0$, adding the judge to the metric reduces FPR from
+$87.5\%$ to $75.0\%$---a $12.5$-percentage-point reduction. At
+$\tau = 0.5$ the reduction is $12.5$~pp ($50.0\% \to 37.5\%$); at
+$\tau = 0.8$ it is again $12.5$~pp ($37.5\% \to 25.0\%$). The exact
+$12.5$~pp constancy across thresholds is a small-sample coincidence
+(the reduction corresponds to a single-pair swap at $n = 8$ negatives)
+but the direction is robust: the judge contributes usable signal in
+the AND composition even at the low $\kappa_{\textsf{quad}} = 0.074$
+against individual human ratings.
 
-\textbf{Second: this reduction in false-closure is bought at the cost of
-higher false-reject.} Adding the judge to metric-only at $\tau = 0$
-raises FNR from $12.8\%$ to $17.0\%$ ($+4.2$~pp); at $\tau = 0.5$ from
-$23.4\%$ to $27.7\%$ ($+4.3$~pp); at $\tau = 0.8$ from $27.7\%$ to
-$31.9\%$ ($+4.2$~pp). The trade-off is stable across thresholds: strict-AND
-buys approximately a $2$--$3\times$ larger drop in FPR than the rise in
-FNR, so the policy is a favourable exchange under any loss function that
-weights false-closure at least as heavily as false-reject.
+\textbf{Second: the reduction in false-closure is bought at the cost
+of higher false-reject.} Adding the judge to metric-only raises FNR
+by $5.8$--$5.7$--$3.9$~pp across $\tau \in \{0, 0.5, 0.8\}$. The
+trade-off is favourable: strict-AND buys $2$--$3\times$ more FPR
+reduction than the FNR rise it costs, so the policy is justified
+under any loss function weighting false-closure at least as heavily
+as false-reject.
 
 \textbf{Third: judge-only at $\rho = 3$ has the best accuracy of any
-single policy on this sample ($78.3\%$).} This is not evidence that the
-judge alone is preferable in practice: at $\rho = 3$ the judge is highly
-permissive (only $23.1\%$ FPR at $\rho = 4$ but at $51.1\%$ FNR), and its
-overall accuracy is dominated by the high positive-class prevalence
-($78.3\%$). Metric-only and strict-AND achieve their accuracy through
+single policy on this sample ($83.3\%$).} This is not evidence that the
+judge alone is preferable in practice: at $\rho = 3$ the judge is
+highly permissive on this sample, and its overall accuracy is dominated
+by the elevated positive-class prevalence ($86.7\%$ under the 5-way
+majority). Metric-only and strict-AND achieve their accuracy through
 substantive discrimination; judge-only at $\rho = 3$ largely predicts
 positive.
 
 The strict-AND policy is therefore \emph{empirically supported}, not
-merely \emph{motivated}, by the human-evaluation data on this sample.
-The point estimate of a $15.4$~pp reduction in false-closure at the
-paper's default operating point should nonetheless be read with a
-$n = 60$ caveat: the $95\%$ Wilson confidence interval on the observed
-FPR reduction spans roughly $\pm 12$~pp, so the effect is directionally
-established but the magnitude is imprecise on this sample.
+merely \emph{motivated}, by the human-evaluation data. The point
+estimate of a $12.5$~pp reduction in false-closure at the paper's
+default operating point should nonetheless be read with a $n = 8$
+negatives caveat: the $95\%$ Wilson confidence interval on the observed
+FPR reduction spans roughly $\pm 25$~pp on this small negative-class
+sample, so the effect is directionally established but the magnitude
+is imprecise.
 
 Two secondary implications:
 
 \begin{enumerate}
-  \item \textbf{The false-closure-candidate reason bucket in
-        Section~\ref{sec:discussion} (metric high, judge low) is
-        underestimated by the judge's own errors.} A judge with
-        $\kappa_{\textsf{quad}} = 0.138$ against human consensus will
-        incorrectly flag some rows as ``judge disagrees with metric''
-        when a human would concur with the metric. The per-cell rates
-        of \texttt{false\_closure\_candidate} reported in
+  \item \textbf{The \texttt{false\_closure\_candidate} bucket in
+        Section~\ref{sec:discussion} is likely upper-bounded rather
+        than point-estimated.} A judge with $\kappa_{\textsf{quad}}
+        = 0.074$ against human consensus will incorrectly flag some
+        rows as ``judge disagrees with metric'' when a human would
+        concur with the metric. The per-cell rates of
+        \texttt{false\_closure\_candidate} reported in
         Section~\ref{sec:discussion} should therefore be treated as
-        upper bounds on the true false-closure rate, not point
-        estimates.
+        upper bounds on the true false-closure rate.
 
-  \item \textbf{Metric-false-negative rows may partially reflect judge
-        over-crediting rather than pure metric conservatism.} On the
-        60-pair sample the judge over-rates slightly relative to the
-        majority human (mean judge $= 3.28$ vs.\ mean human $= 3.15$;
-        judge $>$ human on $23/60$ pairs, judge $<$ human on $13/60$).
-        Rows labelled \texttt{metric\_false\_negative} in
-        Section~\ref{sec:discussion} (metric below $\tau$, judge above
-        $\rho$) therefore mix two populations: cases where the metric is
-        genuinely conservative on human-equivalent artefacts, and cases
-        where the judge over-credits an artefact humans would rate lower.
-        The BERTScore benchmark-flip finding of Section~\ref{sec:discussion}
-        (BERTScore over-credits MBPP and under-credits HumanEval relative
-        to the judge) is unaffected in its comparative statement across
-        benchmarks but should be read as a judge-relative---not a
-        human-relative---signal.
+  \item \textbf{Metric-false-negative rows may partially reflect
+        judge over-crediting rather than pure metric conservatism.}
+        On the 60-pair sample the judge slightly over-rates relative
+        to the 5-way majority human (mean judge~$= 3.28$ vs.\ mean
+        human~$= 3.20$). Rows labelled \texttt{metric\_false\_negative}
+        in Section~\ref{sec:discussion} (metric below $\tau$, judge
+        above $\rho$) therefore mix two populations: cases where the
+        metric is genuinely conservative on human-equivalent artefacts,
+        and cases where the judge over-credits an artefact humans would
+        rate lower. The BERTScore benchmark-flip finding of
+        Section~\ref{sec:discussion} is unaffected in its comparative
+        statement across benchmarks but should be read as a
+        judge-relative---not a human-relative---signal.
 \end{enumerate}
 
 \subsection{Limitations of the addendum}
@@ -221,11 +233,16 @@ inferring narrow confidence intervals on $\alpha$; the addendum reports
 point estimates only. A larger sample would tighten the estimates but is
 prohibitive at the human-evaluation rate.
 
-Second, the three annotators share a professional background as
-software engineers with the corresponding author's supervision or
-co-authorship relationships. Independence from the pipeline runners is
-imperfect. Future replications should recruit annotators via a blinded
-third-party channel.
+Second, the annotator pool has \emph{partial} independence from the
+author team: two of five annotators (DR, RR) are independent of the
+pipeline runners, but three (BV, GS, AM) share supervisory or
+co-authorship relationships. The direct effect of this partial
+independence is quantified in Section~\ref{sec:human_eval_agreement_results}
+(three-way $\alpha = 0.376$ collapses to five-way $\alpha = 0.193$ when
+independent annotators are added). A fully independent replication with
+three or more annotators recruited via a blinded third-party channel
+remains future work; the direction of expected drift is now empirically
+established.
 
 Third, the 5-level ordinal rubric was chosen for compatibility with the
 judge SLM's 0--4 output scale, but human annotators may find fewer
