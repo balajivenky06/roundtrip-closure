@@ -31,11 +31,34 @@ if [[ -z "${OPENROUTER_API_KEY:-}" ]]; then
     exit 1
 fi
 
-CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt")
-N_SAMPLES="${N_SAMPLES:-60}"
+MODE="${MODE:-fast}"   # fast | pre-registered | full
+if [[ -n "${CELLS_OVERRIDE:-}" ]]; then
+    read -r -a CELLS <<<"$CELLS_OVERRIDE"
+    N_SAMPLES="${N_SAMPLES:-60}"
+elif [[ "$MODE" == "fast" ]]; then
+    # Compressed 3-4h variant — 2 monos × 30 samples × 3 paths = 180 closures
+    # Answers RQ4 headline (open vs closed ceiling) with dual-provider coverage.
+    # Defers H2/H8 stage-decomposition cells to future work.
+    CELLS=("M5_closed" "M7_gpt")
+    N_SAMPLES="${N_SAMPLES:-30}"
+elif [[ "$MODE" == "pre-registered" ]]; then
+    # Concept-note-pre-registered 3-cell RQ4 (M5 + H2 + H8) at N=60.
+    # Adds M7_gpt as a post-pre-registration extension. ~10-14h.
+    CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt")
+    N_SAMPLES="${N_SAMPLES:-60}"
+elif [[ "$MODE" == "full" ]]; then
+    # Full pre-registered N=150. ~22-34h across multiple Colab sessions.
+    CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt")
+    N_SAMPLES="${N_SAMPLES:-150}"
+else
+    echo "! Unknown MODE=$MODE. Choose one of: fast | pre-registered | full"
+    echo "  Or override with: CELLS_OVERRIDE=\"cell1 cell2\" N_SAMPLES=X"
+    exit 1
+fi
+
 RESULTS_PATH="results/results_rq4_closed_weight.tsv"
 
-echo "RQ4 closed-weight sweep config:"
+echo "RQ4 closed-weight sweep config (mode=$MODE):"
 echo "  cells:      ${CELLS[*]}"
 echo "  N_samples:  $N_SAMPLES"
 echo "  results:    $RESULTS_PATH"
