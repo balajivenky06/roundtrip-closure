@@ -34,12 +34,14 @@ for d in (DATA_DIR, CHECKPOINTS_DIR, CACHE_DIR, RESULTS_DIR, LOGS_DIR):
 @dataclass(frozen=True)
 class ModelSpec:
     """One SLM's identity + properties."""
-    ollama_tag: str          # e.g. "qwen3.6:27b" — used in the API call
+    ollama_tag: str          # e.g. "qwen3.6:27b" for Ollama models, or
+                             # "anthropic/claude-sonnet-4.5" for OpenRouter.
     short_name: str          # e.g. "qwen3.6" — used in TSV / log columns
     family: str              # e.g. "Alibaba" — used in family-diversity analyses
-    size_b: float            # parameter count in billions (total, not active)
-    architecture: str        # "dense" | "MoE"
+    size_b: float            # parameter count in billions (0 for closed-weight)
+    architecture: str        # "dense" | "MoE" | "unknown" (closed-weight)
     generation_year: int     # e.g. 2026
+    provider: str = "ollama" # "ollama" | "openrouter" — dispatch key for llm_dispatch
     notes: str = ""
 
 
@@ -108,6 +110,32 @@ DEEPSEEK_R1_14B = ModelSpec(
     notes="Reasoning-tuned distill — used ONLY as the external judge LLM.",
 )
 
+# ── Closed-weight frontier references (RQ4 subsweep, via OpenRouter) ─────────
+# Not part of the primary 20-cell DOE; instantiated in the M5_closed / H2_closed
+# / H8_closed / M7_gpt cells to answer RQ4 (open-weight closure vs closed-weight
+# ceiling) that was pre-registered in the concept note but deferred at the
+# original sweep due to API-cost budget constraints. See scripts/rq4_closed_weight_sweep.sh.
+CLAUDE_SONNET_45 = ModelSpec(
+    ollama_tag="anthropic/claude-sonnet-4.5",
+    short_name="claude-sonnet-4.5",
+    family="Anthropic",
+    size_b=0.0,                # undisclosed (closed-weight)
+    architecture="unknown",
+    generation_year=2026,
+    provider="openrouter",
+    notes="Anthropic Claude Sonnet 4.5 via OpenRouter; RQ4 closed-weight reference.",
+)
+GPT_4O_MINI = ModelSpec(
+    ollama_tag="openai/gpt-4o-mini",
+    short_name="gpt-4o-mini",
+    family="OpenAI",
+    size_b=0.0,                # undisclosed
+    architecture="unknown",
+    generation_year=2024,
+    provider="openrouter",
+    notes="OpenAI GPT-4o-mini via OpenRouter; RQ4 closed-weight post-pre-registration extension.",
+)
+
 
 # Convenience tuples
 PIPELINE_MODELS: tuple[ModelSpec, ...] = (
@@ -118,8 +146,9 @@ PIPELINE_MODELS: tuple[ModelSpec, ...] = (
     MISTRAL_SMALL_3_2_24B,
     QWEN_3_CODER_30B,
 )
+CLOSED_WEIGHT_MODELS: tuple[ModelSpec, ...] = (CLAUDE_SONNET_45, GPT_4O_MINI)
 JUDGE_MODEL: ModelSpec = DEEPSEEK_R1_14B
-ALL_MODELS: tuple[ModelSpec, ...] = PIPELINE_MODELS + (JUDGE_MODEL,)
+ALL_MODELS: tuple[ModelSpec, ...] = PIPELINE_MODELS + CLOSED_WEIGHT_MODELS + (JUDGE_MODEL,)
 
 # Lookup helper
 MODELS_BY_SHORT_NAME: dict[str, ModelSpec] = {m.short_name: m for m in ALL_MODELS}

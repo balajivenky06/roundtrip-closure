@@ -12,7 +12,7 @@ triangle are executed:
 Each driver returns a list of ClosureResult records (one per path).
 
 The driver functions are stateless — every LLM call is routed through
-ollama_client.call_llm, which transparently uses closure_cache. So if
+llm_dispatch.call_llm, which transparently uses closure_cache. So if
 the Colab session disconnects mid-sweep, on resume every identical
 LLM call is a free disk lookup.
 
@@ -31,7 +31,7 @@ from typing import Optional
 
 from config import ModelSpec, TEMPERATURE, MAX_OUTPUT_TOKENS, JUDGE_MODEL
 from doe import Cell
-import ollama_client
+import llm_dispatch
 import closure_metrics
 import judge_llm
 from closure_decision import decide_validity
@@ -198,7 +198,7 @@ Tests:
 
 
 # ──────────────────────────────────────────────────────────────────────
-# Stage callers — every LLM call goes through ollama_client.call_llm
+# Stage callers — every LLM call goes through llm_dispatch.call_llm
 # ──────────────────────────────────────────────────────────────────────
 def _call_doc_from_code(model: ModelSpec, code: str) -> tuple[str, bool]:
     """L_spec(code) → docstring. Returns (docstring_text, was_cache_hit).
@@ -210,7 +210,7 @@ def _call_doc_from_code(model: ModelSpec, code: str) -> tuple[str, bool]:
     post-mortem (commit d52ede3 / probe 2026-06-06).
     """
     prompt = _PROMPT_DOC_FROM_CODE.format(code=code)
-    resp = ollama_client.call_llm(
+    resp = llm_dispatch.call_llm(
         model, prompt,
         role_hint="L_spec:doc_from_code",
         temperature=TEMPERATURE, max_tokens=MAX_OUTPUT_TOKENS,
@@ -226,7 +226,7 @@ def _call_tests_from_doc(model: ModelSpec, docstring: str,
         docstring=docstring, fn_name=fn_name or "the function",
         signature=signature or "(unknown)",
     )
-    resp = ollama_client.call_llm(
+    resp = llm_dispatch.call_llm(
         model, prompt,
         role_hint="L_test:tests_from_doc",
         temperature=TEMPERATURE, max_tokens=MAX_OUTPUT_TOKENS,
@@ -237,7 +237,7 @@ def _call_tests_from_doc(model: ModelSpec, docstring: str,
 def _call_tests_from_code(model: ModelSpec, code: str) -> tuple[str, bool]:
     """L_test(code) → tests. Used by Path 3."""
     prompt = _PROMPT_TESTS_FROM_CODE.format(code=code)
-    resp = ollama_client.call_llm(
+    resp = llm_dispatch.call_llm(
         model, prompt,
         role_hint="L_test:tests_from_code",
         temperature=TEMPERATURE, max_tokens=MAX_OUTPUT_TOKENS,
@@ -253,7 +253,7 @@ def _call_doc_from_tests(model: ModelSpec, tests: str) -> tuple[str, bool]:
     message.content gets emitted.
     """
     prompt = _PROMPT_DOC_FROM_TESTS.format(tests=tests)
-    resp = ollama_client.call_llm(
+    resp = llm_dispatch.call_llm(
         model, prompt,
         role_hint="L_spec:doc_from_tests",
         temperature=TEMPERATURE, max_tokens=MAX_OUTPUT_TOKENS,
@@ -270,7 +270,7 @@ def _call_code_from_doc_tests(model: ModelSpec, docstring: str, tests: str,
         fn_name=fn_name or "the function",
         signature=signature or "(unknown)",
     )
-    resp = ollama_client.call_llm(
+    resp = llm_dispatch.call_llm(
         model, prompt,
         role_hint="L_code:code_from_doc_tests",
         temperature=TEMPERATURE, max_tokens=MAX_OUTPUT_TOKENS,

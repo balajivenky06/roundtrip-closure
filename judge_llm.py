@@ -26,7 +26,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from config import JUDGE_MODEL
-import ollama_client
+import llm_dispatch
 
 logger = logging.getLogger(__name__)
 
@@ -160,7 +160,7 @@ def judge_equivalence(
         artefact_b=artefact_b,
     )
 
-    response = ollama_client.call_llm(
+    response = llm_dispatch.call_llm(
         JUDGE_MODEL,
         user_msg,
         system_prompt=_SYSTEM_PROMPT,
@@ -226,7 +226,7 @@ def _self_test() -> None:                                         # pragma: no c
     # Live test — needs deepseek-r1:14b
     print("\n2) Live judge call (requires deepseek-r1:14b)…")
     try:
-        ollama_client.ensure_model_available(JUDGE_MODEL)
+        llm_dispatch.ensure_model_available(JUDGE_MODEL)
     except RuntimeError as exc:
         print(f"   SKIPPED — {exc}")
         print("\n✓ judge_llm self-test passed (parser only; live test skipped).")

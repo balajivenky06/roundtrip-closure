@@ -36,6 +36,8 @@ from config import (
     GEMMA_4_26B,
     MISTRAL_SMALL_3_2_24B,
     QWEN_3_CODER_30B,
+    CLAUDE_SONNET_45,
+    GPT_4O_MINI,
 )
 
 
@@ -211,13 +213,53 @@ N3 = Cell(
 
 
 # ──────────────────────────────────────────────────────────────────────
+# RQ4 closed-weight cells (post-hoc extension via OpenRouter)
+# ──────────────────────────────────────────────────────────────────────
+# The concept note (2026-06-04, commit 30a5e1c) pre-registered M5, H2, H8 as
+# closed-weight (Claude Sonnet 4.6) cells. All three were substituted with
+# open-weight variants during the primary sweep due to API-cost budget
+# constraints (documented as a deviation in §6.5). These four cells restore
+# the pre-registered closed-weight compositions (adjusted to Claude Sonnet
+# 4.5 as the current-generation Anthropic model on OpenRouter) plus one
+# GPT-4o-mini extension. They are run via OpenRouter through llm_dispatch.
+CLAUDE = CLAUDE_SONNET_45   # local alias for readability
+
+M5_CLOSED = Cell(
+    cell_id="M5_closed",
+    stratum="mono",
+    L_spec=CLAUDE, L_test=CLAUDE, L_code=CLAUDE,
+    hypothesis="Closed-weight ceiling (Claude Sonnet 4.5 at all stages); pre-registered as M5 in concept-note commit 30a5e1c.",
+)
+H2_CLOSED = Cell(
+    cell_id="H2_closed",
+    stratum="hetero",
+    L_spec=CLAUDE, L_test=QWEN_3_6_27B, L_code=QWEN_3_CODER_30B,
+    hypothesis="Closed NL spec + open dense test + open MoE code; pre-registered as H2.",
+)
+H8_CLOSED = Cell(
+    cell_id="H8_closed",
+    stratum="hetero",
+    L_spec=CLAUDE, L_test=CLAUDE, L_code=QWEN_3_CODER_30B,
+    hypothesis="Closed→closed→open synthesis-stage boundary; pre-registered as H8.",
+)
+M7_GPT = Cell(
+    cell_id="M7_gpt",
+    stratum="mono",
+    L_spec=GPT_4O_MINI, L_test=GPT_4O_MINI, L_code=GPT_4O_MINI,
+    hypothesis="GPT-4o-mini closed-weight second reference (post-pre-registration extension for cross-provider closed-weight coverage).",
+)
+
+CLOSED_WEIGHT_CELLS: tuple[Cell, ...] = (M5_CLOSED, H2_CLOSED, H8_CLOSED, M7_GPT)
+
+
+# ──────────────────────────────────────────────────────────────────────
 # Public registry — the canonical 20-cell DOE
 # ──────────────────────────────────────────────────────────────────────
 MONO_CELLS:   tuple[Cell, ...] = (M1, M2, M3, M4, M5, M6)
 HETERO_CELLS: tuple[Cell, ...] = (H1, H2, H3, H4, H5, H6, H7, H8, H9, H10, H11)
 NULL_CELLS:   tuple[Cell, ...] = (N1, N2, N3)
 
-ALL_CELLS: tuple[Cell, ...] = MONO_CELLS + HETERO_CELLS + NULL_CELLS
+ALL_CELLS: tuple[Cell, ...] = MONO_CELLS + HETERO_CELLS + NULL_CELLS + CLOSED_WEIGHT_CELLS
 
 CELLS_BY_ID: dict[str, Cell] = {c.cell_id: c for c in ALL_CELLS}
 

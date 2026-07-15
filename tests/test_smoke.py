@@ -74,12 +74,16 @@ def _ollama_has_model(tag: str) -> bool:
 # Static tests (no Ollama needed)
 # ──────────────────────────────────────────────────────────────────────
 def test_doe_table_well_formed():
-    """20 cells across 3 strata, each row of mono/hetero has all 3 stages."""
-    assert len(ALL_CELLS) == 20, f"Expected 20 cells, got {len(ALL_CELLS)}"
+    """Primary DOE: 20 cells across 3 strata (6 mono + 11 hetero + 3 null).
+    Plus post-hoc RQ4 closed-weight extension cells (M5_closed, H2_closed,
+    H8_closed, M7_gpt) → 24 total via ALL_CELLS."""
+    from doe import CLOSED_WEIGHT_CELLS
     assert len(MONO_CELLS) == 6
     assert len(HETERO_CELLS) == 11
     assert len(NULL_CELLS) == 3
-    for cell in MONO_CELLS + HETERO_CELLS:
+    assert len(CLOSED_WEIGHT_CELLS) == 4
+    assert len(ALL_CELLS) == 24, f"Expected 24 cells (20 primary + 4 closed-weight), got {len(ALL_CELLS)}"
+    for cell in MONO_CELLS + HETERO_CELLS + CLOSED_WEIGHT_CELLS:
         assert cell.L_spec is not None, f"{cell.cell_id}: L_spec missing"
         assert cell.L_test is not None, f"{cell.cell_id}: L_test missing"
         assert cell.L_code is not None, f"{cell.cell_id}: L_code missing"
