@@ -28,7 +28,7 @@ A cell is a stage-to-model assignment $a : \mathcal{S} \to \mathcal{M} \cup \{\b
   \;\cup\;
   \underbrace{\bigl\{a : |\{a(s) : s \in \mathcal{S}\}| = 3\bigr\}}_{\text{Hetero stratum (11 cells)}}
   \;\cup\;
-  \underbrace{\mathcal{C}\emph{{\textsf{null}}}}{\text{Null stratum (3 cells)}}.
+  \underbrace{\mathcal{C}_{\textsf{null}}}_{\text{Null stratum (3 cells)}}.
   \label{eq:doe}
 \end{equation}
 
@@ -38,14 +38,14 @@ A cell is a stage-to-model assignment $a : \mathcal{S} \to \mathcal{M} \cup \{\b
 
 Table~\ref{tab:doe_summary} presents the complete DOE with the pre-registered hypothesis for each cell. The full 5-model $\times$ 3-stage design space contains $6^3 = 216$ cells; we sample 20 as a hypothesis-driven fractional factorial. The mono stratum establishes each SLM's self-consistency floor as a baseline. The hetero stratum assigns three different SLMs across the three stages based on per-stage strengths derived from the second companion paper's per-operator capability map (phi-4 dominates predicate reasoning; qwen-coder dominates comparison operators). The null stratum comprises three control cells: N1 (word-shuffled input; expected metric $\approx 0$ if the closure metric is sound), N2 (spec-stage ablated; $L_{\textsf{spec}} = \bot$), and N3 (test-stage ablated; $L_{\textsf{test}} = \bot$).
 
-The six pipeline SLMs (Table~\ref{tab:model_lineup}) are all open-weight and under 30~B parameters, ensuring the entire experiment fits within a single Colab~Pro+ A100/T4 monthly allowance. Five distinct model families are represented (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). DeepSeek-R1:14B serves as the family-disjoint judge $L_J$.
+The six pipeline SLMs (Table~\ref{tab:model_lineup}) are all open-weight and under 30~B parameters, ensuring the entire experiment fits within a single Colab~Pro+ A100/T4 monthly allowance. Five distinct model families are represented: Meta with Llama-3.2-3B~\citep{Llama32}, Microsoft with Phi-4-14B~\citep{Phi4}, Alibaba with Qwen3.6-27B~\citep{Qwen36} and Qwen3-Coder-30B~\citep{QwenCoder}, Google with Gemma-4-26B~\citep{Gemma4}, and Mistral with Mistral-Small-3.2-24B~\citep{MistralSmall}. DeepSeek-R1:14B~\citep{DeepSeekR1} serves as the family-disjoint judge $L_J$.
 
 \subsection{Datasets}
 \label{sec:experiment_setup_datasets}
 
 The primary dataset (\emph{core}) is a stratified 150-function sample from HumanEval (45~functions) and MBPP (105~functions), drawn with seed~42. This preserves the MBPP/HumanEval ratio of the 300-function second-paper sample and enables direct cross-paper comparisons via shared per-function difficulty draws.
 
-Two held-out subsets were prepared for contamination sensitivity analysis: a 25-problem LiveCodeBench subset with publication date $\geq$ 2024-12-01 (post-training-cutoff for all evaluated SLMs) and a 50-problem HumanEval-Mutated subset obtained by applying function-rename, docstring-paraphrase, and parameter-permutation transformations to a subset of HumanEval. The held-out subsets were prepared but not fully swept in this study; contamination sensitivity results on them will be reported in an addendum.
+Two held-out subsets were prepared for contamination sensitivity analysis: a 25-problem LiveCodeBench~\citep{Jain2025LiveCodeBench} subset with publication date $\geq$ 2024-12-01 (post-training-cutoff for all evaluated SLMs) and a 50-problem HumanEval-Mutated subset obtained by applying function-rename, docstring-paraphrase, and parameter-permutation transformations to a subset of HumanEval. Related benchmark alternatives include BigCodeBench~\citep{Zhuo2025BigCodeBench} and CRUXEval~\citep{Gu2025CruxEval}, both released in 2025 and offering complementary decontamination properties. The held-out subsets were prepared but not fully swept in this study; contamination sensitivity results on them will be reported in an addendum.
 
 \subsection{Statistical methodology}
 \label{sec:experiment_setup_stats}
@@ -76,7 +76,7 @@ Pairwise mean differences between cells $i$ and $k$ are tested via Tukey's hones
 \begin{equation}
   q_{ik}
   \;=\;
-  \frac{\bar{Y}_i - \bar{Y}\emph{k}{\sqrt{MS}{\textsf{within}} / n_h}},
+  \frac{\bar{Y}_i - \bar{Y}_k}{\sqrt{MS_{\textsf{within}} / n_h}},
   \label{eq:tukey}
 \end{equation}
 
@@ -121,7 +121,7 @@ For each binarised rating (judge threshold $J \geq \rho$ versus $J < \rho$), Coh
   \label{eq:kappa}
 \end{equation}
 
-where $p_o$ is the observed agreement proportion between the judge SLM and a human annotator and $p_e$ is the chance-expected proportion under independence. Values follow Landis and Koch's bands: $\kappa > 0.6$ substantial, $\kappa > 0.8$ almost perfect. For the three-annotator (judge + two human) setting, we additionally compute Krippendorff's $\alpha$ for ordinal ratings $r_{ij}$ from rater $i$ on item $j$:
+where $p_o$ is the observed agreement proportion between the judge SLM and a human annotator and $p_e$ is the chance-expected proportion under independence. Values follow Landis and Koch's bands: $\kappa > 0.6$ substantial, $\kappa > 0.8$ almost perfect. Effect-size conventions throughout the paper follow \citet{Cohen2013StatPower}. For the multi-annotator setting (five human raters + one judge in the present study), we additionally compute Krippendorff's $\alpha$~\citep{Marzi2024KrippendorffAlpha} for ordinal ratings $r_{ij}$ from rater $i$ on item $j$:
 
 \begin{equation}
   \alpha
