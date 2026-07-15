@@ -53,17 +53,35 @@ PAIRS_TSV = PROJECT_ROOT / "results" / "human_eval_pairs_60.tsv"
 # Data loading
 # ────────────────────────────────────────────────────────────────────────
 def load_annotator(annotator_id: str) -> dict[str, int]:
-    """Return {pair_id -> rating (0..4)} for one annotator."""
-    path = DATA_DIR / f"annotator_{annotator_id}_ratings.tsv"
+    """Return {pair_id -> rating (0..4)} for one annotator.
+
+    Locates the TSV in this order:
+      1. annotator_<ID>_ratings.tsv     (human annotator)
+      2. <ID>_ratings.tsv               (frontier judge, produced by
+                                         frontier_judge_replay.py with an
+                                         ID like 'frontier_judge_openai_gpt-4o-mini')
+    Rows with rating < 0 (parse failures) are excluded.
+    """
+    candidates = [
+        DATA_DIR / f"annotator_{annotator_id}_ratings.tsv",
+        DATA_DIR / f"{annotator_id}_ratings.tsv",
+    ]
+    path = next((p for p in candidates if p.exists()), None)
+    if path is None:
+        raise FileNotFoundError(
+            f"Ratings not found for {annotator_id}. Tried: "
+            + ", ".join(str(p) for p in candidates)
+        )
     out: dict[str, int] = {}
-    if not path.exists():
-        raise FileNotFoundError(f"Ratings not found for {annotator_id}: {path}")
     with path.open("r", encoding="utf-8") as f:
         for row in csv.DictReader(f, delimiter="\t"):
             try:
-                out[row["pair_id"]] = int(row["rating"])
+                r = int(row["rating"])
             except (KeyError, ValueError):
                 continue
+            if r < 0:
+                continue
+            out[row["pair_id"]] = r
     return out
 
 
