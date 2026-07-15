@@ -124,8 +124,9 @@ triangle, using a pre-registered 20-cell design spanning six open-weight
 SLMs under 30~B parameters, three closure paths, and 150 HumanEval and MBPP
 functions. Closure is decided under a strict two-signal policy combining an
 SE-validated metric (mutation kill rate, reference test pass rate, or
-BERTScore F1) with an external judge SLM (DeepSeek-R1); the policy cuts false-closure by $12.5$~pp vs.\ metric-only on a
-60-pair five-annotator human-evaluation sample. Five findings emerge. First, the H1 composition (phi-4 spec + qwen-coder test/code) dominates
+BERTScore F1) with an external judge SLM (DeepSeek-R1); the policy cuts false-closure by $12.5$~pp vs.\ metric-only on 60 pairs rated by
+five annotators, and a frontier-judge replay confirms weak
+judge--human agreement is general to LLM-as-judge, not DeepSeek-specific. Five findings emerge. First, the H1 composition (phi-4 spec + qwen-coder test/code) dominates
 four of five mutation operators, matching its per-operator prediction
 from a companion mutation-testing study. Second, phi-4 as the
 test-generation stage produces filter-failing tests on roughly half of

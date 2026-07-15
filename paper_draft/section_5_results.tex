@@ -264,6 +264,52 @@ five-way majority, matching the pairwise inter-annotator within-1 rates,
 but at the price of essentially no discriminative information at the
 category-exact level.
 
+\textbf{Frontier judges do not close the gap; instead they cluster with
+each other.} To test whether the weakness is DeepSeek-specific, we
+replayed the same 60-pair sample under three frontier judges via
+OpenRouter using an identical prompt (Section~\ref{sec:experiment_setup_human_eval}).
+Table~\ref{tab:frontier_judge_comparison} summarises the results. All
+four judges attain $\kappa_{\textsf{quad}}$ in the ``slight'' band
+against the 5-way human-majority ground truth ($0.019$--$0.199$),
+whereas the three frontier judges agree with \emph{each other} at
+$\kappa_{\textsf{quad}} = 0.68$--$0.70$ (``moderate''). The four LLM
+judges form a coherent cluster in rating space that is only weakly
+correlated with the human majority---an empirical signature of an
+LLM-as-judge limitation rather than a DeepSeek-specific artefact. A
+directional asymmetry is also visible: DeepSeek-R1 slightly over-rates
+the human mean ($3.28$ vs.\ $3.20$) whereas the three frontier judges
+under-rate it ($2.40$--$2.68$).
+
+\begin{table}[t]
+  \centering
+  \caption{Frontier-judge replay against the five-way human-majority
+    ground truth on the 60-pair sample. All four judges attain weak
+    ($\kappa_{\textsf{quad}} <$ 0.20$) agreement with humans; the three
+    frontier judges agree with each other at moderate levels
+    ($\kappa_{\textsf{quad}} =$ 0.68$--$0.70$). Cost columns are
+    per-judge for the full 60-pair replay via OpenRouter.}
+  \label{tab:frontier_judge_comparison}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    Judge & $\kappa_{\textsf{lin}}$ & $\kappa_{\textsf{quad}}$ &
+      within-1 & mean rating & cost (USD) \\
+    \midrule
+    DeepSeek-R1:14B (open, local)         & $0.081$ & $0.074$ & $91.7\%$ & $3.28$ & --- \\
+    OpenAI GPT-4o-mini                    & $0.053$ & $0.019$ & $68.3\%$ & $2.55$ & $0.005$ \\
+    Anthropic Claude Haiku 4.5            & $0.135$ & $0.161$ & $71.7\%$ & $2.40$ & $0.018$ \\
+    Meta Llama-3.3-70B-Instruct           & $0.150$ & $0.199$ & $83.3\%$ & $2.68$ & $0.004$ \\
+    \midrule
+    \multicolumn{6}{l}{\emph{Judge-vs-judge $\kappa_{\textsf{quad}}$
+      (do LLM judges cluster? --- higher = yes):}} \\
+    GPT-4o-mini vs.\ Claude Haiku 4.5     & \multicolumn{5}{r}{$0.697$} \\
+    GPT-4o-mini vs.\ Llama-3.3-70B        & \multicolumn{5}{r}{$0.685$} \\
+    Claude Haiku 4.5 vs.\ Llama-3.3-70B   & \multicolumn{5}{r}{$0.681$} \\
+    DeepSeek-R1:14B vs.\ frontier (avg)   & \multicolumn{5}{r}{$0.450$} \\
+    \multicolumn{6}{l}{\emph{5-way human majority: mean rating $3.20$}} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 \textbf{The ``disputed'' bucket has the highest five-way human
 agreement, though at low absolute values.} Per-bucket exact-agreement
 rates (all five annotators pick the same rating) are $5.0\%$
