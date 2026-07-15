@@ -321,89 +321,132 @@ The reading in which the automated-signal disagreement in the disputed
 bucket arose from unambiguously wrong judge or metric calls that humans
 identify jointly remains supported.
 
-\subsubsection{Empirical value of the strict-AND policy}
+\subsubsection{Empirical evaluation of the strict-AND policy}
 \label{sec:human_eval_strict_and}
 
-We recompute the false-closure ablation against the updated five-way
-majority-vote human ground truth. Ground truth is defined as
-majority-vote human rating $\geq 3$ (equivalent-or-better); positive-class
-prevalence on this sample is $86.7\%$ (up from $78.3\%$ on the
-three-way ground truth --- majority ties, broken toward the higher
-rating following the pre-registered convention, more often land at
-$\geq 3$ with five raters).
-Table~\ref{tab:strict_and_ablation} reports the false-closure rate (FPR)
-and false-reject rate (FNR) at the paper's default operating point
-($\tau = 0$, $\rho = 3$) and at two more conservative metric thresholds.
+We evaluate the strict-AND policy against three baselines on the
+five-way human-majority ground truth: metric-only, judge-only, and the
+trivial majority-class classifier ``always predict positive''. This
+last baseline is critical: positive-class prevalence on the 60-pair
+sample is $86.7\%$ (52 positive, 8 negative), so a classifier that
+ignores its inputs and always predicts positive achieves $86.7\%$
+accuracy --- a strong reference that any discriminative policy must
+beat.
+
+Because the sample is class-imbalanced, we report five metrics with
+complementary interpretations: overall accuracy, balanced accuracy
+($\tfrac{1}{2}(\text{TPR} + \text{TNR})$; robust to class imbalance),
+$F_1$ score, Matthews correlation coefficient (MCC; ranges $-1$ to
+$+1$, $0$ = random, robust to imbalance), and false-closure rate
+(FPR). Table~\ref{tab:strict_and_ablation} presents these at the
+paper's default operating point ($\tau = 0$, $\rho = 3$).
 
 \begin{table}[t]
   \centering
-  \caption{False-closure and false-reject rates under three decision
-    policies on the 60-pair five-annotator-majority sample. Ground truth:
-    5-way majority human rating $\geq 3$ (positive-class prevalence
-    $86.7\%$). Judge threshold $\rho = 3$ throughout. Columns report
-    false-closure rate (FPR: fraction of human-negative pairs incorrectly
-    labelled valid), false-reject rate (FNR: fraction of human-positive
-    pairs incorrectly labelled invalid), and overall accuracy.}
+  \caption{Decision-policy performance on the 60-pair
+    five-annotator-majority sample. Ground truth: 5-way majority human
+    rating $\geq 3$ (prevalence $86.7\%$, so ``always predict positive''
+    achieves $86.7\%$ accuracy and is a strong reference baseline).
+    $\tau = 0$, $\rho = 3$ (paper defaults). Metrics: overall accuracy,
+    balanced accuracy, $F_1$, Matthews correlation coefficient (MCC),
+    and false-closure rate (FPR).}
   \label{tab:strict_and_ablation}
-  \begin{tabular}{lrrrrrrrrr}
+  \begin{tabular}{lrrrrr}
     \toprule
-    & \multicolumn{3}{c}{Metric-only}
-    & \multicolumn{3}{c}{Judge-only}
-    & \multicolumn{3}{c}{Strict-AND} \\
-    \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
-    $\tau$
-    & FPR & FNR & Acc & FPR & FNR & Acc & FPR & FNR & Acc \\
+    Policy & Acc & Bal Acc & $F_1$ & MCC & FPR \\
     \midrule
-    $0.0$ & $87.5\%$ & $13.5\%$ & $76.7\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
-          & $75.0\%$ & $19.2\%$ & $73.3\%$ \\
-    $0.5$ & $50.0\%$ & $23.1\%$ & $73.3\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
-          & $37.5\%$ & $28.8\%$ & $70.0\%$ \\
-    $0.8$ & $37.5\%$ & $28.8\%$ & $70.0\%$ & $87.5\%$ & $5.8\%$ & $83.3\%$
-          & $25.0\%$ & $32.7\%$ & $68.3\%$ \\
+    Always predict positive (majority-class) & $\mathbf{0.867}$ & $0.500$ & $\mathbf{0.929}$ & --- & $1.000$ \\
+    \midrule
+    Metric-only ($m > \tau$)                 & $0.767$ & $0.495$ & $0.865$ & $-0.010$ & $0.875$ \\
+    Judge-only ($J \geq \rho$)               & $0.833$ & $\mathbf{0.534}$ & $0.907$ & $\mathbf{+0.092}$ & $0.875$ \\
+    Strict-AND ($m > \tau \wedge J \geq \rho$) & $0.733$ & $0.529$ & $0.840$ & $+0.049$ & $\mathbf{0.750}$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Three empirical findings emerge from Table~\ref{tab:strict_and_ablation}.
+The honest empirical reading of Table~\ref{tab:strict_and_ablation}
+has four parts.
 
-\textbf{First: at every threshold combination, strict-AND achieves the
-lowest false-closure rate of the three policies.} At the paper's
-default $\tau = 0$, adding the judge to the metric reduces FPR from
-$87.5\%$ to $75.0\%$---a $12.5$-percentage-point reduction. At
-$\tau = 0.5$ the reduction is $12.5$~pp ($50.0\% \to 37.5\%$); at
-$\tau = 0.8$ it is again $12.5$~pp ($37.5\% \to 25.0\%$). The exact
-$12.5$~pp constancy across thresholds is a small-sample coincidence
-(the reduction corresponds to a single-pair swap at $n = 8$ negatives)
-but the direction is robust: the judge contributes usable signal in
-the AND composition even at the low $\kappa_{\textsf{quad}} = 0.074$
-against individual human ratings.
+\textbf{First: metric-only is essentially random on this sample.} MCC
+is $-0.010$; balanced accuracy is $0.495$. The mutation kill rate at
+$\tau = 0$ predicts the human-majority validity with no more skill
+than chance on this $60$-pair sample. Any policy that uses only the
+metric is not discriminating between valid and invalid closures at
+this operating point.
 
-\textbf{Second: the reduction in false-closure is bought at the cost
-of higher false-reject.} Adding the judge to metric-only raises FNR
-by $5.8$--$5.7$--$3.9$~pp across $\tau \in \{0, 0.5, 0.8\}$. The
-trade-off is favourable: strict-AND buys $2$--$3\times$ more FPR
-reduction than the FNR rise it costs, so the policy is justified
-under any loss function weighting false-closure at least as heavily
-as false-reject.
+\textbf{Second: judge-only edges strict-AND on discrimination metrics.}
+Judge-only achieves MCC $=+0.092$ and balanced accuracy $=0.534$;
+strict-AND achieves MCC $=+0.049$ and balanced accuracy $=0.529$. The
+frontier-judge replay (Table~\ref{tab:frontier_judge_comparison}) shows
+that this weak but positive judge signal is consistent across four
+different LLM judges --- adding the judge to the pipeline provides
+some usable signal that the metric alone does not carry.
 
-\textbf{Third: judge-only at $\rho = 3$ has the best accuracy of any
-single policy on this sample ($83.3\%$).} This is not evidence that the
-judge alone is preferable in practice: at $\rho = 3$ the judge is
-highly permissive on this sample, and its overall accuracy is dominated
-by the elevated positive-class prevalence ($86.7\%$ under the 5-way
-majority). Metric-only and strict-AND achieve their accuracy through
-substantive discrimination; judge-only at $\rho = 3$ largely predicts
-positive.
+\textbf{Third: no discriminative policy beats the trivial majority-class
+baseline in raw accuracy.} At $86.7\%$ positive prevalence, ``always
+predict positive'' is a hard reference: it makes $8$ false positives and
+$0$ false negatives, achieving $86.7\%$ accuracy and $F_1 = 0.929$.
+Judge-only comes closest at $83.3\%$; strict-AND is at $73.3\%$. The
+dominance of the trivial baseline in raw accuracy reflects the class
+imbalance in the sample, not a substantive weakness in the policies ---
+but it does argue against defending strict-AND on the basis of raw
+accuracy alone.
 
-The strict-AND policy is therefore \emph{empirically supported}, not
-merely \emph{motivated}, by the human-evaluation data. The point
-estimate of a $12.5$~pp reduction in false-closure at the paper's
-default operating point should nonetheless be read with a $n = 8$
-negatives caveat: the $95\%$ Wilson confidence interval on the observed
-FPR reduction spans roughly $\pm 25$~pp on this small negative-class
-sample, so the effect is directionally established but the magnitude
-is imprecise.
+\textbf{Fourth: strict-AND is only justified on cost-sensitive grounds,
+and only under high false-closure penalties.} Under a loss function
+$L = a \cdot \mathrm{FP} + \mathrm{FN}$ that weights false-closure at
+$a$ times false-reject:
 
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Policy & $a=1$ & $a=2$ & $a=3$ & $a=5$ & $a=10$ \\
+\midrule
+Always positive & $\mathbf{8}$ & $\mathbf{16}$ & $\mathbf{24}$ & $40$ & $80$ \\
+Metric-only     & $14$ & $21$ & $28$ & $42$ & $77$ \\
+Judge-only      & $10$ & $17$ & $\mathbf{24}$ & $\mathbf{38}$ & $73$ \\
+Strict-AND      & $16$ & $22$ & $28$ & $40$ & $\mathbf{70}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Strict-AND wins only at $a \geq 10$ (false-closure penalised at ten
+times false-reject); at all lower cost ratios either the majority-class
+baseline or judge-only dominates. If the deployment context genuinely
+requires strong false-closure suppression --- for example, when a
+falsely-claimed pipeline closure would trigger deployment of a broken
+downstream artefact --- strict-AND is the appropriate choice. In lower-
+stakes settings where false-rejects are equally costly, judge-only is
+preferable.
+
+\textbf{Summary and sample-size caveats.} The empirical evaluation on
+this 60-pair sample does not conclusively support strict-AND over
+judge-only on general-purpose discrimination metrics; strict-AND's
+specific virtue is bounded false-closure at some false-reject cost,
+appropriate for safety-critical settings. Two important caveats apply.
+First, the sample is small: $n = 60$ with only $8$ negatives, so the
+$95\%$ Wilson CI on the observed FPR reduction spans roughly
+$\pm 25$~pp. Second, and more consequentially, the sample is
+stratified toward disputed cases (20 frontier + 20 agreement + 20
+disputed pairs per pre-registration; see
+Section~\ref{sec:experiment_setup_human_eval}). The FPR and FNR
+numbers therefore characterise the metric--judge disagreement region,
+not a uniform draw from the full 5{,}890-row sweep. In a uniform
+sample, the ``agreement'' bucket would dominate and all policies
+would achieve higher accuracy; the relative ordering among policies
+is expected to hold but the absolute numbers should be interpreted as
+``for the disputed region.'' A fully representative validation would
+require a second, uniformly-drawn 60-pair sample and is identified as
+immediate future work in Section~\ref{sec:conclusion}.
+
+Beyond these observed-metric comparisons, strict-AND retains a
+theoretical robustness argument that Table~\ref{tab:strict_and_ablation}
+does not capture: it requires \emph{both} an SE-validated metric and
+an independent LLM judge to concur, so a systematic bias affecting only
+one signal cannot on its own produce a false-closure claim. The paper's
+headline decisions retain this two-signal structure for that adversarial-
+robustness reason, not on the strength of the $60$-pair validation
+alone.
 Two secondary implications:
 
 \begin{enumerate}

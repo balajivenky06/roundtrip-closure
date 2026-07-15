@@ -124,9 +124,9 @@ design across six open-weight SLMs on 150 HumanEval/MBPP functions.
 Closure is decided under a strict two-signal policy combining an
 SE-validated metric (mutation kill rate, reference test pass rate, or
 BERTScore F1) with an external judge SLM (DeepSeek-R1); the policy
-cuts false-closure by $12.5$~pp on 60 human-rated pairs, and a
-frontier-judge replay shows weak judge--human agreement is general to
-LLM-as-judge. Five findings emerge. First, the H1 composition
+trades bounded false-closure for higher false-reject on 60 human-rated
+pairs, and a frontier-judge replay shows weak judge--human agreement is
+a general LLM-as-judge property. Five findings emerge. First, the H1 composition
 (phi-4 spec + qwen-coder test/code) dominates four of five mutation
 operators as pre-registered. Second,
 phi-4 in the test stage produces filter-failing tests on ${\sim}50\%$
