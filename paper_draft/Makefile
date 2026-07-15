@@ -13,13 +13,12 @@
 MAIN     = main
 SECTIONS = section_1_introduction.tex \
            section_2_related_work.tex \
-           section_3_methods.tex \
-           section_4_results.tex \
-           section_5_discussion.tex \
-           section_6_threats.tex \
+           section_3_framework.tex \
+           section_4_experiment_setup.tex \
+           section_5_results.tex \
+           section_6_discussion.tex \
            section_7_conclusion.tex \
-           section_end_matter.tex \
-           equations_and_algorithms.tex
+           section_end_matter.tex
 MD_SRC   = section_1_introduction.md \
            section_2_related_work.md \
            section_3_methods.md \
@@ -47,22 +46,17 @@ quick:
 watch:
 	latexmk -pdf -pvc -view=none $(MAIN).tex
 
-regen: $(MD_SRC)
-	@for md in $(MD_SRC); do \
-	    python3 build/md_to_tex.py $$md $${md%.md}.tex; \
-	done
-	@python3 build/polish_tex.py \
-	    section_1_introduction.tex section_2_related_work.tex \
-	    section_3_methods.tex section_4_results.tex \
-	    section_5_discussion.tex section_6_threats.tex \
-	    section_7_conclusion.tex section_end_matter.tex
-	@echo "Regenerated + Elsevier-polished .tex files from .md sources"
+regen:
+	@echo "WARNING: LaTeX files are now the source of truth. Running 'regen' may overwrite"
+	@echo "manually polished LaTeX-only additions (such as Section 5.10 human-evaluation results)."
+	@echo "If you are sure, run build/md_to_tex.py manually."
+	@exit 1
 
 polish:
 	@python3 build/polish_tex.py \
 	    section_1_introduction.tex section_2_related_work.tex \
-	    section_3_methods.tex section_4_results.tex \
-	    section_5_discussion.tex section_6_threats.tex \
+	    section_3_framework.tex section_4_experiment_setup.tex \
+	    section_5_results.tex section_6_discussion.tex \
 	    section_7_conclusion.tex section_end_matter.tex
 
 wc:
