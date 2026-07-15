@@ -31,7 +31,7 @@ if [[ -z "${OPENROUTER_API_KEY:-}" ]]; then
     exit 1
 fi
 
-MODE="${MODE:-fast}"   # fast | pre-registered | full
+MODE="${MODE:-pre-registered}"   # fast | pre-registered | full  (default = pre-registered)
 if [[ -n "${CELLS_OVERRIDE:-}" ]]; then
     read -r -a CELLS <<<"$CELLS_OVERRIDE"
     N_SAMPLES="${N_SAMPLES:-60}"
