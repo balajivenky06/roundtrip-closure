@@ -78,8 +78,9 @@ echo ""
 
 for cell in "${CELLS[@]}"; do
     # skip flag: SKIP_M5=1 → skips "M5_closed"; SKIP_GPT=1 → skips "M7_gpt"
-    upper="${cell#M5_}"; upper="${upper#H2_}"; upper="${upper#H8_}"; upper="${upper#M7_}"
-    skip_var="SKIP_${upper^^}"
+    # Skip flag: env var name is SKIP_<CELL_ID_UPPER>
+    # e.g. SKIP_M5_CLOSED=1 skips M5_closed only; SKIP_M7_GPT=1 skips M7_gpt only.
+    skip_var="SKIP_${cell^^}"
     if [[ "${!skip_var:-0}" == "1" ]]; then
         echo "SKIP $cell (${skip_var}=1)"
         continue
