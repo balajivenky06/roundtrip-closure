@@ -56,7 +56,7 @@ benchmarks are used as-is.
 
 \paragraph{Human participants.} The 60-pair human-evaluation study described in
 Section~3 and reported in Section~\ref{sec:results_human_eval} involves three
-independent human annotators rating pairs of code artefacts (docstrings, code
+independent human annotators rating pairs of code artifacts (docstrings, code
 fragments, and test suites) --- no personally-identifying data, biometric data,
 health data, or demographic data is collected from annotators. Annotators are compensated at a
 rate consistent with regional software-engineering hourly rates. The annotation
@@ -64,11 +64,11 @@ protocol was reviewed under the institutional research ethics framework at
 Shiv Nadar University, Chennai; the review determined that the study was exempt from
 full IRB review under the ``research involving benign educational tests or
 observations of public behavior'' category. Annotator identities are not linked
-to their ratings in any published artefact.
+to their ratings in any published artifact.
 
 \paragraph{AI systems.} All experiments were conducted with open-weight
 language models. No closed-weight models were used in the primary results. LLM
-outputs were treated strictly as artefacts under evaluation --- the LLM systems
+outputs were treated strictly as artifacts under evaluation --- the LLM systems
 themselves are not the subject of ethical claims. The judge SLM (DeepSeek-R1:14B)
 was used exclusively as an evaluation tool, not as a decision-maker for any
 human-consequential decision.
@@ -77,7 +77,7 @@ human-consequential decision.
 22~GPU-days on Google Colab hardware ($\sim$530~GPU-hours total), split roughly
 40\% on NVIDIA A100 (initial mono sweep and pilot) and 60\% on NVIDIA T4
 (majority of hetero and null cells). Assuming sustained-load power draws of
-$\sim$350~W (A100) and $\sim$70~W (T4), a data-centre PUE of $1.10$, and the
+$\sim$350~W (A100) and $\sim$70~W (T4), a data-center PUE of $1.10$, and the
 Google Cloud global-average grid intensity of $\sim$240~gCO$_2$-eq/kWh, we
 estimate total emissions of approximately \textbf{25~kg~CO$_2$-equivalent},
 with an uncertainty range of $\sim$20--50~kg CO$_2$-equivalent depending on
@@ -90,7 +90,7 @@ estimator~\citep{Lacoste2019MLCO2Emissions} methodology.
 
 The complete replication package for this study is publicly available at
 \url{https://github.com/balajivenky06/roundtrip-closure} under the MIT
-licence. The repository contains: the full experimental sweep TSV
+license. The repository contains: the full experimental sweep TSV
 (\texttt{results/results\_roundtrip.tsv}, 5{,}890 measurement rows covering
 all 20 cells of the pre-registered DOE); the 30-function pilot TSV; the
 pre-registered DOE table (\texttt{doe.py}); the model lineup
@@ -110,7 +110,7 @@ The pre-processed HumanEval, MBPP, LiveCodeBench, and HumanEval-Mutated datasets
 are included in the \texttt{data/} directory as JSONL files. The five-layer
 checkpointing infrastructure (LLM call cache, pytest subprocess cache,
 BERTScore embedding cache, TSV row cache, JSONL decontamination cache)
-preserves every intermediate artefact and enables exact re-execution of any
+preserves every intermediate artifact and enables exact re-execution of any
 single path on any single sample without re-invoking the underlying SLMs.
 
 \section*{Code and reproducibility}
@@ -120,7 +120,7 @@ The single command
 python3 scripts/run_analysis.py --tsv results/results_roundtrip.tsv
 \end{verbatim}
 regenerates all 11 LaTeX tables and all 10 PNG figures from the sweep TSV. The
-following commands regenerate the six gap-closer artefacts described in
+following commands regenerate the six gap-closer artifacts described in
 Section~5:
 
 \begin{itemize}

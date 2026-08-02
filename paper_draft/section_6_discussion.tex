@@ -1,7 +1,7 @@
 \section{Discussion}
 \label{sec:discussion}
 
-We interpret the results of Section~\ref{sec:results} against the four research questions of Section~1.3, derive three design guidelines for practitioners deploying multi-SLM software-engineering pipelines, and characterise the threats to validity that scope our claims in Section~\ref{sec:limitations}.
+We interpret the results of Section~\ref{sec:results} against the four research questions of Section~1.3, derive three design guidelines for practitioners deploying multi-SLM software-engineering pipelines, and characterize the threats to validity that scope our claims in Section~\ref{sec:limitations}.
 
 \subsection{RQ1: heterogeneous versus mono closure rate}
 \label{sec:discussion_rq1}
@@ -12,7 +12,7 @@ On Path~1 aggregate closure rate, the best hetero cell H6 ($0.882$) does not sta
 
 First, the per-mutation-operator decomposition (Section~\ref{sec:results_per_operator}) shows that H1 (phi-4 spec + qwen-coder test/code) achieves perfect kill (1.000) on comparison and negate\_bool operators and $0.939$ on arithmetic --- all three exceeding the best mono baseline by $\geq 0.09$ percentage points. Any single mono cell wins on some operators and loses on others; the H1 composition, whose stage assignments were pre-registered based on the second companion paper's per-operator capability map, achieves the operator-wise maximum on four of five operator families simultaneously. \emph{The mono ceiling on any given operator is not a fundamental capability ceiling.}
 
-Second, the stage-attribution decomposition (Section~\ref{sec:results_stage_attribution}) shows that H4 and H11 exceed the strongest mono ceiling on Path~1 outright ($0.909$ and $0.859$ vs.\ M4 = $0.773$). Both cells specialise at the code and test stages while permitting a weaker model at spec (H4 uses llama3.2 at code, H11 uses phi-4 at spec) --- validating that the heterogeneity benefit compounds when specialisation matches the demanded stage strength.
+Second, the stage-attribution decomposition (Section~\ref{sec:results_stage_attribution}) shows that H4 and H11 exceed the strongest mono ceiling on Path~1 outright ($0.909$ and $0.859$ vs.\ M4 = $0.773$). Both cells specialize at the code and test stages while permitting a weaker model at spec (H4 uses llama3.2 at code, H11 uses phi-4 at spec) --- validating that the heterogeneity benefit compounds when specialization matches the demanded stage strength.
 
 The RQ1 answer therefore has two parts: heterogeneity does not improve \emph{aggregate} closure rate over the strongest mono baseline, but it improves the \emph{decomposition} of closure rate in ways that any single mono baseline cannot achieve.
 
@@ -42,7 +42,7 @@ MBPP ($n = 1{,}412$) & $60.8\%$ & $\mathbf{29.2\%}$ & $0.6\%$ \\
 \end{tabular}
 \end{table}
 
-\textbf{The disagreement flips direction across benchmarks.} On MBPP, BERTScore over-credits equivalence in $32.0\%$ of rows (versus under-crediting in only $0.6\%$); on HumanEval, BERTScore under-credits in $32.9\%$ of rows (versus over-crediting in only $13.4\%$). A $2 \times 2$ chi-square test on the (benchmark, disagreement type) contingency yields $\chi^2 = 368.0$ ($p < 0.0001$, $\text{df} = 1$), so the flip in disagreement direction is statistically categorical, not marginal. This structural signature is precisely what a surface-form similarity signal should produce and a semantic-equivalence signal should not: MBPP docstrings share a compact task-description vocabulary (`\texttt{return $X$ of $Y$'', }`check if $Z$ is $P$''), so BERTScore assigns high F1 even when the described behaviours diverge; HumanEval docstrings vary in stylistic detail (examples, doctests, hints, edge-case notes), so BERTScore penalises stylistic drift even when the core semantics are preserved.
+\textbf{The disagreement flips direction across benchmarks.} On MBPP, BERTScore over-credits equivalence in $32.0\%$ of rows (versus under-crediting in only $0.6\%$); on HumanEval, BERTScore under-credits in $32.9\%$ of rows (versus over-crediting in only $13.4\%$). A $2 \times 2$ chi-square test on the (benchmark, disagreement type) contingency yields $\chi^2 = 368.0$ ($p < 0.0001$, $\text{df} = 1$), so the flip in disagreement direction is statistically categorical, not marginal. This structural signature is precisely what a surface-form similarity signal should produce and a semantic-equivalence signal should not: MBPP docstrings share a compact task-description vocabulary (`\texttt{return $X$ of $Y$'', }`check if $Z$ is $P$''), so BERTScore assigns high F1 even when the described behaviors diverge; HumanEval docstrings vary in stylistic detail (examples, doctests, hints, edge-case notes), so BERTScore penalises stylistic drift even when the core semantics are preserved.
 
 Combined with the very weak per-benchmark correlations ($r_3^{\textsf{HE}} = 0.153$, $r_3^{\textsf{MBPP}} = 0.212$; both $r^2 \leq 0.045$; see Section~\ref{sec:results_contamination}), this decomposition supports a stronger conclusion than ``BERTScore is a poor closure metric on Path~3''. It supports the specific claim that \textbf{BERTScore is functioning as a surface-form similarity signal rather than a semantic-equivalence signal on the docstring--docstring closure task}. This finding scopes our recommendation that judge-SLM adjudication is not an optional supplement to automated closure metrics on Path~3, but a necessary component of the validity decision.
 
@@ -55,7 +55,7 @@ Three cells assign phi-4 to $L_{\textsf{test}}$: M2 (phi-4 mono), H2 (qwen3.6 sp
 
 The mechanism, at operator resolution, is that phi-4-generated tests concentrate their failure on arithmetic and boundary mutations --- exactly the operators where phi-4 mono itself is competitive. H10's arithmetic kill rate ($0.351$) and boundary kill rate ($0.449$) are both substantially below the mono ceiling ($0.806$ and $0.748$ respectively). This is not a case of a weak model producing weak tests; it is a case of a model whose test-generation output is systematically misaligned with the defect families it should be strongest at detecting.
 
-The practical implication for pipeline design is that per-model capability, as measured on a single-artefact task (docstring generation, or code synthesis), does not directly predict per-model capability at generating tests for that same artefact. The second companion paper established the per-operator capability map for phi-4 in the context of test generation with reference-suite exemplars; here, we find that map does not transfer when phi-4 must generate tests for a docstring produced by a different SLM upstream. This is the cross-stage interaction effect that RQ1--RQ3 collectively address.
+The practical implication for pipeline design is that per-model capability, as measured on a single-artifact task (docstring generation, or code synthesis), does not directly predict per-model capability at generating tests for that same artifact. The second companion paper established the per-operator capability map for phi-4 in the context of test generation with reference-suite exemplars; here, we find that map does not transfer when phi-4 must generate tests for a docstring produced by a different SLM upstream. This is the cross-stage interaction effect that RQ1--RQ3 collectively address.
 
 \subsection{RQ5: false-closure rate}
 \label{sec:discussion_rq4}
@@ -76,7 +76,7 @@ Under this interpretation:
   \item Mono cells cluster in the $[10\%, 20\%]$ range, well below the noise floor.
 \end{itemize}
 
-The false-closure result is therefore not a limitation but a \emph{characterisation} of the metric's operating regime. Section~\ref{sec:experiment_setup_sensitivity} shows that alternative threshold choices do not meaningfully change these figures.
+The false-closure result is therefore not a limitation but a \emph{characterization} of the metric's operating regime. Section~\ref{sec:experiment_setup_sensitivity} shows that alternative threshold choices do not meaningfully change these figures.
 
 \subsection{Capability preservation}
 \label{sec:discussion_capability}
@@ -90,7 +90,7 @@ Table~\ref{tab:capability_preservation} reports the capability-preservation rate
   \item H4 preserves only $56.5\%$ of Path~2 capability. Placing llama3.2:3B at $L_{\textsf{code}}$ costs the pipeline $44\%$ of reference-pass-rate success on samples that qwen3.6 mono can synthesise cleanly. The heterogeneity gain of $\Delta = 0.186$ observed in the aggregate stage-attribution decomposition (Section~\ref{sec:results_stage_attribution}) hides the fact that H4 pays this capability cost on the samples the strongest mono baseline handles well.
 \end{itemize}
 
-This analysis quantifies a design tension: heterogeneity offers gains via specialisation but incurs losses when a stage's model is inadequate for that stage. The design implication is that heterogeneous pipelines are not uniformly ``better'' than the strongest mono baseline; they should be selected based on the target sample distribution and the availability of a strong-enough model at each stage.
+This analysis quantifies a design tension: heterogeneity offers gains via specialization but incurs losses when a stage's model is inadequate for that stage. The design implication is that heterogeneous pipelines are not uniformly ``better'' than the strongest mono baseline; they should be selected based on the target sample distribution and the availability of a strong-enough model at each stage.
 
 \subsection{Threshold sensitivity}
 
@@ -132,7 +132,7 @@ We distil three design guidelines for practitioners assembling multi-SLM SE pipe
 \subsection{Limitations}
 \label{sec:limitations}
 
-We organise threats along the four classical dimensions~\citep{Wohlin2012ExperimentSE}: internal, external, construct, and conclusion validity. Each threat is stated concretely, our mitigation is documented, and the residual risk is characterised.
+We organize threats along the four classical dimensions~\citep{Wohlin2012ExperimentSE}: internal, external, construct, and conclusion validity. Each threat is stated concretely, our mitigation is documented, and the residual risk is characterized.
 
 \paragraph{Internal validity}
 
@@ -158,14 +158,14 @@ Internal-validity threats concern whether the observed effects are attributable 
 
 \textbf{Threat.} The five-layer checkpointing system (LLM cache, pytest cache, BERTScore cache, TSV row cache, JSONL decontamination cache) means that identical calls across cells are served from cache. If a cache entry produced under one cell's context (e.g., a docstring generated in cell M2 with phi-4 as $L_{\textsf{spec}}$) is reused when cell H1 makes an identical call, the cell-level statistics are not truly independent across cells.
 
-\textbf{Mitigation.} Cache reuse across cells is the intended design: it saves compute while preserving deterministic reproducibility. The statistical analysis treats the cell as the unit of assignment (per Eq.~\ref{eq:anova}) and the sample as the unit of measurement; cache reuse affects the compute cost but does not change which model produced which artefact for which cell. The sample effect $\beta_j$ in Eq.~\ref{eq:anova} absorbs per-sample cache-driven correlation.
+\textbf{Mitigation.} Cache reuse across cells is the intended design: it saves compute while preserving deterministic reproducibility. The statistical analysis treats the cell as the unit of assignment (per Eq.~\ref{eq:anova}) and the sample as the unit of measurement; cache reuse affects the compute cost but does not change which model produced which artifact for which cell. The sample effect $\beta_j$ in Eq.~\ref{eq:anova} absorbs per-sample cache-driven correlation.
 
 \textbf{Residual risk.} None; this is an efficiency mechanism, not a source of bias.
 
 \paragraph{External validity}
 \label{sec:limitations_external}
 
-External-validity threats concern the generalisation of the findings beyond the specific experimental setup.
+External-validity threats concern the generalization of the findings beyond the specific experimental setup.
 
 \paragraph{Missing closed-weight cells (deferred RQ4)}
 
@@ -177,17 +177,17 @@ External-validity threats concern the generalisation of the findings beyond the 
 
 \paragraph{Model family coverage}
 
-\textbf{Threat.} The six pipeline SLMs represent five distinct model families (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). Every family has one representative except Alibaba, which has two. The DeepSeek judge is a sixth family. This is a stronger family-diversity claim than most prior LLM-evaluation papers, but it is not exhaustive: OpenAI (open-weight releases), Amazon, and Cohere are not represented. Findings may not generalise to unrepresented families.
+\textbf{Threat.} The six pipeline SLMs represent five distinct model families (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). Every family has one representative except Alibaba, which has two. The DeepSeek judge is a sixth family. This is a stronger family-diversity claim than most prior LLM-evaluation papers, but it is not exhaustive: OpenAI (open-weight releases), Amazon, and Cohere are not represented. Findings may not generalize to unrepresented families.
 
-\textbf{Mitigation.} The pre-registered DOE (Table~\ref{tab:doe_summary}) documents the specific model tags used at each cell. Reviewers can inspect \texttt{config.py} for the full model lineup with release dates. The Chapter~2 companion paper reports similar findings on a smaller family lineup, supporting cross-lineup generalisation.
+\textbf{Mitigation.} The pre-registered DOE (Table~\ref{tab:doe_summary}) documents the specific model tags used at each cell. Reviewers can inspect \texttt{config.py} for the full model lineup with release dates. The Chapter~2 companion paper reports similar findings on a smaller family lineup, supporting cross-lineup generalization.
 
 \textbf{Residual risk.} The specific finding of the phi-4-in-test-stage pathology (Section~\ref{sec:discussion_rq3}) is stated as ``phi-4 at $L_{\textsf{test}}$ produces filter-failing tests on approximately half of samples''; whether analogous stage-specific pathologies exist for models we do not evaluate is unknown.
 
 \paragraph{Benchmark coverage}
 
-\textbf{Threat.} The core dataset comprises 150~functions from HumanEval and MBPP. Both benchmarks are Python-only, function-level (not multi-file or class-level), and drawn from a corpus that appeared in the training data of many of the pipeline SLMs. Contamination in closed and open LLM evaluation is a recognised systemic problem~\citep{Balloccu2025LLMDataContamination}. The results may not transfer to other benchmarks, other languages, or to multi-file / class-level SE tasks.
+\textbf{Threat.} The core dataset comprises 150~functions from HumanEval and MBPP. Both benchmarks are Python-only, function-level (not multi-file or class-level), and drawn from a corpus that appeared in the training data of many of the pipeline SLMs. Contamination in closed and open LLM evaluation is a recognized systemic problem~\citep{Balloccu2025LLMDataContamination}. The results may not transfer to other benchmarks, other languages, or to multi-file / class-level SE tasks.
 
-\textbf{Mitigation.} The 25-sample HumanEval-Mutated subset (function-rename + docstring-paraphrase) was swept on the hetero champion H1 and the strongest mono baseline M3; results are reported in Section~\ref{sec:results_contamination}. Both cells show behavioural-path (Paths~1 and~2) closure rates that are as high on the surface-form-varied subset as on the core sweep or higher, indicating that the core closure rates are not driven by memorised HumanEval solutions. The complementary LiveCodeBench-25 post-cutoff subset was blocked at data preparation by the removal of script-based dataset loaders from the current HuggingFace \texttt{datasets} library; a fully independent post-cutoff replication remains future work. The cross-benchmark decomposition in Section~\ref{sec:results_per_benchmark_decomp} additionally documents that per-cell effects are significant on both HumanEval and MBPP with different F-values, suggesting the effects generalise across the two benchmarks.
+\textbf{Mitigation.} The 25-sample HumanEval-Mutated subset (function-rename + docstring-paraphrase) was swept on the hetero champion H1 and the strongest mono baseline M3; results are reported in Section~\ref{sec:results_contamination}. Both cells show behavioral-path (Paths~1 and~2) closure rates that are as high on the surface-form-varied subset as on the core sweep or higher, indicating that the core closure rates are not driven by memorised HumanEval solutions. The complementary LiveCodeBench-25 post-cutoff subset was blocked at data preparation by the removal of script-based dataset loaders from the current HuggingFace \texttt{datasets} library; a fully independent post-cutoff replication remains future work. The cross-benchmark decomposition in Section~\ref{sec:results_per_benchmark_decomp} additionally documents that per-cell effects are significant on both HumanEval and MBPP with different F-values, suggesting the effects generalize across the two benchmarks.
 
 \textbf{Residual risk.} Substantial for languages other than Python and for tasks that require multi-file understanding. This is a well-known limitation of function-level LLM-SE evaluation.
 
@@ -205,7 +205,7 @@ Construct-validity threats concern whether the operational definitions of `\text
 
 \paragraph{Mutation kill rate as a defect-detection proxy (Path~1)}
 
-\textbf{Threat.} Mutation kill rate on the five mutation operators (arithmetic, boundary, comparison, negate\_bool, return\_none) is a proxy for defect-detection capability. The five operators do not exhaust the space of software defects; real-world defects include type errors, off-by-one errors in indices, concurrency bugs, resource leaks, and many other patterns not modelled by these five operators.
+\textbf{Threat.} Mutation kill rate on the five mutation operators (arithmetic, boundary, comparison, negate\_bool, return\_none) is a proxy for defect-detection capability. The five operators do not exhaust the space of software defects; real-world defects include type errors, off-by-one errors in indices, concurrency bugs, resource leaks, and many other patterns not modeled by these five operators.
 
 \textbf{Mitigation.} The five operators are the canonical set inherited from Chapter~2, which itself follows the standard mutation-testing literature~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}. Chapter~2 Section~5 discusses the operator-coverage limitation and its implications for the mutation kill rate metric.
 
@@ -217,7 +217,7 @@ Construct-validity threats concern whether the operational definitions of `\text
 
 \textbf{Mitigation.} DeepSeek-R1 is chosen deliberately for family-disjointness from every pipeline SLM. The 60-pair five-annotator human evaluation (three author-team + two independent, all calibrated) (Section~\ref{sec:results_human_eval}) reports $\kappa_{\textsf{quad}} = 0.074$ between the judge and the majority human rating, placing the judge in Landis and Koch's ``slight'' band at fine resolution while it matches the pairwise human within-1 agreement rate ($91.7\%$) at coarser resolution. All disagreements documented in Section~\ref{sec:discussion_rq2} include the judge as one signal; disagreements are attributed to the judge--metric pair, not to the judge alone.
 
-\textbf{Residual risk.} The judge's category-exact reliability against humans is weak ($\kappa_{\textsf{quad}} = 0.074$); the strict-AND policy that pairs judge and metric on every closure decision is the mitigation. Claims in this paper that depend on the judge's rating (Section~\ref{sec:discussion_rq2}, Section~\ref{sec:discussion_rq4}) are stated as ``the judge disagrees with the metric'' or ``the judge accepts equivalence'' rather than as ``the artefacts are semantically equivalent''.
+\textbf{Residual risk.} The judge's category-exact reliability against humans is weak ($\kappa_{\textsf{quad}} = 0.074$); the strict-AND policy that pairs judge and metric on every closure decision is the mitigation. Claims in this paper that depend on the judge's rating (Section~\ref{sec:discussion_rq2}, Section~\ref{sec:discussion_rq4}) are stated as ``the judge disagrees with the metric'' or ``the judge accepts equivalence'' rather than as ``the artifacts are semantically equivalent''.
 
 The choice of DeepSeek-R1:14B as judge is unusual --- prior LLM-as-judge protocols~\citep[e.g.,][and successors]{Zheng2023LLMJudge} predominantly use frontier judges (GPT-4-class or Claude Sonnet/Opus-class) on the argument that judge quality correlates with model capability. Our choice is motivated by open-weight reproducibility: the entire evaluation stack can be re-run without proprietary API access. To test whether the low $\kappa_{\textsf{quad}} = 0.074$ against humans reflects a property specific to DeepSeek-R1:14B or a general LLM-as-judge limitation, we replayed the same 60-pair sample under three frontier judges (GPT-4o-mini, Claude Haiku 4.5, Llama-3.3-70B-Instruct) using an identical prompt via OpenRouter. The results support the general-limitation hypothesis. Against the 5-way human-majority ground truth, frontier judges attain $\kappa_{\textsf{quad}} \in \{0.019, 0.161, 0.199\}$ --- comparable to or worse than DeepSeek-R1:14B's $0.074$. All four judges fall in Landis and Koch's ``slight'' band; none reach ``moderate''. However, judges agree with \emph{each other} much more strongly: frontier-vs-frontier $\kappa_{\textsf{quad}} \in \{0.68, 0.69, 0.70\}$ and frontier-vs-DeepSeek $\kappa_{\textsf{quad}} \in \{0.43, 0.43, 0.49\}$. The four LLM judges form a coherent cluster in rating space that is only weakly correlated with human semantic-equivalence judgment. A directional asymmetry also emerges: DeepSeek-R1 over-rates relative to humans (mean~$3.28$ vs.\ human $3.20$), while all three frontier judges under-rate (means $2.40$--$2.68$). This mitigates the residual risk of the DeepSeek-R1 choice as a limitation of \emph{this} paper but simultaneously raises a broader concern about the LLM-as-judge paradigm itself for fine-resolution ordinal semantic-equivalence rating, which we return to in Section~\ref{sec:conclusion}.
 
@@ -239,7 +239,7 @@ Conclusion-validity threats concern whether the statistical inferences reported 
 
 \textbf{Mitigation.} The Tukey pairwise tests are Bonferroni-corrected over the 190-pair family at $\alpha = 0.05$ (Section~3.8.2). Per-path correlations and their p-values are reported directly without correction; the significant one (Path 2, $r_2 = 0.52$, $p = 1.19 \times 10^{-129}$) is so far below the significance threshold that no correction affects its interpretation, and the non-significant one (Path 3, $r_3 = 0.022$, $p = 0.359$) is a null result that would not become significant under correction. The interaction ANOVA is a single planned comparison. The main-effect ANOVAs are also planned comparisons.
 
-\textbf{Residual risk.} Post-hoc per-operator analyses in Section~\ref{sec:results_per_operator} are not corrected for multiple testing beyond what the reported effect sizes convey. Effect sizes $\Delta > 0.05$ are treated as meaningful; smaller effect sizes are not emphasised.
+\textbf{Residual risk.} Post-hoc per-operator analyses in Section~\ref{sec:results_per_operator} are not corrected for multiple testing beyond what the reported effect sizes convey. Effect sizes $\Delta > 0.05$ are treated as meaningful; smaller effect sizes are not emphasized.
 
 \paragraph{Sample size and statistical power}
 

@@ -2,9 +2,9 @@
 \label{sec:framework}
 
 The docstring--test--code closure framework consists of three components:
-(i)~the \emph{docstring--test--code triangle} of artefacts associated with a
+(i)~the \emph{docstring--test--code triangle} of artifacts associated with a
 Python function, (ii)~three \emph{closure paths} that each reconstruct one
-artefact from the other two via a sequence of two SLM stages, and
+artifact from the other two via a sequence of two SLM stages, and
 (iii)~a \emph{strict-AND validity policy} that pairs an SE-validated
 automated metric with an external judge SLM's semantic-equivalence rating
 to decide whether a reconstruction counts as closed. Figure~\ref{fig:framework}
@@ -21,7 +21,7 @@ is drawn) is deferred to Section~\ref{sec:experiment_setup}.
 Table~\ref{tab:notation} summarises the notation used throughout this
 paper. In brief: uppercase italic letters $C, D, T$ denote the original
 Python code, its docstring, and its reference test suite; primed
-variants $C', D', T'$ denote SLM-reconstructed artefacts; $L_{\mathsf{spec}},
+variants $C', D', T'$ denote SLM-reconstructed artifacts; $L_{\mathsf{spec}},
 L_{\mathsf{test}}, L_{\mathsf{code}}$ denote the pipeline SLMs assigned to
 the three stages by the current DOE cell; $L_J$ denotes the external
 judge SLM. A closure operator is a two-step composition of two of these
@@ -38,7 +38,7 @@ the reconstruction is semantically equivalent to the original.
 Symbol & Meaning \\
 \midrule
 $C, D, T$ & original code, docstring, and reference test suite \\
-$C', D', T'$ & pipeline-reconstructed artefacts \\
+$C', D', T'$ & pipeline-reconstructed artifacts \\
 $L_{\textsf{spec}}, L_{\textsf{test}}, L_{\textsf{code}}$ & Small Language Models assigned to the three stages \\
 $L_J$ & external judge SLM (DeepSeek-R1, family-disjoint from pipeline) \\
 $\mathcal{M} = \{m_1, \ldots, m_6\}$ & the six pipeline SLMs (see Table~\ref{tab:model_lineup}) \\
@@ -105,7 +105,7 @@ Path 2 explicitly conditions $L_{\textsf{code}}$ on both the original docstring 
 
 \subsection{Closure validity decision}
 
-A round-trip closure is considered \emph{valid} when both the automated metric and the judge SLM agree on the artefact equivalence. Formally, for Path 1 we require
+A round-trip closure is considered \emph{valid} when both the automated metric and the judge SLM agree on the artifact equivalence. Formally, for Path 1 we require
 
 \begin{equation}
   \text{valid}_1(C, D, D', T')
@@ -129,7 +129,7 @@ and analogously for Paths 2 and 3:
 
 The two-signal \emph{strict-AND} policy is deliberate: it prevents metric noise or judge parse failures from spuriously inflating closure rates. We adopt the strict policy because the alternative --- single-signal validity --- was the failure mode responsible for inflated closure rates observed in the 30-function pilot; the strict policy also makes the false-closure rate (Section~5) well-defined.
 
-Every closure row is additionally categorised by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in Section~5 for characterising \emph{where} the automated metric and the judge diverge.
+Every closure row is additionally categorized by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in Section~5 for characterizing \emph{where} the automated metric and the judge diverge.
 
 \begin{algorithm}[h]
 \caption{Closure validity decision (implements Eq.~\ref{eq:valid1}--\ref{eq:valid3})}
@@ -138,7 +138,7 @@ Every closure row is additionally categorised by Algorithm~\ref{alg:validity} in
 \Require metric value $m$, judge rating $J \in \{-1, 0, 1, 2, 3, 4\}$, thresholds $\tau$, $\rho$
 \Ensure validity $\in \{\text{valid}, \text{invalid}\}$, \textsf{decision\_reason} $\in$ five categories
 \If{$m$ is missing \textbf{or} $J = -1$}
-  \State \Return $(\text{invalid},\; \textsf{structural\_NA})$ \Comment{Ablation cells or empty artefacts}
+  \State \Return $(\text{invalid},\; \textsf{structural\_NA})$ \Comment{Ablation cells or empty artifacts}
 \EndIf
 \If{$m > \tau$ \textbf{and} $J \geq \rho$}
   \State \Return $(\text{valid},\; \textsf{both\_agree\_valid})$
@@ -207,7 +207,7 @@ Given the filtered test suite $T'_{\textsf{filt}}$ and the set of mutants $\math
   \label{eq:killrate}
 \end{equation}
 
-A mutant is \emph{killed} if at least one filtered test fails on it. Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ (mutants whose observable behaviour matches the original) are excluded from the denominator following the second companion paper's protocol. Five mutation operators are applied: arithmetic (e.g. $\texttt{+} \to \texttt{-}$), boundary ($\texttt{<} \to \texttt{<=}$), comparison ($\texttt{<} \to \texttt{>}$), negate\_bool, and return\_none. Up to 15 mutants are generated per function.
+A mutant is \emph{killed} if at least one filtered test fails on it. Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ (mutants whose observable behavior matches the original) are excluded from the denominator following the second companion paper's protocol. Five mutation operators are applied: arithmetic (e.g. $\texttt{+} \to \texttt{-}$), boundary ($\texttt{<} \to \texttt{<=}$), comparison ($\texttt{<} \to \texttt{>}$), negate\_bool, and return\_none. Up to 15 mutants are generated per function.
 
 \subsubsection{Path 2: reference test pass rate}
 
@@ -244,5 +244,5 @@ We use baseline-rescaled scores so $B \in (-\infty, 1]$ with $B = 0$ denoting ``
 
 \subsubsection{Judge equivalence rating}
 
-The judge SLM $L_J$ = DeepSeek-R1:14B is prompted with a 5-level behaviourally-anchored rubric: 4 = identical, 3 = equivalent (same observable behaviour), 2 = approximately equivalent, 1 = clearly different, 0 = unrelated. A rating of $-1$ denotes parse failure --- the judge is treated as absent for that row. DeepSeek-R1 is deliberately chosen because it belongs to a family (DeepSeek) disjoint from every pipeline SLM, avoiding self-evaluation bias.
+The judge SLM $L_J$ = DeepSeek-R1:14B is prompted with a 5-level behaviourally-anchored rubric: 4 = identical, 3 = equivalent (same observable behavior), 2 = approximately equivalent, 1 = clearly different, 0 = unrelated. A rating of $-1$ denotes parse failure --- the judge is treated as absent for that row. DeepSeek-R1 is deliberately chosen because it belongs to a family (DeepSeek) disjoint from every pipeline SLM, avoiding self-evaluation bias.
 

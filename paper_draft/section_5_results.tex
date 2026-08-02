@@ -1,7 +1,7 @@
 \section{Results}
 \label{sec:results}
 
-We report closure rates across the 20-cell DOE on the 150-function core dataset, comprising 5{,}890 measurement rows (150 mono samples $\times$ 3 paths $\times$ 6 mono cells $+$ 75 hetero samples $\times$ 3 paths $\times$ 11 hetero cells $+$ 75 null samples $\times$ 3 paths $\times$ 3 null cells). Results are organised by research question. Every closure rate reported here uses the strict two-signal validity policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3} with default thresholds $\tau_1 = \tau_2 = \tau_3 = 0$ and $\rho = 3$; the sensitivity analysis (Section~\ref{sec:experiment_setup_sensitivity}) confirms every headline finding survives alternative threshold choices.
+We report closure rates across the 20-cell DOE on the 150-function core dataset, comprising 5{,}890 measurement rows (150 mono samples $\times$ 3 paths $\times$ 6 mono cells $+$ 75 hetero samples $\times$ 3 paths $\times$ 11 hetero cells $+$ 75 null samples $\times$ 3 paths $\times$ 3 null cells). Results are organized by research question. Every closure rate reported here uses the strict two-signal validity policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3} with default thresholds $\tau_1 = \tau_2 = \tau_3 = 0$ and $\rho = 3$; the sensitivity analysis (Section~\ref{sec:experiment_setup_sensitivity}) confirms every headline finding survives alternative threshold choices.
 
 \subsection{Overall closure rates per cell and path}
 \label{sec:results_closure_matrix}
@@ -19,9 +19,9 @@ Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present t
 
 First, Path~1 (mutation kill rate) closure rates cluster in the $[0.7, 0.9]$ range for all non-ablated cells, with a mean of $0.831$. The strongest mono baseline is M3 (qwen3.6:27B, all stages) at $0.900$; the strongest hetero cell is H6 (phi-4/qwen3.6/phi-4) at $0.882$. The single mono failure is M1 (llama3.2:3B mono) at $0.577$.
 
-Second, Path~2 (reference test pass rate) closure rates are systematically lower than Path~1, averaging $0.630$ across non-ablated cells. This reflects the harder nature of the code-synthesis task: passing the reference tests requires reconstructing the function's behaviour exactly rather than merely covering it. Notably, the spec-stage-ablated null cell N2 (Path~2 closure rate $= 0.667$) ties or exceeds every mono baseline (M1 $= 0.367$, M2 $= 0.547$, others $\in [0.533, 0.647]$). We return to the implications of this in Section~\ref{sec:discussion_rq3}.
+Second, Path~2 (reference test pass rate) closure rates are systematically lower than Path~1, averaging $0.630$ across non-ablated cells. This reflects the harder nature of the code-synthesis task: passing the reference tests requires reconstructing the function's behavior exactly rather than merely covering it. Notably, the spec-stage-ablated null cell N2 (Path~2 closure rate $= 0.667$) ties or exceeds every mono baseline (M1 $= 0.367$, M2 $= 0.547$, others $\in [0.533, 0.647]$). We return to the implications of this in Section~\ref{sec:discussion_rq3}.
 
-Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.211$ across non-ablated cells, and vary in a compressed range $[0.17, 0.28]$. This is an artefact of BERTScore's rescaled value distribution on our data --- the natural distribution of BERTScore F1 values between original and reconstructed docstrings clusters in $[-0.1, 0.5]$. The compressed range does not indicate poor pipeline performance; Section~\ref{sec:discussion_rq2} shows that judge equivalence ratings on the same rows tell an entirely different story.
+Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.211$ across non-ablated cells, and vary in a compressed range $[0.17, 0.28]$. This is an artifact of BERTScore's rescaled value distribution on our data --- the natural distribution of BERTScore F1 values between original and reconstructed docstrings clusters in $[-0.1, 0.5]$. The compressed range does not indicate poor pipeline performance; Section~\ref{sec:discussion_rq2} shows that judge equivalence ratings on the same rows tell an entirely different story.
 
 \subsection{Mono versus heterogeneous cells}
 \label{sec:results_mono_vs_hetero}
@@ -43,7 +43,7 @@ To test whether cell-mean differences are statistically significant, we fit the 
 
 \begin{itemize}
   \item H1 vs.\ M1: $\Delta = -0.182$ ($p_{\textsf{adj}} < 0.001$) --- phi-4 in the spec stage plus qwen-coder in test/code stages substantially outperforms llama3.2 mono.
-  \item H4 vs.\ N1: $\Delta = -0.262$ ($p_{\textsf{adj}} < 0.001$) --- every hetero cell beats the word-shuffled control by $> 0.25$, confirming that hetero closure signal is not a metric artefact.
+  \item H4 vs.\ N1: $\Delta = -0.262$ ($p_{\textsf{adj}} < 0.001$) --- every hetero cell beats the word-shuffled control by $> 0.25$, confirming that hetero closure signal is not a metric artifact.
   \item M1 vs.\ N2: $\Delta = +0.282$ ($p_{\textsf{adj}} < 0.001$) --- the spec-stage-ablated null cell N2 beats M1 mono; skipping the docstring stage and reusing the ground-truth docstring works better than generating a weak docstring in the first place.
 \end{itemize}
 
@@ -56,7 +56,7 @@ Each hetero cell composes three models $(m_{\textsf{spec}}, m_{\textsf{test}}, m
 
 \input{../tables/tab_per_stage_bottleneck.tex}
 
-Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's closure rate to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{Y}_{a,s}$ is the closure rate of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = \bar{Y}_a - \min_s \hat{Y}_{a,s}$ is the improvement from specialising the other two stages.
+Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's closure rate to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{Y}_{a,s}$ is the closure rate of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = \bar{Y}_a - \min_s \hat{Y}_{a,s}$ is the improvement from specializing the other two stages.
 
 Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (cell $\times$ path) triples; test-stage 10; code-stage 8. The most striking single-stage attributions are:
 
@@ -166,13 +166,13 @@ Because HumanEval and MBPP predate the training cut-offs of all six pipeline SLM
 
 Three findings emerge.
 
-\textbf{First: the behavioural paths (Paths~1 and~2) show no evidence of contamination-driven inflation on the core sweep.} Both cells improve on HEM by $+15$ to $+26$~pp on the two paths whose metrics measure real behaviour (mutation kill rate; reference-test pass rate). If core closure rates were driven by memorised HumanEval solutions, we would expect the opposite --- surface-form-varied inputs would degrade the memorisation shortcut. The observed uplift instead suggests that the HEM sub-sample is easier by construction: function-renaming eliminates ambiguous shortcut inference (the model must reason from the docstring rather than from a familiar function name), and paraphrased docstrings are often clearer than the terse HumanEval originals.
+\textbf{First: the behavioral paths (Paths~1 and~2) show no evidence of contamination-driven inflation on the core sweep.} Both cells improve on HEM by $+15$ to $+26$~pp on the two paths whose metrics measure real behavior (mutation kill rate; reference-test pass rate). If core closure rates were driven by memorised HumanEval solutions, we would expect the opposite --- surface-form-varied inputs would degrade the memorization shortcut. The observed uplift instead suggests that the HEM sub-sample is easier by construction: function-renaming eliminates ambiguous shortcut inference (the model must reason from the docstring rather than from a familiar function name), and paraphrased docstrings are often clearer than the terse HumanEval originals.
 
 \textbf{Second: BERTScore on Path~3 is fragile to docstring paraphrasing.} Both cells lose $25$--$31$~pp on Path~3 HEM. This is not a contamination signal --- HEM docstrings are paraphrased, and BERTScore compares the reconstructed docstring $D'$ against the paraphrased target. Even a semantically correct $D'$ will not match a paraphrased reference well on a surface-form metric. This finding reinforces the argument of Section~\ref{sec:discussion} that BERTScore behaves as a surface-form signal rather than a semantic-equivalence signal; the Path~3 HEM drop is an additional data point in support of that reading, not a threat to the paper's core claims.
 
 \textbf{Third: the H1-vs-M3 comparison holds under decontamination.} On Path~1, both cells reach $100\%$ HEM closure --- H1 gains $+21.0$~pp, M3 gains $+14.5$~pp. On Path~2, M3 gains $+25.7$~pp and H1 gains $+15.5$~pp. On Path~3, M3 degrades slightly less than H1 ($-24.5$ vs.\ $-31.0$~pp), consistent with M3's higher core-sweep Path~3 rate ($70.0\%$ vs.\ $63.6\%$). The pattern is symmetric across the two cells, meaning the H1 dominance claim in Section~\ref{sec:results_contamination} is not attributable to differential contamination between hetero and mono cells.
 
-The absence of contamination-driven inflation on the behavioural paths, together with the H1--M3 pattern preservation on HEM, materially strengthens the paper's central claim that the observed cross-stage composition effects reflect genuine capability differences rather than dataset-memorisation artefacts.
+The absence of contamination-driven inflation on the behavioral paths, together with the H1--M3 pattern preservation on HEM, materially strengthens the paper's central claim that the observed cross-stage composition effects reflect genuine capability differences rather than dataset-memorization artifacts.
 
 
 \subsection{Human-evaluation results}
@@ -286,7 +286,7 @@ whereas the three frontier judges agree with \emph{each other} at
 $\kappa_{\textsf{quad}} = 0.68$--$0.70$ (``moderate''). The four LLM
 judges form a coherent cluster in rating space that is only weakly
 correlated with the human majority---an empirical signature of an
-LLM-as-judge limitation rather than a DeepSeek-specific artefact. A
+LLM-as-judge limitation rather than a DeepSeek-specific artifact. A
 directional asymmetry is also visible: DeepSeek-R1 slightly over-rates
 the human mean ($3.28$ vs.\ $3.20$) whereas the three frontier judges
 under-rate it ($2.40$--$2.68$).
@@ -426,7 +426,7 @@ times false-reject); at all lower cost ratios either the majority-class
 baseline or judge-only dominates. If the deployment context genuinely
 requires strong false-closure suppression --- for example, when a
 falsely-claimed pipeline closure would trigger deployment of a broken
-downstream artefact --- strict-AND is the appropriate choice. In lower-
+downstream artifact --- strict-AND is the appropriate choice. In lower-
 stakes settings where false-rejects are equally costly, judge-only is
 preferable.
 
@@ -441,7 +441,7 @@ $\pm 25$~pp. Second, and more consequentially, the sample is
 stratified toward disputed cases (20 frontier + 20 agreement + 20
 disputed pairs per pre-registration; see
 Section~\ref{sec:experiment_setup_human_eval}). The FPR and FNR
-numbers therefore characterise the metric--judge disagreement region,
+numbers therefore characterize the metric--judge disagreement region,
 not a uniform draw from the full 5{,}890-row sweep. In a uniform
 sample, the ``agreement'' bucket would dominate and all policies
 would achieve higher accuracy; the relative ordering among policies
@@ -475,11 +475,11 @@ Two secondary implications:
         judge over-crediting rather than pure metric conservatism.}
         On the 60-pair sample the judge slightly over-rates relative
         to the 5-way majority human (mean judge~$= 3.28$ vs.\ mean
-        human~$= 3.20$). Rows labelled \texttt{metric\_false\_negative}
+        human~$= 3.20$). Rows labeled \texttt{metric\_false\_negative}
         in Section~\ref{sec:discussion} (metric below $\tau$, judge
         above $\rho$) therefore mix two populations: cases where the
-        metric is genuinely conservative on human-equivalent artefacts,
-        and cases where the judge over-credits an artefact humans would
+        metric is genuinely conservative on human-equivalent artifacts,
+        and cases where the judge over-credits an artifact humans would
         rate lower. The BERTScore benchmark-flip finding of
         Section~\ref{sec:discussion} is unaffected in its comparative
         statement across benchmarks but should be read as a
