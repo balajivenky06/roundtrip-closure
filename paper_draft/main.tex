@@ -1,38 +1,26 @@
 %% ============================================================================
-%% main.tex — Chapter 3 manuscript, Elsevier submission format.
+%% main.tex — Elsevier CAS (Complex Article Structure) single-column template.
 %%
-%% Uses the elsarticle document class (standard for Elsevier journals). Target
-%% venue: Empirical Software Engineering (Springer) as primary; if pivoting to
-%% Elsevier venues (Information & Software Technology, Journal of Systems and
-%% Software, Information Processing & Management), this class is the correct
-%% choice; for Springer venues, switch \documentclass to `svjour3` or
-%% Springer's Nature-family template.
+%% Target venue: EMSE / IPM (Elsevier). Uses cas-sc (single-column preprint).
+%% Switch to cas-dc for double-column camera-ready if the venue requires it.
 %%
-%% Structure per Elsevier convention (mirrors the Epistemic Fortitude
-%% IPM submission format the user marked as the target style):
-%%
-%%     1. Highlights (mandatory; 3-5 bullet points, ≤ 85 chars each)
-%%     2. Title, authors, affiliations
-%%     3. Keywords + abstract
-%%     4. Body sections (numbered 1., 1.1, 1.1.1)
-%%     5. Declaration of Competing Interest (mandatory)
-%%     6. Acknowledgements
-%%     7. Data availability statement (mandatory)
-%%     8. References
-%%     9. Appendices
-%%
-%% Build:
-%%     make            # full build
-%%     make clean      # remove artefacts
+%% Structure per Elsevier CAS convention:
+%%     1. Highlights (3-5 bullets, ≤ 85 chars each)
+%%     2. Title, short-title, short-authors, tnotes
+%%     3. Authors with orcid + credit (inline)
+%%     4. Affiliations (numeric IDs)
+%%     5. Corresponding-author + footnotes
+%%     6. Abstract + keywords
+%%     7. Body sections
+%%     8. \printcredits (auto-generated from \credit blocks above)
+%%     9. Bibliography
+%%    10. Author bios (optional; disabled below)
 %% ============================================================================
 
-\documentclass[preprint,3p,authoryear]{elsarticle}
-%% Class options:
-%%   preprint       — draft mode with wide margins for review comments
-%%   3p             — three-column preprint (Elsevier default); alt: 1p / 5p
-%%   authoryear     — author-year citation style; alt: number for [1] style
-%%
-%% Switch to `final,3p,times,twocolumn` for camera-ready submission.
+\documentclass[a4paper,fleqn]{cas-sc}
+
+%% Bibliography via natbib (cas-sc does not bundle it)
+\usepackage[authoryear,longnamesfirst]{natbib}
 
 %% -- Math -------------------------------------------------------------------
 \usepackage{amsmath, amssymb, amsthm}
@@ -42,7 +30,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
-%% -- Tables + figures + graphics -------------------------------------------
+%% -- Tables + figures + graphics --------------------------------------------
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
@@ -50,12 +38,12 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds}
 
-%% -- Hyperlinks + cleveref (after amsmath, before hyperref) ------------------
+%% -- Hyperlinks + cleveref (after amsmath) ----------------------------------
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
 \usepackage{cleveref}
 
-%% -- Fonts + microtype -------------------------------------------------------
+%% -- Fonts + microtype ------------------------------------------------------
 \usepackage{lmodern}
 \usepackage{microtype}
 
@@ -63,58 +51,60 @@
 \usepackage{xcolor}
 \newcommand{\PLACEHOLDER}[1]{\textcolor{red!70!black}{\textbf{[TODO: #1]}}}
 
-%% -- Bibliography -----------------------------------------------------------
-\bibliographystyle{elsarticle-harv}   % Elsevier author-year style
-%% Alternatives: elsarticle-num (numeric), elsarticle-num-names (numeric with names)
-
-%% ============================================================================
-%% Journal / target-venue metadata (Elsevier template placeholders)
-%% ============================================================================
-\journal{Empirical Software Engineering}   %% swap to actual target on submission
-
 \begin{document}
 
-%% ============================================================================
-%% Front matter: Highlights block (mandatory Elsevier requirement)
-%% Each highlight is one bullet, ≤ 85 characters, 3–5 items total.
-%% ============================================================================
-
-\begin{frontmatter}
-
-\begin{highlights}
-\item First cross-LLM $\times$ cross-stage study of round-trip closure in SE pipelines
-\item Pre-registered 20-cell DOE across six open-weight SLMs on HumanEval and MBPP
-\item H1 (phi-4 spec + qwen-coder test/code) dominates 4 of 5 mutation operators
-\item BERTScore is uncorrelated with judge equivalence on Path 3 ($r = 0.02$, $n = 1{,}791$)
-\item Weak LLM-judge agreement with humans is general, not DeepSeek-R1-specific
-\end{highlights}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
 
 %% ============================================================================
-%% Title, authors, affiliations
+%% Short-title / short-authors (cas-sc mandatory for running heads)
 %% ============================================================================
+\shorttitle{Heterogeneous multi-SLM round-trip closure}
+\shortauthors{Venktesh~V., Amsaprabhaa~M., Sundaram}
 
-\title{Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle:
-       A Mutation-Testing Study}
+%% ============================================================================
+%% Title + tnotes
+%% ============================================================================
+\title[mode=title]{Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle: A Mutation-Testing Study}
 
-\author[snu]{Balaji Venktesh V.\corref{cor1}}
+\tnotemark[1]
+\tnotetext[1]{Pre-registered replication package including the 20-cell DOE, the 5{,}890-row sweep TSV, closure-decision + test-filter algorithms with 67 unit tests, and all analysis scripts is publicly available at \url{https://github.com/balajivenky06/roundtrip-closure} under the MIT licence.}
+
+%% ============================================================================
+%% Authors with orcid + credit + affiliations
+%% ============================================================================
+\author[1]{Balaji Venktesh~V.}[
+    type=editor,
+    orcid=0000-0000-0000-0000,
+    ]
+\cormark[1]
 \ead{balaji23610040@snuchennai.edu.in}
+\credit{Conceptualization, Methodology, Software, Formal analysis, Investigation, Data curation, Writing --- original draft, Writing --- review \& editing, Visualization, Project administration}
 
-\author[snu]{Amsaprabhaa M.}
+\author[1]{Amsaprabhaa~M.}[
+    orcid=0000-0000-0000-0000,
+    ]
 \ead{amsaprabhaam@snuchennai.edu.in}
+\credit{Conceptualization, Methodology, Supervision, Resources, Writing --- review \& editing, Project administration, Funding acquisition}
 
-\author[snu]{Gireesh Sundaram}
+\author[1]{Gireesh Sundaram}[
+    orcid=0000-0000-0000-0000,
+    ]
 \ead{gireesh23610036@snuchennai.edu.in}
+\credit{Methodology, Software, Validation, Writing --- review \& editing}
 
 \cortext[cor1]{Corresponding author.}
 
-\affiliation[snu]{organization={Department of Computer Science and Engineering,
-                                 Shiv Nadar University},
-                  city={Chennai}, state={Tamil Nadu}, country={India}}
+\affiliation[1]{organization={Department of Computer Science and Engineering, Shiv Nadar University},
+                city={Chennai},
+                state={Tamil Nadu},
+                postcode={603110},
+                country={India}}
 
 %% ============================================================================
-%% Abstract + keywords
+%% Abstract (≤ 250 words for IPM cap; EMSE more generous)
 %% ============================================================================
-
 \begin{abstract}
 Do multi-stage Small-Language-Model (SLM) pipelines for software
 engineering depend on which SLM sits at which stage? We report the
@@ -126,26 +116,40 @@ SE-validated metric (mutation kill rate, reference test pass rate, or
 BERTScore F1) with an external judge SLM (DeepSeek-R1); the policy
 trades bounded false-closure for higher false-reject on 60 human-rated
 pairs, and a frontier-judge replay shows weak judge--human agreement is
-a general LLM-as-judge property. Five findings emerge. First, the H1 composition
-(phi-4 spec + qwen-coder test/code) dominates four of five mutation
-operators as pre-registered. Second,
-phi-4 in the test stage produces filter-failing tests on ${\sim}50\%$
-of samples across three cells---invisible in single-stage evaluations.
-Third, BERTScore F1 is uncorrelated in aggregate
-($r = 0.02$, $n = 1{,}791$) with the judge on the docstring path;
-disagreement flips across benchmarks, consistent with a surface-form
-signal. Fourth, the three closure paths carry non-redundant information
-about cell performance ($F(34, 4865) = 6.21$, $p < 0.001$, partial
-$\eta^2 = 0.042$). Fifth, heterogeneity is not free: well-composed
-hetero cells preserve $78$--$91\%$ of the strongest mono baseline,
-while poorly-composed cells collapse. A HumanEval-Mutated
-decontamination re-sweep shows behavioural-path closure rates hold or
-improve under function-rename + docstring-paraphrase, ruling out
-surface-form memorisation. We derive three design guidelines and
-release an open replication package with 67 unit tests.
+a general LLM-as-judge property. Five findings emerge. First, the H1
+composition (phi-4 spec + qwen-coder test/code) dominates four of five
+mutation operators as pre-registered. Second, phi-4 in the test stage
+produces filter-failing tests on ${\sim}50\%$ of samples across three
+cells---invisible in single-stage evaluations. Third, BERTScore F1 is
+uncorrelated in aggregate ($r = 0.02$, $n = 1{,}791$) with the judge
+on the docstring path; disagreement flips across benchmarks, consistent
+with a surface-form signal. Fourth, the three closure paths carry
+non-redundant information about cell performance
+($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$). Fifth,
+heterogeneity is not free: well-composed hetero cells preserve
+$78$--$91\%$ of the strongest mono baseline, while poorly-composed
+cells collapse. A HumanEval-Mutated decontamination re-sweep shows
+behavioural-path closure rates hold or improve under function-rename +
+docstring-paraphrase, ruling out surface-form memorisation. We derive
+three design guidelines and release an open replication package with
+67 unit tests.
 \end{abstract}
 
-\begin{keyword}
+%% ============================================================================
+%% Highlights (mandatory; 3-5 bullets, ≤ 85 chars each)
+%% ============================================================================
+\begin{highlights}
+\item First cross-LLM $\times$ cross-stage study of round-trip closure in SE pipelines
+\item Pre-registered 20-cell DOE across six open-weight SLMs on HumanEval and MBPP
+\item H1 (phi-4 spec + qwen-coder test/code) dominates 4 of 5 mutation operators
+\item BERTScore is uncorrelated with judge equivalence on Path 3 ($r = 0.02$, $n = 1{,}791$)
+\item Weak LLM-judge agreement with humans is general, not DeepSeek-R1-specific
+\end{highlights}
+
+%% ============================================================================
+%% Keywords
+%% ============================================================================
+\begin{keywords}
 Small Language Models \sep
 round-trip closure \sep
 unit test generation \sep
@@ -154,9 +158,9 @@ LLM-as-judge \sep
 empirical software engineering \sep
 open-weight language models \sep
 design of experiments
-\end{keyword}
+\end{keywords}
 
-\end{frontmatter}
+\maketitle
 
 %% ============================================================================
 %% Body sections
@@ -181,15 +185,24 @@ design of experiments
 %% respectively.
 
 %% ============================================================================
-%% End matter (Elsevier mandatory sections)
+%% End matter — CoI, Acknowledgements, Funding, Ethics, Data availability
+%%
+%% NOTE: the CRediT authorship contribution statement is now auto-generated
+%% by \printcredits below (populated from the per-author \credit{...} macros
+%% in the frontmatter). The redundant manual CRediT section in
+%% section_end_matter.tex remains as a fallback for non-cas-sc classes but
+%% is skipped in the CAS build via the guard below — cas-sc's
+%% \printcredits injects it automatically.
 %% ============================================================================
-
 \input{section_end_matter.tex}
+
+%% CAS-native auto-generated CRediT block (from \credit macros above)
+\printcredits
 
 %% ============================================================================
 %% Bibliography
 %% ============================================================================
-
+\bibliographystyle{cas-model2-names}
 \bibliography{references}
 
 \end{document}
