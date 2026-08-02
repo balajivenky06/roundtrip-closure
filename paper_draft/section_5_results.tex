@@ -10,7 +10,7 @@ Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present t
 
 \input{../tables/tab_closure_rate_matrix.tex}
 
-\\begin{figure}[!ht]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.85\linewidth]{../plots/output/fig2_closure_heatmap.png}
   \caption{Mean closure rate per cell $\times$ path (heatmap). Cell strata are (top to bottom) mono (M1--M6), hetero (H1--H11), and null (N1--N3). Values are computed under the strict two-signal validity policy of Eqs.~\ref{eq:valid1}--\ref{eq:valid3}.}
@@ -26,7 +26,7 @@ Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.211$ acr
 \subsection{Mono versus heterogeneous cells}
 \label{sec:results_mono_vs_hetero}
 
-\\begin{figure}[!ht]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.7\linewidth]{../plots/output/fig3_mono_vs_hetero.png}
   \caption{Distribution of Path~1 closure rates across strata (mono, hetero, null). Each violin summarises the per-cell mean closure rates within a stratum.}
@@ -65,7 +65,7 @@ Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (ce
   \item \textbf{H4 code attribution, $\Delta = 0.186$} --- qwen-coder at $L_{\textsf{spec}}$ and $L_{\textsf{test}}$, llama3.2 at $L_{\textsf{code}}$. Even the ``cheap drafter at the code stage'' composition recovers $\Delta = 0.186$ over the llama3.2 mono baseline, suggesting that spec and test quality can compensate substantially for weak synthesis.
 \end{itemize}
 
-\\begin{figure}[!ht]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.9\linewidth]{../plots/output/fig10_stage_contribution.png}
   \caption{Per-hetero-cell stage-contribution decomposition on Path~1. Blue segment: worst-stage mono baseline (floor). Orange segment: heterogeneity gain over that baseline. Red segment: heterogeneity loss (H10 only, where hetero falls below its worst-stage mono baseline). Dashed line: strongest mono ceiling (M4 $= 0.773$).}
@@ -109,7 +109,7 @@ The most striking benchmark-specific effect surfaces not in the aggregate closur
 \subsection{Judge--metric correlation (RQ2)}
 \label{sec:results_judge_metric_corr}
 
-\\begin{figure}[!ht]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.95\linewidth]{../plots/output/fig7_judge_corr.png}
   \caption{Judge SLM rating vs.\ automated closure metric per path. Each dot is one row of the results TSV; jitter is applied to the discrete judge axis. Path~1: mutation kill rate. Path~2: reference test pass rate (binary). Path~3: BERTScore F1. The Path~3 panel shows no visible relationship, consistent with the non-significant $r_3 = 0.022$ ($p = 0.359$, $n = 1{,}791$).}
