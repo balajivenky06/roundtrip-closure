@@ -47,6 +47,10 @@
 \usepackage{lmodern}
 \usepackage{microtype}
 
+%% -- Float placement (prevents figures from clustering at end) --------------
+\usepackage[section]{placeins}   % \FloatBarrier automatically at each \section
+% If a figure still floats past its subsection, add \FloatBarrier manually.
+
 %% -- Colors for placeholders + comments ------------------------------------
 \usepackage{xcolor}
 \newcommand{\PLACEHOLDER}[1]{\textcolor{red!70!black}{\textbf{[TODO: #1]}}}

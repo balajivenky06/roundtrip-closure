@@ -97,14 +97,19 @@ pre-registered DOE table (\texttt{doe.py}); the model lineup
 (\texttt{config.py}); the three closure-path drivers (\texttt{closure\_paths.py});
 the closure-validity decision (\texttt{closure\_decision.py}, Algorithm~2); the
 test-filter validity gate (\texttt{closure\_metrics.filter\_tests\_with\_reason},
-Algorithm~3); the mutation-testing engine inherited from Chapter~2
-(\texttt{mutation\_testing.py}); the 51-test suite covering both algorithms
-(\texttt{tests/test\_closure\_decision.py},
-\texttt{tests/test\_filter\_tests\_reason.py}); the analysis pipeline
-(\texttt{scripts/run\_analysis.py}); all six gap-closer scripts
-(\texttt{scripts/build\_*.py}); the 11 LaTeX tables and 10 PNG figures used in
-this manuscript, reproducible from the sweep TSV via a single command; and the
-60-pair human-evaluation worksheet (blinded) and pair de-blinding index.
+Algorithm~3); the mutation-testing engine inherited from the second companion paper
+(\texttt{mutation\_testing.py}); the 67-test suite covering the closure-validity
+decision, the test-filter validity gate, and their integration into the sweep
+pipeline (\texttt{tests/test\_closure\_decision.py},
+\texttt{tests/test\_filter\_tests\_reason.py}, \texttt{tests/test\_wiring\_integration.py});
+the analysis pipeline (\texttt{scripts/run\_analysis.py}); all six gap-closer
+scripts (\texttt{scripts/build\_*.py}); the 22 LaTeX tables and 5 figures
+(1~TikZ framework diagram + 4~empirical plots) used in this manuscript, all
+reproducible from the sweep TSV via a single command; the 60-pair
+five-annotator human-evaluation TSVs (\texttt{human\_eval/data/annotator\_*.tsv})
+with the pair-metadata table; and the three-judge frontier-judge replay outputs
+(\texttt{human\_eval/data/frontier\_judge\_*.tsv}) from GPT-4o-mini, Claude
+Haiku~4.5, and Llama-3.3-70B.
 
 The pre-processed HumanEval, MBPP, LiveCodeBench, and HumanEval-Mutated datasets
 are included in the \texttt{data/} directory as JSONL files. The five-layer
@@ -119,7 +124,7 @@ The single command
 \begin{verbatim}
 python3 scripts/run_analysis.py --tsv results/results_roundtrip.tsv
 \end{verbatim}
-regenerates all 11 LaTeX tables and all 10 PNG figures from the sweep TSV. The
+regenerates the 22 LaTeX tables and 5 figures from the sweep TSV. The
 following commands regenerate the six gap-closer artifacts described in
 Section~5:
 
