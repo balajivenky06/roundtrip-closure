@@ -171,7 +171,7 @@ External-validity threats concern the generalization of the findings beyond the 
 
 \textbf{Threat.} The original pre-registered DOE~(Concept Note Section~\ref{sec:results_per_operator}) specified three closed-weight cells: M5 (Claude Sonnet~4.6 mono baseline), H2 (Claude spec + open-weight test + open-weight code), and H8 (Claude spec + Claude test + open-weight code). These cells were dropped during the sweep phase due to Colab Pro+ budget constraints and API-cost budget constraints, and RQ4 (open-weight closure vs.\ closed-weight ceiling) is not answered in the present chapter. This is a substantive deviation from the pre-registration.
 
-\textbf{Mitigation.} The deviation is disclosed here, in Section~1.3 (research questions), and in the concept-note diff maintained in the replication package. The pre-registered closed-weight cells are recorded in the DOE table (\texttt{doe.py}) with a documented \texttt{is\_deferred = True} marker. The remaining 20-cell open-weight sweep is complete.
+\textbf{Mitigation.} The deviation is disclosed here, in Section~1.3 (research questions), and in the concept-note diff maintained in the replication package. The pre-registered closed-weight cells remain recorded in the DOE table with an explicit deferred marker. The remaining 20-cell open-weight sweep is complete.
 
 \textbf{Residual risk.} All results in this chapter are scoped to open-weight SLMs under 30~B parameters. Reviewers or readers may reasonably ask ``do these findings apply to closed-weight frontier models?'' --- the honest answer is that this study cannot say. The follow-up study proposed in Section~7 addresses this directly.
 
@@ -179,7 +179,7 @@ External-validity threats concern the generalization of the findings beyond the 
 
 \textbf{Threat.} The six pipeline SLMs represent five distinct model families (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). Every family has one representative except Alibaba, which has two. The DeepSeek judge is a sixth family. This is a stronger family-diversity claim than most prior LLM-evaluation papers, but it is not exhaustive: OpenAI (open-weight releases), Amazon, and Cohere are not represented. Findings may not generalize to unrepresented families.
 
-\textbf{Mitigation.} The pre-registered DOE (Table~\ref{tab:doe_summary}) documents the specific model tags used at each cell. Reviewers can inspect \texttt{config.py} for the full model lineup with release dates. The Chapter~2 companion paper reports similar findings on a smaller family lineup, supporting cross-lineup generalization.
+\textbf{Mitigation.} The pre-registered DOE (Table~\ref{tab:doe_summary}) documents the specific model tags used at each cell; the full model lineup with release dates is included in the replication package. The second companion paper reports similar findings on a smaller family lineup, supporting cross-lineup generalization.
 
 \textbf{Residual risk.} The specific finding of the phi-4-in-test-stage pathology (Section~\ref{sec:discussion_rq3}) is stated as ``phi-4 at $L_{\textsf{test}}$ produces filter-failing tests on approximately half of samples''; whether analogous stage-specific pathologies exist for models we do not evaluate is unknown.
 
@@ -207,7 +207,7 @@ Construct-validity threats concern whether the operational definitions of `\text
 
 \textbf{Threat.} Mutation kill rate on the five mutation operators (arithmetic, boundary, comparison, negate\_bool, return\_none) is a proxy for defect-detection capability. The five operators do not exhaust the space of software defects; real-world defects include type errors, off-by-one errors in indices, concurrency bugs, resource leaks, and many other patterns not modeled by these five operators.
 
-\textbf{Mitigation.} The five operators are the canonical set inherited from Chapter~2, which itself follows the standard mutation-testing literature~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}. Chapter~2 Section~5 discusses the operator-coverage limitation and its implications for the mutation kill rate metric.
+\textbf{Mitigation.} The five operators are the canonical set inherited from the second companion paper, which itself follows the standard mutation-testing literature~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}. The second companion paper discusses the operator-coverage limitation and its implications for the mutation kill rate metric.
 
 \textbf{Residual risk.} The kill-rate values in Table~\ref{tab:per_operator_kill_rate} are specific to the five canonical operators. Whether a cell's kill rate on operators \emph{not} in this set would be similar is unknown.
 
@@ -269,6 +269,6 @@ Conclusion-validity threats concern whether the statistical inferences reported 
   \item \textbf{Human evaluation reported in addendum.} The 60-pair five-annotator study is reported in Section~\ref{sec:results_human_eval}, which post-dates the initial revision.
 \end{itemize}
 
-Every deviation is disclosed in this chapter and reflected in the source-controlled DOE table (\texttt{doe.py}), the pre-registered concept note (\texttt{chapter3\_concept\_note.md}), and the sweep TSV timestamps. No results were re-planned in light of the observed data.
+Every deviation is disclosed in this paper and reflected in the source-controlled DOE table, the pre-registered concept note, and the sweep TSV timestamps included in the replication package. No results were re-planned in light of the observed data.
 
 \emph{End of Section~\ref{sec:discussion}.} Section~\ref{sec:conclusion} concludes.
