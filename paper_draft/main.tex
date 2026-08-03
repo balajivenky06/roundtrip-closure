@@ -44,7 +44,12 @@
 \usepackage{cleveref}
 
 %% -- Fonts + microtype ------------------------------------------------------
+%% T1 fontenc + utf8 inputenc + lmodern together fix glyph-slot bugs in cas-sc
+%% where \times, %, and other math/text symbols map to wrong glyphs (e.g. ×→İ).
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage{textcomp}       % \textmu, \textdegree, etc. under T1
 \usepackage{microtype}
 
 %% -- Float placement (prevents figures from clustering at end) --------------
