@@ -45,14 +45,22 @@
 
 %% -- Fonts + microtype ------------------------------------------------------
 %% cas-sc's default math font has broken glyph slots for common symbols
-%% (× → İ, ~ → í, ∅ → ç). Fix: swap in Times-family math which has correct
-%% slots. cas-sc conflicts with newtxmath but not with mathptmx (older,
-%% widely-compatible Times math package).
+%% (× -> İ, ~ -> í, superscript ² dropped) under every pdflatex-compatible
+%% math package we tried (newtxmath, mathptmx, lmodern alone). Fix: compile
+%% with LuaLaTeX + unicode-math, which loads Latin Modern Math (OpenType)
+%% and replaces cas-sc's math setup entirely. Guarded via iftex so pdflatex
+%% still compiles (though with broken glyphs — LuaLaTeX is the supported
+%% target).
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{textcomp}
 \usepackage{microtype}
+\usepackage{iftex}
+\ifluatex
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+\fi
 
 %% -- Float placement (prevents figures from clustering at end) --------------
 \usepackage[section]{placeins}   % \FloatBarrier automatically at each \section
