@@ -44,18 +44,15 @@
 \usepackage{cleveref}
 
 %% -- Fonts + microtype ------------------------------------------------------
-%% cas-sc's default math font ships with broken glyph mappings for several
-%% common symbols (× → İ, % → ˜, ∅ → ç, ' → odd chars). Fix:
-%%   1. T1 fontenc + utf8 inputenc (character-encoding sanity)
-%%   2. lmodern text font (avoids the broken cas-sc default text font)
-%%   3. textcomp for text-mode symbols
-%%   4. newtxmath for a Times-based math font that has correct × / ∈ / % glyphs
-%%   5. mathptmx as a further fallback if newtxmath is unavailable
+%% cas-sc's default math font has broken glyph slots for common symbols
+%% (× → İ, ~ → í, ∅ → ç). Fix: swap in Times-family math which has correct
+%% slots. cas-sc conflicts with newtxmath but not with mathptmx (older,
+%% widely-compatible Times math package).
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{textcomp}
-\usepackage{newtxmath}      % swaps cas-sc's default math font → Times-based math
+\usepackage{mathptmx}       % Times-based math font — fixes × / ~ / % glyphs in cas-sc
 \usepackage{microtype}
 
 %% -- Float placement (prevents figures from clustering at end) --------------
