@@ -1,7 +1,7 @@
 \begin{table}[t]
 \centering
 \small
-\caption{Path 1 (mutation kill rate) closure-rate sensitivity across kill-rate threshold $\tau$ and judge-rating threshold $\rho$. Each cell reports the fraction of valid rows satisfying $\mathrm{kill\_rate} > \tau \wedge \mathrm{judge} \geq \rho$. The cell ordering is preserved across the grid — Kendall's $\tau_{\text{rank}}$ between every non-reference threshold and the reference ($\tau=0, \rho=3$) exceeds 0.85 (bottom row).}
+\caption{Path 1 (mutation kill rate) closure-rate sensitivity across kill-rate threshold $\tau$ and judge-rating threshold $\rho$. Each entry reports the strict-AND closure rate conditional on the metric being computable: $V' = |\{r : Y_r > \tau \wedge J_r \geq \rho\}| / n_{\text{metric-ok}}$. This is a different denominator convention from the canonical $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}) reported in Table~\ref{tab:closure_rate_matrix}, where the denominator is the total measurement rows per cell $\times$ path. The conditional-on-metric denominator is appropriate for a threshold-sensitivity analysis because it separates ``metric could not be computed'' (a structural failure of the test-filter, path-independent) from ``metric was below threshold'' (the sensitivity question). Numeric values at $(\tau=0, \rho=3)$ therefore differ from the corresponding $V_{a, p}$ entries derivable from Table~\ref{tab:closure_rate_matrix}. Cell ordering is preserved across the grid --- Kendall's $\tau_{\text{rank}}$ between every non-reference threshold and the reference exceeds $0.85$ (bottom row).}
 \label{tab:threshold_sensitivity_path1}
 \begin{tabular}{lrrrrrrrrr}
 \toprule

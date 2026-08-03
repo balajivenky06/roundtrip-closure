@@ -1,30 +1,33 @@
 \begin{table}[t]
 \centering
-\caption{Metric mean $\bar{Y}_{a, p}$ per cell $\times$ path (Eq.~\ref{eq:metric_mean}); the parenthetical is the strict-AND valid-closure count $n_{\text{valid}} = |\{r : Y_r > 0 \wedge J_r \geq 3\}|$ from which the valid-closure fraction $V_{a, p} = n_{\text{valid}} / N$ can be computed (using $N = 150$ for mono, $N = 75$ for hetero and null). Metric $Y$: kill rate (Path~1), reference-test pass rate (Path~2), rescaled BERTScore F1 (Path~3).}
+\caption{Metric mean $\bar{Y}_{a, p}$ per cell $\times$ path (Eq.~\ref{eq:metric_mean}); the parenthetical is the strict-AND valid-closure count $n_{\text{valid}} = |\{r : Y_r > 0 \wedge J_r \geq 3\}|$, from which the valid-closure fraction $V_{a, p} = n_{\text{valid}} / N$ can be computed ($N = 150$ for mono; $N = 75$ for hetero and null; H1 has $N = 89$ on Paths 1 and 2 and $N = 88$ on Path 3 after the human-evaluation re-sweep). Metric $Y$: kill rate (Path~1), reference-test pass rate (Path~2), rescaled BERTScore F1 (Path~3). \textbf{Bold} marks the highest $\bar{Y}$ per path across non-null cells. N2 and N3 rows carry \texttt{---} for paths whose operative stage was ablated by construction (spec-ablation for N2, test-ablation for N3).}
 \label{tab:closure_rate_matrix}
 \begin{tabular}{@{}lccc@{}}
 \toprule
 Cell & Path 1 & Path 2 & Path 3 \\
 \midrule
-H1 & 0.854 (81.0) & 0.674 (89.0) & 0.194 (88.0) \\
-H10 & 0.764 (34.0) & 0.613 (75.0) & 0.248 (75.0) \\
-H11 & 0.872 (71.0) & 0.653 (75.0) & 0.173 (75.0) \\
-H2 & 0.862 (41.0) & 0.613 (75.0) & 0.185 (75.0) \\
-H3 & 0.787 (61.0) & 0.671 (70.0) & 0.221 (59.0) \\
-H4 & 0.862 (66.0) & 0.453 (75.0) & 0.199 (75.0) \\
-H5 & 0.811 (59.0) & 0.667 (75.0) & 0.218 (75.0) \\
-H6 & 0.882 (62.0) & 0.6 (75.0) & 0.184 (75.0) \\
-H7 & 0.872 (66.0) & 0.6 (75.0) & 0.2 (74.0) \\
-H8 & 0.846 (63.0) & 0.6 (75.0) & 0.26 (75.0) \\
-H9 & 0.881 (61.0) & 0.627 (75.0) & 0.202 (75.0) \\
-M1 & 0.577 (123.0) & 0.367 (150.0) & 0.245 (150.0) \\
-M2 & 0.769 (84.0) & 0.547 (150.0) & 0.185 (150.0) \\
-M3 & 0.9 (117.0) & 0.647 (150.0) & 0.208 (150.0) \\
-M4 & 0.856 (141.0) & 0.647 (150.0) & 0.282 (150.0) \\
-M5 & 0.781 (126.0) & 0.533 (150.0) & 0.261 (150.0) \\
-M6 & 0.862 (126.0) & 0.647 (150.0) & 0.219 (150.0) \\
-N1 & 0.429 (60.0) & 0.12 (75.0) & 0.174 (75.0) \\
-N2 & nan (nan) & 0.667 (75.0) & nan (nan) \\
+M1   & 0.577~(75) & 0.367~(45) & 0.245~(61) \\
+M2   & 0.769~(63) & 0.547~(71) & 0.185~(81) \\
+M3   & \textbf{0.900}~(100) & 0.647~(90) & 0.208~(105) \\
+M4   & 0.856~(116) & 0.647~(87) & \textbf{0.282}~(109) \\
+M5   & 0.781~(98) & 0.533~(69) & 0.261~(80) \\
+M6   & 0.862~(108) & 0.647~(86) & 0.219~(100) \\
+\midrule
+H1   & 0.854~(64) & \textbf{0.674}~(57) & 0.194~(56) \\
+H2   & 0.862~(35) & 0.613~(40) & 0.185~(40) \\
+H3   & 0.787~(50) & 0.627~(42) & 0.174~(29) \\
+H4   & 0.862~(60) & 0.453~(30) & 0.199~(50) \\
+H5   & 0.811~(50) & 0.667~(47) & 0.218~(37) \\
+H6   & 0.882~(53) & 0.600~(41) & 0.184~(49) \\
+H7   & 0.872~(57) & 0.600~(42) & 0.200~(53) \\
+H8   & 0.846~(53) & 0.600~(43) & 0.260~(54) \\
+H9   & 0.881~(54) & 0.627~(46) & 0.202~(55) \\
+H10  & 0.764~(22) & 0.613~(42) & 0.248~(47) \\
+H11  & 0.872~(61) & 0.653~(46) & 0.173~(50) \\
+\midrule
+N1   & 0.429~(23) & 0.120~(7) & 0.174~(20) \\
+N2   & --- & 0.667~(47) & 0.000~(0) \\
+N3   & --- & 0.000~(0) & 0.000~(0) \\
 \bottomrule
 \end{tabular}
 \end{table}

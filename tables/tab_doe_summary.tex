@@ -1,9 +1,10 @@
 \begin{table}[t]
 \centering
-\small
+\footnotesize
 \caption{Pre-registered 20-cell DOE over six open-weight SLMs and three pipeline stages ($6^3 = 216$ full design space, sampled purposively, not by fractional factorial). Three strata: 6 mono, 11 hetero, 3 null. Hypothesis is the rationale recorded at design time.}
 \label{tab:doe_summary}
-\begin{tabular}{@{}llllll@{}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}llllllp{4.5cm}@{}}
 \toprule
 Cell & Stratum & $L_{\textsf{spec}}$ & $L_{\textsf{test}}$ & $L_{\textsf{code}}$ & Hypothesis \\
 \midrule
@@ -11,22 +12,27 @@ M1 & mono & llama3.2 & llama3.2 & llama3.2 & Small-dense self-consistency floor 
 M2 & mono & phi4 & phi4 & phi4 & Mid-dense reasoning-tuned mono baseline (14\,B Microsoft). \\
 M3 & mono & qwen3.6 & qwen3.6 & qwen3.6 & Dense mono baseline (27\,B Alibaba). \\
 M4 & mono & gemma4 & gemma4 & gemma4 & MoE mono baseline (26\,B Google). \\
-M5 & mono & mistral-s.\ 3.2 & mistral-s.\ 3.2 & mistral-s.\ 3.2 & Function-calling-tuned dense mono (24\,B Mistral). \\
-M6 & mono & qwen3-coder & qwen3-coder & qwen3-coder & Code-specialised MoE self-consistency (30\,B Alibaba). \\
-H1 & hetero & phi4 & qwen3-coder & qwen3-coder & Predicate-reasoner at spec plus coder at test/code. \\
-H2 & hetero & qwen3.6 & phi4 & qwen3-coder & Dense spec, reasoner tests, coder synth. \\
-H3 & hetero & gemma4 & mistral-s.\ 3.2 & qwen3-coder & Cross-family triple: Google $\to$ Mistral $\to$ Alibaba-coder. \\
-H4 & hetero & qwen3-coder & qwen3-coder & llama3.2 & Cheap drafter at synth: does a 3\,B model suffice? \\
-H5 & hetero & llama3.2 & qwen3-coder & qwen3-coder & Cheap drafter at spec: can a 3\,B docstring survive downstream? \\
+M5 & mono & mistral-s. & mistral-s. & mistral-s. & Function-calling-tuned dense mono (24\,B Mistral). \\
+M6 & mono & qwen-coder & qwen-coder & qwen-coder & Code-specialised MoE self-consistency (30\,B Alibaba). \\
+H1 & hetero & phi4 & qwen-coder & qwen-coder & Predicate-reasoner at spec plus coder at test/code. \\
+H2 & hetero & qwen3.6 & phi4 & qwen-coder & Dense spec, reasoner tests, coder synth. \\
+H3 & hetero & gemma4 & mistral-s. & qwen-coder & Cross-family triple: Google $\to$ Mistral $\to$ Alibaba-coder. \\
+H4 & hetero & qwen-coder & qwen-coder & llama3.2 & Cheap drafter at synth: does a 3\,B model suffice? \\
+H5 & hetero & llama3.2 & qwen-coder & qwen-coder & Cheap drafter at spec: can a 3\,B docstring survive downstream? \\
 H6 & hetero & phi4 & qwen3.6 & phi4 & Phi sandwich with a different-family middle stage. \\
-H7 & hetero & qwen3-coder & qwen3.6 & phi4 & Reverse-capability gradient: strongest first, weakest last. \\
-H8 & hetero & gemma4 & qwen3-coder & mistral-s.\ 3.2 & MoE $\to$ MoE $\to$ dense: does architecture matching matter? \\
-H9 & hetero & qwen3-coder & qwen3.6 & qwen3-coder & Strong-sandwich: MoE bookends dense for synthesis stability. \\
-H10 & hetero & mistral-s.\ 3.2 & phi4 & qwen3-coder & Best-of-each-family-stage: Mistral spec + Phi test + Qwen-coder synth. \\
-H11 & hetero & phi4 & gemma4 & qwen3-coder & Phi spec + Gemma test + Qwen-coder synth (alt family triple). \\
+H7 & hetero & qwen-coder & qwen3.6 & phi4 & Reverse-capability gradient: strongest first, weakest last. \\
+H8 & hetero & gemma4 & qwen-coder & mistral-s. & MoE $\to$ MoE $\to$ dense: does architecture matching matter? \\
+H9 & hetero & qwen-coder & qwen3.6 & qwen-coder & Strong-sandwich: MoE bookends dense for synthesis stability. \\
+H10 & hetero & mistral-s. & phi4 & qwen-coder & Best-of-each-family-stage. \\
+H11 & hetero & phi4 & gemma4 & qwen-coder & Alt family triple: Phi + Gemma + Qwen-coder. \\
 N1 & null & llama3.2 & llama3.2 & llama3.2 & Word-shuffled input: expected metric $\approx 0$ if metric is sound. \\
-N2 & null & (skip) & qwen3-coder & qwen3-coder & Spec-stage ablation: quantifies $L_{\textsf{spec}}$ contribution. \\
-N3 & null & qwen3-coder & (skip) & qwen3-coder & Test-stage ablation: quantifies $L_{\textsf{test}}$ contribution. \\
+N2 & null & (skip) & qwen-coder & qwen-coder & Spec-stage ablation: quantifies $L_{\textsf{spec}}$ contribution. \\
+N3 & null & qwen-coder & (skip) & qwen-coder & Test-stage ablation: quantifies $L_{\textsf{test}}$ contribution. \\
 \bottomrule
 \end{tabular}
+
+\vspace{2pt}
+\raggedright\footnotesize
+\emph{Model tags:} \texttt{mistral-s.} = \texttt{mistral-small3.2}; \texttt{qwen-coder} = \texttt{qwen3-coder}.
+Full model lineup with parameter counts and release dates in Table~\ref{tab:model_lineup}.
 \end{table}
