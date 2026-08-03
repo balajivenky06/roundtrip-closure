@@ -143,17 +143,28 @@ Internal-validity threats concern whether the observed effects are attributable 
 
 \paragraph{Cache reuse across cells and per-path duplicate cells}
 
-\textbf{Threat.} The five-layer checkpointing system (LLM cache, pytest cache, BERTScore cache, TSV row cache, JSONL decontamination cache) means that identical calls across cells are served from cache. This introduces a specific analytical concern: each closure path exercises only two of the three pipeline stages (Path~1 uses $L_{\textsf{spec}}$ and $L_{\textsf{test}}$; Path~2 uses $L_{\textsf{test}}$ and $L_{\textsf{code}}$; Path~3 uses $L_{\textsf{test}}$ and $L_{\textsf{spec}}$), so cells sharing the operative stage-pair on a given path produce byte-identical rows on that path. The per-path duplicate groups are:
+\textbf{Threat.} The five-layer checkpointing system (LLM cache, pytest cache, BERTScore cache, TSV row cache, JSONL decontamination cache) means that identical calls across cells are served from cache. This introduces a specific analytical concern: each closure path exercises only two of the three pipeline stages (Path~1 uses $L_{\textsf{spec}}$ and $L_{\textsf{test}}$; Path~2 uses $L_{\textsf{test}}$ and $L_{\textsf{code}}$; Path~3 uses $L_{\textsf{test}}$ and $L_{\textsf{spec}}$), so cells sharing the operative stage-pair on a given path can produce identical rows via cache reuse. We measured the empirical per-group identity rate directly from the released sweep TSV, counting samples with identical $(m, J)$ tuples across every cell in a candidate group:
 
 \begin{itemize}
-  \item \textbf{Path~1 (shared $L_{\textsf{spec}}, L_{\textsf{test}}$):} $\{M6, H4\}$, $\{H7, H9\}$, $\{M1, N1\}$ produce identical Path~1 rows within each group.
-  \item \textbf{Path~2 (shared $L_{\textsf{test}}, L_{\textsf{code}}$):} $\{M6, H1, H5\}$, $\{H2, H10\}$, $\{H6, H7\}$, $\{M1, N1\}$ produce identical Path~2 rows within each group.
-  \item \textbf{Path~3 (shared $L_{\textsf{test}}, L_{\textsf{spec}}$):} $\{M6, H4\}$, $\{H7, H9\}$, $\{M1, N1\}$ produce identical Path~3 rows within each group.
+  \item \textbf{Genuine duplicates ($\geq 98\%$ identical rows on shared samples):}
+    $\{M6, H4\}$ on Path~1 ($65/65$, $100\%$) and Path~3 ($74/75$, $98.7\%$);
+    $\{M6, H1, H5\}$ on Path~2 ($74/75$, $98.7\%$).
+    These groups share the operative stage-pair on the affected path and were swept entirely within the same cache era; the effective per-cell degrees of freedom on the affected path collapse across the group.
+  \item \textbf{Partial duplicates ($\sim$$50\%$ identical rows):}
+    $\{H7, H9\}$ on Path~1 ($33/59$, $56\%$);
+    $\{H2, H10\}$ on Path~2 ($37/75$, $49\%$);
+    $\{H6, H7\}$ on Path~2 ($38/75$, $51\%$).
+    The partial rate is a consequence of the mid-sweep $\texttt{NUM\_CTX}$ configuration change disclosed in the ``mid-sweep $\texttt{NUM\_CTX}$ configuration change'' threat above: pre-change rows are cache-identical across the group while post-change rows have different cache keys.
+  \item \textbf{Notably \emph{not} duplicates:}
+    $\{H7, H9\}$ on Path~3 ($0/74$ identical) --- both cells share $(L_{\textsf{test}}, L_{\textsf{spec}}) = (\texttt{qwen3.6}, \texttt{qwen-coder})$ on Path~3 by our indexing convention, but no rows survive with byte-identical BERTScore + judge outputs on this path.
+    $\{M1, N1\}$ on every path ($9/51 = 17.6\%$ Path~1, $15/75 = 20.0\%$ Path~2, $3/75 = 4.0\%$ Path~3): although M1 and N1 share $L_{\textsf{spec}} = L_{\textsf{test}} = L_{\textsf{code}} = \texttt{llama3.2}$, N1 is a word-shuffled-input null control (Section~\ref{sec:experiment_setup_doe}) so its per-sample inputs differ from M1's by construction --- the shared-stage-pair reasoning does not apply. The $\bar{Y}$ scale difference (M1 $\bar{Y}_1 = 0.577$ vs.\ N1 $\bar{Y}_1 = 0.429$; false-closure rate $14.0\%$ vs.\ $26.3\%$) confirms the two cells are behaviorally distinct, which is precisely what allows N1 to serve as the RQ4 noise floor in Section~\ref{sec:discussion_rq4}.
 \end{itemize}
 
-\textbf{Mitigation and correction.} We disclose these groups explicitly because Tukey pairwise contrasts and per-path effect sizes double-count rows that share an operative stage-pair, and between-duplicate contrasts (e.g.\ H7 vs.\ H9 on Path~1) are structurally null rather than empirically informative. In interpreting the per-path ANOVAs (Section~\ref{sec:results_stage_attribution}) and the mixed-effects logit (Section~\ref{sec:results_mixed_logit}), the effective degrees of freedom on any given path are reduced by the number of duplicate rows within groups; the qualitative RQ1--RQ3 conclusions (heterogeneity matches mono on aggregate $\bar{Y}$; test-stage is the significant per-stage attribution; the phi-4-in-test-stage pathology) do not depend on between-duplicate contrasts and survive the correction. The mixed-effects logit is the least affected because it estimates per-model-per-stage marginal effects rather than per-cell effects, so duplicates on a given path collapse to the same fitted probability. Table~\ref{tab:mixed_logit}'s significant test-stage coefficients ($\beta \neq 0$ for phi-4, mistral-small, llama3.2 at $L_{\textsf{test}}$) therefore remain the paper's most duplication-robust per-stage finding.
+The apparent H7 = H9 byte-identity on Path~1 in the cache-reconstructed per-operator table (Table~\ref{tab:per_operator_kill_rate}) reflects the cache-recoverable subset of Path~1 rows (which necessarily excludes the post-$\texttt{NUM\_CTX}$-change rows where H7 and H9 diverge), not the released sweep TSV. Readers checking H7 vs.\ H9 across the TSV and the per-operator table will find the two artifacts differ, and this is why.
 
-\textbf{Residual risk.} Tukey contrasts between duplicate-group members overstate the effective per-comparison sample size; between-group contrasts are unaffected. Where duplicate-group members appear in headline contrasts (M6-M1, H9-H7, H1-M6), we mark them non-informative in the notes below Table~\ref{tab:tukey_significant}.
+\textbf{Mitigation.} We disclose the measured duplication rates explicitly. In interpreting the per-path ANOVAs (Section~\ref{sec:results_stage_attribution}) and the mixed-effects logit (Section~\ref{sec:results_mixed_logit}), the effective per-path degrees of freedom on genuine-duplicate groups collapse across the group (M6/H4 counts once on Paths~1 and~3; M6/H1/H5 counts once on Path~2), and partial-duplicate groups count with a scaled-down effective sample. The qualitative RQ1--RQ3 conclusions (heterogeneity matches mono on aggregate $\bar{Y}$; test-stage is the significant per-stage attribution; the phi-4-in-test-stage pathology) do not depend on between-duplicate contrasts and survive the correction. The mixed-effects logit is the least affected because it estimates per-model-per-stage marginal effects rather than per-cell effects; genuine duplicates on a given path collapse to the same fitted probability. Table~\ref{tab:mixed_logit}'s significant test-stage coefficients ($\beta \neq 0$ for phi-4, mistral-small, llama3.2 at $L_{\textsf{test}}$) therefore remain the paper's most duplication-robust per-stage finding.
+
+\textbf{Residual risk.} Tukey contrasts within the two genuine-duplicate groups (M6/H4 on Paths~1 and~3; M6/H1/H5 on Path~2) overstate the effective per-comparison sample size. No such within-group contrast appears in the headline Tukey pairs of Table~\ref{tab:tukey_significant}, which report only H1--M1, H4--N1, and M1--N2. Between-group contrasts and within-partial-duplicate contrasts are affected proportionally to the measured identity rate.
 
 \paragraph{External validity}
 \label{sec:limitations_external}
@@ -166,7 +177,7 @@ External-validity threats concern the generalization of the findings beyond the 
 
 \textbf{Mitigation.} The scope is disclosed here and in Section~\ref{sec:introduction}. The open-weight framing is deliberate: reproducibility of the full evaluation stack without proprietary API access is a design goal of the study.
 
-\textbf{Residual risk.} Findings are scoped to open-weight SLMs under 30~B parameters. Reviewers may reasonably ask ``do these findings apply to closed-weight frontier models?'' --- the honest answer is that this study cannot say. The follow-up outlined in Section~7 addresses this directly.
+\textbf{Residual risk.} Findings are scoped to open-weight SLMs under 30~B parameters. Reviewers may reasonably ask ``do these findings apply to closed-weight frontier models?'' --- the honest answer is that this study cannot say. The follow-up outlined in Section~\ref{sec:conclusion} addresses this directly.
 
 \paragraph{Model family coverage}
 
@@ -194,7 +205,7 @@ Construct-validity threats concern whether the operational definitions of ``clos
 
 \textbf{Mitigation.} Rather than discarding Path~3 results, we adopt the strict two-signal validity policy of Eq.~\ref{eq:valid3}: closure requires both metric $> 0$ AND judge $\geq \rho$. Path~3 closure counts are correspondingly conservative. Section~\ref{sec:discussion_rq2} explicitly reports Path~3 findings as ``metric $\times$ judge disagreement'' rather than as ``metric-only closure.''
 
-\textbf{Residual risk.} Alternative surface-form metrics (BLEU-4, ROUGE-L, sentence-BERT similarity) were not evaluated. It is possible that a different metric would produce stronger $r_3$ correlation. This is left to follow-up work and is stated as an open question in Section~7.
+\textbf{Residual risk.} Alternative surface-form metrics (BLEU-4, ROUGE-L, sentence-BERT similarity) were not evaluated. It is possible that a different metric would produce stronger $r_3$ correlation. This is left to follow-up work and is stated as an open question in Section~\ref{sec:conclusion}.
 
 \paragraph{Mutation kill rate as a defect-detection proxy (Path~1)}
 

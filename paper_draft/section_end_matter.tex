@@ -150,6 +150,12 @@ Section~5:
         \texttt{python3 scripts/build\_path\_cell\_anova.py}
   \item G6 (stage-contribution figure):
         \texttt{python3 scripts/build\_stage\_contribution\_figure.py}
+  \item Verify text vs.\ artifact drift on the per-path duplicate-cells disclosure
+        (Section~\ref{sec:limitations}):
+        \texttt{python3 scripts/verify\_duplicate\_groups.py}
+        recomputes empirical per-group identity rates against the released
+        sweep TSV and reports whether every claimed duplicate/partial/
+        non-duplicate group matches the paper's numbers.
 \end{itemize}
 
 Re-executing the full 20-cell experimental sweep from cold is possible via
