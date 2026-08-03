@@ -1,14 +1,14 @@
 \begin{table}[t]
 \centering
-\caption{Pearson correlation between the automated closure metric and the external SLM judge's 0--4 equivalence rating. RQ2: do these two signals agree?}
+\caption{Pearson correlation between the automated closure metric and the external SLM judge's 0--4 equivalence rating. RQ2: do these two signals agree? \textbf{Bold}: Path~2 is the only strong-and-significant correlation. \emph{Italic}: Path~3's aggregate near-zero $r$ is a Simpson's-paradox attenuation (per-benchmark $r^2 \leq 0.045$; see Section~\ref{sec:results_judge_metric_corr}).}
 \label{tab:judge_correlation}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 Scope & n & Pearson r & p & Sig \\
 \midrule
 Path 1 & 1441 & 0.192 & $<0.001$ & *** \\
-Path 2 & 1839 & 0.523 & $<0.001$ & *** \\
-Path 3 & 1791 & 0.022 & $0.359$ & n.s. \\
+Path 2 & 1839 & \textbf{0.523} & $<0.001$ & \textbf{***} \\
+Path 3 & 1791 & \emph{0.022} & \emph{0.359} & \emph{n.s.} \\
 Overall & 5071 & 0.343 & $<0.001$ & *** \\
 \bottomrule
 \end{tabular}

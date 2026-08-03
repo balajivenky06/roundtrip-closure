@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{Type-III interaction ANOVA on closure metric (response) $\sim$ C(cell) $\times$ C(path) + C(sample). Path main effect is inflated by response-scale heterogeneity across paths (kill rate, pass rate, rescaled BERTScore inhabit different scales); the interpretive load is carried by the cell $\times$ path interaction.}
+\caption{Type-III interaction ANOVA on closure metric (response) $\sim$ C(cell) $\times$ C(path) + C(sample). Path main effect is inflated by response-scale heterogeneity across paths (kill rate, pass rate, rescaled BERTScore inhabit different scales); the interpretive load is carried by the \textbf{cell $\times$ path interaction} (bold), which is the paper's evidence that the three closure paths carry non-redundant information about cell performance.}
 \label{tab:anova_interaction}
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
@@ -10,7 +10,7 @@ Intercept & 30.23 & 1 & 330.40 & $<0.001$ & 0.064 \\
 C(cell_id) & 20.31 & 18 & 12.33 & $<0.001$ & 0.044 \\
 C(path) & 19.54 & 2 & 106.77 & $<0.001$ & 0.042 \\
 C(sample_idx) & 135.76 & 149 & 9.96 & $<0.001$ & 0.234 \\
-C(cell_id):C(path) & 21.32 & 36 & 6.47 & $<0.001$ & 0.046 \\
+\textbf{C(cell\_id):C(path)} & \textbf{21.32} & \textbf{36} & \textbf{6.47} & $\mathbf{<0.001}$ & \textbf{0.046} \\
 Residual & 445.26 & 4867 & --- & --- & --- \\
 \bottomrule
 \end{tabular}

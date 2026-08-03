@@ -1,13 +1,13 @@
 \begin{table}[t]
 \centering
 \small
-\caption{Headline per-operator finding: H1 (phi-4 spec + qwen-coder test + qwen-coder code) beats the strongest mono baseline on every mutation operator, with the largest gain on arithmetic operators ($\Delta = +0.133$).}
+\caption{Headline per-operator finding: H1 (phi-4 spec + qwen-coder test + qwen-coder code) leads the strongest mono baseline on 4 of 5 mutation operators, with the largest gain on arithmetic operators. \textbf{Bold} marks the largest gain ($\Delta = +0.133$).}
 \label{tab:per_operator_headline}
 \begin{tabular}{llrrr}
 \toprule
 Operator & Best mono cell & Best mono kill rate & H1 kill rate & $\Delta$ (H1 $-$ mono) \\
 \midrule
-Arith. & M3 & 0.806 & 0.939 & +0.133 \\
+Arith. & M3 & 0.806 & 0.939 & $\mathbf{+0.133}$ \\
 Bound. & M3 & 0.748 & 0.844 & +0.096 \\
 Comp. & M3 & 0.912 & 1.000 & +0.088 \\
 Negate & M6 & 0.944 & 1.000 & +0.056 \\

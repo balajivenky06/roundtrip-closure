@@ -1,6 +1,6 @@
 \begin{table}[t]
 \centering
-\caption{Per-stage bottleneck decomposition. For each hetero cell + path, the bottleneck stage is the one whose mono-cell mean is lowest. $\Delta$ to bottleneck = hetero\_mean $-$ mono(bottleneck) — positive means the hetero pipeline outperformed the bottleneck stage alone.}
+\caption{Per-stage bottleneck decomposition. For each hetero cell + path, the bottleneck stage is the one whose mono-cell mean is lowest. $\Delta$ to bottleneck $=$ hetero\_mean $-$ mono(bottleneck) --- positive means the hetero pipeline outperformed the bottleneck stage alone. \textbf{Bold} $\Delta$ marks the two largest heterogeneity gains (H4 Path~1 $\Delta = +0.285$ and H5 Path~2 $\Delta = +0.300$) --- both cases where a strong-model substitution at the non-bottleneck stages recovers substantial closure lost to the weak-stage baseline.}
 \label{tab:per_stage_bottleneck}
 \begin{tabular}{@{}lccccccc@{}}
 \toprule
@@ -15,11 +15,11 @@ H2 & 3 & 0.185 & 0.208 & 0.185 & 0.219 & test & 0.0 \\
 H3 & 1 & 0.787 & 0.856 & 0.781 & 0.862 & test & 0.006 \\
 H3 & 2 & 0.671 & 0.647 & 0.533 & 0.647 & test & 0.138 \\
 H3 & 3 & 0.221 & 0.282 & 0.261 & 0.219 & code & 0.001 \\
-H4 & 1 & 0.862 & 0.862 & 0.862 & 0.577 & code & 0.285 \\
+H4 & 1 & 0.862 & 0.862 & 0.862 & 0.577 & code & $\mathbf{0.285}$ \\
 H4 & 2 & 0.453 & 0.647 & 0.647 & 0.367 & code & 0.087 \\
 H4 & 3 & 0.199 & 0.219 & 0.219 & 0.245 & spec & -0.021 \\
 H5 & 1 & 0.811 & 0.577 & 0.862 & 0.862 & spec & 0.234 \\
-H5 & 2 & 0.667 & 0.367 & 0.647 & 0.647 & spec & 0.3 \\
+H5 & 2 & 0.667 & 0.367 & 0.647 & 0.647 & spec & $\mathbf{0.300}$ \\
 H5 & 3 & 0.218 & 0.245 & 0.219 & 0.219 & test & -0.002 \\
 H6 & 1 & 0.882 & 0.769 & 0.9 & 0.769 & spec & 0.113 \\
 H6 & 2 & 0.6 & 0.547 & 0.647 & 0.547 & spec & 0.053 \\
