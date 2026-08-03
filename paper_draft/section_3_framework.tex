@@ -207,7 +207,7 @@ Given the filtered test suite $T'_{\textsf{filt}}$ and the set of mutants $\math
   \label{eq:killrate}
 \end{equation}
 
-A mutant is \emph{killed} if at least one filtered test fails on it. Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ (mutants whose observable behavior matches the original) are excluded from the denominator following the second companion paper's protocol. Five mutation operators are applied: arithmetic (e.g. $\texttt{+} \to \texttt{-}$), boundary ($\texttt{<} \to \texttt{<=}$), comparison ($\texttt{<} \to \texttt{>}$), negate\_bool, and return\_none. Up to 15 mutants are generated per function.
+A mutant is \emph{killed} if at least one filtered test fails on it. Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ (mutants whose observable behavior matches the original) are excluded from the denominator following standard mutation-testing protocol~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}. Five mutation operators are applied: arithmetic (e.g. $\texttt{+} \to \texttt{-}$), boundary ($\texttt{<} \to \texttt{<=}$), comparison ($\texttt{<} \to \texttt{>}$), negate\_bool, and return\_none. Up to 15 mutants are generated per function.
 
 \subsubsection{Path 2: reference test pass rate}
 
