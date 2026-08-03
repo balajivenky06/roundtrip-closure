@@ -48,6 +48,34 @@ This paper makes five contributions to the empirical literature on multi-SLM sof
 
 A sixth methodological contribution is the demonstration that open-weight SLM evaluation with pre-registered statistical rigor, transparent computational-cost accounting, and open-science reproducibility artifacts~\citep{Panichella2024OpenScienceSE} is a viable methodology for empirical software-engineering research. The six pipeline SLMs used here are all under 30~B parameters and all released with open weights; the entire 5{,}890-row sweep fit within a single-researcher Colab Pro+ monthly allowance ($\sim$530 GPU-hours across A100 and T4, an estimated $25$~kg~CO$_2$-equivalent following~\citet{Lacoste2019MLCO2Emissions} --- see Ethics statement).
 
+\subsection{Findings at a glance}
+
+Because the design is multi-dimensional (20 cells $\times$ 3 paths, two per-cell aggregates, five mutation operators, two source benchmarks), Table~\ref{tab:findings_glance} previews each research question's headline answer and the evidence behind it, so that the detailed results of Section~\ref{sec:results} can be read against a fixed map. Throughout the paper, cells are named M1--M6 (mono: one SLM at all three stages), H1--H11 (hetero: different SLMs across stages), and N1--N3 (null controls); the full stage-to-model assignment for every cell is given in Table~\ref{tab:doe_summary}, and the two per-cell aggregates --- metric mean $\bar{Y}$ and strict-AND valid-closure fraction $V$ --- are defined in Section~\ref{sec:framework_cell_aggregates}.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Findings at a glance: headline answer, key quantitative evidence, and the section where each is developed. Compositions: H1 = phi-4 spec + qwen-coder test/code; H4 = qwen-coder spec/test + llama3.2 code; H10 = mistral spec + phi-4 test + qwen-coder code; H11 = phi-4 spec + gemma-4 test + qwen-coder code; M3 = qwen3.6 mono; M4 = gemma-4 mono.}
+\label{tab:findings_glance}
+\begin{tabular}{@{}p{0.55cm}p{4.9cm}p{4.9cm}p{1.1cm}@{}}
+\toprule
+RQ & Headline answer & Key evidence & Where \\
+\midrule
+RQ1 & Hetero compositions \emph{match} the strongest mono baseline on aggregate metric mean, and \emph{exceed} it under decomposition & H6 $\bar{Y} = 0.882$ vs.\ M3 $0.900$ (Tukey n.s.); H1 leads 4 of 5 mutation operators (up to $\Delta = +0.133$); H4/H11 exceed the mono ceiling on $V$ ($0.909$/$0.859$ vs.\ $0.773$) & \S\ref{sec:discussion_rq1} \\
+\addlinespace
+RQ2 & The judge agrees moderately with the Path-2 metric, weakly with Path~1, and only very weakly with BERTScore on Path~3, whose disagreement flips direction across benchmarks & $r_1 = 0.192$, $r_2 = 0.523$; Path~3 per-benchmark $r^2 \leq 0.045$; MBPP over-credits ($29.2\%$) vs.\ HumanEval under-credits ($30.0\%$), $\chi^2 = 368$ & \S\ref{sec:discussion_rq2} \\
+\addlinespace
+RQ3 & The spec stage is the most frequent weakest link, but only test-stage substitutions have significant marginal effects; phi-4 at the test stage is pathological & Spec bottleneck in 15 of 33 triples; mixed-model test-stage coefficients $-10$ to $-27$~pp ($p < 0.01$); phi-4-at-test filter failure on $44$--$55\%$ of samples & \S\ref{sec:discussion_rq3} \\
+\addlinespace
+RQ4 & False-closure rates sit at or below the empirical noise floor for every cell except the one carrying the phi-4 pathology & Mean $7.7\%$; N1 noise floor $26.3\%$; only H10 above it ($28.6\%$, Path~1) & \S\ref{sec:discussion_rq4} \\
+\midrule
+--- & LLM judges cluster with each other but not with humans; strict-AND is justified only under high false-closure penalties & Judge--human $\kappa_{\textsf{quad}} = 0.074$; four judges $\leq 0.199$ vs.\ humans yet $0.68$--$0.70$ vs.\ each other & \S\ref{sec:results_human_eval} \\
+\addlinespace
+--- & Behavioral-path closure survives surface-form decontamination; BERTScore does not & HEM-25: Paths~1--2 gain $+15$ to $+26$~pp; Path~3 loses $25$--$31$~pp & \S\ref{sec:results_contamination} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Roadmap}
 
 The remainder of this paper is organized as follows. Section~\ref{sec:related_work} reviews related work on LLM-based test and docstring generation, round-trip and consistency evaluation, LLM-as-judge protocols, and multi-agent architectural specialization. Section~\ref{sec:framework} presents the framework, including the three closure paths (Eqs.~\ref{eq:path1}--\ref{eq:path3}), the closure validity decision (Eq.~\ref{eq:valid1} and Algorithm~\ref{alg:validity}), the test-filter validity gate (Eq.~\ref{eq:filter} and Algorithm~\ref{alg:test_filter}), and the closure metrics. Section~\ref{sec:experiment_setup} details the 20-cell DOE (Eq.~\ref{eq:doe}), datasets, statistical methodology, and human-evaluation protocol. Section~\ref{sec:results} reports the empirical results across the four research questions with anchor tables and figures. Section~\ref{sec:discussion} interprets the findings against RQ1--RQ4, characterizes the phi-4-in-test-stage pathology and the BERTScore surface-form finding, derives three design guidelines for practitioners deploying multi-SLM SE pipelines, and folds in the threats-to-validity analysis. Section~\ref{sec:conclusion} concludes with future research directions.
