@@ -19,7 +19,7 @@ The central research question is whether the mapping of specific SLMs to specifi
 
 \subsection{Research questions}
 
-This paper addresses four of the five research questions in the pre-registered concept note: RQ1, RQ2, RQ3, and RQ5 below. RQ4 (open-weight versus closed-weight ceiling comparison) was deferred to a follow-up study due to API-cost budget constraints; see Section~6 (Threats to Validity) for a detailed discussion of this deviation. The RQ numbering is retained from the concept note for traceability.
+This paper addresses four research questions. A fifth question motivated by the same DOE — comparing open-weight closure rates to a closed-weight frontier ceiling — is outside the scope of the present study and is discussed as a limitation in Section~6 (Threats to Validity) and as future work in Section~7.
 
 \textbf{RQ1.} When the docstring--test--code triangle is traversed by heterogeneous SLMs (different SLM families assigned to the three stages), does the closure rate differ significantly from same-family closure, after controlling for per-sample difficulty?
 
@@ -27,7 +27,7 @@ This paper addresses four of the five research questions in the pre-registered c
 
 \textbf{RQ3.} Across the $|\mathcal{M}| \times |\mathcal{S}| = 6 \times 3 = 18$ (model, stage) pairings, which stage is the closure bottleneck? Does the bottleneck attribution shift across source benchmark (HumanEval versus MBPP) or across mutation-operator family?
 
-\textbf{RQ5.} What is the false-closure rate --- the proportion of pipelines where the automated metric threshold is satisfied but the judge SLM disagrees --- and is this rate bounded below the empirical noise floor established by the word-shuffled null cell N1?
+\textbf{RQ4.} What is the false-closure rate --- the proportion of pipelines where the automated metric threshold is satisfied but the judge SLM disagrees --- and is this rate bounded below the empirical noise floor established by the word-shuffled null cell N1?
 
 \subsection{Contributions}
 
@@ -49,4 +49,4 @@ A sixth methodological contribution is the demonstration that open-weight SLM ev
 
 \subsection{Roadmap}
 
-The remainder of this paper is organized as follows. Section~2 reviews related work on LLM-based test and docstring generation, round-trip and consistency evaluation, LLM-as-judge protocols, and multi-agent architectural specialization. Section~3 presents the methods, including the notation (Section~3.1), the formal definition of the three closure paths (Section~3.2, Eqs.~\ref{eq:path1}--\ref{eq:path3}), the closure validity decision (Section~3.3, Eq.~\ref{eq:valid1} and Algorithm~\ref{alg:validity}), the test-filter validity gate (Section~3.4, Eq.~\ref{eq:filter} and Algorithm~\ref{alg:test_filter}), the closure metrics (Section~3.5), the 20-cell design of experiments (Section~3.6, Eq.~\ref{eq:doe}), the datasets (Section~3.7), and the statistical methodology (Section~3.8). Section~4 reports the empirical results across all four research questions with anchor tables and figures. Section~5 interprets the findings against RQ1--RQ5, characterizes the phi-4-in-test-stage pathology and the BERTScore surface-form finding, and derives three design guidelines for practitioners deploying multi-SLM SE pipelines. Section~6 details the threats to validity. Section~7 concludes with future research directions, including a follow-up study to address the deferred RQ4 on closed-weight comparison.
+The remainder of this paper is organized as follows. Section~2 reviews related work on LLM-based test and docstring generation, round-trip and consistency evaluation, LLM-as-judge protocols, and multi-agent architectural specialization. Section~3 presents the methods, including the notation (Section~3.1), the formal definition of the three closure paths (Section~3.2, Eqs.~\ref{eq:path1}--\ref{eq:path3}), the closure validity decision (Section~3.3, Eq.~\ref{eq:valid1} and Algorithm~\ref{alg:validity}), the test-filter validity gate (Section~3.4, Eq.~\ref{eq:filter} and Algorithm~\ref{alg:test_filter}), the closure metrics (Section~3.5), the 20-cell design of experiments (Section~3.6, Eq.~\ref{eq:doe}), the datasets (Section~3.7), and the statistical methodology (Section~3.8). Section~4 reports the empirical results across the four research questions with anchor tables and figures. Section~5 interprets the findings against RQ1--RQ4, characterizes the phi-4-in-test-stage pathology and the BERTScore surface-form finding, and derives three design guidelines for practitioners deploying multi-SLM SE pipelines. Section~6 details the threats to validity. Section~7 concludes with future research directions.

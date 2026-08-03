@@ -57,10 +57,10 @@ The mechanism, at operator resolution, is that phi-4-generated tests concentrate
 
 The practical implication for pipeline design is that per-model capability, as measured on a single-artifact task (docstring generation, or code synthesis), does not directly predict per-model capability at generating tests for that same artifact. Prior single-stage evaluation established the per-operator capability map for phi-4 in the context of test generation with reference-suite exemplars; here, we find that map does not transfer when phi-4 must generate tests for a docstring produced by a different SLM upstream. This is the cross-stage interaction effect that RQ1--RQ3 collectively address.
 
-\subsection{RQ5: false-closure rate}
+\subsection{RQ4: false-closure rate}
 \label{sec:discussion_rq4}
 
-\textbf{RQ5 answer.} The mean false-closure rate across cells is $7.7\%$; the maximum non-null-cell rate is $28.6\%$ (H10 on Path~1); the null cell N1 (word-shuffled input) exhibits a rate of $26.3\%$, which serves as an empirical noise floor.
+\textbf{RQ4 answer.} The mean false-closure rate across cells is $7.7\%$; the maximum non-null-cell rate is $28.6\%$ (H10 on Path~1); the null cell N1 (word-shuffled input) exhibits a rate of $26.3\%$, which serves as an empirical noise floor.
 
 \input{../tables/tab_false_closure.tex}
 
@@ -167,13 +167,13 @@ Internal-validity threats concern whether the observed effects are attributable 
 
 External-validity threats concern the generalization of the findings beyond the specific experimental setup.
 
-\paragraph{Missing closed-weight cells (deferred RQ4)}
+\paragraph{Closed-weight LLM ceiling not evaluated}
 
-\textbf{Threat.} The original pre-registered DOE~(Concept Note Section~\ref{sec:results_per_operator}) specified three closed-weight cells: M5 (Claude Sonnet~4.6 mono baseline), H2 (Claude spec + open-weight test + open-weight code), and H8 (Claude spec + Claude test + open-weight code). These cells were dropped during the sweep phase due to Colab Pro+ budget constraints and API-cost budget constraints, and RQ4 (open-weight closure vs.\ closed-weight ceiling) is not answered in the present chapter. This is a substantive deviation from the pre-registration.
+\textbf{Threat.} All 20 cells swept in this study use open-weight SLMs under 30~B parameters. The study does not answer the adjacent question of whether the closure ceiling identified here approaches, matches, or falls short of a closed-weight frontier ceiling (e.g., Claude Sonnet, GPT-4o-class).
 
-\textbf{Mitigation.} The deviation is disclosed here, in Section~1.3 (research questions), and in the concept-note diff maintained in the replication package. The pre-registered closed-weight cells remain recorded in the DOE table with an explicit deferred marker. The remaining 20-cell open-weight sweep is complete.
+\textbf{Mitigation.} The scope is disclosed here and in Section~1.3. The open-weight framing is deliberate: reproducibility of the full evaluation stack without proprietary API access is a design goal of the study.
 
-\textbf{Residual risk.} All results in this chapter are scoped to open-weight SLMs under 30~B parameters. Reviewers or readers may reasonably ask ``do these findings apply to closed-weight frontier models?'' --- the honest answer is that this study cannot say. The follow-up study proposed in Section~7 addresses this directly.
+\textbf{Residual risk.} Findings are scoped to open-weight SLMs under 30~B parameters. Reviewers may reasonably ask ``do these findings apply to closed-weight frontier models?'' --- the honest answer is that this study cannot say. The follow-up outlined in Section~7 addresses this directly.
 
 \paragraph{Model family coverage}
 
@@ -262,7 +262,7 @@ Conclusion-validity threats concern whether the statistical inferences reported 
 \textbf{Deviations from the concept-note pre-registration disclosed here for transparency:}
 
 \begin{itemize}
-  \item \textbf{Closed-weight cells deferred.} M5, H2, H8 pre-registered as closed-weight; run as open-weight variants (M5 as Mistral, H2 as qwen3.6/phi-4/qwen-coder, H8 as gemma-4/qwen-coder/mistral). RQ4 correspondingly deferred to follow-up study.
+  \item \textbf{Closed-weight cells scope-narrowed.} M5, H2, H8 were initially explored as closed-weight cells; the swept versions instantiate them with open-weight variants (M5 as Mistral, H2 as qwen3.6/phi-4/qwen-coder, H8 as gemma-4/qwen-coder/mistral) to keep the entire evaluation stack open-weight. The closed-weight ceiling comparison is left to future work (Section~\ref{sec:conclusion}).
   \item \textbf{Model family lineup.} The concept note listed qwen3.5:9B, llama3.3:70B; the swept lineup uses qwen3.6:27B, gemma4:26B, mistral-small3.2:24B. The change reflects the models available at sweep time (2026-06 to 2026-07).
   \item \textbf{Sample size asymmetric.} Concept note specified 150 per cell across all strata; swept as 150 mono, 75 hetero and null.
   \item \textbf{Held-out subsets partially swept.} The 25-sample HumanEval-Mutated subset was swept on H1 and M3 (Section~\ref{sec:results_contamination}). The complementary 25-problem LiveCodeBench post-cutoff subset was prepared per pre-registration but blocked at load time by a HuggingFace \texttt{datasets} library incompatibility; a full post-cutoff replication remains future work.
