@@ -27,17 +27,17 @@ in this paper.
 
 We thank our colleagues at the Department of Computer Science and Engineering,
 Shiv Nadar University, Chennai, for detailed feedback on the pre-registered
-design of experiments and on the interim gate-check results. We are indebted to
-the anonymous reviewers of the companion Chapters~1 and~2 submissions for
-feedback that shaped the human-evaluation protocol and threats-to-validity
-structure adopted here. We thank the two independent annotators (DR, RR) who
-joined the three author-team annotators in conducting the five-annotator
-human-evaluation study for their calibration and rating effort. Author
-contributions follow the CRediT taxonomy~\citep{Brand2015CRediT}. This
-work would not have been feasible without the open-weight releases from Meta,
-Microsoft, Alibaba, Google, Mistral, and DeepSeek, and the maintainers of the
-Ollama runtime, the LangChain / LangGraph ecosystem, and the BERTScore,
-HumanEval, and MBPP benchmarks.
+design of experiments and on the interim gate-check results. We are indebted
+to reviewers of earlier iterations of the framework for feedback that shaped
+the human-evaluation protocol and threats-to-validity structure adopted here.
+We thank the two independent annotators (DR, RR) who joined the three
+author-team annotators in conducting the five-annotator human-evaluation
+study for their calibration and rating effort. Author contributions follow
+the CRediT taxonomy~\citep{Brand2015CRediT}. This work would not have been
+feasible without the open-weight releases from Meta, Microsoft, Alibaba,
+Google, Mistral, and DeepSeek, and the maintainers of the Ollama runtime,
+the LangChain / LangGraph ecosystem, and the BERTScore, HumanEval, and MBPP
+benchmarks.
 
 \section*{Funding}
 
@@ -111,7 +111,7 @@ decision, the test-filter validity gate, and their integration into the sweep
 pipeline (\texttt{tests/test\_closure\_decision.py},
 \texttt{tests/test\_filter\_tests\_reason.py}, \texttt{tests/test\_wiring\_integration.py});
 the analysis pipeline (\texttt{scripts/run\_analysis.py}); all six gap-closer
-scripts (\texttt{scripts/build\_*.py}); the 22 LaTeX tables and 5 figures
+scripts (\texttt{scripts/build\_*.py}); the 24 LaTeX tables and 5 figures
 (1~TikZ framework diagram + 4~empirical plots) used in this manuscript, all
 reproducible from the sweep TSV via a single command; the 60-pair
 five-annotator human-evaluation TSVs (\texttt{human\_eval/data/annotator\_*.tsv})
@@ -132,7 +132,7 @@ The single command
 \begin{verbatim}
 python3 scripts/run_analysis.py --tsv results/results_roundtrip.tsv
 \end{verbatim}
-regenerates the 22 LaTeX tables and 5 figures from the sweep TSV. The
+regenerates the 24 LaTeX tables and 5 figures from the sweep TSV. The
 following commands regenerate the six gap-closer artifacts described in
 Section~5:
 

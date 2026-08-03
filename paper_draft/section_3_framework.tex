@@ -129,7 +129,7 @@ and analogously for Paths 2 and 3:
 
 The two-signal \emph{strict-AND} policy is deliberate: it prevents metric noise or judge parse failures from spuriously inflating closure rates. We adopt the strict policy because the alternative --- single-signal validity --- was the failure mode responsible for inflated closure rates observed in the 30-function pilot; the strict policy also makes the false-closure rate (Section~5) well-defined.
 
-Every closure row is additionally categorized by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in Section~5 for characterizing \emph{where} the automated metric and the judge diverge.
+Every closure row is additionally categorized by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in Section~\ref{sec:results} for characterizing \emph{where} the automated metric and the judge diverge.
 
 \begin{algorithm}[h]
 \caption{Closure validity decision (implements Eq.~\ref{eq:valid1}--\ref{eq:valid3})}
@@ -220,7 +220,7 @@ Let $T = \{t_1, \ldots, t_k\}$ be the ground-truth reference suite. The pass rat
   \label{eq:passrate}
 \end{equation}
 
-In this experiment we use a binary indicator ($R \in \{0, 1\}$: the suite either fully passes or does not) for the Section~4 statistical analysis.
+In this experiment we use a binary indicator ($R \in \{0, 1\}$: the suite either fully passes or does not) for the Section~\ref{sec:experiment_setup} statistical analysis.
 
 \subsubsection{Path 3: BERTScore F1}
 
@@ -266,5 +266,5 @@ Every empirical claim in this paper about a cell's closure performance is drawn 
   \label{eq:valid_closure_frac}
 \end{align}
 
-$\bar{Y}_{a, p}$ (\emph{metric mean}) is the raw automated metric averaged across a cell's rows and appears in Table~\ref{tab:closure_rate_matrix}, Fig.~\ref{fig:closure_heatmap}, the RQ1 ANOVA of Section~\ref{sec:results_mono_vs_hetero}, and all Tukey pairwise contrasts. $V_{a, p}$ (\emph{valid-closure fraction}) is the strict-AND two-signal closure count of Algorithm~\ref{alg:validity} normalized by row count, and appears in Table~\ref{tab:per_stage_bottleneck}, the stage-contribution figure (Fig.~\ref{fig:stage_contribution}), the rank-swap analysis of Section~\ref{sec:results_contamination}, the capability-preservation table (Table~\ref{tab:capability_preservation}), the strict-AND ablation of Section~\ref{sec:human_eval_strict_and}, and the threshold-sensitivity table (Table~\ref{tab:threshold_sensitivity_path1}). Every downstream number that reads as ``closure rate'' is one of these two aggregates; captions and text below specify which.
+$\bar{Y}_{a, p}$ (\emph{metric mean}) is the raw automated metric averaged across a cell's rows and appears in Table~\ref{tab:closure_rate_matrix}, Fig.~\ref{fig:closure_heatmap}, the RQ1 ANOVA of Section~\ref{sec:results_mono_vs_hetero}, and all Tukey pairwise contrasts. $V_{a, p}$ (\emph{valid-closure fraction}) is the strict-AND two-signal closure count of Algorithm~\ref{alg:validity} normalized by row count, and appears in Table~\ref{tab:per_stage_bottleneck}, the stage-contribution figure (Fig.~\ref{fig:stage_contribution}), the rank-swap analysis of Section~\ref{sec:results_path_cell_interaction}, the capability-preservation table (Table~\ref{tab:capability_preservation}), the strict-AND ablation of Section~\ref{sec:human_eval_strict_and}, and the threshold-sensitivity table (Table~\ref{tab:threshold_sensitivity_path1}). Every downstream number that reads as ``closure rate'' is one of these two aggregates; captions and text below specify which.
 

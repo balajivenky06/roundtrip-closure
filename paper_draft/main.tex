@@ -134,7 +134,9 @@ Closure is decided under a strict two-signal policy combining an
 SE-validated metric (mutation kill rate, reference test pass rate, or
 BERTScore F1) with an external judge SLM (DeepSeek-R1). Five findings
 emerge. First, the H1 composition (phi-4 spec + qwen-coder test/code)
-empirically dominates four of five mutation operators. Second, phi-4
+empirically leads on four of five mutation operators (two operator wins
+with tight Wilson 95\% CIs, two consistent-with-dominance at smaller
+mutant counts). Second, phi-4
 in the test stage produces filter-failing tests on ${\sim}50\%$ of
 samples across three cells---invisible in single-stage evaluations.
 Third, BERTScore F1 is only weakly correlated per benchmark with the
@@ -158,7 +160,7 @@ unit tests.
 \begin{highlights}
 \item First cross-LLM $\times$ cross-stage study of round-trip closure in SE pipelines
 \item Pre-registered 20-cell DOE across six open-weight SLMs on HumanEval and MBPP
-\item H1 (phi-4 spec + qwen-coder test/code) dominates 4 of 5 mutation operators
+\item H1 (phi-4 spec + qwen-coder test/code) leads on 4 of 5 mutation operators (Wilson 95\% CIs)
 \item BERTScore only weakly agrees with judge equivalence on Path 3 ($r^2 \leq 0.045$ per benchmark)
 \item Weak LLM-judge agreement with humans is general, not DeepSeek-R1-specific
 \end{highlights}
