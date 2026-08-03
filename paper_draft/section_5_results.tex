@@ -17,11 +17,11 @@ Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present t
   \label{fig:closure_heatmap}
 \end{figure}
 
-First, Path~1 (mutation kill rate) closure rates cluster in the $[0.7, 0.9]$ range for all non-ablated cells, with a mean of $0.831$. The strongest mono baseline is M3 (qwen3.6:27B, all stages) at $0.900$; the strongest hetero cell is H6 (phi-4/qwen3.6/phi-4) at $0.882$. The single mono failure is M1 (llama3.2:3B mono) at $0.577$.
+First, Path~1 (mutation kill rate) closure rates cluster in the $[0.7, 0.9]$ range for all non-null cells except M1, with a mean per-cell $\bar{Y}$ of $0.826$ across the 17 non-null cells. The strongest mono baseline is M3 (qwen3.6:27B, all stages) at $0.900$; the strongest hetero cell is H6 (phi-4/qwen3.6/phi-4) at $0.882$. The single mono failure is M1 (llama3.2:3B mono) at $0.577$.
 
-Second, Path~2 (reference test pass rate) closure rates are systematically lower than Path~1, averaging $0.630$ across non-ablated cells. This reflects the harder nature of the code-synthesis task: passing the reference tests requires reconstructing the function's behavior exactly rather than merely covering it. Notably, the spec-stage-ablated null cell N2 (Path~2 closure rate $= 0.667$) ties or exceeds every mono baseline (M1 $= 0.367$, M2 $= 0.547$, others $\in [0.533, 0.647]$). We return to the implications of this in Section~\ref{sec:discussion_rq3}.
+Second, Path~2 (reference test pass rate) closure rates are systematically lower than Path~1, averaging $0.595$ across the 17 non-null cells. This reflects the harder nature of the code-synthesis task: passing the reference tests requires reconstructing the function's behavior exactly rather than merely covering it. Notably, the spec-stage-ablated null cell N2 (Path~2 closure rate $= 0.667$) ties or exceeds every mono baseline (M1 $= 0.367$, M2 $= 0.547$, others $\in [0.533, 0.647]$). We return to the implications of this in Section~\ref{sec:discussion_rq3}.
 
-Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.211$ across non-ablated cells, and vary in a compressed range $[0.17, 0.28]$. This is an artifact of BERTScore's rescaled value distribution on our data --- the natural distribution of BERTScore F1 values between original and reconstructed docstrings clusters in $[-0.1, 0.5]$. The compressed range does not indicate poor pipeline performance; Section~\ref{sec:discussion_rq2} shows that judge equivalence ratings on the same rows tell an entirely different story.
+Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.214$ across the 17 non-null cells, and vary in a compressed range $[0.17, 0.28]$. This is an artifact of BERTScore's rescaled value distribution on our data --- the natural distribution of BERTScore F1 values between original and reconstructed docstrings clusters in $[-0.1, 0.5]$. The compressed range does not indicate poor pipeline performance; Section~\ref{sec:discussion_rq2} shows that judge equivalence ratings on the same rows tell an entirely different story.
 
 \subsection{Mono versus heterogeneous cells}
 \label{sec:results_mono_vs_hetero}
@@ -33,7 +33,7 @@ Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.211$ acr
   \label{fig:mono_vs_hetero}
 \end{figure}
 
-Fig.~\ref{fig:mono_vs_hetero} presents the per-strand distribution of closure rates on Path~1. The distributions overlap substantially: the median hetero cell ($0.862$) is competitive with the median mono cell ($0.807$), but the ceiling of each strand differs. The best mono cell (M3, kill rate $= 0.900$) exceeds the median hetero cell but not the best hetero cell (H6, $0.882$).
+Fig.~\ref{fig:mono_vs_hetero} presents the per-strand distribution of closure rates on Path~1. The distributions overlap substantially: the median hetero cell ($0.862$) is competitive with the median mono cell ($0.819$), but the ceiling of each strand differs. The best mono cell (M3, kill rate $= 0.900$) exceeds the median hetero cell but not the best hetero cell (H6, $0.882$).
 
 \input{../tables/tab_anova.tex}
 
@@ -52,17 +52,17 @@ The strongest non-directional finding is that the M3 mono ceiling and the best h
 \subsection{Per-stage bottleneck attribution}
 \label{sec:results_stage_attribution}
 
-This subsection reports strict-AND valid-closure fractions $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}); numeric values here therefore differ from Table~\ref{tab:closure_rate_matrix}'s metric means $\bar{Y}_{a, p}$. Each hetero cell composes three models $(m_{\textsf{spec}}, m_{\textsf{test}}, m_{\textsf{code}})$.
+The bottleneck-attribution table (Table~\ref{tab:per_stage_bottleneck}) is computed on the metric mean $\bar{Y}_{a, p}$ (Eq.~\ref{eq:metric_mean}), consistent with Table~\ref{tab:closure_rate_matrix}; the stage-contribution figure (Fig.~\ref{fig:stage_contribution}) at the end of this subsection instead uses the strict-AND valid-closure fraction $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}), so its numeric values differ from the table's. Each hetero cell composes three models $(m_{\textsf{spec}}, m_{\textsf{test}}, m_{\textsf{code}})$.
 
 \input{../tables/tab_per_stage_bottleneck.tex}
 
-Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's valid-closure fraction to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{V}_{a,s}$ is the valid-closure fraction of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = V_a - \min_s \hat{V}_{a,s}$ is the improvement from specializing the other two stages.
+Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's metric mean to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{Y}_{a,s}$ is the metric mean of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = \bar{Y}_a - \min_s \hat{Y}_{a,s}$ is the improvement from specializing the other two stages.
 
 Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (cell $\times$ path) triples; test-stage 10; code-stage 8. The most striking single-stage attributions are:
 
 \begin{itemize}
-  \item \textbf{H5 spec attribution, $\Delta = 0.267$} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $27$ percentage points of closure rate that llama3.2 mono cannot achieve alone.
-  \item \textbf{H4 code attribution, $\Delta = 0.186$} --- qwen-coder at $L_{\textsf{spec}}$ and $L_{\textsf{test}}$, llama3.2 at $L_{\textsf{code}}$. Even the ``cheap drafter at the code stage'' composition recovers $\Delta = 0.186$ over the llama3.2 mono baseline, suggesting that spec and test quality can compensate substantially for weak synthesis.
+  \item \textbf{H4 code attribution, $\Delta = 0.285$ (Path~1)} --- qwen-coder at $L_{\textsf{spec}}$ and $L_{\textsf{test}}$, llama3.2 at $L_{\textsf{code}}$. Even the ``cheap drafter at the code stage'' composition recovers $28$ percentage points of kill rate over the llama3.2 mono baseline, suggesting that spec and test quality can compensate substantially for weak synthesis.
+  \item \textbf{H5 spec attribution, $\Delta = 0.234$ (Path~1)} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $23$ percentage points of kill rate that llama3.2 mono cannot achieve alone; the same composition recovers $\Delta = 0.300$ on Path~2.
 \end{itemize}
 
 \begin{figure}[!ht]
@@ -159,11 +159,11 @@ The variance-explained metric alone understates the \emph{practical} implication
 \begin{itemize}
   \item \textbf{The best cell is different for every path.} Path~1 best = H11 ($V = 0.813$); Path~2 best = H1 ($V = 0.640$); Path~3 best = H9 ($V = 0.733$). No cell tops any two paths.
   \item \textbf{The top-3 cells share zero members across all three paths.} Path~1 top-3 = $\{$H11, H4, M4$\}$; Path~2 top-3 = $\{$H1, H5, H9$\}$; Path~3 top-3 = $\{$H9, M4, H8$\}$. The three-way intersection is empty; M4 appears in Path~1 and Path~3 top-3 but not Path~2.
-  \item \textbf{The top-5 cells share only H9 across all three paths.} Ten cells appear in top-5 on some paths but not others; only H9 is stably in the top-5 across all three.
-  \item \textbf{Kendall's $\tau_{\textsf{rank}}$ between path rankings ranges $0.09$--$0.43$.} Path~1 vs.\ Path~2: $\tau = 0.088$; Path~1 vs.\ Path~3: $\tau = 0.426$; Path~2 vs.\ Path~3: $\tau = 0.191$. Pairs of path rankings have only weak-to-moderate ordinal agreement.
+  \item \textbf{At most one cell (H9) is top-5 on all three paths, and only via a tie.} H9 is top-5 on Paths~2 and~3 outright but shares fifth place on Path~1 with M6 (both $V = 0.720$). No cell is unambiguously in the top-5 on all three paths.
+  \item \textbf{Kendall's $\tau_{\textsf{rank}}$ between path rankings ranges $0.26$--$0.40$.} Path~1 vs.\ Path~2: $\tau = 0.265$; Path~1 vs.\ Path~3: $\tau = 0.404$; Path~2 vs.\ Path~3: $\tau = 0.301$. All three pairs show only weak-to-moderate ordinal agreement.
 \end{itemize}
 
-These four measures give the small variance-explained finding its operational meaning: cell rankings between Paths~1 and~2 are close to path-independent noise, and even the best-agreeing pair (Paths~1 and~3) shows only moderate ordinal correlation. For a practitioner choosing an SLM composition, the pipeline stage that will dominate quality is not derivable from a single-path benchmark --- each path must be measured separately.
+These four measures give the small variance-explained finding its operational meaning: no pair of path rankings exceeds moderate ordinal agreement ($\tau \leq 0.40$), and the winner set changes wholesale across paths. For a practitioner choosing an SLM composition, the pipeline stage that will dominate quality is not derivable from a single-path benchmark --- each path must be measured separately.
 
 Under Type-III sums of squares the four ANOVA effects are (Table~\ref{tab:anova_interaction}, all $p < 0.001$): sample difficulty $\eta^2_p = 0.234$ (the substantial random-intercept-equivalent term), interaction $\eta^2_p = 0.046$, cell main effect $\eta^2_p = 0.044$, path main effect $\eta^2_p = 0.042$. The four effects are of comparable size once Type-III controls each for the others --- there is no single dominant effect, and the practical interpretation rests on the interaction, which is the smallest-per-df but most theoretically load-bearing term.
 
