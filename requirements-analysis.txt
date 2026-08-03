@@ -1,0 +1,12 @@
+# Pinned versions for reproducing the analysis scripts in scripts/build_*.py
+# and scripts/verify_duplicate_groups.py. These pins silence the
+# "NumPy 2.x / pandas C-extension binary mismatch" warnings that appear
+# under looser version constraints.
+#
+# Full package install: pip install -e .   (uses pyproject.toml)
+# Analysis-only reproduction: pip install -r requirements-analysis.txt
+
+numpy>=1.26,<2.1
+pandas>=2.2.2,<2.4
+scipy>=1.13,<1.15
+statsmodels>=0.14.2,<0.15

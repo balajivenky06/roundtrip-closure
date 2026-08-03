@@ -15,7 +15,11 @@ import sys
 from pathlib import Path
 import pandas as pd
 
-TSV = Path("/Users/balajivenktesh/Desktop/Education/roundtrip-closure/results/results_roundtrip.tsv")
+# Resolve TSV relative to the repo root so the replication package works out of
+# the box for any user (previously hardcoded a local absolute path — a
+# particularly ironic failure mode for a text-vs-artifact-drift checker).
+REPO_ROOT = Path(__file__).resolve().parent.parent
+TSV = REPO_ROOT / "results" / "results_roundtrip.tsv"
 
 CLAIMED_GROUPS = [
     (("M6", "H4"),     1, "genuine"),

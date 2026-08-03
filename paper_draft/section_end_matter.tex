@@ -128,7 +128,9 @@ single path on any single sample without re-invoking the underlying SLMs.
 
 \section*{Code and reproducibility}
 
-The single command
+Analysis-script dependencies are pinned in \texttt{requirements-analysis.txt}
+in the repository root (\texttt{pip install -r requirements-analysis.txt} on
+Python $\geq$ 3.10). The single command
 \begin{verbatim}
 python3 scripts/run_analysis.py --tsv results/results_roundtrip.tsv
 \end{verbatim}

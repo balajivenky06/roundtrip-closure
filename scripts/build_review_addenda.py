@@ -15,7 +15,7 @@ import statsmodels.formula.api as smf
 from statsmodels.stats.anova import anova_lm
 from scipy.stats import beta as beta_dist
 
-REPO = Path("/Users/balajivenktesh/Desktop/Education/roundtrip-closure")
+REPO = Path(__file__).resolve().parent.parent
 TSV = REPO / "results/results_roundtrip.tsv"
 TABLES = REPO / "tables"
 

@@ -21,8 +21,9 @@ import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 
-TSV = Path("/Users/balajivenktesh/Desktop/Education/roundtrip-closure/results/results_roundtrip.tsv")
-OUT_TEX = Path("/Users/balajivenktesh/Desktop/Education/roundtrip-closure/tables/tab_mixed_logit.tex")
+REPO_ROOT = Path(__file__).resolve().parent.parent
+TSV = REPO_ROOT / "results" / "results_roundtrip.tsv"
+OUT_TEX = REPO_ROOT / "tables" / "tab_mixed_logit.tex"
 
 
 # Per-cell stage-model assignments (from tab_doe_summary)
