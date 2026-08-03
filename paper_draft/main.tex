@@ -85,7 +85,7 @@
 %% ============================================================================
 %% Title + tnotes
 %% ============================================================================
-\title[mode=title]{Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle: A Mutation-Testing Study}
+\title[mode=title]{Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle: A Cross-Stage Empirical Study}
 
 \tnotemark[1]
 \tnotetext[1]{Pre-registered replication package including the 20-cell DOE, the 5{,}890-row sweep TSV, closure-decision + test-filter algorithms with 67 unit tests, and all analysis scripts is publicly available at \url{https://github.com/balajivenky06/roundtrip-closure} under the MIT license.}
@@ -132,26 +132,24 @@ on the docstring--test--code triangle, using a pre-registered 20-cell
 design across six open-weight SLMs on 150 HumanEval/MBPP functions.
 Closure is decided under a strict two-signal policy combining an
 SE-validated metric (mutation kill rate, reference test pass rate, or
-BERTScore F1) with an external judge SLM (DeepSeek-R1); the policy
-trades bounded false-closure for higher false-reject on 60 human-rated
-pairs, and a frontier-judge replay shows weak judge--human agreement is
-a general LLM-as-judge property. Five findings emerge. First, the H1
-composition (phi-4 spec + qwen-coder test/code) dominates four of five
-mutation operators as pre-registered. Second, phi-4 in the test stage
-produces filter-failing tests on ${\sim}50\%$ of samples across three
-cells---invisible in single-stage evaluations. Third, BERTScore F1 is
-uncorrelated in aggregate ($r = 0.02$, $n = 1{,}791$) with the judge
-on the docstring path; disagreement flips across benchmarks, consistent
-with a surface-form signal. Fourth, the three closure paths carry
-non-redundant information about cell performance
-($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$). Fifth,
-heterogeneity is not free: well-composed hetero cells preserve
-$78$--$91\%$ of the strongest mono baseline, while poorly-composed
-cells collapse. A HumanEval-Mutated decontamination re-sweep shows
-behavioral-path closure rates hold or improve under function-rename +
-docstring-paraphrase, ruling out surface-form memorization. We derive
-three design guidelines and release an open replication package with
-67 unit tests.
+BERTScore F1) with an external judge SLM (DeepSeek-R1). Five findings
+emerge. First, the H1 composition (phi-4 spec + qwen-coder test/code)
+empirically dominates four of five mutation operators. Second, phi-4
+in the test stage produces filter-failing tests on ${\sim}50\%$ of
+samples across three cells---invisible in single-stage evaluations.
+Third, BERTScore F1 is only weakly correlated per benchmark with the
+judge on the docstring path ($r^2 \leq 0.045$; both benchmarks),
+with a categorical disagreement flip across benchmarks
+($\chi^2 = 368$, $p < 0.001$). Fourth, the three closure paths carry
+non-redundant information ($F(36, 4867) = 6.47$, partial
+$\eta^2 = 0.046$). Fifth, well-composed hetero cells preserve
+$78$--$91\%$ of the strongest mono baseline; poorly-composed cells
+collapse. A frontier-judge replay confirms weak judge--human agreement
+is a general LLM-as-judge property, and a HumanEval-Mutated
+decontamination re-sweep shows behavioral-path closure rates hold or
+improve under function-rename + docstring-paraphrase. We derive three
+design guidelines and release an open replication package with 67
+unit tests.
 \end{abstract}
 
 %% ============================================================================
@@ -161,7 +159,7 @@ three design guidelines and release an open replication package with
 \item First cross-LLM $\times$ cross-stage study of round-trip closure in SE pipelines
 \item Pre-registered 20-cell DOE across six open-weight SLMs on HumanEval and MBPP
 \item H1 (phi-4 spec + qwen-coder test/code) dominates 4 of 5 mutation operators
-\item BERTScore is uncorrelated with judge equivalence on Path 3 ($r = 0.02$, $n = 1{,}791$)
+\item BERTScore only weakly agrees with judge equivalence on Path 3 ($r^2 \leq 0.045$ per benchmark)
 \item Weak LLM-judge agreement with humans is general, not DeepSeek-R1-specific
 \end{highlights}
 

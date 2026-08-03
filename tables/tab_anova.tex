@@ -1,15 +1,15 @@
 \begin{table}[t]
 \centering
-\caption{Type-III ANOVA on closure metric (response) $\sim$ C(cell) + C(sample).}
+\caption{Type-III ANOVA on closure metric (response) $\sim$ C(cell) + C(sample). Sums of squares are Type-III (each effect tested with all other terms in the model).}
 \label{tab:anova}
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Factor & Sum Sq & df & F & p & Sig \\
+Factor & Sum Sq & df & F & p & partial $\eta^2$ \\
 \midrule
-Intercept & 21.51 & 1.0 & 143.43 & $<0.001$ & *** \\
-C(cell_id) & 35.34 & 18.0 & 13.09 & $<0.001$ & *** \\
-C(sample_idx) & 149.52 & 149.0 & 6.69 & $<0.001$ & *** \\
-Residual & 743.1 & 4954.0 & nan & — &  \\
+Intercept & 21.44 & 1 & 143.49 & $<0.001$ & 0.028 \\
+C(cell_id) & 34.53 & 18 & 12.84 & $<0.001$ & 0.045 \\
+C(sample_idx) & 148.00 & 149 & 6.65 & $<0.001$ & 0.168 \\
+Residual & 732.69 & 4903 & --- & --- & --- \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,0 +1,29 @@
+\begin{table}[t]
+\centering
+\small
+\caption{Mixed-effects linear-probability model of strict-AND valid closure (Eq.~\ref{eq:mixedlogit}), reference category qwen3.6 mono at each stage, per-sample random intercept. Coefficients are the change in $\Pr[V=1]$ attributable to substituting a different model at that stage. $n = 4996$ rows; positive class $= 3149$ (63.0\%). Full mixed-logit (Bernoulli) did not converge on this data volume; the linear-probability approximation is reported per Eq.~\ref{eq:mixedlogit}'s footnote.}
+\label{tab:mixed_logit}
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+Term & $\hat{\beta}$ & SE & p & sig \\
+\midrule
+spec=gemma4 & +0.035 & 0.045 & 0.441 &  \\
+spec=llama3.2 & -0.044 & 0.059 & 0.453 &  \\
+spec=mistral-small3.2 & -0.001 & 0.042 & 0.971 &  \\
+spec=phi4 & -0.013 & 0.051 & 0.793 &  \\
+spec=qwen3-coder & +0.012 & 0.051 & 0.817 &  \\
+test=gemma4 & -0.008 & 0.046 & 0.861 &  \\
+test=llama3.2 & -0.271 & 0.064 & 2.29e-05 & *** \\
+test=mistral-small3.2 & -0.126 & 0.037 & 0.000749 & *** \\
+test=phi4 & -0.100 & 0.032 & 0.00181 & ** \\
+test=qwen3-coder & -0.042 & 0.033 & 0.209 &  \\
+code=gemma4 & -0.032 & 0.065 & 0.625 &  \\
+code=llama3.2 & -0.037 & 0.063 & 0.553 &  \\
+code=mistral-small3.2 & -0.003 & 0.051 & 0.958 &  \\
+code=phi4 & -0.018 & 0.064 & 0.782 &  \\
+code=qwen3-coder & +0.012 & 0.049 & 0.816 &  \\
+path=2 & -0.255 & 0.014 & 1.41e-71 & *** \\
+path=3 & -0.182 & 0.014 & 1.34e-37 & *** \\
+\bottomrule
+\end{tabular}
+\end{table}

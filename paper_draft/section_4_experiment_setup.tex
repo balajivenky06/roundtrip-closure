@@ -26,7 +26,7 @@ A cell is a stage-to-model assignment $a : \mathcal{S} \to \mathcal{M} \cup \{\b
   \mathcal{C}_{\textsf{DOE}} \;=\;
   \underbrace{\bigl\{a : a(\textsf{spec}) = a(\textsf{test}) = a(\textsf{code})\bigr\}}_{\text{Mono stratum (6 cells)}}
   \;\cup\;
-  \underbrace{\bigl\{a : |\{a(s) : s \in \mathcal{S}\}| = 3\bigr\}}_{\text{Hetero stratum (11 cells)}}
+  \underbrace{\bigl\{a : |\{a(s) : s \in \mathcal{S}\}| \geq 2\bigr\}}_{\text{Hetero stratum (11 cells)}}
   \;\cup\;
   \underbrace{\mathcal{C}_{\textsf{null}}}_{\text{Null stratum (3 cells)}}.
   \label{eq:doe}
@@ -36,7 +36,7 @@ A cell is a stage-to-model assignment $a : \mathcal{S} \to \mathcal{M} \cup \{\b
 
 \input{../tables/tab_model_lineup.tex}
 
-Table~\ref{tab:doe_summary} presents the complete DOE with the pre-registered hypothesis for each cell. The full 5-model $\times$ 3-stage design space contains $6^3 = 216$ cells; we sample 20 as a hypothesis-driven fractional factorial. The mono stratum establishes each SLM's self-consistency floor as a baseline. The hetero stratum assigns three different SLMs across the three stages based on per-stage strengths derived from a prior per-operator capability analysis of LLM-generated tests (phi-4 dominates predicate reasoning; qwen-coder dominates comparison operators). The null stratum comprises three control cells: N1 (word-shuffled input; expected metric $\approx 0$ if the closure metric is sound), N2 (spec-stage ablated; $L_{\textsf{spec}} = \bot$), and N3 (test-stage ablated; $L_{\textsf{test}} = \bot$).
+Table~\ref{tab:doe_summary} presents the complete DOE with the pre-registered hypothesis for each cell. The full 6-model $\times$ 3-stage design space contains $6^3 = 216$ cells; we sample 20 as a hypothesis-driven purposive selection (not a formal fractional factorial). Hetero cells are permitted two distinct models (H1, H4, H5, H6, H9 use a same-model repetition at two of three stages) or three distinct models (H2, H3, H7, H8, H10, H11), reflecting the design goal of probing specific stage-pairings rather than orthogonalising all six SLMs across all three stages. The mono stratum establishes each SLM's self-consistency floor as a baseline. The hetero stratum assigns SLMs across stages based on per-stage strengths from the canonical mutation-testing literature~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}: phi-4 was assigned to stages where predicate reasoning dominates, qwen-coder to stages where operator-level test coverage dominates. The null stratum comprises three control cells: N1 (word-shuffled input; expected metric $\approx 0$ if the closure metric is sound), N2 (spec-stage ablated; $L_{\textsf{spec}} = \bot$), and N3 (test-stage ablated; $L_{\textsf{test}} = \bot$).
 
 The six pipeline SLMs (Table~\ref{tab:model_lineup}) are all open-weight and under 30~B parameters, ensuring the entire experiment fits within a single Colab~Pro+ A100/T4 monthly allowance. Five distinct model families are represented: Meta with Llama-3.2-3B~\citep{Llama32}, Microsoft with Phi-4-14B~\citep{Phi4}, Alibaba with Qwen3.6-27B~\citep{Qwen36} and Qwen3-Coder-30B~\citep{QwenCoder}, Google with Gemma-4-26B~\citep{Gemma4}, and Mistral with Mistral-Small-3.2-24B~\citep{MistralSmall}. DeepSeek-R1:14B~\citep{DeepSeekR1} serves as the family-disjoint judge $L_J$.
 
@@ -45,7 +45,7 @@ The six pipeline SLMs (Table~\ref{tab:model_lineup}) are all open-weight and und
 
 The primary dataset (\emph{core}) is a stratified 150-function sample from HumanEval (45~functions) and MBPP (105~functions), drawn with seed~42. This preserves the MBPP/HumanEval ratio of the 300-function second-paper sample and enables direct cross-paper comparisons via shared per-function difficulty draws.
 
-Two held-out subsets were prepared for contamination sensitivity analysis: a 25-problem LiveCodeBench~\citep{Jain2025LiveCodeBench} subset with publication date $\geq$ 2024-12-01 (post-training-cutoff for all evaluated SLMs) and a 50-problem HumanEval-Mutated subset obtained by applying function-rename, docstring-paraphrase, and parameter-permutation transformations to a subset of HumanEval. Related benchmark alternatives include BigCodeBench~\citep{Zhuo2025BigCodeBench} and CRUXEval~\citep{Gu2025CruxEval}, both released in 2025 and offering complementary decontamination properties. The held-out subsets were prepared but not fully swept in this study; contamination sensitivity results on them will be reported in an addendum.
+Two held-out subsets were prepared for contamination sensitivity analysis: a 25-problem LiveCodeBench~\citep{Jain2025LiveCodeBench} subset with publication date $\geq$ 2024-12-01 (post-training-cutoff for all evaluated SLMs) and a 25-problem HumanEval-Mutated (HEM) subset obtained by applying function-rename, docstring-paraphrase, and parameter-permutation transformations to a stratified draw from HumanEval. Related benchmark alternatives include BigCodeBench~\citep{Zhuo2025BigCodeBench} and CRUXEval~\citep{Gu2025CruxEval}, both released in 2025 and offering complementary decontamination properties. The HEM subset was swept on H1 and M3 (results in Section~\ref{sec:results_contamination}); the LiveCodeBench subset was prepared but blocked at load time by the removal of script-based dataset loaders from the current HuggingFace \texttt{datasets} library (see Limitations, Section~\ref{sec:limitations_external}).
 
 \subsection{Statistical methodology}
 \label{sec:experiment_setup_stats}
@@ -80,7 +80,7 @@ Pairwise mean differences between cells $i$ and $k$ are tested via Tukey's hones
   \label{eq:tukey}
 \end{equation}
 
-where $n_h$ is the harmonic mean of per-cell sample sizes (mono cells have $n = 150$; hetero and null cells have $n = 75$). A pair is significant at family-wise $\alpha = 0.05$ after Bonferroni correction over the $20 \times 19 / 2 = 190$ pairwise comparisons.
+where $n_h$ is the harmonic mean of per-cell sample sizes (mono cells have $n = 150$; hetero and null cells have $n = 75$). Tukey's HSD controls family-wise error at $\alpha = 0.05$ over the $\binom{20}{2} = 190$ pairwise comparisons via the studentized-range distribution of $q_{ik}$; no additional Bonferroni correction is applied.
 
 \subsubsection{Judge--metric correlation}
 
@@ -95,20 +95,21 @@ quantifies the extent to which each path's automated metric agrees with the judg
 
 \subsubsection{Mixed-effects logit for per-stage decomposition}
 
-To isolate which stage assignment drives closure, we treat each cell as the product of three stage choices and fit a generalized linear mixed model. Let $\text{closure}_{ij} \in \{0, 1\}$ denote whether function $j$ closed under cell $i$. We model
+To isolate which stage assignment drives closure, we treat each cell as the product of three stage choices and fit a mixed-effects model. Let $V_{ij} \in \{0, 1\}$ denote whether sample $j$ achieved strict-AND valid closure under cell $i$ (Eq.~\ref{eq:valid_closure_frac} at row resolution). With $\mathbf{d}^{s}_i \in \{0, 1\}^{|\mathcal{M}| - 1}$ denoting the reference-coded dummy vector for the model assigned to stage $s \in \{\textsf{spec}, \textsf{test}, \textsf{code}\}$ under cell $i$ (reference: qwen3.6, the mid-range dense mono baseline), we model
 
 \begin{equation}
-  \text{logit}\bigl(\Pr[\text{closure}_{ij} = 1]\bigr)
+  \Pr[V_{ij} = 1]
   \;=\;
   \beta_0
-  + \beta_1 \cdot a_i(\textsf{spec})
-  + \beta_2 \cdot a_i(\textsf{test})
-  + \beta_3 \cdot a_i(\textsf{code})
-  + \gamma_j,
+  + \boldsymbol{\beta}_1^\top \mathbf{d}^{\textsf{spec}}_i
+  + \boldsymbol{\beta}_2^\top \mathbf{d}^{\textsf{test}}_i
+  + \boldsymbol{\beta}_3^\top \mathbf{d}^{\textsf{code}}_i
+  + \gamma_j
+  + \varepsilon_{ij},
   \label{eq:mixedlogit}
 \end{equation}
 
-where $\gamma_j \sim \mathcal{N}(0, \sigma_{\textsf{sample}}^2)$ is a random intercept for sample. Estimates $\hat{\beta}_1, \hat{\beta}_2, \hat{\beta}_3$ quantify each stage's contribution to closure odds.
+where $\gamma_j \sim \mathcal{N}(0, \sigma_{\textsf{sample}}^2)$ is a random intercept for sample. The full Bernoulli GLMM (logit link) did not converge on our data volume ($n \approx 5{,}000$ rows across 150 samples with unbalanced strata); we report the linear-probability approximation with mixed-effects standard errors, following the standard fallback when GLMM convergence fails. Coefficient vectors $\hat{\boldsymbol{\beta}}_1, \hat{\boldsymbol{\beta}}_2, \hat{\boldsymbol{\beta}}_3$ quantify each stage's marginal contribution to valid-closure probability relative to placing qwen3.6 there.
 
 \subsubsection{Judge--human agreement}
 

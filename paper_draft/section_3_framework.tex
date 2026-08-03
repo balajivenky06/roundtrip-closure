@@ -246,3 +246,25 @@ We use baseline-rescaled scores so $B \in (-\infty, 1]$ with $B = 0$ denoting ``
 
 The judge SLM $L_J$ = DeepSeek-R1:14B is prompted with a 5-level behaviourally-anchored rubric: 4 = identical, 3 = equivalent (same observable behavior), 2 = approximately equivalent, 1 = clearly different, 0 = unrelated. A rating of $-1$ denotes parse failure --- the judge is treated as absent for that row. DeepSeek-R1 is deliberately chosen because it belongs to a family (DeepSeek) disjoint from every pipeline SLM, avoiding self-evaluation bias.
 
+\subsubsection{Per-cell aggregates: metric mean $\bar{Y}$ vs.\ valid-closure fraction $V$}
+\label{sec:framework_cell_aggregates}
+
+Every empirical claim in this paper about a cell's closure performance is drawn from one of two per-cell scalar aggregates, and the distinction is analytically load-bearing. Let $\mathcal{R}_{a, p}$ denote the set of measurement rows for cell $a \in \mathcal{C}_{\textsf{DOE}}$ on path $p \in \{1, 2, 3\}$, with per-row automated-metric value $Y_r \in \mathbb{R}$ (kill rate $K$ on Path~1; pass rate $R$ on Path~2; BERTScore $B$ on Path~3) and per-row judge rating $J_r \in \{-1, 0, 1, 2, 3, 4\}$. We define:
+
+\begin{align}
+  \bar{Y}_{a, p}
+  &\;=\;
+  \frac{1}{|\mathcal{R}_{a, p}|}
+  \sum_{r \in \mathcal{R}_{a, p}} Y_r,
+  \label{eq:metric_mean}
+  \\[2pt]
+  V_{a, p}
+  &\;=\;
+  \frac{1}{|\mathcal{R}_{a, p}|}
+  \sum_{r \in \mathcal{R}_{a, p}}
+    \mathds{1}\!\bigl[\, Y_r > \tau_p \;\wedge\; J_r \geq \rho \,\bigr].
+  \label{eq:valid_closure_frac}
+\end{align}
+
+$\bar{Y}_{a, p}$ (\emph{metric mean}) is the raw automated metric averaged across a cell's rows and appears in Table~\ref{tab:closure_rate_matrix}, Fig.~\ref{fig:closure_heatmap}, the RQ1 ANOVA of Section~\ref{sec:results_mono_vs_hetero}, and all Tukey pairwise contrasts. $V_{a, p}$ (\emph{valid-closure fraction}) is the strict-AND two-signal closure count of Algorithm~\ref{alg:validity} normalized by row count, and appears in Table~\ref{tab:per_stage_bottleneck}, the stage-contribution figure (Fig.~\ref{fig:stage_contribution}), the rank-swap analysis of Section~\ref{sec:results_contamination}, the capability-preservation table (Table~\ref{tab:capability_preservation}), the strict-AND ablation of Section~\ref{sec:human_eval_strict_and}, and the threshold-sensitivity table (Table~\ref{tab:threshold_sensitivity_path1}). Every downstream number that reads as ``closure rate'' is one of these two aggregates; captions and text below specify which.
+

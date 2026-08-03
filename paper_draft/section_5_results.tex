@@ -1,12 +1,12 @@
 \section{Results}
 \label{sec:results}
 
-We report closure rates across the 20-cell DOE on the 150-function core dataset, comprising 5{,}890 measurement rows (150 mono samples $\times$ 3 paths $\times$ 6 mono cells $+$ 75 hetero samples $\times$ 3 paths $\times$ 11 hetero cells $+$ 75 null samples $\times$ 3 paths $\times$ 3 null cells). Results are organized by research question. Every closure rate reported here uses the strict two-signal validity policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3} with default thresholds $\tau_1 = \tau_2 = \tau_3 = 0$ and $\rho = 3$; the sensitivity analysis (Section~\ref{sec:experiment_setup_sensitivity}) confirms every headline finding survives alternative threshold choices.
+We report closure rates across the 20-cell DOE on the 150-function core dataset, comprising 5{,}890 measurement rows across the 20 cells $\times$ 3 paths, with mono cells at $n = 150$ samples/cell and hetero/null cells at $n = 75$ (H1, the pre-registered hetero champion, was re-swept during the human-evaluation extension, adding 41 rows above the $5{,}850$-row nominal schema; H7 lost one row to a parse failure). Results are organized by research question. Every closure rate reported here uses the strict two-signal validity policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3} with default thresholds $\tau_1 = \tau_2 = \tau_3 = 0$ and $\rho = 3$; the sensitivity analysis (Section~\ref{sec:experiment_setup_sensitivity}) confirms every headline finding survives alternative threshold choices.
 
-\subsection{Overall closure rates per cell and path}
+\subsection{Metric means per cell and path}
 \label{sec:results_closure_matrix}
 
-Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present the mean closure rate for every cell $\times$ path combination. Three high-level patterns emerge.
+Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present the per-cell metric mean $\bar{Y}_{a, p}$ (Eq.~\ref{eq:metric_mean}) for every cell $\times$ path combination. This subsection reports metric means; the strict-AND valid-closure fraction $V_{a, p}$ is reported per-cell in Sections~\ref{sec:results_stage_attribution}, \ref{sec:results_contamination}, and~\ref{sec:human_eval_strict_and}. Three high-level patterns emerge.
 
 \input{../tables/tab_closure_rate_matrix.tex}
 
@@ -37,7 +37,7 @@ Fig.~\ref{fig:mono_vs_hetero} presents the per-strand distribution of closure ra
 
 \input{../tables/tab_anova.tex}
 
-To test whether cell-mean differences are statistically significant, we fit the ANOVA model of Eq.~\ref{eq:anova}; Table~\ref{tab:anova} presents the fitted terms. Cell is a significant predictor of closure rate ($F(13, 3918) = 17.45$, $p < 0.001$, partial $\eta^2 = 0.068$) after adjusting for per-sample difficulty. Tukey's HSD (Eq.~\ref{eq:tukey}) with Bonferroni correction over 190 pairs identifies 35 pairs significant at $p_{\textsf{adj}} < 0.05$ and 33 significant at $p_{\textsf{adj}} < 0.01$ (Table~\ref{tab:tukey_significant}). The strongest single contrasts are:
+To test whether cell-mean differences are statistically significant, we fit the ANOVA model of Eq.~\ref{eq:anova}; Table~\ref{tab:anova} presents the fitted terms. Cell is a significant predictor of closure rate under Type-III sums of squares ($F(18, 4903) = 12.84$, $p < 0.001$, partial $\eta^2 = 0.045$) after adjusting for per-sample difficulty. Tukey's HSD (Eq.~\ref{eq:tukey}), which controls family-wise error at $\alpha = 0.05$ over the $\binom{20}{2} = 190$ pairwise cell comparisons via the studentized-range distribution, identifies 35 pairs significant at $p_{\textsf{adj}} < 0.05$ and 33 significant at $p_{\textsf{adj}} < 0.01$ (Table~\ref{tab:tukey_significant}). The strongest single contrasts are:
 
 \input{../tables/tab_tukey_significant.tex}
 
@@ -52,11 +52,11 @@ The strongest non-directional finding is that the M3 mono ceiling and the best h
 \subsection{Per-stage bottleneck attribution}
 \label{sec:results_stage_attribution}
 
-Each hetero cell composes three models $(m_{\textsf{spec}}, m_{\textsf{test}}, m_{\textsf{code}})$.
+This subsection reports strict-AND valid-closure fractions $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}); numeric values here therefore differ from Table~\ref{tab:closure_rate_matrix}'s metric means $\bar{Y}_{a, p}$. Each hetero cell composes three models $(m_{\textsf{spec}}, m_{\textsf{test}}, m_{\textsf{code}})$.
 
 \input{../tables/tab_per_stage_bottleneck.tex}
 
-Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's closure rate to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{Y}_{a,s}$ is the closure rate of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = \bar{Y}_a - \min_s \hat{Y}_{a,s}$ is the improvement from specializing the other two stages.
+Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's valid-closure fraction to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{V}_{a,s}$ is the valid-closure fraction of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = V_a - \min_s \hat{V}_{a,s}$ is the improvement from specializing the other two stages.
 
 Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (cell $\times$ path) triples; test-stage 10; code-stage 8. The most striking single-stage attributions are:
 
@@ -68,11 +68,11 @@ Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (ce
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=0.9\linewidth]{../plots/output/fig10_stage_contribution.png}
-  \caption{Per-hetero-cell stage-contribution decomposition on Path~1. Blue segment: worst-stage mono baseline (floor). Orange segment: heterogeneity gain over that baseline. Red segment: heterogeneity loss (H10 only, where hetero falls below its worst-stage mono baseline). Dashed line: strongest mono ceiling (M4 $= 0.773$).}
+  \caption{Per-hetero-cell stage-contribution decomposition on Path~1, using strict-AND valid-closure fractions $V_{a, 1}$ (Eq.~\ref{eq:valid_closure_frac}). Blue segment: worst-stage mono baseline (floor). Orange segment: heterogeneity gain over that baseline. Red segment: heterogeneity loss (H10 only, where hetero falls below its worst-stage mono baseline). Dashed line: strongest mono ceiling on the $V$ scale (M4 $V_{M4,1} = 0.773$, which is distinct from M4's metric mean $\bar{Y}_{M4,1} = 0.856$ in Table~\ref{tab:closure_rate_matrix}).}
   \label{fig:stage_contribution}
 \end{figure}
 
-Fig.~\ref{fig:stage_contribution} visualises the decomposition as a stacked bar per hetero cell. Cells H4 and H11 exceed the strongest mono ceiling (M4 = $0.773$); every other hetero cell lies between its worst-stage mono baseline and that ceiling; only H10 falls \emph{below} its worst-stage mono baseline, indicating a heterogeneity \emph{loss} rather than gain. Section~\ref{sec:discussion_rq3} develops this into a design guideline.
+Fig.~\ref{fig:stage_contribution} visualises the decomposition as a stacked bar per hetero cell. Cells H4 ($V_{H4,1} = 0.909$) and H11 ($V_{H11,1} = 0.859$) exceed the strongest mono ceiling on the $V$ scale ($V_{M4,1} = 0.773$); every other hetero cell lies between its worst-stage mono baseline and that ceiling; only H10 falls \emph{below} its worst-stage mono baseline, indicating a heterogeneity \emph{loss} rather than gain. Note this ranking is under $V$; on the $\bar{Y}$ scale (Table~\ref{tab:closure_rate_matrix}) M3 leads at $\bar{Y}_{M3,1} = 0.900$ and H6 leads the hetero stratum at $\bar{Y}_{H6,1} = 0.882$. Section~\ref{sec:discussion_rq3} develops the $V$-scale finding into a design guideline.
 
 \subsection{Per-mutation-operator kill rate}
 \label{sec:results_per_operator}
@@ -93,9 +93,26 @@ Two structural findings emerge. First, mono baselines exhibit different operator
 
 \input{../tables/tab_per_operator_headline.tex}
 
-Table~\ref{tab:per_operator_headline} summarises these findings. \textbf{H1 (phi-4 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$) is the single strongest cell on 4 of 5 mutation operators}, beating the best mono baseline by $\Delta \geq 0.056$ on all four and by $\Delta = 0.133$ on arithmetic. This finding directly validates H1's pre-registered hypothesis in the DOE table: H1 was assigned this composition based on prior findings that phi-4 dominates predicate reasoning (prior single-stage mutation-testing analysis) and qwen-coder dominates comparison operators (the pre-registered per-operator prediction). The per-operator data confirms the hypothesis at the resolution of individual defect families.
+Table~\ref{tab:per_operator_headline} summarises these findings. \textbf{H1 (phi-4 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$) achieves the highest point-estimate kill rate on 4 of 5 mutation operators}, beating the best mono baseline by $\Delta \geq 0.056$ on all four and by $\Delta = 0.133$ on arithmetic. Wilson 95\% CIs in Table~\ref{tab:per_operator_kill_rate} show that H1's per-operator advantages are largest on arithmetic ($[0.79, 0.99]$, $n = 33$) and boundary ($[0.72, 0.92]$, $n = 64$); on comparison and negate\_bool H1 reaches $1.000$ but with tight sample sizes ($n = 16$ and $n = 2$ respectively), so those two operator wins are estimated with wide intervals and should be read as ``consistent with H1 dominance'' rather than ``H1 strictly dominates.'' The empirical per-operator pattern (H1 wins where its stage-composition rationale suggests, ties where the mutant count is too low to resolve) is consistent with capability priors from the mutation-testing literature~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}.
 
 Two outliers merit specific attention. H10 (mistral spec + phi-4 test + qwen-coder code) achieves arithmetic $= 0.351$ and boundary $= 0.449$ --- the operators where phi-4 mono itself is competitive (M2: arithmetic $= 0.580$, boundary $= 0.653$). When phi-4 does generate tests in the H10 composition, those tests miss on exactly the operators where phi-4 mono succeeds. Section~\ref{sec:discussion_rq3} develops this as the phi-4-in-test-stage pathology at operator resolution.
+
+\subsection{Mixed-effects logit: per-stage attribution with sample random intercept}
+\label{sec:results_mixed_logit}
+
+To confirm the per-stage attribution of Section~\ref{sec:results_stage_attribution} in a single unified model, we fit the mixed-effects specification of Eq.~\ref{eq:mixedlogit} on strict-AND valid closure ($V_r \in \{0, 1\}$; Eq.~\ref{eq:valid_closure_frac} at the row level) as the outcome, with the three per-stage model assignments as fixed effects and a per-sample random intercept. Table~\ref{tab:mixed_logit} presents the fitted coefficients, using qwen3.6 (the mid-range dense mono baseline M3) as the reference category at each stage.
+
+\input{../tables/tab_mixed_logit.tex}
+
+Three findings emerge that support and refine the per-stage attribution reported in Section~\ref{sec:results_stage_attribution}:
+
+\begin{enumerate}
+  \item \textbf{Test-stage substitutions are the significant per-stage effects.} Relative to qwen3.6 at $L_{\textsf{test}}$, placing llama3.2 at the test stage lowers $\Pr[V=1]$ by $27.1$~pp ($p < 0.001$), mistral-small at the test stage by $12.6$~pp ($p = 0.001$), and phi-4 at the test stage by $10.0$~pp ($p = 0.002$). All other test-stage substitutions and every spec- and code-stage substitution are not significant at $\alpha = 0.05$.
+  \item \textbf{The phi-4-in-test-stage pathology is a mixed-model coefficient, not just a NA-rate observation.} Section~\ref{sec:discussion_rq3}'s Path~1 \textsf{structural\_NA} rates ($44$--$55\%$ across M2/H2/H10) and the mixed-logit test-stage coefficient for phi-4 ($-0.100$, $p = 0.002$) are two orthogonal statistical instruments converging on the same finding. This is the strongest single-cell-independent confirmation of the phi-4-in-test-stage claim.
+  \item \textbf{Path is a strong main effect after controlling for stage assignment.} Path~2 vs.\ Path~1: $-25.5$~pp ($p < 0.001$); Path~3 vs.\ Path~1: $-18.2$~pp ($p < 0.001$). This corroborates the interaction-ANOVA finding (Section~\ref{sec:results_stage_attribution}) that the paths carry non-redundant information: differences persist after cell-effect controls.
+\end{enumerate}
+
+The mixed-logit converges to a linear-probability approximation rather than the full Bernoulli GLMM at this data volume ($n = 4{,}996$ rows, 150 sample groups). Random-intercept variance is $\sigma_{\textsf{sample}}^2 = 0.053$, indicating meaningful per-sample difficulty heterogeneity above what the fixed effects capture. Full ANOVA and mixed-logit conclusions agree qualitatively on the pattern that cell composition drives significant variation in $V$ with the test stage carrying the plurality of the attribution.
 
 \subsection{Per-benchmark decomposition}
 \label{sec:results_per_benchmark_decomp}
@@ -134,12 +151,12 @@ Path~3's very weak per-benchmark correlations (both $r^2 \leq 0.045$) are the pa
 
 To test whether the three closure paths carry non-redundant information, we fit the interaction ANOVA of Eq.~\ref{eq:anova_interact}. Table~\ref{tab:anova_interaction} presents the results for $n = 5{,}068$ rows after excluding structural NaN entries and cells present only on a subset of paths.
 
-The cell $\times$ path interaction is significant ($F(34, 4865) = 6.21$, $p < 0.001$, partial $\eta^2 = 0.042$). The effect is statistically robust given the large sample ($n = 4{,}900$) but small in Cohen's conventional bands ($\eta^2_p \in [0.01, 0.06]$~=~small; $[0.06, 0.14]$~=~medium; $\geq 0.14$~=~large). Path assignment therefore accounts for a modest share of variance in closure rate once cell and sample are controlled.
+The cell $\times$ path interaction is significant under Type-III sums of squares ($F(36, 4867) = 6.47$, $p < 0.001$, partial $\eta^2 = 0.046$). The effect is statistically robust given the large sample ($n = 5{,}068$) but small in Cohen's conventional bands ($\eta^2_p \in [0.01, 0.06]$~=~small; $[0.06, 0.14]$~=~medium; $\geq 0.14$~=~large). Path assignment therefore accounts for a modest share of variance in closure rate once cell and sample are controlled. \emph{Caveat on the stacked ANOVA response.} Because the response variable stacks three different-scale metrics (kill rate $\in [0, 1]$, binary pass, rescaled BERTScore $\in (-\infty, 1]$), the path main effect in Table~\ref{tab:anova_interaction} is partly a response-scale artifact. To confirm the interaction is not a scale artifact, we re-fit \emph{per-path} rank-transformed ANOVAs (three separate models, cell + sample fixed effects, rank-transformed metric as response). The cell main effect is significant on every path with even stronger effect sizes than the stacked model: Path~1 $F = 22.31$, partial $\eta^2 = 0.229$; Path~2 $F = 16.38$, partial $\eta^2 = 0.150$; Path~3 $F = 15.73$, partial $\eta^2 = 0.141$. Cell-composition differences drive substantial variance in the metric on every path independently of the stacking scale.
 
-The variance-explained metric alone understates the \emph{practical} implication of the interaction: cell rankings are unstable across paths, so a practitioner choosing a cell for one path cannot re-use the choice for another. We quantify this with a rank-swap analysis over the 17 non-null cells:
+The variance-explained metric alone understates the \emph{practical} implication of the interaction: cell rankings are unstable across paths, so a practitioner choosing a cell for one path cannot re-use the choice for another. We quantify this with a rank-swap analysis over the 17 non-null cells on the strict-AND valid-closure fraction $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}):
 
 \begin{itemize}
-  \item \textbf{The best cell is different for every path.} Path~1 best = H4 ($0.909$); Path~2 best = H3 ($0.646$); Path~3 best = H9 ($0.733$). No cell tops any two paths.
+  \item \textbf{The best cell is different for every path.} Path~1 best = H4 ($V = 0.909$); Path~2 best = H3 ($V = 0.646$); Path~3 best = H9 ($V = 0.733$). No cell tops any two paths.
   \item \textbf{The top-3 cells share zero members across all three paths.} Path~1 top-3 = $\{$H4, H7, H9$\}$; Path~2 top-3 = $\{$H1, H3, H5$\}$; Path~3 top-3 = $\{$H8, H9, M4$\}$. The three-way intersection is empty.
   \item \textbf{The top-5 cells share only H9 across all three paths.} Ten cells appear in top-5 on some paths but not others; only H9 is stably in the top-5 across all three.
   \item \textbf{Kendall's $\tau_{\textsf{rank}}$ between path rankings ranges $0.09$--$0.43$.} Path~1 vs.\ Path~2: $\tau = 0.088$; Path~1 vs.\ Path~3: $\tau = 0.426$; Path~2 vs.\ Path~3: $\tau = 0.191$. Pairs of path rankings have only weak-to-moderate ordinal agreement.
@@ -148,14 +165,6 @@ The variance-explained metric alone understates the \emph{practical} implication
 These four measures give the small variance-explained finding its operational meaning: cell rankings between Paths~1 and~2 are close to path-independent noise, and even the best-agreeing pair (Paths~1 and~3) shows only moderate ordinal correlation. For a practitioner choosing an SLM composition, the pipeline stage that will dominate quality is not derivable from a single-path benchmark --- each path must be measured separately.
 
 The largest main effect is path itself (partial $\eta^2 = 0.388$), reflecting that Path~1, Path~2, and Path~3 metrics inhabit different value scales; the cell main effect ($\eta^2 = 0.068$) captures aggregate composition quality; and sample difficulty ($\eta^2 = 0.227$) is a substantial random-intercept-equivalent term. All four effects are significant at $p < 0.001$.
-
-\subsection{Cache efficiency and computational cost}
-
-\input{../tables/tab_cache_efficiency.tex}
-
-Table~\ref{tab:cache_efficiency} reports the closure-call cache hit rate per cell. Because the LLM cache is keyed on (model, role, prompt, generation-parameters), cells that reuse the same model at overlapping stages achieve high hit rates through cross-cell reuse. Mono cells run first and see near-zero hit rates ($\leq 0.6\%$ for M1, M2, M4, M5, M6); M3 achieves 21.5\% because it was re-run after a mid-sweep configuration change. Hetero cells run subsequently and inherit substantial hit rates: H4 achieves 89.2\% because its qwen-coder stages reuse M6 cache entries directly. N2 and N3 achieve 100\% because their surviving stages are identical to earlier cells.
-
-The full 20-cell sweep consumed 16{,}302 SLM calls, of which 3{,}706 were served from cache ($22.7\%$ hit rate). The total wall-clock time on Google Colab hardware was approximately 22 GPU-days accumulated over 23~calendar days, spanning both A100 and T4 hardware.
 
 \subsection{Contamination sensitivity on HumanEval-Mutated}
 \label{sec:results_contamination}
@@ -295,9 +304,9 @@ under-rate it ($2.40$--$2.68$).
   \centering
   \caption{Frontier-judge replay against the five-way human-majority
     ground truth on the 60-pair sample. All four judges attain weak
-    ($\kappa_{\textsf{quad}} <$ 0.20$) agreement with humans; the three
+    ($\kappa_{\textsf{quad}} < 0.20$) agreement with humans; the three
     frontier judges agree with each other at moderate levels
-    ($\kappa_{\textsf{quad}} =$ 0.68$--$0.70$). Cost columns are
+    ($\kappa_{\textsf{quad}} = 0.68$--$0.70$). Cost columns are
     per-judge for the full 60-pair replay via OpenRouter.}
   \label{tab:frontier_judge_comparison}
   \begin{tabular}{lrrrrr}
