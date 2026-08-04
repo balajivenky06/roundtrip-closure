@@ -10,7 +10,7 @@ Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present t
 
 \input{../tables/tab_closure_rate_matrix.tex}
 
-\begin{figure}[!ht]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.85\linewidth]{../plots/output/fig2_closure_heatmap.png}
   \caption{Metric mean $\bar{Y}_{a, p}$ per cell $\times$ path (heatmap; Eq.~\ref{eq:metric_mean}). Cell strata are (top to bottom) mono (M1--M6), hetero (H1--H11), and null (N1--N3). Values are raw per-cell means of the automated closure metric before the strict-AND validity policy is applied; the strict-AND valid-closure fraction $V_{a, p}$ is shown per cell in Table~\ref{tab:per_stage_bottleneck} and Fig.~\ref{fig:stage_contribution}.}
@@ -26,7 +26,7 @@ Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.214$ acr
 \subsection{Mono versus heterogeneous cells}
 \label{sec:results_mono_vs_hetero}
 
-\begin{figure}[!ht]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.7\linewidth]{../plots/output/fig3_mono_vs_hetero.png}
   \caption{Distribution of Path~1 closure rates across strata (mono, hetero, null). Each violin summarises the per-cell mean closure rates within a stratum.}
@@ -65,7 +65,7 @@ Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (ce
   \item \textbf{H5 spec attribution, $\Delta = 0.234$ (Path~1)} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $23$ percentage points of kill rate that llama3.2 mono cannot achieve alone; the same composition recovers $\Delta = 0.300$ on Path~2.
 \end{itemize}
 
-\begin{figure}[!ht]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.9\linewidth]{../plots/output/fig10_stage_contribution.png}
   \caption{Per-hetero-cell stage-contribution decomposition on Path~1, using strict-AND valid-closure fractions $V_{a, 1}$ (Eq.~\ref{eq:valid_closure_frac}). Blue segment: worst-stage mono baseline (floor). Orange segment: heterogeneity gain over that baseline. Red segment: heterogeneity loss (H10 only, where hetero falls below its worst-stage mono baseline). Dashed line: strongest mono ceiling on the $V$ scale (M4 $V_{M4,1} = 0.773$, which is distinct from M4's metric mean $\bar{Y}_{M4,1} = 0.856$ in Table~\ref{tab:closure_rate_matrix}).}
@@ -126,7 +126,7 @@ The most striking benchmark-specific effect surfaces not in the aggregate closur
 \subsection{Judge--metric correlation (RQ2)}
 \label{sec:results_judge_metric_corr}
 
-\begin{figure}[!ht]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.95\linewidth]{../plots/output/fig7_judge_corr.png}
   \caption{Judge SLM rating vs.\ automated closure metric per path. Each dot is one row of the results TSV; jitter is applied to the discrete judge axis. Path~1: mutation kill rate. Path~2: reference test pass rate (binary). Path~3: BERTScore F1. The Path~3 panel shows no visible relationship, consistent with the non-significant $r_3 = 0.022$ ($p = 0.359$, $n = 1{,}791$).}
@@ -301,7 +301,7 @@ directional asymmetry is also visible: DeepSeek-R1 slightly over-rates
 the human mean ($3.28$ vs.\ $3.20$) whereas the three frontier judges
 under-rate it ($2.40$--$2.68$).
 
-\begin{table}[t]
+\begin{table}[!htbp]
   \centering
   \caption{Frontier-judge replay against the five-way human-majority
     ground truth on the 60-pair sample. All four judges attain weak
