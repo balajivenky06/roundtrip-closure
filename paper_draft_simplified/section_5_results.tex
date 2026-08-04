@@ -10,15 +10,15 @@ Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present t
 
 \input{../tables/tab_closure_rate_matrix.tex}
 
-\needspace{0.85\textheight}
-\begin{center}
-  \includegraphics[width=0.85\linewidth,height=0.85\textheight,keepaspectratio]{../plots/output/fig2_closure_heatmap.png}
-\end{center}
-\vspace{-6pt}
-\begin{quote}
+\needspace{0.75\textheight}% fig2 is portrait (aspect 1.22) — needs ~70%% of textheight even at 0.75 linewidth
+\noindent
+\centering
+\includegraphics[width=0.75\linewidth]{../plots/output/fig2_closure_heatmap.png}
+
 \captionof{figure}{Metric mean $\bar{Y}_{a, p}$ per cell $\times$ path (heatmap; Eq.~\ref{eq:metric_mean}). Cell strata are (top to bottom) mono (M1--M6), hetero (H1--H11), and null (N1--N3). Values are raw per-cell means of the automated closure metric before the strict-AND validity policy is applied; the strict-AND valid-closure fraction $V_{a, p}$ is shown per cell in Table~\ref{tab:per_stage_bottleneck} and Fig.~\ref{fig:stage_contribution}.}
 \label{fig:closure_heatmap}
-\end{quote}
+
+\medskip
 
 First, Path~1 (mutation kill rate) closure rates cluster in the $[0.7, 0.9]$ range for all non-null cells except M1, with a mean per-cell $\bar{Y}$ of $0.826$ across the 17 non-null cells. The strongest mono baseline is M3 (qwen3.6:27B, all stages) at $0.900$; the strongest hetero cell is H6 (phi-4/qwen3.6/phi-4) at $0.882$. The single mono failure is M1 (llama3.2:3B mono) at $0.577$.
 
@@ -29,15 +29,16 @@ Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.214$ acr
 \subsection{Mono versus heterogeneous cells}
 \label{sec:results_mono_vs_hetero}
 
-\needspace{0.45\textheight}
-\begin{center}
-  \includegraphics[width=0.7\linewidth,height=0.85\textheight,keepaspectratio]{../plots/output/fig3_mono_vs_hetero.png}
-\end{center}
-\vspace{-6pt}
-\begin{quote}
+\needspace{18\baselineskip}
+
+\noindent
+\centering
+\includegraphics[width=0.90\linewidth]{../plots/output/fig3_mono_vs_hetero.png}
+
 \captionof{figure}{Distribution of Path~1 closure rates across strata (mono, hetero, null). Each violin summarises the per-cell mean closure rates within a stratum.}
 \label{fig:mono_vs_hetero}
-\end{quote}
+
+\medskip
 
 Fig.~\ref{fig:mono_vs_hetero} presents the per-strand distribution of closure rates on Path~1. The distributions overlap substantially: the median hetero cell ($0.862$) is competitive with the median mono cell ($0.819$), but the ceiling of each strand differs. The best mono cell (M3, kill rate $= 0.900$) exceeds the median hetero cell but not the best hetero cell (H6, $0.882$).
 
@@ -71,15 +72,16 @@ Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (ce
   \item \textbf{H5 spec attribution, $\Delta = 0.234$ (Path~1)} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $23$ percentage points of kill rate that llama3.2 mono cannot achieve alone; the same composition recovers $\Delta = 0.300$ on Path~2.
 \end{itemize}
 
-\needspace{0.45\textheight}
-\begin{center}
-  \includegraphics[width=0.9\linewidth,height=0.85\textheight,keepaspectratio]{../plots/output/fig10_stage_contribution.png}
-\end{center}
-\vspace{-6pt}
-\begin{quote}
+\needspace{18\baselineskip}
+
+\noindent
+\centering
+\includegraphics[width=0.90\linewidth]{../plots/output/fig10_stage_contribution.png}
+
 \captionof{figure}{Per-hetero-cell stage-contribution decomposition on Path~1, using strict-AND valid-closure fractions $V_{a, 1}$ (Eq.~\ref{eq:valid_closure_frac}). Blue segment: worst-stage mono baseline (floor). Orange segment: heterogeneity gain over that baseline. Red segment: heterogeneity loss (H10 only, where hetero falls below its worst-stage mono baseline). Dashed line: strongest mono ceiling on the $V$ scale (M4 $V_{M4,1} = 0.773$, which is distinct from M4's metric mean $\bar{Y}_{M4,1} = 0.856$ in Table~\ref{tab:closure_rate_matrix}).}
 \label{fig:stage_contribution}
-\end{quote}
+
+\medskip
 
 Fig.~\ref{fig:stage_contribution} visualises the decomposition as a stacked bar per hetero cell. Cells H11 ($V_{H11,1} = 0.813$) and H4 ($V_{H4,1} = 0.800$) exceed the strongest mono ceiling on the $V$ scale ($V_{M4,1} = 0.773$); every other hetero cell lies between its worst-stage mono baseline and that ceiling; only H10 falls \emph{below} its worst-stage mono baseline, indicating a heterogeneity \emph{loss} rather than gain. Note this ranking is under $V$; on the $\bar{Y}$ scale (Table~\ref{tab:closure_rate_matrix}) M3 leads at $\bar{Y}_{M3,1} = 0.900$ and H6 leads the hetero stratum at $\bar{Y}_{H6,1} = 0.882$. Section~\ref{sec:discussion_rq3} develops the $V$-scale finding into a design guideline.
 
@@ -109,15 +111,16 @@ Two outliers merit specific attention. H10 (mistral spec + phi-4 test + qwen-cod
 \subsection{Judge--metric correlation (RQ2)}
 \label{sec:results_judge_metric_corr}
 
-\needspace{0.5\textheight}
-\begin{center}
-  \includegraphics[width=0.95\linewidth,height=0.85\textheight,keepaspectratio]{../plots/output/fig7_judge_corr.png}
-\end{center}
-\vspace{-6pt}
-\begin{quote}
+\needspace{18\baselineskip}
+
+\noindent
+\centering
+\includegraphics[width=0.90\linewidth]{../plots/output/fig7_judge_corr.png}
+
 \captionof{figure}{Judge SLM rating vs.\ automated closure metric per path. Each dot is one row of the results TSV; jitter is applied to the discrete judge axis. Path~1: mutation kill rate. Path~2: reference test pass rate (binary). Path~3: BERTScore F1. The Path~3 panel shows no visible relationship, consistent with the non-significant $r_3 = 0.022$ ($p = 0.359$, $n = 1{,}791$).}
 \label{fig:judge_corr}
-\end{quote}
+
+\medskip
 
 \input{../tables/tab_judge_correlation.tex}
 
