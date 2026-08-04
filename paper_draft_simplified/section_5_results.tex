@@ -97,23 +97,6 @@ Table~\ref{tab:per_operator_headline} summarises these findings. \textbf{H1 (phi
 
 Two outliers merit specific attention. H10 (mistral spec + phi-4 test + qwen-coder code) achieves arithmetic $= 0.351$ and boundary $= 0.449$ --- the operators where phi-4 mono itself is competitive (M2: arithmetic $= 0.580$, boundary $= 0.653$). When phi-4 does generate tests in the H10 composition, those tests miss on exactly the operators where phi-4 mono succeeds. Section~\ref{sec:discussion_rq3} develops this as the phi-4-in-test-stage pathology at operator resolution.
 
-\subsection{Mixed-effects logit: per-stage attribution with sample random intercept}
-\label{sec:results_mixed_logit}
-
-To confirm the per-stage attribution of Section~\ref{sec:results_stage_attribution} in a single unified model, we fit the mixed-effects specification of Eq.~\ref{eq:mixedlogit} on strict-AND valid closure ($V_r \in \{0, 1\}$; Eq.~\ref{eq:valid_closure_frac} at the row level) as the outcome, with the three per-stage model assignments as fixed effects and a per-sample random intercept. Table~\ref{tab:mixed_logit} presents the fitted coefficients, using qwen3.6 (the mid-range dense mono baseline M3) as the reference category at each stage.
-
-\input{../tables/tab_mixed_logit.tex}
-
-Three findings emerge that support and refine the per-stage attribution reported in Section~\ref{sec:results_stage_attribution}:
-
-\begin{enumerate}
-  \item \textbf{Test-stage substitutions are the significant per-stage effects.} Relative to qwen3.6 at $L_{\textsf{test}}$, placing llama3.2 at the test stage lowers $\Pr[V=1]$ by $27.1$~pp ($p < 0.001$), mistral-small at the test stage by $12.6$~pp ($p = 0.001$), and phi-4 at the test stage by $10.0$~pp ($p = 0.002$). All other test-stage substitutions and every spec- and code-stage substitution are not significant at $\alpha = 0.05$.
-  \item \textbf{The phi-4-in-test-stage pathology is a mixed-model coefficient, not just a NA-rate observation.} Section~\ref{sec:discussion_rq3}'s Path~1 \textsf{structural\_NA} rates ($44$--$55\%$ across M2/H2/H10) and the mixed-logit test-stage coefficient for phi-4 ($-0.100$, $p = 0.002$) are two orthogonal statistical instruments converging on the same finding. This is the strongest single-cell-independent confirmation of the phi-4-in-test-stage claim.
-  \item \textbf{Path is a strong main effect after controlling for stage assignment.} Path~2 vs.\ Path~1: $-25.5$~pp ($p < 0.001$); Path~3 vs.\ Path~1: $-18.2$~pp ($p < 0.001$). This corroborates the interaction-ANOVA finding (Section~\ref{sec:results_stage_attribution}) that the paths carry non-redundant information: differences persist after cell-effect controls.
-\end{enumerate}
-
-The mixed-logit converges to a linear-probability approximation rather than the full Bernoulli GLMM at this data volume ($n = 4{,}996$ rows, 150 sample groups). Random-intercept variance is $\sigma_{\textsf{sample}}^2 = 0.053$, indicating meaningful per-sample difficulty heterogeneity above what the fixed effects capture. Full ANOVA and mixed-logit conclusions agree qualitatively on the pattern that cell composition drives significant variation in $V$ with the test stage carrying the plurality of the attribution.
-
 \subsection{Judge--metric correlation (RQ2)}
 \label{sec:results_judge_metric_corr}
 
@@ -136,27 +119,26 @@ Fig.~\ref{fig:judge_corr} plots the automated closure metric against the judge r
 
 Path~3's very weak per-benchmark correlations (both $r^2 \leq 0.045$) are the paper's strongest single validity finding on BERTScore. Standard practice in NLP evaluation~\citep{Zhang2020BERTScore} treats BERTScore F1 as a semantic-equivalence proxy; our result shows it captures at most a small share of variance in an LLM-based semantic-equivalence judgement, and does so identically weakly on both benchmarks. Section~\ref{sec:discussion_rq2} stratifies the direction of the residual disagreement by benchmark, showing that even though the correlation strengths are indistinguishable, the disagreement \emph{type} (over-crediting versus under-crediting) flips categorically across benchmarks --- a structural signature consistent with BERTScore functioning as a surface-form similarity signal.
 
-\subsection{Path $\times$ cell interaction}
+\subsection{Per-stage attribution: two orthogonal instruments}
 \label{sec:results_path_cell_interaction}
+\label{sec:results_mixed_logit}
 
-\input{../tables/tab_anova_interaction.tex}
+Two independent statistical instruments --- a cell $\times$ path interaction ANOVA and a mixed-effects logit --- test whether the three closure paths carry non-redundant per-cell information and which stage carries that information.
 
-To test whether the three closure paths carry non-redundant information, we fit the interaction ANOVA of Eq.~\ref{eq:anova_interact}. Table~\ref{tab:anova_interaction} presents the results for $n = 5{,}073$ rows after excluding structural NaN entries and cells present only on a subset of paths.
+\paragraph{Interaction ANOVA.} Fitting Eq.~\ref{eq:anova_interact} on $n = 5{,}073$ rows (after excluding structural NaN entries and cells present only on a subset of paths) under Type-III sums of squares, the cell $\times$ path interaction is significant: $F(36, 4867) = 6.47$, $p < 0.001$, partial $\eta^2 = 0.046$. The four effects are of comparable size once Type-III controls each for the others (sample $\eta^2_p = 0.234$; interaction $0.046$; cell main $0.044$; path main $0.042$, all $p < 0.001$) --- there is no single dominant effect, and the practical interpretation rests on the interaction. Because the response variable stacks three different-scale metrics, the path main effect is partly a response-scale artifact; per-path rank-transformed ANOVAs (Appendix~\ref{sec:appendix_rank_transformed}) confirm the cell effect is significant on every path independently, with even stronger effect sizes than the stacked model. Cell assignment is also a significant predictor on both HumanEval and MBPP separately (Appendix~\ref{sec:appendix_per_benchmark}).
 
-The cell $\times$ path interaction is significant under Type-III sums of squares ($F(36, 4867) = 6.47$, $p < 0.001$, partial $\eta^2 = 0.046$). The effect is statistically robust given the large sample ($n = 5{,}073$) but small in Cohen's conventional bands ($\eta^2_p \in [0.01, 0.06]$~=~small; $[0.06, 0.14]$~=~medium; $\geq 0.14$~=~large). Path assignment therefore accounts for a modest share of variance in closure rate once cell and sample are controlled. Because the response variable stacks three different-scale metrics, the path main effect in Table~\ref{tab:anova_interaction} is partly a response-scale artifact; per-path rank-transformed ANOVAs (Appendix~\ref{sec:appendix_rank_transformed}) confirm the cell effect is significant on every path independently, with even stronger effect sizes than the stacked model. Cell assignment is also a significant predictor on both HumanEval and MBPP separately (Appendix~\ref{sec:appendix_per_benchmark}).
+\paragraph{Mixed-effects logit.} The second instrument fits Eq.~\ref{eq:mixedlogit} on strict-AND valid closure $V_{ijp} \in \{0, 1\}$ (Eq.~\ref{eq:valid_closure_frac} at row resolution) with per-stage model assignments as fixed effects and per-sample random intercept ($n = 4{,}996$, positive-class $63.0\%$). Reference qwen3.6 at each stage. Three findings emerge; full coefficient table in Appendix~\ref{sec:appendix_mixed_logit}. (i)~\emph{Test-stage substitutions are the only significant per-stage effects.} Relative to qwen3.6 at $L_{\textsf{test}}$, placing llama3.2 lowers $\Pr[V = 1]$ by $27.1$~pp ($p < 0.001$), mistral-small by $12.6$~pp ($p = 0.001$), and phi-4 by $10.0$~pp ($p = 0.002$). Every spec- and code-stage substitution is null at $\alpha = 0.05$. (ii)~\emph{The phi-4-in-test-stage pathology is a mixed-model coefficient, not just a filter-failure observation.} The Path~1 structural NA rates of Section~\ref{sec:discussion_rq3} ($44$--$55\%$ across M2/H2/H10) and the mixed-logit test-stage coefficient for phi-4 ($-0.100$, $p = 0.002$) are two orthogonal instruments converging on the same finding. (iii)~\emph{Path is a strong main effect after controlling for stage assignment}: Path~2 vs.\ Path~1 $= -25.5$~pp; Path~3 vs.\ Path~1 $= -18.2$~pp (both $p < 0.001$).
 
-The variance-explained metric alone understates the \emph{practical} implication of the interaction: cell rankings are unstable across paths, so a practitioner choosing a cell for one path cannot re-use the choice for another. We quantify this with a rank-swap analysis over the 17 non-null cells on the strict-AND valid-closure fraction $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}, denominator = total measurement rows per cell $\times$ path):
+\paragraph{Rank-swap: the operational meaning of the interaction.} The variance-explained metric alone understates the practical implication of the interaction: cell rankings are unstable across paths, so a practitioner choosing a cell for one path cannot re-use the choice for another. We quantify this with a rank-swap analysis over the 17 non-null cells on the strict-AND valid-closure fraction $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}, denominator = total measurement rows per cell $\times$ path):
 
 \begin{itemize}
   \item \textbf{The best cell is different for every path.} Path~1 best = H11 ($V = 0.813$); Path~2 best = H1 ($V = 0.640$); Path~3 best = H9 ($V = 0.733$). No cell tops any two paths.
   \item \textbf{The top-3 cells share zero members across all three paths.} Path~1 top-3 = $\{$H11, H4, M4$\}$; Path~2 top-3 = $\{$H1, H5, H9$\}$; Path~3 top-3 = $\{$H9, M4, H8$\}$. The three-way intersection is empty; M4 appears in Path~1 and Path~3 top-3 but not Path~2.
-  \item \textbf{At most one cell (H9) is top-5 on all three paths, and only via a tie.} H9 is top-5 on Paths~2 and~3 outright but shares fifth place on Path~1 with M6 (both $V = 0.720$). No cell is unambiguously in the top-5 on all three paths.
-  \item \textbf{Kendall's $\tau_{\textsf{rank}}$ between path rankings ranges $0.26$--$0.40$.} Path~1 vs.\ Path~2: $\tau = 0.265$; Path~1 vs.\ Path~3: $\tau = 0.404$; Path~2 vs.\ Path~3: $\tau = 0.301$. All three pairs show only weak-to-moderate ordinal agreement.
+  \item \textbf{At most one cell (H9) is top-5 on all three paths, and only via a tie.} H9 is top-5 on Paths~2 and~3 outright but shares fifth place on Path~1 with M6 (both $V = 0.720$).
+  \item \textbf{Kendall's $\tau_{\textsf{rank}}$ between path rankings ranges $0.26$--$0.40$.} Path~1 vs.\ Path~2: $\tau = 0.265$; Path~1 vs.\ Path~3: $\tau = 0.404$; Path~2 vs.\ Path~3: $\tau = 0.301$.
 \end{itemize}
 
-These four measures give the small variance-explained finding its operational meaning: no pair of path rankings exceeds moderate ordinal agreement ($\tau \leq 0.40$), and the winner set changes wholesale across paths. For a practitioner choosing an SLM composition, the pipeline stage that will dominate quality is not derivable from a single-path benchmark --- each path must be measured separately.
-
-Under Type-III sums of squares the four ANOVA effects are (Table~\ref{tab:anova_interaction}, all $p < 0.001$): sample difficulty $\eta^2_p = 0.234$ (the substantial random-intercept-equivalent term), interaction $\eta^2_p = 0.046$, cell main effect $\eta^2_p = 0.044$, path main effect $\eta^2_p = 0.042$. The four effects are of comparable size once Type-III controls each for the others --- there is no single dominant effect, and the practical interpretation rests on the interaction, which is the smallest-per-df but most theoretically load-bearing term.
+No pair of path rankings exceeds moderate ordinal agreement, and the winner set changes wholesale across paths. Combined with the mixed-logit's test-stage attribution, the two instruments converge: cell composition drives significant variation in $V$ with the test stage carrying the plurality of the marginal effect, and the resulting rankings do not transfer across paths.
 
 \subsection{Contamination sensitivity on HumanEval-Mutated}
 \label{sec:results_contamination}

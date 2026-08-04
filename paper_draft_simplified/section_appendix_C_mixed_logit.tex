@@ -1,0 +1,30 @@
+\section{Mixed-effects logit: full coefficient table}
+\label{sec:appendix_mixed_logit}
+
+Full coefficient table for the mixed-effects linear-probability model
+of Eq.~\ref{eq:mixedlogit}, cited in Section~\ref{sec:results_path_cell_interaction}
+as the second per-stage attribution instrument.
+
+\input{../tables/tab_mixed_logit.tex}
+
+The specification is $V_{ijp}$ (strict-AND valid closure, Eq.~\ref{eq:valid_closure_frac}
+at row resolution) as the outcome; reference category qwen3.6 at each stage; per-sample
+random intercept. Full Bernoulli GLMM (logit link on $\Pr[V_{ijp} = 1]$) did not
+converge on our data volume ($n \approx 5{,}000$ rows across 150 samples with unbalanced
+strata); we report the linear-probability approximation with mixed-effects standard
+errors, the standard fallback when GLMM convergence fails.
+
+Reference category selection: qwen3.6 was chosen as an interior mono baseline on the
+$V$ scale (M3 sits in the middle of the six mono cells on strict-AND valid-closure
+fraction). Note M3 is the strongest mono on the $\bar{Y}$ scale, but the reference
+selection is by $V$-scale interiority since $V$ is the outcome.
+
+The random-intercept variance is $\sigma_{\textsf{sample}}^2 = 0.053$, indicating
+meaningful per-sample difficulty heterogeneity above what the fixed effects capture.
+The three significant test-stage coefficients quoted in the main body
+(Section~\ref{sec:results_path_cell_interaction}) are $\hat{\beta}_{\textsf{test}=\textsf{llama3.2}} = -0.271$
+($p < 0.001$), $\hat{\beta}_{\textsf{test}=\textsf{mistral-small}} = -0.126$ ($p = 0.001$),
+$\hat{\beta}_{\textsf{test}=\textsf{phi-4}} = -0.100$ ($p = 0.002$); all spec-stage and code-stage
+coefficients are null at $\alpha = 0.05$. Path fixed effects: Path~2 vs.\ Path~1
+$\hat{\beta} = -0.255$ ($p < 0.001$); Path~3 vs.\ Path~1 $\hat{\beta} = -0.182$
+($p < 0.001$).

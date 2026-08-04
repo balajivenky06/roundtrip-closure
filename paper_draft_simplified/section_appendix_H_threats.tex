@@ -1,0 +1,162 @@
+\section{Full text of routine threats to validity}
+\label{sec:appendix_threats}
+
+This appendix carries the full \emph{threat / mitigation / residual risk}
+text for the three routine methodological threats summarised in
+Table~\ref{tab:threats_routine} in the main body
+(Section~\ref{sec:limitations}). The three load-bearing threats
+(judge SLM validity, BERTScore construct validity, benchmark coverage
+and contamination) remain as prose in the main body.
+
+\subsection{Hardware split during the sweep}
+\label{sec:appendix_hardware_split}
+
+\textbf{Threat.} The 22 GPU-days of experimental sweep were split
+across Google Colab A100 and T4 hardware. Different cells were
+executed on different hardware because A100 availability was
+intermittent; the mono stratum (M1--M6) and the initial pilot ran on
+A100, the H8/H10/H11/H6/H9 hetero cells ran on T4, and the remaining
+cells split across both. Different hardware could in principle produce
+different LLM outputs due to different floating-point kernels or
+different attention implementations.
+
+\textbf{Mitigation.} The Ollama runtime enforces greedy decoding at
+temperature $0.2$ across all models used in this study. All model
+weights are quantised and deterministic under the same seed and
+prompt. The LLM disk cache is keyed on (\texttt{model\_tag},
+\texttt{role\_hint}, \texttt{prompt}, \texttt{temperature},
+\texttt{top\_p}, \texttt{top\_k}, \texttt{num\_ctx}, \texttt{max\_tokens})
+--- identical parameter tuples produce identical cache hits regardless
+of hardware. Cross-hardware verification via re-execution of 30 pilot
+rows on both hardware types produced byte-identical LLM outputs.
+
+\textbf{Residual risk.} Rare non-determinism in the Ollama runtime
+under GPU memory pressure could produce different output text on a
+small number of rows. We estimate this affects fewer than $0.1\%$ of
+rows based on the observed hit rate of the cache during resumption
+from mid-sweep checkpoints.
+
+\paragraph{Related: mid-sweep NUM\_CTX configuration change.} During
+the sweep, a configuration change reduced $\texttt{NUM\_CTX}$ from
+$16384$ to $8192$ tokens for the affected models to work around T4
+memory constraints. Rows generated before and after the change have
+subtly different cache keys, so the G2 per-mutation-operator
+regeneration script achieved only $67\%$ cache-recovery coverage on
+Path~1 rows. The per-operator table (Table~\ref{tab:per_operator_kill_rate})
+is computed only on the $1{,}172$ Path~1 rows for which cache
+reconstruction succeeded; the remaining $567$ rows are excluded, not
+silently treated as zeros. All other analyses use the aggregate
+metric value stored directly in the TSV, which is unaffected by the
+cache-key mismatch.
+
+\subsection{Cache reuse across cells and per-path duplicate cells}
+\label{sec:appendix_cache_reuse}
+
+\textbf{Threat.} The five-layer checkpointing system (LLM cache,
+pytest cache, BERTScore cache, TSV row cache, JSONL decontamination
+cache) means that identical calls across cells are served from cache.
+This introduces a specific analytical concern: each closure path
+exercises only two of the three pipeline stages (Path~1 uses
+$L_{\textsf{spec}}$ and $L_{\textsf{test}}$; Path~2 uses
+$L_{\textsf{test}}$ and $L_{\textsf{code}}$; Path~3 uses
+$L_{\textsf{test}}$ and $L_{\textsf{spec}}$), so cells sharing the
+operative stage-pair on a given path can produce identical rows via
+cache reuse. We measured the empirical per-group identity rate
+directly from the released sweep TSV, counting samples with identical
+$(m, J)$ tuples across every cell in a candidate group:
+
+\begin{itemize}
+  \item \textbf{Genuine duplicates ($\geq 98\%$ identical rows on shared samples):}
+    $\{M6, H4\}$ on Path~1 ($65/65$, $100\%$) and Path~3 ($74/75$, $98.7\%$);
+    $\{M6, H1, H5\}$ on Path~2 ($74/75$, $98.7\%$).
+    These groups share the operative stage-pair on the affected path
+    and were swept entirely within the same cache era; the effective
+    per-cell degrees of freedom on the affected path collapse across
+    the group.
+  \item \textbf{Partial duplicates ($\sim$$50\%$ identical rows):}
+    $\{H7, H9\}$ on Path~1 ($33/59$, $56\%$);
+    $\{H2, H10\}$ on Path~2 ($37/75$, $49\%$);
+    $\{H6, H7\}$ on Path~2 ($38/75$, $51\%$).
+    The partial rate is a consequence of the mid-sweep
+    $\texttt{NUM\_CTX}$ configuration change disclosed above:
+    pre-change rows are cache-identical across the group while
+    post-change rows have different cache keys.
+  \item \textbf{Notably \emph{not} duplicates:}
+    $\{H7, H9\}$ on Path~3 ($0/74$ identical) --- both cells share
+    $(L_{\textsf{test}}, L_{\textsf{spec}}) = (\texttt{qwen3.6}, \texttt{qwen-coder})$
+    on Path~3 by our indexing convention, but no rows survive with
+    byte-identical BERTScore $+$ judge outputs on this path.
+    $\{M1, N1\}$ on every path ($9/51 = 17.6\%$ Path~1, $15/75 = 20.0\%$
+    Path~2, $3/75 = 4.0\%$ Path~3): although M1 and N1 share
+    $L_{\textsf{spec}} = L_{\textsf{test}} = L_{\textsf{code}} = \texttt{llama3.2}$,
+    N1 is a word-shuffled-input null control
+    (Section~\ref{sec:experiment_setup_doe}) so its per-sample inputs
+    differ from M1's by construction --- the shared-stage-pair
+    reasoning does not apply. The $\bar{Y}$ scale difference (M1
+    $\bar{Y}_1 = 0.577$ vs.\ N1 $\bar{Y}_1 = 0.429$; false-closure
+    rate $14.0\%$ vs.\ $26.3\%$) confirms the two cells are
+    behaviorally distinct, which is precisely what allows N1 to serve
+    as the RQ4 noise floor in Section~\ref{sec:discussion_rq4}.
+\end{itemize}
+
+The apparent H7 $=$ H9 byte-identity on Path~1 in the cache-reconstructed
+per-operator table (Table~\ref{tab:per_operator_kill_rate}) reflects the
+cache-recoverable subset of Path~1 rows (which necessarily excludes the
+post-$\texttt{NUM\_CTX}$-change rows where H7 and H9 diverge), not the
+released sweep TSV. Readers checking H7 vs.\ H9 across the TSV and the
+per-operator table will find the two artifacts differ, and this is why.
+
+\textbf{Mitigation.} We disclose the measured duplication rates
+explicitly. In interpreting the per-path ANOVAs
+(Section~\ref{sec:results_stage_attribution}) and the mixed-effects
+logit (Section~\ref{sec:results_path_cell_interaction}), the effective
+per-path degrees of freedom on genuine-duplicate groups collapse across
+the group (M6/H4 counts once on Paths~1 and~3; M6/H1/H5 counts once on
+Path~2), and partial-duplicate groups count with a scaled-down
+effective sample. The qualitative RQ1--RQ3 conclusions (heterogeneity
+matches mono on aggregate $\bar{Y}$; test-stage is the significant
+per-stage attribution; the phi-4-in-test-stage pathology) do not depend
+on between-duplicate contrasts and survive the correction. The
+mixed-effects logit is the least affected because it estimates
+per-model-per-stage marginal effects rather than per-cell effects;
+genuine duplicates on a given path collapse to the same fitted
+probability.
+
+\textbf{Residual risk.} Tukey contrasts within the two genuine-duplicate
+groups (M6/H4 on Paths~1 and~3; M6/H1/H5 on Path~2) overstate the
+effective per-comparison sample size. No such within-group contrast
+appears among the 25 significant pairs listed in
+Table~\ref{tab:tukey_significant}; the contrasts highlighted in the
+text of Section~\ref{sec:results_mono_vs_hetero} (H1--M1, H4--N1,
+M1--N2) are all between-group. Between-group contrasts and
+within-partial-duplicate contrasts are affected proportionally to the
+measured identity rate.
+
+\subsection{Multiple testing}
+\label{sec:appendix_multiple_testing}
+
+\textbf{Threat.} The paper reports many statistical tests: the main
+ANOVA (Eq.~\ref{eq:anova}), the interaction ANOVA
+(Eq.~\ref{eq:anova_interact}), 190 pairwise Tukey comparisons, three
+per-path Pearson correlations, per-benchmark ANOVAs, per-operator
+effect sizes, capability-preservation rates. Without correction, some
+significance would be expected by chance.
+
+\textbf{Mitigation.} The Tukey HSD pairwise test controls family-wise
+error at $\alpha = 0.05$ over the 190-pair family via its own
+studentized-range distribution (Section~\ref{sec:experiment_setup_stats});
+no additional Bonferroni layering is applied. Per-path correlations and
+their p-values are reported directly without correction; the significant
+ones (Path~2, $r_2 = 0.52$, $p = 1.19 \times 10^{-129}$; per-benchmark
+Path~3, both $p \leq 0.001$) are far below the significance threshold
+that no correction affects their interpretation, and the aggregate
+Path~3 $r_3 = 0.022$, $p = 0.359$ is reported alongside its
+Simpson's-paradox interpretation rather than as a null claim. The
+interaction ANOVA is a single planned comparison. The main-effect
+ANOVAs are also planned comparisons.
+
+\textbf{Residual risk.} Post-hoc per-operator analyses in
+Section~\ref{sec:results_per_operator} are not corrected for multiple
+testing beyond what the reported effect sizes convey. Effect sizes
+$\Delta > 0.05$ are treated as meaningful; smaller effect sizes are
+not emphasized.
