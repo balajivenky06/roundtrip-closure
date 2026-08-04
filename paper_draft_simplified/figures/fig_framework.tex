@@ -44,6 +44,13 @@
     \draw[slm] (P2T) -- node[above, font=\scriptsize]{$L_{\mathsf{code}}$}  (P2C);
     \draw[slm] (P2C) -- (P2M);
     \draw[slm] (P2M) -- (P2J);
+    %% L_code also conditions on the original docstring D (Eq. path2):
+    %% C' = L_code(D, L_test(D)) = L_code(D, T'). Curved dashed arrow from
+    %% P2D south around P2T to P2C south to reflect the second input.
+    \draw[slm, dashed, gray!60]
+      (P2D.south) to[out=-30, in=-150]
+        node[below, font=\scriptsize, gray!60]{$D$ also $\to L_{\mathsf{code}}$}
+      (P2C.south);
     \node[pathlabel, left=0.15cm of P2D]{Path 2};
 
     %% ------------------- Path 3: C -> T -> D -------------------
