@@ -7,15 +7,26 @@
 \begin{table}[t]
   \centering
   \caption{Contamination sensitivity: strict-AND closure rate on the
-    core sweep (HumanEval + MBPP, $n=150$ mono / $n=75$ hetero per
-    path) vs.\ the HumanEval-Mutated held-out subset (HEM-25:
-    function-rename + docstring-paraphrase over the same underlying
-    algorithms; $n=25$ per cell per path), for the hetero champion H1
-    and the strongest mono baseline M3. Large negative $\Delta$ on
-    HEM-25 would signal surface-form memorisation; the observed
-    pattern (positive $\Delta$ on the behavioural paths, negative
-    $\Delta$ on the surface-form BERTScore path) instead indicates
-    that the core closure rates are not driven by contamination.
+    core sweep (HumanEval + MBPP) vs.\ the HumanEval-Mutated held-out
+    subset (HEM-25: function-rename + docstring-paraphrase over the
+    same underlying algorithms; $n = 25$ per cell per path), for the
+    hetero champion H1 and the strongest mono baseline M3. Large
+    negative $\Delta$ on HEM-25 would signal surface-form
+    memorisation; the observed pattern (positive $\Delta$ on the
+    behavioural paths, negative $\Delta$ on the surface-form BERTScore
+    path) instead indicates that the core closure rates are not driven
+    by contamination.
+    \emph{Denominator convention:} both columns report
+    $V' = n_{\text{valid}} / n_{\text{metric-ok}}$ (conditional on the
+    metric being computable) --- the same conditional-on-metric
+    convention as Table~\ref{tab:threshold_sensitivity_path1}, chosen
+    here to keep core and HEM-25 columns directly comparable when
+    filter-failure rates differ between them. Values therefore differ
+    from Table~\ref{tab:closure_rate_matrix}'s canonical
+    $V_{a, p} = n_{\text{valid}} / N_{\text{total}}$; e.g.\ H1 Path~1
+    is $64/81 = 79.0\%$ here vs.\ $64/89 = 71.9\%$ under canonical
+    $V$. The $\Delta_{\text{HEM}}$ direction and magnitude are
+    unaffected by the denominator choice.
     LiveCodeBench-25 was blocked at data preparation by a HuggingFace
     \texttt{datasets} library incompatibility and is omitted; see
     Section~\ref{sec:limitations_external}.}
