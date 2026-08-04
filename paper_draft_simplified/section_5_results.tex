@@ -10,6 +10,7 @@ Table~\ref{tab:closure_rate_matrix} and Fig.~\ref{fig:closure_heatmap} present t
 
 \input{../tables/tab_closure_rate_matrix.tex}
 
+\needspace{0.75\textheight}
 \begin{center}
   \includegraphics[width=0.85\linewidth]{../plots/output/fig2_closure_heatmap.png}
 \end{center}
@@ -28,6 +29,7 @@ Third, Path~3 (BERTScore) closure rates are uniformly low, averaging $0.214$ acr
 \subsection{Mono versus heterogeneous cells}
 \label{sec:results_mono_vs_hetero}
 
+\needspace{0.45\textheight}
 \begin{center}
   \includegraphics[width=0.7\linewidth]{../plots/output/fig3_mono_vs_hetero.png}
 \end{center}
@@ -69,6 +71,7 @@ Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (ce
   \item \textbf{H5 spec attribution, $\Delta = 0.234$ (Path~1)} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $23$ percentage points of kill rate that llama3.2 mono cannot achieve alone; the same composition recovers $\Delta = 0.300$ on Path~2.
 \end{itemize}
 
+\needspace{0.45\textheight}
 \begin{center}
   \includegraphics[width=0.9\linewidth]{../plots/output/fig10_stage_contribution.png}
 \end{center}
@@ -106,6 +109,7 @@ Two outliers merit specific attention. H10 (mistral spec + phi-4 test + qwen-cod
 \subsection{Judge--metric correlation (RQ2)}
 \label{sec:results_judge_metric_corr}
 
+\needspace{0.5\textheight}
 \begin{center}
   \includegraphics[width=0.95\linewidth]{../plots/output/fig7_judge_corr.png}
 \end{center}

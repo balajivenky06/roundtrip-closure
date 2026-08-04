@@ -1,0 +1,167 @@
+\section{Limitations and threats to validity}
+\label{sec:limitations}
+
+We organize threats along the four classical dimensions~\citep{Wohlin2012ExperimentSE}: internal, external, construct, and conclusion validity. Each threat is stated concretely, our mitigation is documented, and the residual risk is characterized.
+
+\paragraph{Routine methodological threats (compact summary).} Three
+threats are routine but worth disclosing: hardware split (Colab
+A100/T4 mix, $< 0.1\%$ estimated residual non-determinism from Ollama
+cache verification); cache reuse across cells with the resulting
+per-path duplicate-cell groups measured directly from the TSV (two
+genuine-duplicate groups on Path~1 and one on Path~2 with
+$\geq 98\%$ empirical identity rate); and multiple-testing control on
+190 Tukey pairs (Tukey studentized-range distribution, no Bonferroni
+layering). Table~\ref{tab:threats_routine} summarises each; full text
+including per-group identity counts, the mid-sweep $\texttt{NUM\_CTX}$
+sub-threat, and correction procedure is in
+Appendix~\ref{sec:appendix_threats}.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Routine methodological threats: compact summary. Full
+\emph{threat / mitigation / residual risk} text in
+Appendix~\ref{sec:appendix_threats}. The three load-bearing threats
+(judge SLM validity, BERTScore construct validity, benchmark coverage
+and contamination) remain as prose below.}
+\label{tab:threats_routine}
+\begin{tabular}{@{}p{3cm}p{5cm}p{4.5cm}@{}}
+\toprule
+Threat & Mitigation (headline) & Residual risk \\
+\midrule
+Hardware split
+(Appendix~\ref{sec:appendix_hardware_split})
+&
+Deterministic Ollama cache keyed on model, prompt, sampling params;
+byte-identical outputs verified on 30-row pilot across A100 and T4.
+&
+$<0.1\%$ estimated affected rows. \\
+\addlinespace
+Cache reuse + per-path duplicate cells
+(Appendix~\ref{sec:appendix_cache_reuse})
+&
+Measured per-group identity rates from the TSV;
+$\{M6, H4\}$ on Paths 1/3 and $\{M6, H1, H5\}$ on Path~2 are the two
+genuine-duplicate groups ($\geq 98\%$ identical); qualitative
+RQ1--RQ3 conclusions survive because they do not depend on
+between-duplicate contrasts.
+&
+Tukey contrasts within genuine-duplicate groups overstate effective
+sample size; no such contrast appears among the 25 significant
+Tukey pairs. \\
+\addlinespace
+Multiple testing
+(Appendix~\ref{sec:appendix_multiple_testing})
+&
+Tukey HSD controls FWER at $\alpha = 0.05$ over the 190-pair family
+via studentized-range distribution; no Bonferroni layering.
+Interaction ANOVA and per-path Pearson tests are single planned
+comparisons.
+&
+Post-hoc per-operator analyses uncorrected; effect sizes
+$\Delta > 0.05$ treated as meaningful. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{External validity}
+\label{sec:limitations_external}
+
+External-validity threats concern the generalization of the findings beyond the specific experimental setup.
+
+\paragraph{Closed-weight LLM ceiling not evaluated}
+
+\textbf{Threat.} All 20 cells swept in this study use open-weight SLMs under 30~B parameters. The study does not answer the adjacent question of whether the closure ceiling identified here approaches, matches, or falls short of a closed-weight frontier ceiling (e.g., Claude Sonnet, GPT-4o-class).
+
+\textbf{Mitigation.} The scope is disclosed here and in Section~\ref{sec:introduction}. The open-weight framing is deliberate: reproducibility of the full evaluation stack without proprietary API access is a design goal of the study.
+
+\textbf{Residual risk.} Findings are scoped to open-weight SLMs under 30~B parameters. Reviewers may reasonably ask ``do these findings apply to closed-weight frontier models?'' --- the honest answer is that this study cannot say. The follow-up outlined in Section~\ref{sec:conclusion} addresses this directly.
+
+\paragraph{Model family coverage}
+
+\textbf{Threat.} The six pipeline SLMs represent five distinct model families (Meta, Microsoft, Alibaba dense, Google, Mistral, Alibaba coder). Every family has one representative except Alibaba, which has two. The DeepSeek judge is a sixth family. This is a stronger family-diversity claim than most prior LLM-evaluation papers, but it is not exhaustive: OpenAI (open-weight releases), Amazon, and Cohere are not represented. Findings may not generalize to unrepresented families.
+
+\textbf{Mitigation.} The pre-registered DOE (Table~\ref{tab:doe_summary}) documents the specific model tags used at each cell; the full model lineup with release dates is included in the replication package. Prior single-stage evaluation reports similar findings on a smaller family lineup, supporting cross-lineup generalization.
+
+\textbf{Residual risk.} The specific finding of the phi-4-in-test-stage pathology (Section~\ref{sec:discussion_rq3}) is stated as ``phi-4 at $L_{\textsf{test}}$ produces filter-failing tests on approximately half of samples''; whether analogous stage-specific pathologies exist for models we do not evaluate is unknown.
+
+\paragraph{Benchmark coverage}
+
+\textbf{Threat.} The core dataset comprises 150~functions from HumanEval and MBPP. Both benchmarks are Python-only, function-level (not multi-file or class-level), and drawn from a corpus that appeared in the training data of many of the pipeline SLMs. Contamination in closed and open LLM evaluation is a recognized systemic problem~\citep{Balloccu2025LLMDataContamination}. The results may not transfer to other benchmarks, other languages, or to multi-file / class-level SE tasks.
+
+\textbf{Mitigation.} The 25-sample HumanEval-Mutated subset (function-rename + docstring-paraphrase) was swept on the hetero champion H1 and the strongest mono baseline M3; results are reported in Section~\ref{sec:results_contamination}. Both cells show behavioral-path (Paths~1 and~2) closure rates that are as high on the surface-form-varied subset as on the core sweep or higher, indicating that the core closure rates are not driven by memorised HumanEval solutions. The complementary LiveCodeBench-25 post-cutoff subset was blocked at data preparation by the removal of script-based dataset loaders from the current HuggingFace \texttt{datasets} library; a fully independent post-cutoff replication remains future work. The cross-benchmark decomposition in Section~\ref{sec:results_per_benchmark_decomp} additionally documents that per-cell effects are significant on both HumanEval and MBPP with different F-values, suggesting the effects generalize across the two benchmarks.
+
+\textbf{Residual risk.} Substantial for languages other than Python and for tasks that require multi-file understanding. This is a well-known limitation of function-level LLM-SE evaluation.
+
+\subsection{Construct validity}
+
+Construct-validity threats concern whether the operational definitions of ``closure'' and ``validity'' actually measure what we claim they measure.
+
+\paragraph{BERTScore as a semantic-equivalence signal (Path~3)}
+
+\textbf{Threat.} BERTScore F1 on RoBERTa-large was pre-registered as the Path~3 automated metric. Section~\ref{sec:results_judge_metric_corr} reports that BERTScore is only weakly correlated with the judge SLM's semantic-equivalence rating per benchmark ($r_3^{\textsf{HE}} = 0.153$, $r_3^{\textsf{MBPP}} = 0.212$; both $r^2 \leq 0.045$); the aggregate $r_3 = 0.022$ ($p = 0.359$, $n = 1{,}791$) is a Simpson's-paradox attenuation from pooling. Section~\ref{sec:discussion_rq2} stratifies this by benchmark and shows the disagreement flips direction categorically: MBPP over-credits, HumanEval under-credits ($\chi^2 = 368$, $p < 0.001$). This is direct evidence that BERTScore is functioning as a surface-form similarity signal rather than a semantic-equivalence signal on our data.
+
+\textbf{Mitigation.} Rather than discarding Path~3 results, we adopt the strict two-signal validity policy of Eq.~\ref{eq:valid3}: closure requires both metric $> 0$ AND judge $\geq \rho$. Path~3 closure counts are correspondingly conservative. Section~\ref{sec:discussion_rq2} explicitly reports Path~3 findings as ``metric $\times$ judge disagreement'' rather than as ``metric-only closure.''
+
+\textbf{Residual risk.} Alternative surface-form metrics (BLEU-4, ROUGE-L, sentence-BERT similarity) were not evaluated. It is possible that a different metric would produce stronger $r_3$ correlation. This is left to follow-up work and is stated as an open question in Section~\ref{sec:conclusion}.
+
+\paragraph{Mutation kill rate as a defect-detection proxy (Path~1)}
+
+\textbf{Threat.} Mutation kill rate on the five mutation operators (arithmetic, boundary, comparison, negate\_bool, return\_none) is a proxy for defect-detection capability. The five operators do not exhaust the space of software defects; real-world defects include type errors, off-by-one errors in indices, concurrency bugs, resource leaks, and many other patterns not modeled by these five operators.
+
+\textbf{Mitigation.} The five operators are the canonical set drawn from the standard mutation-testing literature~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}. Prior mutation-testing work discusses the operator-coverage limitation and its implications for the mutation kill rate metric.
+
+\textbf{Residual risk.} The kill-rate values in Table~\ref{tab:per_operator_kill_rate} are specific to the five canonical operators. Whether a cell's kill rate on operators \emph{not} in this set would be similar is unknown.
+
+\paragraph{Judge SLM validity}
+
+\textbf{Threat.} DeepSeek-R1:14B is used as the external judge SLM. The judge's own validity as a semantic-equivalence oracle is not independently verified in this study. LLM-as-judge protocols are known to exhibit position bias, verbosity bias, self-preference bias, and sycophancy under user pressure~\citep{Panickssery2024JudgeBias, Wang2024JudgeBias, Fanous2025SycEval}.
+
+\textbf{Mitigation.} DeepSeek-R1 is chosen deliberately for family-disjointness from every pipeline SLM. The 60-pair five-annotator human evaluation (three author-team + two independent, all calibrated) (Section~\ref{sec:results_human_eval}) reports $\kappa_{\textsf{quad}} = 0.074$ between the judge and the majority human rating, placing the judge in Landis and Koch's ``slight'' band at fine resolution while it matches the pairwise human within-1 agreement rate ($91.7\%$) at coarser resolution. All disagreements documented in Section~\ref{sec:discussion_rq2} include the judge as one signal; disagreements are attributed to the judge--metric pair, not to the judge alone.
+
+\textbf{Residual risk.} The judge's category-exact reliability against humans is weak ($\kappa_{\textsf{quad}} = 0.074$); the strict-AND policy that pairs judge and metric on every closure decision is the mitigation. Claims in this paper that depend on the judge's rating (Section~\ref{sec:discussion_rq2}, Section~\ref{sec:discussion_rq4}) are stated as ``the judge disagrees with the metric'' or ``the judge accepts equivalence'' rather than as ``the artifacts are semantically equivalent''.
+
+The choice of DeepSeek-R1:14B as judge is unusual --- prior LLM-as-judge protocols~\citep[e.g.,][and successors]{Zheng2023LLMJudge} predominantly use frontier judges (GPT-4-class or Claude Sonnet/Opus-class) on the argument that judge quality correlates with model capability. Our choice is motivated by open-weight reproducibility: the entire evaluation stack can be re-run without proprietary API access. To test whether the low $\kappa_{\textsf{quad}} = 0.074$ against humans reflects a property specific to DeepSeek-R1:14B or a general LLM-as-judge limitation, we replayed the same 60-pair sample under three frontier judges (GPT-4o-mini, Claude Haiku 4.5, Llama-3.3-70B-Instruct) using an identical prompt via OpenRouter. The results support the general-limitation hypothesis. Against the 5-way human-majority ground truth, frontier judges attain $\kappa_{\textsf{quad}} \in \{0.019, 0.161, 0.199\}$ --- comparable to or worse than DeepSeek-R1:14B's $0.074$. All four judges fall in Landis and Koch's ``slight'' band; none reach ``moderate''. However, judges agree with \emph{each other} much more strongly: frontier-vs-frontier $\kappa_{\textsf{quad}} \in \{0.68, 0.69, 0.70\}$ and frontier-vs-DeepSeek $\kappa_{\textsf{quad}} \in \{0.43, 0.43, 0.49\}$. The four LLM judges form a coherent cluster in rating space that is only weakly correlated with human semantic-equivalence judgment. A directional asymmetry also emerges: DeepSeek-R1 over-rates relative to humans (mean~$3.28$ vs.\ human $3.20$), while all three frontier judges under-rate (means $2.40$--$2.68$). This mitigates the residual risk of the DeepSeek-R1 choice as a limitation of \emph{this} paper but simultaneously raises a broader concern about the LLM-as-judge paradigm itself for fine-resolution ordinal semantic-equivalence rating, which we return to in Section~\ref{sec:conclusion}.
+
+\paragraph{The strict-AND validity policy}
+
+\textbf{Threat.} The two-signal strict-AND validity policy (Eqs.~\ref{eq:valid1}--\ref{eq:valid3}) is one of many possible ways to combine the automated metric and the judge rating. Alternative policies (metric-OR-judge, weighted combination, judge-only) would produce different closure counts.
+
+\textbf{Mitigation.} Section~\ref{sec:experiment_setup_sensitivity} reports sensitivity analysis over $(\tau, \rho)$ combinations, showing that Path~1 conclusions are robust to threshold choice. The strict-AND policy is disclosed as a deliberate choice in Section~3.3 and its analytical role (surfacing disagreements as the false-closure-candidate and metric-false-negative categories in Section~\ref{sec:discussion_rq2}) is documented.
+
+\textbf{Residual risk.} Reviewers advocating a permissive validity policy (metric-OR-judge) would obtain higher closure counts and softer between-cell contrasts.
+
+\subsection{Conclusion validity}
+
+Conclusion-validity threats concern whether the statistical inferences reported in Section~\ref{sec:results} are sound.
+
+\paragraph{Sample size and statistical power}
+
+\textbf{Threat.} Mono cells were run on $N = 150$ core samples; hetero and null cells on $N = 75$ samples each. The unbalanced design gives narrower confidence intervals to mono cells than to hetero and null cells.
+
+\textbf{Mitigation.} The Tukey pairwise tests use the harmonic-mean sample size (Eq.~\ref{eq:tukey}) to handle the unbalanced design. Per-cell confidence intervals for hetero cells are reported in Table~\ref{tab:closure_rate_matrix}. Effect sizes are computed with partial $\eta^2$, which is sample-size-invariant.
+
+\textbf{Residual risk.} Hetero-cell effect estimates are noisier than mono-cell estimates. Consequently, the ``no significant Tukey pair between H6 and M3'' finding (Section~\ref{sec:results_mono_vs_hetero}) could reflect either genuine equivalence or insufficient power at the hetero sample size. A follow-up study with $N = 150$ on hetero cells would tighten this.
+
+\paragraph{ANOVA assumptions}
+
+\textbf{Threat.} ANOVA (Eq.~\ref{eq:anova}) assumes homoscedasticity and normality of residuals. Closure rates are bounded in $[0, 1]$ and can exhibit ceiling effects, potentially violating homoscedasticity.
+
+\textbf{Mitigation.} Under Type-III sums of squares the four effects in the interaction ANOVA (Table~\ref{tab:anova_interaction}) are of comparable magnitude (partial $\eta^2 \in \{0.042, 0.044, 0.046, 0.234\}$ for path, cell, interaction, and sample respectively), so an F-test robustness argument based on a dominant term is not available. Instead, we validate the interaction against response-scale heterogeneity by re-fitting three separate per-path rank-transformed ANOVAs (Section~\ref{sec:results_stage_attribution}), which use bounded ranked responses within each path and are therefore homoscedastic by construction. The cell main effect is significant on every path independently with partial $\eta^2 \in [0.14, 0.23]$ --- stronger than the stacked interaction --- so the interaction is not a response-scale artifact. The Tukey pairwise test is more sensitive to heteroscedasticity but our reported significant pairs are all far below the significance threshold.
+
+\textbf{Residual risk.} The mixed-effects specification of Eq.~\ref{eq:mixedlogit} is now reported in Section~\ref{sec:results_mixed_logit} (Table~\ref{tab:mixed_logit}); its per-stage coefficients on strict-AND valid closure ($V$) converge qualitatively with the ANOVA on the metric mean ($\bar{Y}$): the test-stage substitutions (phi-4, mistral-small, llama3.2) carry the significant per-stage attribution while spec and code substitutions are largely null at $\alpha = 0.05$. Reviewers preferring the mixed-effects logit as the primary analysis have the coefficients directly available.
+
+\subsection{Pre-registration deviations}
+
+\textbf{Deviations from the concept-note pre-registration disclosed here for transparency:}
+
+\begin{itemize}
+  \item \textbf{Closed-weight cells scope-narrowed.} M5, H2, H8 were initially explored as closed-weight cells; the swept versions instantiate them with open-weight variants (M5 as Mistral, H2 as qwen3.6/phi-4/qwen-coder, H8 as gemma-4/qwen-coder/mistral) to keep the entire evaluation stack open-weight. The closed-weight ceiling comparison is left to future work (Section~\ref{sec:conclusion}).
+  \item \textbf{Model family lineup.} The concept note listed qwen3.5:9B, llama3.3:70B; the swept lineup uses qwen3.6:27B, gemma4:26B, mistral-small3.2:24B. The change reflects the models available at sweep time (2026-06 to 2026-07).
+  \item \textbf{Sample size asymmetric.} Concept note specified 150 per cell across all strata; swept as 150 mono, 75 hetero and null.
+  \item \textbf{Held-out subsets partially swept.} The 25-sample HumanEval-Mutated subset was swept on H1 and M3 (Section~\ref{sec:results_contamination}). The complementary 25-problem LiveCodeBench post-cutoff subset was prepared per pre-registration but blocked at load time by a HuggingFace \texttt{datasets} library incompatibility; a full post-cutoff replication remains future work.
+  \item \textbf{Human evaluation reported in addendum.} The 60-pair five-annotator study is reported in Section~\ref{sec:results_human_eval}, which post-dates the initial revision.
+  \item \textbf{Annotator count grew from three to five.} The concept-note pre-registered a three-annotator study (all author-team). During review of the interim results, we added two annotators independent of the pipeline runners to test whether the three-way inter-rater $\alpha_{\textsf{ord}} = 0.376$ was inflated by shared calibration. The five-way $\alpha_{\textsf{ord}} = 0.193$ answers the question empirically and is now the reported headline (Section~\ref{sec:human_eval_agreement_results}).
+\end{itemize}
+
+Every deviation is disclosed in this paper and reflected in the source-controlled DOE table, the pre-registered concept note, and the sweep TSV timestamps included in the replication package. No results were re-planned in light of the observed data.

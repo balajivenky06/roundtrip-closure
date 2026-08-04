@@ -37,6 +37,7 @@
 \usepackage{multirow}
 \usepackage{float}    % anchors figures at source, prevents cas-sc float clustering
 \usepackage{capt-of}  % allows non-floating figure captions via \captionof
+\usepackage{needspace} % forces page-break-before if figure won't fit
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds}
 
@@ -210,9 +211,10 @@ design of experiments
 \input{section_5_results.tex}
 \input{section_6_discussion.tex}
 \input{section_7_conclusion.tex}
-%% §6 Threats and §8 Human-eval addendum previously stood alone; their content
-%% is now folded into §6.5 (Limitations) and §5.10 (Human evaluation results)
-%% respectively.
+\input{section_8_limitations.tex}
+%% §8 (Limitations and threats to validity) was moved out of §6.8 to appear
+%% post-Conclusion, following the venue convention where threats-to-validity
+%% analysis sits after the main narrative rather than interrupting it.
 
 %% ============================================================================
 %% End matter — CoI, Acknowledgements, Funding, Ethics, Data availability
