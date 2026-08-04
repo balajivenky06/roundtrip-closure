@@ -1,0 +1,42 @@
+\section{Per-benchmark stability and rank-transformed robustness}
+\label{sec:appendix_stability}
+
+This appendix carries the two supporting analyses that establish the
+Section~\ref{sec:results} findings hold across (a) source benchmarks
+(HumanEval vs.\ MBPP) and (b) response-scale transformations.
+
+\subsection{Per-benchmark decomposition}
+\label{sec:appendix_per_benchmark}
+\label{sec:results_per_benchmark_decomp}
+
+\input{../tables/tab_per_benchmark.tex}
+
+Table~\ref{tab:per_benchmark} decomposes the cell effect by source
+benchmark. On HumanEval ($n = 1{,}652$), $F(19, 1632) = 5.06$,
+$p < 0.001$; on MBPP ($n = 4{,}238$), $F(19, 4218) = 8.91$, $p < 0.001$.
+Cell assignment is a significant predictor on both benchmarks, with
+MBPP showing a stronger effect --- consistent with MBPP's shorter and
+more uniform problem structure making per-cell differences more
+measurable. The most striking benchmark-specific effect surfaces not
+in the aggregate closure rate but in the Path~3 judge--metric
+decomposition (Section~\ref{sec:discussion_rq2}), which flips
+direction between HumanEval and MBPP and provides the surface-form
+signature.
+
+\subsection{Per-path rank-transformed ANOVA (response-scale robustness)}
+\label{sec:appendix_rank_transformed}
+
+The stacked ANOVA of Section~\ref{sec:results_path_cell_interaction}
+mixes three different-scale metrics (kill rate $\in [0, 1]$, binary
+pass, rescaled BERTScore $\in (-\infty, 1]$), so the path main effect
+in Table~\ref{tab:anova_interaction} is partly a response-scale
+artifact. To confirm the interaction is not a scale artifact, we
+re-fit per-path rank-transformed ANOVAs (three separate models, cell
+$+$ sample fixed effects, rank-transformed metric as response, which
+is bounded and homoscedastic by construction within each path). The
+cell main effect is significant on every path with even stronger
+effect sizes than the stacked model: Path~1 $F = 22.31$, partial
+$\eta^2 = 0.229$; Path~2 $F = 16.38$, partial $\eta^2 = 0.150$;
+Path~3 $F = 15.73$, partial $\eta^2 = 0.141$. Cell-composition
+differences drive substantial variance in the metric on every path
+independently of the stacking scale.

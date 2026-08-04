@@ -1,0 +1,253 @@
+%% ============================================================================
+%% main.tex — Elsevier CAS (Complex Article Structure) single-column template.
+%%
+%% Target venue: EMSE / IPM (Elsevier). Uses cas-sc (single-column preprint).
+%% Switch to cas-dc for double-column camera-ready if the venue requires it.
+%%
+%% Structure per Elsevier CAS convention:
+%%     1. Highlights (3-5 bullets, ≤ 85 chars each)
+%%     2. Title, short-title, short-authors, tnotes
+%%     3. Authors with orcid + credit (inline)
+%%     4. Affiliations (numeric IDs)
+%%     5. Corresponding-author + footnotes
+%%     6. Abstract + keywords
+%%     7. Body sections
+%%     8. \printcredits (auto-generated from \credit blocks above)
+%%     9. Bibliography
+%%    10. Author bios (optional; disabled below)
+%% ============================================================================
+
+\documentclass[a4paper,fleqn]{cas-sc}
+
+%% Bibliography via natbib (cas-sc does not bundle it)
+\usepackage[authoryear,longnamesfirst]{natbib}
+
+%% -- Math -------------------------------------------------------------------
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{dsfont}         % for \mathds{1}
+
+%% -- Algorithms -------------------------------------------------------------
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+%% -- Tables + figures + graphics --------------------------------------------
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds}
+
+%% -- Hyperlinks + cleveref (after amsmath) ----------------------------------
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{cleveref}
+
+%% -- Fonts + microtype ------------------------------------------------------
+%% cas-sc's default math font has broken glyph slots for common symbols
+%% (× -> İ, ~ -> í, superscript ² dropped) under every pdflatex-compatible
+%% math package we tried (newtxmath, mathptmx, lmodern alone). Fix: compile
+%% with LuaLaTeX + unicode-math, which loads Latin Modern Math (OpenType)
+%% and replaces cas-sc's math setup entirely. Guarded via iftex so pdflatex
+%% still compiles (though with broken glyphs — LuaLaTeX is the supported
+%% target).
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{microtype}
+\usepackage{iftex}
+\ifluatex
+  \usepackage{unicode-math}
+  \setmathfont{Latin Modern Math}
+\fi
+
+%% -- Float placement --------------------------------------------------------
+%% Relax cas-sc's aggressive float defaults, which force floats onto their own
+%% pages and leave large white gaps before section breaks. The plain (non-
+%% ``[section]'') placeins gives us \FloatBarrier as an explicit tool without
+%% barrier-ing every section. Standard float-placement parameters below let
+%% floats share pages with text more freely and prevent nearly-empty pages.
+\usepackage{placeins}
+\renewcommand{\topfraction}{0.9}       % up to 90% of top page can be float
+\renewcommand{\bottomfraction}{0.8}    % up to 80% of bottom
+\renewcommand{\textfraction}{0.1}      % text page needs only 10% text
+\renewcommand{\floatpagefraction}{0.75}% float-only page needs 75% floats
+
+%% -- Colors for placeholders + comments ------------------------------------
+\usepackage{xcolor}
+\newcommand{\PLACEHOLDER}[1]{\textcolor{red!70!black}{\textbf{[TODO: #1]}}}
+
+\begin{document}
+
+\let\WriteBookmarks\relax
+%% Note: cas-sc's built-in \def\floatpagepagefraction and \def\textpagefraction
+%% are misnamed no-ops (the standard names are \floatpagefraction and
+%% \textfraction, set via \renewcommand above). Removed to avoid confusion.
+
+%% ============================================================================
+%% Short-title / short-authors (cas-sc mandatory for running heads)
+%% ============================================================================
+\shorttitle{Heterogeneous multi-SLM round-trip closure}
+\shortauthors{Venktesh~V., Amsaprabhaa~M., Sundaram}
+
+%% ============================================================================
+%% Title + tnotes
+%% ============================================================================
+\title[mode=title]{Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle: A Cross-Stage Empirical Study}
+
+\tnotemark[1]
+\tnotetext[1]{Pre-registered replication package including the 20-cell DOE, the 5{,}890-row sweep TSV, closure-decision + test-filter algorithms with 67 unit tests, and all analysis scripts is publicly available at \url{https://github.com/balajivenky06/roundtrip-closure} under the MIT license.}
+
+%% ============================================================================
+%% Authors with orcid + credit + affiliations
+%% ============================================================================
+\author[1]{Balaji Venktesh~V.}[
+    type=editor,
+    orcid=0000-0000-0000-0000,
+    ]
+\cormark[1]
+\ead{balaji23610040@snuchennai.edu.in}
+\credit{Conceptualization, Methodology, Software, Formal analysis, Investigation, Data curation, Writing --- original draft, Writing --- review \& editing, Visualization, Project administration}
+
+\author[1]{Amsaprabhaa~M.}[
+    orcid=0000-0000-0000-0000,
+    ]
+\ead{amsaprabhaam@snuchennai.edu.in}
+\credit{Conceptualization, Methodology, Supervision, Resources, Writing --- review \& editing, Project administration, Funding acquisition}
+
+\author[1]{Gireesh Sundaram}[
+    orcid=0000-0000-0000-0000,
+    ]
+\ead{gireesh23610036@snuchennai.edu.in}
+\credit{Methodology, Software, Validation, Writing --- review \& editing}
+
+\cortext[cor1]{Corresponding author.}
+
+\affiliation[1]{organization={Department of Computer Science and Engineering, Shiv Nadar University},
+                city={Chennai},
+                state={Tamil Nadu},
+                postcode={603110},
+                country={India}}
+
+%% ============================================================================
+%% Abstract (≤ 250 words for IPM cap; EMSE more generous)
+%% ============================================================================
+\begin{abstract}
+Do multi-stage Small-Language-Model (SLM) pipelines for software
+engineering depend on which SLM sits at which stage? We report the
+first cross-LLM $\times$ cross-stage evaluation of round-trip closure
+on the docstring--test--code triangle, using a pre-registered 20-cell
+design across six open-weight SLMs on 150 HumanEval/MBPP functions.
+Closure is decided under a strict two-signal policy combining an
+SE-validated metric (mutation kill rate, reference test pass rate, or
+BERTScore F1) with an external judge SLM (DeepSeek-R1). Five findings
+emerge. First, the H1 composition (phi-4 spec + qwen-coder test/code)
+empirically leads on four of five mutation operators (two operator wins
+with tight Wilson 95\% CIs, two consistent-with-dominance at smaller
+mutant counts). Second, phi-4
+in the test stage produces filter-failing tests on ${\sim}50\%$ of
+samples across three cells---invisible in single-stage evaluations.
+Third, BERTScore F1 is only weakly correlated per benchmark with the
+judge on the docstring path ($r^2 \leq 0.045$; both benchmarks),
+with a categorical disagreement flip across benchmarks
+($\chi^2 = 368$, $p < 0.001$). Fourth, the three closure paths carry
+non-redundant information ($F(36, 4867) = 6.47$, partial
+$\eta^2 = 0.046$). Fifth, well-composed hetero cells preserve
+$76$--$91\%$ of the strongest mono baseline; poorly-composed cells
+collapse. A frontier-judge replay confirms weak judge--human agreement
+is a general LLM-as-judge property, and a HumanEval-Mutated
+decontamination re-sweep shows behavioral-path closure rates hold or
+improve under function-rename + docstring-paraphrase. We derive three
+design guidelines and release an open replication package with 67
+unit tests.
+\end{abstract}
+
+%% ============================================================================
+%% Highlights (mandatory; 3-5 bullets, ≤ 85 chars each)
+%% ============================================================================
+\begin{highlights}
+\item First cross-LLM $\times$ cross-stage study of round-trip closure in SE pipelines
+\item Pre-registered 20-cell DOE across six open-weight SLMs on HumanEval and MBPP
+\item H1 (phi-4 spec + qwen-coder test/code) leads on 4 of 5 mutation operators (Wilson 95\% CIs)
+\item BERTScore only weakly agrees with judge equivalence on Path 3 ($r^2 \leq 0.045$ per benchmark)
+\item Weak LLM-judge agreement with humans is general, not DeepSeek-R1-specific
+\end{highlights}
+
+%% ============================================================================
+%% Keywords
+%% ============================================================================
+\begin{keywords}
+Small Language Models \sep
+round-trip closure \sep
+unit test generation \sep
+mutation testing \sep
+LLM-as-judge \sep
+empirical software engineering \sep
+open-weight language models \sep
+design of experiments
+\end{keywords}
+
+\maketitle
+
+%% ============================================================================
+%% Body sections
+%% ============================================================================
+
+\input{section_1_introduction.tex}
+\input{section_2_related_work.tex}
+
+%% §3 Framework (paths, validity, filter, metrics) and §4 Experiment Setup
+%% (DOE, datasets, statistics, sensitivity, human-eval protocol) are separated
+%% following Elsevier convention. equations_and_algorithms.tex is kept in the
+%% repo as an author-facing reference sheet but NOT \input here — the
+%% equations that appear in the paper live in §3 and §4.
+
+\input{section_3_framework.tex}
+\input{section_4_experiment_setup.tex}
+\input{section_5_results.tex}
+\input{section_6_discussion.tex}
+\input{section_7_conclusion.tex}
+%% §6 Threats and §8 Human-eval addendum previously stood alone; their content
+%% is now folded into §6.5 (Limitations) and §5.10 (Human evaluation results)
+%% respectively.
+
+%% ============================================================================
+%% End matter — CoI, Acknowledgements, Funding, Ethics, Data availability
+%%
+%% NOTE: the CRediT authorship contribution statement is now auto-generated
+%% by \printcredits below (populated from the per-author \credit{...} macros
+%% in the frontmatter). The redundant manual CRediT section in
+%% section_end_matter.tex remains as a fallback for non-cas-sc classes but
+%% is skipped in the CAS build via the guard below — cas-sc's
+%% \printcredits injects it automatically.
+%% ============================================================================
+%% ============================================================================
+%% Appendices — detailed material moved out of the main body to reduce
+%% reader load. Every appendix is pointed to from the main body where its
+%% content would otherwise have appeared.
+%%   A: Strict-AND policy ablation (60-pair FPR/FNR + cost-sensitive loss)
+%%   B: Per-benchmark stability + per-path rank-transformed robustness ANOVAs
+%%   E: Threshold sensitivity grid + V' conditional-on-metric denominator
+%%   F: Cohen's kappa + Krippendorff's alpha formulas; post-hoc protocols
+%%   G: Full human-evaluation protocol
+%% ============================================================================
+\appendix
+\input{section_appendix_strict_and.tex}
+\input{section_appendix_B_stability.tex}
+\input{section_appendix_E_threshold.tex}
+\input{section_appendix_F_methodology.tex}
+\input{section_appendix_G_humaneval.tex}
+
+\input{section_end_matter.tex}
+
+%% CAS-native auto-generated CRediT block (from \credit macros above)
+\printcredits
+
+%% ============================================================================
+%% Bibliography
+%% ============================================================================
+\bibliographystyle{cas-model2-names}
+\bibliography{references}
+
+\end{document}

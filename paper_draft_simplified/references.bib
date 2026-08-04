@@ -1,0 +1,484 @@
+%% references.bib — Chapter 3 manuscript bibliography.
+%%
+%% Entries are grouped by section that first cites them. Fill in venue-full
+%% details (volume, pages) before final submission.
+
+%% ============================================================================
+%% Round-trip and consistency evaluation of LLMs (§2.3)
+%% ============================================================================
+
+@inproceedings{Allamanis2024RTC,
+  author    = {Allamanis, Miltiadis and Panthaplackel, Sheena and Yin, Pengcheng},
+  title     = {Unsupervised Evaluation of Code {LLM}s with Round-Trip Correctness},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  year      = {2024},
+  note      = {arXiv:2402.08699},
+}
+
+@article{Zhang2025CodingTriangle,
+  author  = {Zhang, Taolin and Chen, Xinshu and Chen, Yiran and Zhu, Yuxin and He, Junyu and Sun, Chengyu and Xu, Zhihuan and Wu, Zenan and Fu, Wei and Wang, Tao},
+  title   = {Coding Triangle: How Does Large Language Model Understand Code?},
+  journal = {arXiv preprint arXiv:2507.06138},
+  year    = {2025},
+}
+
+@article{Tian2024MBCT,
+  author  = {Tian, Zhouyang and Chen, Junjie and Hu, Qi and Xie, Xiaoyu and Shen, Boyuan and Zhang, Yingfei},
+  title   = {Mutation-Based Consistency Testing for Evaluating the Code Understanding Capability of {LLM}s},
+  journal = {arXiv preprint arXiv:2401.05940},
+  year    = {2024},
+}
+
+%% ============================================================================
+%% LLM-based test generation and SBST (§2.1)
+%% ============================================================================
+
+@inproceedings{Fraser2011EvoSuite,
+  author    = {Fraser, Gordon and Arcuri, Andrea},
+  title     = {{EvoSuite}: Automatic Test Suite Generation for Object-Oriented Software},
+  booktitle = {Proc. ESEC/FSE},
+  year      = {2011},
+}
+
+@article{Lukasczyk2022Pynguin,
+  author  = {Lukasczyk, Stephan and Fraser, Gordon},
+  title   = {Pynguin: Automated Unit Test Generation for {Python}},
+  journal = {IEEE/ACM International Conference on Software Engineering (ICSE)},
+  year    = {2022},
+}
+
+@inproceedings{Schafer2023LLMTest,
+  author    = {Sch{\"a}fer, Max and others},
+  title     = {An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation},
+  booktitle = {Proc. ICSE},
+  year      = {2023},
+}
+
+@inproceedings{Tufano2022LLMTest,
+  author    = {Tufano, Michele and others},
+  title     = {Unit Test Case Generation with Transformers and Focal Context},
+  booktitle = {Proc. IEEE International Conference on Software Testing},
+  year      = {2022},
+}
+
+@article{Dakhel2024MuTAP,
+  author  = {Dakhel, Arghavan Moradi and Nikanjam, Amin and Majdinasab, Vahid and Khomh, Foutse and Desmarais, Michel C.},
+  title   = {Effective Test Generation Using Pre-trained Large Language Models and Mutation Testing},
+  journal = {Information and Software Technology},
+  volume  = {171},
+  year    = {2024},
+  note    = {arXiv:2308.16557},
+}
+
+@inproceedings{Chen2023CodeT,
+  author    = {Chen, Bei and Zhang, Fengji and Nguyen, Anh and Zan, Daoguang and Lin, Zeqi and Lou, Jian-Guang and Chen, Weizhu},
+  title     = {{CodeT}: Code Generation with Generated Tests},
+  booktitle = {The Eleventh International Conference on Learning Representations (ICLR)},
+  year      = {2023},
+  note      = {arXiv:2207.10397},
+}
+
+@inproceedings{Xie2024ChatUniTest,
+  author    = {Xie, Zejun and Chen, Yanlin and Zhang, Chunrong and Xu, Jiazheng and Kong, Weisong and Yao, Yongjie and Zang, Zan and Ma, Yuchi and Chen, Junjie},
+  title     = {{ChatUniTest}: A ChatGPT-based Automated Unit Test Generation Tool},
+  booktitle = {Proc.\ ACM International Conference on the Foundations of Software Engineering (FSE), Demo Track},
+  year      = {2024},
+  note      = {arXiv:2305.04764},
+}
+
+@article{Schafer2024TestPilot,
+  author  = {Sch{\"a}fer, Max and Nadi, Sarah and Eghbali, Aryaz and Tip, Frank},
+  title   = {An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation},
+  journal = {IEEE Transactions on Software Engineering},
+  volume  = {50},
+  number  = {1},
+  year    = {2024},
+  note    = {TestPilot; extended arXiv:2302.06527},
+}
+
+@inproceedings{Huang2024AgentCoder,
+  author    = {Huang, Dong and Bu, Qingwen and Zhang, Jie and Luck, Michael and Cui, Heming},
+  title     = {{AgentCoder}: Multi-Agent-based Code Generation with Iterative Testing and Optimisation},
+  booktitle = {arXiv preprint arXiv:2312.13010},
+  year      = {2024},
+}
+
+@article{Dong2024SelfCollaboration,
+  author  = {Dong, Yihong and Jiang, Xue and Jin, Zhi and Li, Ge},
+  title   = {Self-Collaboration Code Generation via {ChatGPT}},
+  journal = {ACM Transactions on Software Engineering and Methodology},
+  year    = {2024},
+  note    = {arXiv:2304.07590},
+}
+
+@article{Andrews2005MutationAnalysis,
+  author  = {Andrews, James H. and Briand, Lionel C. and Labiche, Yvan},
+  title   = {Is Mutation an Appropriate Tool for Testing Experiments?},
+  journal = {IEEE Trans. Software Engineering},
+  year    = {2005},
+}
+
+@inproceedings{Just2014MutationAnalysis,
+  author    = {Just, Ren{\'e} and others},
+  title     = {Are Mutants a Valid Substitute for Real Faults in Software Testing?},
+  booktitle = {Proc. FSE},
+  year      = {2014},
+}
+
+%% ============================================================================
+%% RAG and LLM-based docstring generation (§2.2)
+%% ============================================================================
+
+@article{Lewis2020RAG,
+  author  = {Lewis, Patrick and others},
+  title   = {Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks},
+  journal = {NeurIPS},
+  year    = {2020},
+}
+
+@article{Liu2024RAGSurvey,
+  author  = {Liu, Junyi and Ma, Yaozhen and Han, Rundong and Zheng, Xiaoyi and Zhang, Ge and Sun, Kai},
+  title   = {A Survey of Retrieval-Augmented Generation for Code Tasks},
+  journal = {arXiv preprint arXiv:2408.15694},
+  year    = {2024},
+}
+
+@article{Zhang2023RAGCode,
+  author  = {Zhang, Fengji and Chen, Bei and Zhang, Yue and Keung, Jacky and Liu, Jin and Zan, Daoguang and Mao, Yi and Lou, Jian-Guang and Chen, Weizhu},
+  title   = {{RepoCoder}: Repository-Level Code Completion Through Iterative Retrieval and Generation},
+  journal = {arXiv preprint arXiv:2303.12570},
+  year    = {2023},
+}
+
+%% ============================================================================
+%% LLM-as-judge protocols (§2.4)
+%% ============================================================================
+
+@article{Zheng2023LLMJudge,
+  author  = {Zheng, Lianmin and others},
+  title   = {Judging {LLM}-as-a-Judge with {MT}-Bench and Chatbot Arena},
+  journal = {arXiv preprint},
+  year    = {2023},
+  note    = {arXiv:2306.05685},
+}
+
+@article{Panickssery2024JudgeBias,
+  author  = {Panickssery, Aditya and others},
+  title   = {{LLM} Evaluators Recognize and Favor Their Own Generations},
+  journal = {arXiv preprint},
+  year    = {2024},
+}
+
+@article{Wang2024JudgeBias,
+  author  = {Wang, Peiyi and Li, Lei and Chen, Liang and Cai, Zefan and Zhu, Dawei and Lin, Binghuai and Cao, Yunbo and Liu, Qi and Liu, Tianyu and Sui, Zhifang},
+  title   = {Large Language Models are not Fair Evaluators},
+  journal = {arXiv preprint arXiv:2305.17926},
+  year    = {2024},
+}
+
+@article{Fanous2025SycEval,
+  author  = {Fanous, Ahmed and others},
+  title   = {{SycEval}: Evaluating {LLM} Sycophancy},
+  journal = {arXiv preprint},
+  year    = {2025},
+}
+
+@inproceedings{Du2023MAD,
+  author    = {Du, Yilun and Li, Shuang and Torralba, Antonio and Tenenbaum, Joshua B. and Mordatch, Igor},
+  title     = {Improving Factuality and Reasoning in Language Models through Multiagent Debate},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning (ICML)},
+  year      = {2024},
+  note      = {arXiv:2305.14325},
+}
+
+@article{Wynn2025DebateHarm,
+  author  = {Wynn, Alexandra R. and Farhat, Mohamed Abdelfattah and Ackerman, Rachel Freedman},
+  title   = {Multi-Agent Debate Can Be Actively Harmful},
+  journal = {arXiv preprint arXiv:2502.05374},
+  year    = {2025},
+}
+
+%% ============================================================================
+%% Multi-agent architectural specialisation (§2.5)
+%% ============================================================================
+
+@article{Bai2022ConstitutionalAI,
+  author  = {Bai, Yuntao and others},
+  title   = {Constitutional {AI}: Harmlessness from {AI} Feedback},
+  journal = {Anthropic technical report},
+  year    = {2022},
+  note    = {arXiv:2212.08073},
+}
+
+@article{Xiong2025DelphiAgent,
+  author  = {Xiong, Miao and Miao, Ning and Zhang, Yifan and Pang, Tianyu and Du, Chao and Zhou, Zhewei and Ye, Jiancheng and Wang, Jing and Kwok, James T. and Kim, Jae Jin and Weld, Daniel S.},
+  title   = {{DelphiAgent}: Fact Verification via Multi-Agent Consensus},
+  journal = {arXiv preprint arXiv:2510.14371},
+  year    = {2025},
+}
+
+@article{Meier2025CausalDelphi,
+  author  = {Meier, Fabian and Loechner, Thomas and Zimmermann, Cornelius},
+  title   = {Multi-Agent Delphi for Causal Discovery with Specialised Language Models},
+  journal = {arXiv preprint arXiv:2504.19571},
+  year    = {2025},
+}
+
+%% ============================================================================
+%% Benchmarks (§3.7)
+%% ============================================================================
+
+@article{Chen2021HumanEval,
+  author  = {Chen, Mark and others},
+  title   = {Evaluating Large Language Models Trained on Code},
+  journal = {arXiv preprint},
+  year    = {2021},
+  note    = {arXiv:2107.03374 (HumanEval)},
+}
+
+@article{Austin2021MBPP,
+  author  = {Austin, Jacob and others},
+  title   = {Program Synthesis with Large Language Models},
+  journal = {arXiv preprint},
+  year    = {2021},
+  note    = {arXiv:2108.07732 (MBPP)},
+}
+
+@inproceedings{Zhang2020BERTScore,
+  author    = {Zhang, Tianyi and Kishore, Varsha and Wu, Felix and Weinberger, Kilian Q. and Artzi, Yoav},
+  title     = {{BERTScore}: Evaluating Text Generation with {BERT}},
+  booktitle = {The Eighth International Conference on Learning Representations (ICLR)},
+  year      = {2020},
+  note      = {arXiv:1904.09675},
+}
+
+%% ============================================================================
+%% Statistical methods (§3.8, §6)
+%% ============================================================================
+
+@book{Cohen2013StatPower,
+  author    = {Cohen, Jacob},
+  title     = {Statistical Power Analysis for the Behavioral Sciences},
+  edition   = {2nd},
+  publisher = {Routledge},
+  year      = {2013},
+}
+
+@book{Wohlin2012ExperimentSE,
+  author    = {Wohlin, Claes and others},
+  title     = {Experimentation in Software Engineering},
+  publisher = {Springer},
+  year      = {2012},
+}
+
+@article{Brand2015CRediT,
+  author  = {Brand, Amy and others},
+  title   = {Beyond authorship: attribution, contribution, collaboration, and credit},
+  journal = {Learned Publishing},
+  year    = {2015},
+}
+
+@article{Marzi2024KrippendorffAlpha,
+  author  = {Marzi, Giacomo and Balzano, Marco and Marchiori, Davide},
+  title   = {K-Alpha Calculator---Krippendorff's Alpha Calculator: A user-friendly tool for computing Krippendorff's Alpha inter-rater reliability coefficient},
+  journal = {MethodsX},
+  volume  = {12},
+  year    = {2024},
+  note    = {102545, doi:10.1016/j.mex.2023.102545},
+}
+
+%% ============================================================================
+%% Small Language Models used in the DOE (§3.6)
+%% Note: these entries cite the model release cards; final BibTeX should
+%% reference the model's original technical report or blog post where
+%% available. Placeholders below.
+%% ============================================================================
+
+@techreport{Llama32,
+  author      = {Meta {AI}},
+  title       = {Llama 3.2 Technical Report},
+  institution = {Meta},
+  year        = {2024},
+  note        = {llama3.2:3b Ollama tag},
+}
+
+@techreport{Phi4,
+  author      = {Microsoft Research},
+  title       = {Phi-4 Technical Report},
+  institution = {Microsoft},
+  year        = {2024},
+  note        = {phi4:14b Ollama tag},
+}
+
+@techreport{Qwen36,
+  author      = {Alibaba {DAMO} Academy},
+  title       = {Qwen3.6 Technical Report},
+  institution = {Alibaba},
+  year        = {2026},
+  note        = {qwen3.6:27b Ollama tag},
+}
+
+@techreport{Gemma4,
+  author      = {Google DeepMind},
+  title       = {Gemma 4 Technical Report},
+  institution = {Google DeepMind},
+  year        = {2026},
+  note        = {gemma4:26b Ollama tag; MoE architecture},
+}
+
+@techreport{MistralSmall,
+  author      = {Mistral {AI}},
+  title       = {Mistral-Small-3.2 24B Instruct},
+  institution = {Mistral AI},
+  year        = {2025},
+  note        = {mistral-small3.2:24b Ollama tag},
+}
+
+@techreport{QwenCoder,
+  author      = {Alibaba {DAMO} Academy},
+  title       = {Qwen3-Coder: Code-Specialised Language Model},
+  institution = {Alibaba},
+  year        = {2025},
+  note        = {qwen3-coder:30b Ollama tag; MoE architecture},
+}
+
+@techreport{DeepSeekR1,
+  author      = {DeepSeek {AI}},
+  title       = {DeepSeek-R1: Reasoning-Tuned Language Model},
+  institution = {DeepSeek},
+  year        = {2025},
+  note        = {deepseek-r1:14b Ollama tag; used as external judge SLM},
+}
+
+@article{Lacoste2019MLCO2Emissions,
+  author  = {Lacoste, Alexandre and Luccioni, Alexandra and Schmidt, Victor and Dandres, Thomas},
+  title   = {Quantifying the Carbon Emissions of Machine Learning},
+  journal = {arXiv preprint arXiv:1910.09700},
+  year    = {2019},
+  note    = {MLCO$_2$ Machine Learning Impact Calculator},
+}
+
+%% ============================================================================
+%% Recent LLM-for-SE + LLM-as-judge + benchmarks (2025-2026)
+%% ============================================================================
+
+@inproceedings{Jain2025LiveCodeBench,
+  author    = {Jain, Naman and Han, King and Gu, Alex and Li, Wen-Ding and Yan, Fanjia and Zhang, Tianjun and Wang, Sida and Solar-Lezama, Armando and Sen, Koushik and Stoica, Ion},
+  title     = {LiveCodeBench: Holistic and Contamination-Free Evaluation of Large Language Models for Code},
+  booktitle = {The Thirteenth International Conference on Learning Representations},
+  year      = {2025},
+  note      = {arXiv:2403.07974},
+}
+
+@inproceedings{Zhuo2025BigCodeBench,
+  author    = {Zhuo, Terry Yue and Vu, Minh Chien and Chim, Jenny and Hu, Han and Yu, Wenhao and Widyasari, Ratnadira and Yusuf, Imam Nur Bani and Zhan, Haolan and He, Junda and Paul, Indraneil and others},
+  title     = {{BigCodeBench}: Benchmarking Code Generation with Diverse Function Calls and Complex Instructions},
+  booktitle = {The Thirteenth International Conference on Learning Representations},
+  year      = {2025},
+  note      = {arXiv:2406.15877},
+}
+
+@article{Gu2025CruxEval,
+  author  = {Gu, Alex and Rozi{\`e}re, Baptiste and Leather, Hugh and Solar-Lezama, Armando and Synnaeve, Gabriel and Wang, Sida I.},
+  title   = {{CRUXEval}: A Benchmark for Code Reasoning, Understanding and Execution},
+  journal = {Journal of Machine Learning Research},
+  volume  = {26},
+  year    = {2025},
+  note    = {arXiv:2401.03065},
+}
+
+@inproceedings{Li2025MultiAgentBench,
+  author    = {Li, Kevin and Liu, Yang and Zhang, Yuanzhi and Chen, Zhaoyi and Wang, Yang},
+  title     = {A Survey of Multi-Agent LLM Frameworks for Code Generation},
+  booktitle = {2025 IEEE/ACM International Conference on Software Engineering (ICSE)},
+  year      = {2025},
+  publisher = {IEEE},
+}
+
+@inproceedings{Hong2025MetaGPT,
+  author    = {Hong, Sirui and Zhuge, Mingchen and Chen, Jiaqi and Zheng, Xiawu and Cheng, Yuheng and Wang, Jinlin and Zhang, Ceyao and Wang, Zili and Yau, Steven Ka Shing and Lin, Zijuan and others},
+  title     = {{MetaGPT}: Meta Programming for a Multi-Agent Collaborative Framework},
+  booktitle = {The Twelfth International Conference on Learning Representations},
+  year      = {2024},
+}
+
+@inproceedings{Wu2024AutoGen,
+  author    = {Wu, Qingyun and Bansal, Gagan and Zhang, Jieyu and Wu, Yiran and Li, Beibin and Zhu, Erkang and Jiang, Li and Zhang, Xiaoyun and Zhang, Shaokun and Liu, Jiale and Awadallah, Ahmed and White, Ryen and Burger, Doug and Wang, Chi},
+  title     = {{AutoGen}: Enabling Next-Gen {LLM} Applications via Multi-Agent Conversation},
+  booktitle = {COLM 2024},
+  year      = {2024},
+  note      = {arXiv:2308.08155},
+}
+
+@inproceedings{Khattab2024DSPy,
+  author    = {Khattab, Omar and Singhvi, Arnav and Maheshwari, Paridhi and Zhang, Zhiyuan and Santhanam, Keshav and Vardhamanan, Sri and Haq, Saiful and Sharma, Ashutosh and Joshi, Thomas T. and Moazam, Hanna and Miller, Heather and Zaharia, Matei and Potts, Christopher},
+  title     = {{DSPy}: Compiling Declarative Language Model Calls into State-of-the-Art Pipelines},
+  booktitle = {The Twelfth International Conference on Learning Representations},
+  year      = {2024},
+}
+
+@article{Chen2025LLMJudgeSurvey,
+  author  = {Chen, Guiming Hardy and Chen, Shunian and Liu, Ziche and Jiang, Feng and Wang, Benyou},
+  title   = {A Survey on {LLM-as-a-Judge}},
+  journal = {arXiv preprint arXiv:2411.15594},
+  year    = {2025},
+}
+
+@article{Li2025JudgeBench,
+  author  = {Li, Zhen and Fu, Peng and Lin, Yiyi and Yang, Zhen and Xu, Bo and Wang, Suhang and Yang, Jing},
+  title   = {{JudgeBench}: A Benchmark for Evaluating {LLM}-based Judges},
+  journal = {arXiv preprint arXiv:2410.12784},
+  year    = {2025},
+}
+
+@inproceedings{Wei2025BiasJudge,
+  author    = {Wei, Hui and Yang, Shenghua and He, Tianqi and Zhang, Xudong and Lin, Zhicheng and Xie, Pengtao},
+  title     = {Systematic Biases in {LLM} Judges and Effective Mitigation Strategies},
+  booktitle = {Findings of ACL 2025},
+  year      = {2025},
+}
+
+@inproceedings{Balloccu2025LLMDataContamination,
+  author    = {Balloccu, Simone and Schmidtova, Patricia and Lango, Mateusz and Du{\v{s}}ek, Ond{\v{r}}ej},
+  title     = {Leak, Cheat, Repeat: Data Contamination and Evaluation Malpractices in Closed-Source {LLM}s},
+  booktitle = {Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics},
+  year      = {2025},
+}
+
+@article{Sallou2025PreregistrationSE,
+  author  = {Sallou, June and Panichella, Annibale and Zaidman, Andy},
+  title   = {Pre-Registration in Empirical Software Engineering: Motivation, Practice, and Challenges},
+  journal = {Empirical Software Engineering},
+  volume  = {30},
+  year    = {2025},
+}
+
+@article{Dou2025LLMTestSurvey,
+  author  = {Dou, Shihan and Liu, Yueming and Jia, Haoxiang and Zhou, Enyu and Xiong, Limao and Shen, Junjie and Shan, Jun and Huang, Caishuang and Wang, Xiao and Fan, Xiaoran and Wang, Zhiheng and Chen, Muling and Ren, Wentao and Zhu, Chenyang and Zhu, Zhichao and Huang, Yisheng and Zhou, Yuhao and Ru, Dongyue and Chen, Jing and Chen, Weijun and Ye, Xun and Yao, Jing and Cui, Yifan and Zheng, Rui and Zhang, Qi and Huang, Xuanjing},
+  title   = {A Comprehensive Survey of {LLM}-Based Test Case Generation Methods},
+  journal = {IEEE Transactions on Software Engineering},
+  year    = {2025},
+}
+
+@inproceedings{Panichella2024OpenScienceSE,
+  author    = {Panichella, Sebastiano and Panichella, Annibale and Ernst, Neil A.},
+  title     = {Open Science in Empirical Software Engineering: Progress and Roadblocks},
+  booktitle = {ACM Transactions on Software Engineering and Methodology},
+  year      = {2024},
+}
+
+@article{Kang2025LLMHallucinationInCode,
+  author  = {Kang, Sungmin and Lee, Sungjae and Yoo, Shin and Ryu, Sukyoung},
+  title   = {A Quantitative and Qualitative Evaluation of {LLM}-based Code Generation: Beyond Accuracy},
+  journal = {Empirical Software Engineering},
+  volume  = {30},
+  year    = {2025},
+}
+
+@article{Marino2026SelfConsistency,
+  author  = {Marino, Ludovico and Cambronero, Jos{\'e} and Sutton, Charles and Yin, Pengcheng},
+  title   = {Self-Consistency and Round-Trip Evaluation of Large Language Models for Program Synthesis},
+  journal = {Journal of Automated Software Engineering},
+  volume  = {33},
+  year    = {2026},
+}

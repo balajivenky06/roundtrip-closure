@@ -1,0 +1,80 @@
+\section{Introduction}
+\label{sec:introduction}
+
+Automated software-engineering pipelines built on top of Small Language Models (SLMs) are increasingly deployed as multi-stage systems: a model generates a specification (docstring) from code, a second model generates unit tests from the specification, and a third model reconstructs code from the specification and tests. Practitioners assembling such pipelines face a concrete question with no empirically-grounded answer: \emph{should I use the same SLM for documentation, test generation, and code synthesis, or should I specialize by stage?} Existing evaluations of LLM-based software-engineering tools either report on individual stages in isolation (LLM-for-docstring-generation~\citep{Liu2024RAGSurvey}; LLM-for-test-generation~\citep{Schafer2023LLMTest, Tufano2022LLMTest}; LLM-for-code-synthesis~\citep{Chen2021HumanEval}) or evaluate self-consistency within a single LLM across multiple stages~\citep{Allamanis2024RTC, Zhang2025CodingTriangle}. \emph{No published study has measured cross-stage semantic preservation when stages are owned by different LLM families, under a software-engineering-validated defect-detection metric.} The present study addresses this gap.
+
+\subsection{The docstring--test--code closure question}
+
+For each Python function $f$ in a benchmark, three artifacts are canonically associated: the code $C$ (the function body), the docstring $D$ (a natural-language specification), and the reference test suite $T$ (a set of pytest cases exercising~$C$). Together these artifacts form a triangle, and each edge of the triangle can be traversed by a generative pipeline. The pipeline is said to \emph{close} the triangle on a traversal when the reconstructed artifact is semantically equivalent to the original.
+
+We define three closure paths:
+\begin{itemize}
+  \item \textbf{Path 1 (}$C \to D \to T$\textbf{):} an SLM generates a docstring from the code; a second SLM generates tests from that docstring; we measure whether those tests catch defects introduced in the original code.
+  \item \textbf{Path 2 (}$D \to T \to C$\textbf{):} an SLM generates tests from the original docstring; a second SLM reconstructs code from the docstring and generated tests; we measure whether the reconstructed code passes the original reference tests.
+  \item \textbf{Path 3 (}$C \to T \to D$\textbf{):} an SLM generates tests from the code; a second SLM recovers a docstring from those tests; we measure whether the recovered docstring is semantically equivalent to the original.
+\end{itemize}
+
+Each path is measured by an SE-validated automated metric (mutation kill rate on Path~1, reference-test pass rate on Path~2, docstring BERTScore F1 on Path~3) paired with an external judge SLM's semantic-equivalence rating.
+
+The central research question is whether the mapping of specific SLMs to specific stages of the pipeline matters --- and if so, in what direction, at what magnitude, and with what per-stage attribution.
+
+\subsection{Research questions}
+
+This paper addresses four research questions. A fifth question motivated by the same DOE --- comparing open-weight closure rates to a closed-weight frontier ceiling --- is outside the scope of the present study and is discussed as a limitation in Section~\ref{sec:limitations} and as future work in Section~\ref{sec:conclusion}.
+
+\textbf{RQ1.} When the docstring--test--code triangle is traversed by heterogeneous SLMs (different SLM families assigned to the three stages), does the closure rate differ significantly from same-family closure, after controlling for per-sample difficulty?
+
+\textbf{RQ2.} Does mutation kill rate --- measured against the original code's reference-suite mutations --- agree with an external judge SLM's semantic-equivalence rating on each closure path? Where does the two-signal validity policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3} produce disagreement, and does the disagreement structure suggest that the automated metric is capturing the intended signal?
+
+\textbf{RQ3.} Across the $|\mathcal{M}| \times |\mathcal{S}| = 6 \times 3 = 18$ (model, stage) pairings, which stage is the closure bottleneck? Does the bottleneck attribution shift across source benchmark (HumanEval versus MBPP) or across mutation-operator family?
+
+\textbf{RQ4.} What is the false-closure rate --- the proportion of pipelines where the automated metric threshold is satisfied but the judge SLM disagrees --- and is this rate bounded below the empirical noise floor established by the word-shuffled null cell N1?
+
+\subsection{Contributions}
+
+This paper makes four contributions to the empirical literature on multi-SLM software-engineering pipelines:
+
+\begin{enumerate}
+  \item \textbf{First empirical study of heterogeneous multi-SLM round-trip closure} across the docstring--test--code triangle, with a pre-registered 20-cell design of experiments spanning mono (6~cells), hetero (11~cells), and null (3~cells) strata. All 20 cells and the aligned concept note were committed to the released replication package approximately four weeks before the first sweep result was recorded (repository-timestamp pre-registration; not an OSF-style registry entry). Our pre-registration practice follows the emerging guidance of \citet{Sallou2025PreregistrationSE} on pre-registration in empirical software engineering; the open-science replication commitments follow the community roadmap of \citet{Panichella2024OpenScienceSE}.
+
+  \item \textbf{Empirical per-operator dominance of the H1 composition.} H1 (phi-4 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$) empirically achieves the highest point-estimate kill rate on 4 of 5 mutation-operator families (arithmetic $\Delta = +0.133$ vs.\ best mono; boundary $+0.096$; comparison $+0.088$; negate\_bool $+0.056$; return\_none is won by H6 at $\Delta = +0.010$). Wilson 95\% CIs confirm dominance on arithmetic and boundary; the comparison and negate\_bool operator wins reach $1.000$ on smaller mutant counts and are ``consistent with dominance'' rather than strictly dominant. The five operator families themselves are the canonical selection from the mutation-testing literature~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}; the per-operator pattern reported here is an empirical finding of this study and is not derived from a pre-registered model-specific prior. To our knowledge this is the first cross-stage evaluation of an SLM composition at operator resolution.
+
+  \item \textbf{The phi-4-in-test-stage pathology.} We identify a specific stage-model pairing (phi-4 as $L_{\textsf{test}}$) as producing systematically defective test suites at approximately $50\%$ of samples, replicated across three independent cells (M2 mono $= 44\%$, H2 $= 45\%$, H10 $= 55\%$). At operator resolution the pathology localises to the exact mutation families phi-4 mono itself is competitive on --- a cross-stage interaction effect invisible in single-stage evaluations.
+
+  \item \textbf{Judge--metric disagreement decomposition.} On Path~3 (docstring--docstring closure), BERTScore F1 is only weakly correlated with the judge SLM's semantic-equivalence rating: per-benchmark $r_3^{\textsf{HE}} = 0.153$ and $r_3^{\textsf{MBPP}} = 0.212$ (both $r^2 \leq 0.045$; Fisher-$z$ test for equality $p = 0.24$), while the aggregate $r_3 = 0.02$ ($n = 1{,}791$) is an artifact of Simpson's-paradox attenuation from pooling two benchmarks with different mean judge ratings. Stratifying by source benchmark reveals that the residual disagreement flips categorically in direction ($\chi^2 = 368$, $p < 0.001$): on MBPP, BERTScore over-credits equivalence in $29.2\%$ of rows; on HumanEval, BERTScore under-credits in $30.0\%$. This structural directional signature supports the specific claim that BERTScore functions as a surface-form similarity signal rather than a semantic-equivalence signal on our data.
+
+\end{enumerate}
+
+An \textbf{open replication package} accompanies the paper, including the pre-registered DOE, the full 5{,}890-row sweep TSV, both closure decisions implemented as tested Python functions (67 unit tests total: 51 covering all decision-and-filter reasons plus 16 wiring-integration tests), the G1--G6 gap-closer scripts, and single-command regeneration of all 24 tables and 5 figures. Released under the MIT license; full manifest in the Data Availability statement. Our open-weight framing follows the open-science roadmap of \citet{Panichella2024OpenScienceSE}; the entire sweep ran on a single-researcher Colab~Pro+ subscription ($\sim$530 GPU-hours across A100 and T4, an estimated $25$~kg~CO$_2$-equivalent following~\citet{Lacoste2019MLCO2Emissions} --- see Ethics statement).
+
+\subsection{Findings at a glance}
+
+Because the design is multi-dimensional (20 cells $\times$ 3 paths, two per-cell aggregates, five mutation operators, two source benchmarks), Table~\ref{tab:findings_glance} previews each research question's headline answer and the evidence behind it, so that the detailed results of Section~\ref{sec:results} can be read against a fixed map. Throughout the paper, cells are named M1--M6 (mono: one SLM at all three stages), H1--H11 (hetero: different SLMs across stages), and N1--N3 (null controls); the full stage-to-model assignment for every cell is given in Table~\ref{tab:doe_summary}, and the two per-cell aggregates --- metric mean $\bar{Y}$ and strict-AND valid-closure fraction $V$ --- are defined in Section~\ref{sec:framework_cell_aggregates}.
+
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Findings at a glance: headline answer, key quantitative evidence, and the section where each is developed. Compositions: H1 = phi-4 spec + qwen-coder test/code; H4 = qwen-coder spec/test + llama3.2 code; H10 = mistral spec + phi-4 test + qwen-coder code; H11 = phi-4 spec + gemma-4 test + qwen-coder code; M3 = qwen3.6 mono; M4 = gemma-4 mono.}
+\label{tab:findings_glance}
+\begin{tabular}{@{}p{0.55cm}p{4.9cm}p{4.9cm}p{1.1cm}@{}}
+\toprule
+RQ & Headline answer & Key evidence & Where \\
+\midrule
+RQ1 & Hetero compositions \emph{match} the strongest mono baseline on aggregate metric mean, and \emph{exceed} it under decomposition & H6 $\bar{Y} = 0.882$ vs.\ M3 $0.900$ (Tukey n.s.); H1 leads 4 of 5 mutation operators (up to $\Delta = +0.133$); H11/H4 exceed the mono ceiling on $V$ ($0.813$/$0.800$ vs.\ $0.773$) & \S\ref{sec:discussion_rq1} \\
+\addlinespace
+RQ2 & The judge agrees moderately with the Path-2 metric, weakly with Path~1, and only very weakly with BERTScore on Path~3, whose disagreement flips direction across benchmarks & $r_1 = 0.192$, $r_2 = 0.523$; Path~3 per-benchmark $r^2 \leq 0.045$; MBPP over-credits ($29.2\%$) vs.\ HumanEval under-credits ($30.0\%$), $\chi^2 = 368$ & \S\ref{sec:discussion_rq2} \\
+\addlinespace
+RQ3 & The spec stage is the most frequent weakest link, but only test-stage substitutions have significant marginal effects; phi-4 at the test stage is pathological & Spec bottleneck in 15 of 33 triples; mixed-model test-stage coefficients $-10$ to $-27$~pp ($p < 0.01$); phi-4-at-test filter failure on $44$--$55\%$ of samples & \S\ref{sec:discussion_rq3} \\
+\addlinespace
+RQ4 & False-closure rates sit at or below the empirical noise floor for every cell except the one carrying the phi-4 pathology & Mean $11.4\%$ at the strong-success bar; N1 noise floor $26.3\%$; only H10 above it ($28.6\%$, Path~1) & \S\ref{sec:discussion_rq4} \\
+\midrule
+--- & LLM judges cluster with each other but not with humans; strict-AND is justified only under high false-closure penalties & Judge--human $\kappa_{\textsf{quad}} = 0.074$; four judges $\leq 0.199$ vs.\ humans yet $0.68$--$0.70$ vs.\ each other & \S\ref{sec:results_human_eval} \\
+\addlinespace
+--- & Behavioral-path closure survives surface-form decontamination; BERTScore does not & HEM-25: Paths~1--2 gain $+15$ to $+26$~pp; Path~3 loses $25$--$31$~pp & \S\ref{sec:results_contamination} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Roadmap}
+
+The remainder of this paper is organized as follows. Section~\ref{sec:related_work} reviews related work on LLM-based test and docstring generation, round-trip and consistency evaluation, LLM-as-judge protocols, and multi-agent architectural specialization. Section~\ref{sec:framework} presents the framework, including the three closure paths (Eqs.~\ref{eq:path1}--\ref{eq:path3}), the closure validity decision (Eq.~\ref{eq:valid1} and Algorithm~\ref{alg:validity}), the test-filter validity gate (Eq.~\ref{eq:filter} and Algorithm~\ref{alg:test_filter}), and the closure metrics. Section~\ref{sec:experiment_setup} details the 20-cell DOE (Eq.~\ref{eq:doe}), datasets, statistical methodology, and human-evaluation protocol. Section~\ref{sec:results} reports the empirical results across the four research questions with anchor tables and figures. Section~\ref{sec:discussion} interprets the findings against RQ1--RQ4, characterizes the phi-4-in-test-stage pathology and the BERTScore surface-form finding, derives three design guidelines for practitioners deploying multi-SLM SE pipelines, and folds in the threats-to-validity analysis. Section~\ref{sec:conclusion} concludes with future research directions.

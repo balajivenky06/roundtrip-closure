@@ -1,0 +1,270 @@
+\section{Framework}
+\label{sec:framework}
+
+The docstring--test--code closure framework consists of three components:
+(i)~the \emph{docstring--test--code triangle} of artifacts associated with a
+Python function, (ii)~three \emph{closure paths} that each reconstruct one
+artifact from the other two via a sequence of two SLM stages, and
+(iii)~a \emph{strict-AND validity policy} that pairs an SE-validated
+automated metric with an external judge SLM's semantic-equivalence rating
+to decide whether a reconstruction counts as closed. Figure~\ref{fig:framework}
+gives the overall picture; the remainder of this section formalises each
+component. The experimental instantiation of the framework (which SLMs sit
+at which stages, which benchmark functions, and how statistical inference
+is drawn) is deferred to Section~\ref{sec:experiment_setup}.
+
+\input{figures/fig_framework.tex}
+
+\subsection{Notation and problem setup}
+\label{sec:framework_notation}
+
+Table~\ref{tab:notation} summarises the notation used throughout this
+paper. In brief: uppercase italic letters $C, D, T$ denote the original
+Python code, its docstring, and its reference test suite; primed
+variants $C', D', T'$ denote SLM-reconstructed artifacts; $L_{\mathsf{spec}},
+L_{\mathsf{test}}, L_{\mathsf{code}}$ denote the pipeline SLMs assigned to
+the three stages by the current DOE cell; $L_J$ denotes the external
+judge SLM. A closure operator is a two-step composition of two of these
+SLMs; the pipeline is \emph{closed} on a given (path, sample) pair when
+the reconstruction is semantically equivalent to the original.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Notation used in the round-trip closure formalism.}
+\label{tab:notation}
+\begin{tabular}{ll}
+\toprule
+Symbol & Meaning \\
+\midrule
+$C, D, T$ & original code, docstring, and reference test suite \\
+$C', D', T'$ & pipeline-reconstructed artifacts \\
+$L_{\textsf{spec}}, L_{\textsf{test}}, L_{\textsf{code}}$ & Small Language Models assigned to the three stages \\
+$L_J$ & external judge SLM (DeepSeek-R1, family-disjoint from pipeline) \\
+$\mathcal{M} = \{m_1, \ldots, m_6\}$ & the six pipeline SLMs (see Table~\ref{tab:model_lineup}) \\
+$\mathcal{S} = \{\textsf{spec}, \textsf{test}, \textsf{code}\}$ & pipeline stages \\
+$a : \mathcal{S} \to \mathcal{M} \cup \{\bot\}$ & cell assignment (mapping stages to models or ablation) \\
+$K(T', C)$ & mutation kill rate of test suite $T'$ against code $C$ \\
+$R(C', T)$ & reference test pass rate of code $C'$ against tests $T$ \\
+$B(D_1, D_2)$ & rescaled BERTScore-F1 between two docstrings \\
+$J(x, y) \in \{-1, 0, 1, 2, 3, 4\}$ & judge equivalence rating; $-1$ denotes parse failure \\
+$\tau$ & metric-validity threshold (path-specific; $\tau = 0$ in our defaults) \\
+$\rho$ & judge-validity threshold ($\rho = 3$: ``equivalent or better'') \\
+$\mathds{1}[\cdot]$ & indicator function \\
+$N$ & per-cell sample size ($150$ for mono, $75$ for hetero and null) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Closure paths}
+
+We define three closure paths, each traversing two edges of the docstring--test--code triangle. Path 1 (Code $\to$ Docstring $\to$ Tests) tests whether tests derived from an LLM-generated docstring can still detect defects in the original code. Path 2 (Docstring $\to$ Tests $\to$ Code) tests whether code reconstructed from the original docstring and LLM-generated tests can satisfy the reference test suite. Path 3 (Code $\to$ Tests $\to$ Docstring) tests whether the docstring recovered from tests-generated-from-code still describes the original function. Formally,
+
+\begin{align}
+  \text{Path 1 (}C \to D \to T\text{):} \quad
+  T' &\;=\; L_{\textsf{test}}\bigl(L_{\textsf{spec}}(C)\bigr), \label{eq:path1}\\
+  \text{Path 2 (}D \to T \to C\text{):} \quad
+  C' &\;=\; L_{\textsf{code}}\bigl(D,\; L_{\textsf{test}}(D)\bigr), \label{eq:path2}\\
+  \text{Path 3 (}C \to T \to D\text{):} \quad
+  D' &\;=\; L_{\textsf{spec}}\bigl(L_{\textsf{test}}(C)\bigr). \label{eq:path3}
+\end{align}
+
+Path 2 explicitly conditions $L_{\textsf{code}}$ on both the original docstring $D$ and the freshly-generated tests $T'$ --- this matches the strongest reconstruction context available to the pipeline. Algorithm~\ref{alg:path_execution} presents the unified execution procedure.
+
+\begin{algorithm}[h]
+\caption{Round-trip closure path execution}
+\label{alg:path_execution}
+\begin{algorithmic}[1]
+\Require cell $a = (L_{\textsf{spec}}, L_{\textsf{test}}, L_{\textsf{code}})$, sample $s = (C, D, T)$
+\Ensure closure result $r_p$ for each path $p \in \{1, 2, 3\}$
+\For{$p \in \{1, 2, 3\}$}
+  \If{$p = 1$} \Comment{$C \to D \to T$}
+    \State $D' \leftarrow L_{\textsf{spec}}(C)$
+    \State $T' \leftarrow L_{\textsf{test}}(D', \textsf{entry\_point}, \textsf{signature})$
+    \State $T'_{\textsf{filt}} \leftarrow \textsf{TestFilter}(T', C)$ \Comment{Algorithm~\ref{alg:test_filter}}
+    \State $K \leftarrow \textsf{MutationKillRate}(T'_{\textsf{filt}}, C)$
+    \State $J \leftarrow \textsf{Judge}(D, D', \text{kind}=\textsc{docstring})$
+    \State $r_1 \leftarrow (\text{metric}=K,\; \text{judge}=J)$
+  \ElsIf{$p = 2$} \Comment{$D \to T \to C$}
+    \State $T' \leftarrow L_{\textsf{test}}(D, \textsf{entry\_point}, \textsf{signature})$
+    \State $C' \leftarrow L_{\textsf{code}}(D, T', \textsf{entry\_point}, \textsf{signature})$
+    \State $R \leftarrow \textsf{ReferencePassRate}(T, C')$
+    \State $J \leftarrow \textsf{Judge}(C, C', \text{kind}=\textsc{code})$
+    \State $r_2 \leftarrow (\text{metric}=R,\; \text{judge}=J)$
+  \Else \Comment{$p = 3$, $C \to T \to D$}
+    \State $T' \leftarrow L_{\textsf{test}}(C)$
+    \State $D' \leftarrow L_{\textsf{spec}}(T')$
+    \State $B \leftarrow \textsf{BERTScore}(D, D')$
+    \State $J \leftarrow \textsf{Judge}(D, D', \text{kind}=\textsc{docstring})$
+    \State $r_3 \leftarrow (\text{metric}=B,\; \text{judge}=J)$
+  \EndIf
+\EndFor
+\State \Return $[r_1, r_2, r_3]$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Closure validity decision}
+
+A round-trip closure is considered \emph{valid} when both the automated metric and the judge SLM agree on the artifact equivalence. Formally, for Path 1 we require
+
+\begin{equation}
+  \text{valid}_1(C, D, D', T')
+  \;=\;
+  \mathds{1}\!\bigl[\, K(T', C) > \tau \,\bigr]
+  \;\wedge\;
+  \mathds{1}\!\bigl[\, J(D, D') \geq \rho \,\bigr],
+  \label{eq:valid1}
+\end{equation}
+
+and analogously for Paths 2 and 3:
+
+\begin{equation}
+  \text{valid}_2 = \mathds{1}[R(C', T) > 0] \wedge \mathds{1}[J(C, C') \geq \rho],
+  \label{eq:valid2}
+\end{equation}
+\begin{equation}
+  \text{valid}_3 = \mathds{1}[B(D, D') > 0] \wedge \mathds{1}[J(D, D') \geq \rho].
+  \label{eq:valid3}
+\end{equation}
+
+The two-signal \emph{strict-AND} policy is deliberate: it prevents metric noise or judge parse failures from spuriously inflating closure rates. We adopt the strict policy because the alternative --- single-signal validity --- was the failure mode responsible for inflated closure rates observed in the 30-function pilot; the strict policy also makes the false-closure rate (Section~5) well-defined.
+
+Every closure row is additionally categorized by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in Section~\ref{sec:results} for characterizing \emph{where} the automated metric and the judge diverge.
+
+\begin{algorithm}[h]
+\caption{Closure validity decision (implements Eq.~\ref{eq:valid1}--\ref{eq:valid3})}
+\label{alg:validity}
+\begin{algorithmic}[1]
+\Require metric value $m$, judge rating $J \in \{-1, 0, 1, 2, 3, 4\}$, thresholds $\tau$, $\rho$
+\Ensure validity $\in \{\text{valid}, \text{invalid}\}$, \textsf{decision\_reason} $\in$ five categories
+\If{$m$ is missing \textbf{or} $J = -1$}
+  \State \Return $(\text{invalid},\; \textsf{structural\_NA})$ \Comment{Ablation cells or empty artifacts}
+\EndIf
+\If{$m > \tau$ \textbf{and} $J \geq \rho$}
+  \State \Return $(\text{valid},\; \textsf{both\_agree\_valid})$
+\ElsIf{$m \leq \tau$ \textbf{and} $J < \rho$}
+  \State \Return $(\text{invalid},\; \textsf{both\_agree\_invalid})$
+\ElsIf{$m > \tau$ \textbf{and} $J < \rho$}
+  \State \Return $(\text{invalid},\; \textsf{false\_closure\_candidate})$ \Comment{Metric over-credits}
+\Else \Comment{$m \leq \tau$ and $J \geq \rho$}
+  \State \Return $(\text{invalid},\; \textsf{metric\_false\_negative})$ \Comment{Metric under-credits}
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+Algorithm~\ref{alg:validity} is implemented as the pure function \texttt{closure\_decision.decide\_validity} in the replication package, with 43 unit tests covering all five decision reasons, the structural-NA edge cases (NaN metric, judge $= -1$, \texttt{None}), and the boundary values of $\tau$ and $\rho$.
+
+\subsection{Test-filter validity gate}
+
+Before computing the mutation kill rate, we discard generated tests that fail on the original code $C$. This avoids penalising mutants for surviving tests that were spuriously wrong to begin with. Formally, given a candidate test set $T' = \{t_1, t_2, \ldots\}$, the filtered suite is
+
+\begin{equation}
+  T'_{\textsf{filt}}(C)
+  \;=\;
+  \bigl\{\, t \in T' \;:\; \textsf{exec}(t, C) = \textsf{pass} \,\bigr\}.
+  \label{eq:filter}
+\end{equation}
+
+The filter is implemented as Algorithm~\ref{alg:test_filter}, which additionally emits a machine-readable \textsf{filter\_reason} label recording \emph{why} the filter output was empty when it was. This label appears in every closure row in the results TSV and is used in Section~5 to distinguish rows where the LLM produced no tests at all (\textsf{empty\_input}) from rows where every generated test failed on the ground truth (\textsf{all\_dropped}) --- a distinction that matters for the phi-4-in-test-stage analysis in Section~\ref{sec:discussion_rq3}.
+
+\begin{algorithm}[h]
+\caption{Test-filter validity gate (implements Eq.~\ref{eq:filter})}
+\label{alg:test_filter}
+\begin{algorithmic}[1]
+\Require candidate test suite $T'$, original code $C$
+\Ensure filtered test suite $T'_{\textsf{filt}} \subseteq T'$, \textsf{filter\_reason} label
+\If{$T'$ or $C$ is empty}
+  \State \Return $(\emptyset,\; \textsf{empty\_input})$
+\EndIf
+\State $N \leftarrow$ number of \texttt{def test\_*} functions in $T'$
+\If{$N = 0$}
+  \State \Return $(\emptyset,\; \textsf{no\_test\_functions})$
+\EndIf
+\State $T'_{\textsf{filt}} \leftarrow \emptyset$
+\For{each test $t$ in $\textsf{split\_test\_functions}(T')$}
+  \State $\textsf{status} \leftarrow \textsf{pytest\_subprocess}(t, C, \textsf{timeout} = 10\text{s})$
+  \If{$\textsf{status} = \textsf{pass}$}
+    \State $T'_{\textsf{filt}} \leftarrow T'_{\textsf{filt}} \cup \{t\}$
+  \EndIf
+\EndFor
+\If{$|T'_{\textsf{filt}}| = 0$}
+  \State \Return $(\emptyset,\; \textsf{all\_dropped})$ \Comment{Row will be written with NaN metric}
+\EndIf
+\State \Return $(T'_{\textsf{filt}},\; \textsf{kept}\_K\_\textsf{of}\_N)$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Closure metrics}
+
+\subsubsection{Path 1: mutation kill rate}
+
+Given the filtered test suite $T'_{\textsf{filt}}$ and the set of mutants $\mathcal{M}_C = \{m_1, \ldots, m_n\}$ generated from $C$, the mutation kill rate is
+
+\begin{equation}
+  K(T', C)
+  \;=\;
+  \frac{\bigl|\{\, m \in \mathcal{M}_C \;:\; \exists t \in T'_{\textsf{filt}}(C),\; \textsf{exec}(t, m) = \textsf{fail} \,\}\bigr|}{\bigl|\mathcal{M}_C\bigr| \;-\; \bigl|\mathcal{M}_C^{\textsf{equiv}}\bigr|}.
+  \label{eq:killrate}
+\end{equation}
+
+A mutant is \emph{killed} if at least one filtered test fails on it. Equivalent mutants $\mathcal{M}_C^{\textsf{equiv}}$ (mutants whose observable behavior matches the original) are excluded from the denominator following standard mutation-testing protocol~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}. Five mutation operators are applied: arithmetic (e.g. $\texttt{+} \to \texttt{-}$), boundary ($\texttt{<} \to \texttt{<=}$), comparison ($\texttt{<} \to \texttt{>}$), negate\_bool, and return\_none. Up to 15 mutants are generated per function.
+
+\subsubsection{Path 2: reference test pass rate}
+
+Let $T = \{t_1, \ldots, t_k\}$ be the ground-truth reference suite. The pass rate is
+
+\begin{equation}
+  R(C', T)
+  \;=\;
+  \frac{1}{|T|}\sum_{i=1}^{|T|} \mathds{1}\!\bigl[\,\textsf{exec}(t_i, C') = \textsf{pass}\,\bigr].
+  \label{eq:passrate}
+\end{equation}
+
+In this experiment we use a binary indicator ($R \in \{0, 1\}$: the suite either fully passes or does not) for the Section~\ref{sec:experiment_setup} statistical analysis.
+
+\subsubsection{Path 3: BERTScore F1}
+
+For two docstrings $D_1$ and $D_2$, let $\phi(D)$ denote their RoBERTa-large contextual embeddings. Precision and recall under cosine similarity are
+
+\begin{align}
+  P(D_1, D_2) &\;=\; \tfrac{1}{|\phi(D_2)|} \textstyle\sum_{x \in \phi(D_2)} \max_{y \in \phi(D_1)} \cos(x, y), \label{eq:bert_p}\\
+  R(D_1, D_2) &\;=\; \tfrac{1}{|\phi(D_1)|} \textstyle\sum_{y \in \phi(D_1)} \max_{x \in \phi(D_2)} \cos(x, y), \label{eq:bert_r}
+\end{align}
+
+and the BERTScore F1 we report is
+
+\begin{equation}
+  B(D_1, D_2)
+  \;=\;
+  \frac{2 \cdot P(D_1, D_2) \cdot R(D_1, D_2)}{P(D_1, D_2) + R(D_1, D_2)}.
+  \label{eq:bertscore}
+\end{equation}
+
+We use baseline-rescaled scores so $B \in (-\infty, 1]$ with $B = 0$ denoting ``no better than random pairing''. In our data, $B$ values on real closure pairs concentrate in $[-0.2, 0.7]$.
+
+\subsubsection{Judge equivalence rating}
+
+The judge SLM $L_J$ = DeepSeek-R1:14B is prompted with a 5-level behaviourally-anchored rubric: 4 = identical, 3 = equivalent (same observable behavior), 2 = approximately equivalent, 1 = clearly different, 0 = unrelated. A rating of $-1$ denotes parse failure --- the judge is treated as absent for that row. DeepSeek-R1 is deliberately chosen because it belongs to a family (DeepSeek) disjoint from every pipeline SLM, avoiding self-evaluation bias.
+
+\subsubsection{Per-cell aggregates: metric mean $\bar{Y}$ vs.\ valid-closure fraction $V$}
+\label{sec:framework_cell_aggregates}
+
+Every empirical claim in this paper about a cell's closure performance is drawn from one of two per-cell scalar aggregates, and the distinction is analytically load-bearing. Let $\mathcal{R}_{a, p}$ denote the set of measurement rows for cell $a \in \mathcal{C}_{\textsf{DOE}}$ on path $p \in \{1, 2, 3\}$, with per-row automated-metric value $Y_r \in \mathbb{R}$ (kill rate $K$ on Path~1; pass rate $R$ on Path~2; BERTScore $B$ on Path~3) and per-row judge rating $J_r \in \{-1, 0, 1, 2, 3, 4\}$. We define:
+
+\begin{align}
+  \bar{Y}_{a, p}
+  &\;=\;
+  \frac{1}{|\mathcal{R}_{a, p}|}
+  \sum_{r \in \mathcal{R}_{a, p}} Y_r,
+  \label{eq:metric_mean}
+  \\[2pt]
+  V_{a, p}
+  &\;=\;
+  \frac{1}{|\mathcal{R}_{a, p}|}
+  \sum_{r \in \mathcal{R}_{a, p}}
+    \mathds{1}\!\bigl[\, Y_r > \tau_p \;\wedge\; J_r \geq \rho \,\bigr].
+  \label{eq:valid_closure_frac}
+\end{align}
+
+$\bar{Y}_{a, p}$ (\emph{metric mean}) is the raw automated metric averaged across a cell's rows and appears in Table~\ref{tab:closure_rate_matrix}, Fig.~\ref{fig:closure_heatmap}, the RQ1 ANOVA of Section~\ref{sec:results_mono_vs_hetero}, and all Tukey pairwise contrasts. $V_{a, p}$ (\emph{valid-closure fraction}) is the strict-AND two-signal closure count of Algorithm~\ref{alg:validity} normalized by row count, and appears in Table~\ref{tab:per_stage_bottleneck}, the stage-contribution figure (Fig.~\ref{fig:stage_contribution}), the rank-swap analysis of Section~\ref{sec:results_path_cell_interaction}, the capability-preservation table (Table~\ref{tab:capability_preservation}), the strict-AND ablation of Appendix~\ref{sec:human_eval_strict_and}, and the threshold-sensitivity table (Table~\ref{tab:threshold_sensitivity_path1}). Every downstream number that reads as ``closure rate'' is one of these two aggregates; captions and text below specify which.
+

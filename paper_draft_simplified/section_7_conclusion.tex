@@ -1,0 +1,42 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We introduced the first cross-LLM, cross-stage empirical evaluation of round-trip closure in a software-engineering pipeline, evaluated under a pre-registered 20-cell design of experiments spanning six open-weight Small Language Models across the docstring--test--code triangle. The study answers the practitioner-facing question motivated in Section~1: \emph{when the pipeline is composed of multiple SLMs, does it matter which SLM sits at which stage?}
+
+\subsection{Summary of contributions}
+
+Four empirical contributions emerge from the 5{,}890-row sweep and the associated post-hoc analyses (Section~\ref{sec:results}).
+
+The H1 composition (phi-4 as $L_{\textsf{spec}}$, qwen-coder as $L_{\textsf{test}}$ and $L_{\textsf{code}}$) empirically achieves the highest point-estimate kill rate on 4 of 5 mutation-operator families (Section~\ref{sec:results_per_operator}), with the largest gain on arithmetic ($\Delta = +0.133$). Wilson 95\% CIs confirm H1 dominance on arithmetic ($n = 33$) and boundary ($n = 64$); the comparison and negate\_bool wins reach $1.000$ on smaller mutant counts and are consistent-with-dominance rather than strictly dominant. Alongside this, Section~\ref{sec:discussion_rq3} documents the phi-4-in-test-stage pathology: placing phi-4 as $L_{\textsf{test}}$ produces filter-failing test suites on approximately half of samples across three independent cells (M2 $= 44\%$, H2 $= 45\%$, H10 $= 55\%$), a cross-stage interaction effect invisible in single-stage evaluations. Two orthogonal statistical instruments --- the interaction ANOVA (Section~\ref{sec:results_path_cell_interaction}: $F(36, 4867) = 6.47$, $p < 0.001$, partial $\eta^2 = 0.046$) and the mixed-effects logit (Section~\ref{sec:results_mixed_logit}: significant test-stage coefficients $-10$~pp to $-27$~pp) --- converge on the finding that cell composition drives significant path-conditional variation in valid closure with the test stage carrying the plurality of the attribution.
+
+On the judge--metric side, BERTScore F1 is only weakly correlated per benchmark with the judge SLM's semantic-equivalence rating on Path~3 ($r_3^{\textsf{HE}} = 0.153$, $r_3^{\textsf{MBPP}} = 0.212$; both $r^2 \leq 0.045$); the aggregate $r_3 = 0.022$ reflects Simpson's-paradox attenuation from pooling, and the residual disagreement flips categorically across benchmarks ($\chi^2 = 368$, $p < 0.001$: MBPP over-credits equivalence in $29\%$ of rows, HumanEval under-credits in $30\%$). This directional signature supports the specific claim that BERTScore behaves as a surface-form similarity signal rather than a semantic-equivalence signal on the docstring--docstring closure path. Finally, capability preservation is non-uniform: well-composed hetero cells (H11, H7, H9, H1) preserve $76$--$91\%$ of the strongest mono baseline's capability, while wrong-model-at-wrong-stage cells sacrifice materially (H10 preserves $34.9\%$ on Path~1; H4 preserves $56.5\%$ on Path~2). Heterogeneity is not free; the stage assignment must match the demanded per-stage strength.
+
+\subsection{Design guidelines for practitioners}
+
+Three guidelines follow from the empirical findings, targeted at practitioners assembling multi-SLM SE pipelines:
+
+\begin{itemize}
+  \item \textbf{G1: Place the strongest available model at the bottleneck stage.} The stage-attribution decomposition (Section~\ref{sec:results_stage_attribution}) and the per-operator table (Section~\ref{sec:results_per_operator}) both identify per-stage strengths that dominate closure success. Selecting stage models based on the pipeline's bottleneck --- rather than on aggregate model capability --- consistently produces higher closure rates.
+
+  \item \textbf{G2: Match test-generation choice to the docstring style upstream, not to the model's general capability.} The phi-4-in-test-stage pathology (Section~\ref{sec:discussion_rq3}) shows that a model's test-generation capability \emph{de novo} does not transfer when the test model is downstream of a docstring produced by a different model. Stage models should be chosen jointly, not marginally.
+
+  \item \textbf{G3: Use two-signal validity when reporting closure rates.} No single automated metric was found to correlate reliably with judge semantic equivalence on all three paths (Section~\ref{sec:results_judge_metric_corr}). The strict-AND validity policy of Algorithm~\ref{alg:validity} produces conservative closure counts with interpretable disagreement modes (Section~\ref{sec:discussion_rq2}). Single-signal validity risks systematic misestimation.
+\end{itemize}
+
+\subsection{Future work}
+
+Four directions extend this study.
+
+\begin{itemize}
+  \item \textbf{Uniformly-drawn validation of the strict-AND policy.} The 60-pair human-evaluation sample of Section~\ref{sec:results_human_eval} is deliberately stratified toward metric--judge disagreement cases (20~frontier + 20~agreement + 20~disputed pairs). The FPR/FNR numbers therefore characterize the disagreement region, not a uniform draw from the full sweep. An immediate follow-up would draw a second 60-pair sample uniformly at random from the 5{,}890-row sweep and re-run the human annotation, allowing the strict-AND value proposition to be evaluated against a representative validity distribution. Estimated cost: five annotators $\times$ 60 pairs $\times$ $\sim$3 hours + API costs for the frontier-judge replay --- approximately one week of coordination.
+
+  \item \textbf{Closed-weight ceiling comparison.} A follow-up study substituting Claude Sonnet-class and GPT-4o-class models at the M5, H2, and H8 slots would answer whether the closure-rate ceiling identified here for open-weight SLMs approaches, matches, or falls short of a closed-weight frontier ceiling. Such a study would extend the DOE by four cells without disturbing the open-weight sweep reported here.
+
+  \item \textbf{Judge-model diversification.} Section~\ref{sec:results_human_eval} shows that four LLM judges (DeepSeek-R1:14B plus three frontier judges) cluster together in rating space at $\kappa_{\textsf{quad}} \approx 0.68$ but agree with human consensus only weakly ($\kappa_{\textsf{quad}} \leq 0.20$). Whether more architecturally diverse judges (a purpose-trained equivalence classifier, or a rule-based structural comparator) would break this cluster and improve human alignment remains open. Ensemble-of-judges designs~(Delphi-style consensus) are similarly unevaluated.
+
+  \item \textbf{Full contamination replication.} The 25-sample HumanEval-Mutated held-out sweep on H1 and M3 (Section~\ref{sec:results_contamination}) rules out surface-form memorization as a driver of the composition effects. A complementary post-training-cutoff replication (originally the LiveCodeBench-25 subset, blocked at load time by the removal of script-based dataset loaders from the current HuggingFace \texttt{datasets} library) would add date-based decontamination to the surface-form decontamination already reported. A recovered LiveCodeBench sweep across all six mono baselines and the four best hetero cells would extend the H1 dominance test to definitionally-uncontaminated problems.
+\end{itemize}
+
+\subsection{Closing statement}
+
+The empirical evidence assembled here supports a single-sentence takeaway: \emph{Small Language Models for software engineering are not interchangeable at any stage of a multi-stage pipeline, and the choice of which SLM sits at which stage is a first-class experimental variable whose effects are quantifiable, statistically significant, and reproducible from a pre-registered design of experiments.} Specific stage-model pairings (phi-4 at $L_{\textsf{test}}$; llama-3.2 at $L_{\textsf{code}}$) exhibit pathologies invisible in single-stage evaluations; specific hetero cells (H1, H4, H11) achieve per-operator kill rates exceeding any single-model mono baseline; and the automated closure metric on the docstring--docstring path fails to carry the signal a semantic-equivalence metric on that path should carry. Together these findings position cross-stage SLM composition as a research direction that single-LLM evaluation methodology cannot address.

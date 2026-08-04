@@ -1,0 +1,53 @@
+\section{Threshold sensitivity and the conditional-on-metric fraction $V'$}
+\label{sec:appendix_threshold}
+
+This appendix carries the full threshold-sensitivity grid whose main-body
+summary in Section~\ref{sec:discussion} promised that ``the RQ1 finding
+holds at every $(\tau, \rho)$ in the operational band.'' It also formally
+defines the conditional-on-metric fraction $V'$ used here and in
+Table~\ref{tab:holdout_sensitivity} in the main body.
+
+\subsection{The $V'$ denominator convention}
+\label{sec:appendix_vprime_defn}
+
+Where the canonical valid-closure fraction $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac})
+divides by total measurement rows, the threshold-sensitivity and HEM-25
+tables use the \emph{conditional-on-metric} fraction
+
+\begin{equation}
+  V'_{a, p}
+  \;=\;
+  \frac{|\{r \in \mathcal{R}_{a, p} : Y_r > \tau_p \wedge J_r \geq \rho\}|}
+       {|\{r \in \mathcal{R}_{a, p} : Y_r \text{ is defined}\}|},
+  \label{eq:vprime}
+\end{equation}
+
+which restricts the denominator to rows where the metric could be computed
+at all. This convention is appropriate for a threshold-sensitivity analysis
+because it separates ``metric could not be computed'' (a structural
+test-filter failure, path-independent) from ``metric was below threshold''
+(the sensitivity question). Numeric values at $(\tau = 0, \rho = 3)$
+therefore differ from the canonical $V_{a, p}$: e.g.\ H1 Path~1 is
+$64/81 = 79.0\%$ under $V'$ vs.\ $64/89 = 71.9\%$ under $V$. The
+direction and magnitude of the sensitivity claim (and the HEM-25 delta)
+are unaffected by the denominator choice.
+
+\subsection{Threshold sensitivity grid on Path 1}
+\label{sec:appendix_threshold_grid}
+
+\input{../tables/tab_threshold_sensitivity_path1.tex}
+
+Table~\ref{tab:threshold_sensitivity_path1} reports $V'$ at every
+$(\tau, \rho) \in \{0, 0.5, 0.8\} \times \{2, 3, 4\}$ combination on
+Path~1. On the conditional-on-metric $V'$ scale, the top-ranked cell at
+the reference $(\tau = 0, \rho = 3)$ is H9 ($V' = 0.885$), with H11
+($0.859$), H6 ($0.855$), M3 ($0.855$), and H1 ($0.790$) clustered
+within $\sim$$0.10$; the ordering shuffles slightly across threshold
+pairs but no mono cell dominates all hetero cells at any
+$(\tau, \rho) \in \{0, 0.5\} \times \{2, 3\}$. At the extreme
+$\rho = 4$ (``identical only''), the entire distribution compresses
+toward zero and threshold-choice noise dominates. Kendall's
+$\tau_{\textsf{rank}}$ between the reference threshold and every
+alternative $(\tau, \rho) \in \{0, 0.5, 0.8\} \times \{2, 3\}$ exceeds
+$0.65$, indicating that the ordinal ranking of cells is preserved as
+thresholds are varied within the paper's operational band.

@@ -1,0 +1,72 @@
+\section{Statistical formulas and post-hoc protocols}
+\label{sec:appendix_methodology}
+
+Formal definitions the main body cites but does not display.
+
+\subsection{Judge--human agreement: Cohen's $\kappa$ and Krippendorff's $\alpha$}
+\label{sec:appendix_kappa_alpha}
+
+For each binarised rating (judge threshold $J \geq \rho$ versus $J < \rho$),
+Cohen's $\kappa$ is
+
+\begin{equation}
+  \kappa
+  \;=\;
+  \frac{p_o - p_e}{1 - p_e},
+  \label{eq:kappa}
+\end{equation}
+
+where $p_o$ is the observed agreement proportion between the judge SLM
+and a human annotator and $p_e$ is the chance-expected proportion under
+independence. Values follow Landis and Koch's bands: $\kappa > 0.6$
+substantial, $\kappa > 0.8$ almost perfect. Effect-size conventions
+throughout the paper follow \citet{Cohen2013StatPower}. For the
+multi-annotator setting (five human raters $+$ one judge), we
+additionally compute Krippendorff's $\alpha$~\citep{Marzi2024KrippendorffAlpha}
+for ordinal ratings $r_{ij}$ from rater $i$ on item $j$:
+
+\begin{equation}
+  \alpha
+  \;=\;
+  1 \;-\; \frac{D_o}{D_e},
+  \quad
+  D_o \;=\; \tfrac{1}{n}\sum_{j} \tfrac{1}{\binom{m_j}{2}}
+            \sum_{i_1 < i_2} \delta(r_{i_1 j}, r_{i_2 j})^2,
+  \label{eq:alpha}
+\end{equation}
+
+where $\delta$ is the ordinal-difference metric and $D_e$ is the
+expected disagreement under random pairing. Values $\alpha > 0.667$
+are considered acceptable for inferential use. Both $\kappa$ and
+$\alpha$ are reported in Section~\ref{sec:results_human_eval}; the
+headline numbers on the 60-pair five-annotator sample are
+$\alpha_{\textsf{ord}} = 0.193$ (5-way, all annotators) and
+$\kappa_{\textsf{quad}} = 0.074$ (DeepSeek-R1 judge vs.\ 5-way
+majority human rating).
+
+\subsection{Post-processing categorization of every closure row}
+\label{sec:appendix_postproc}
+\label{sec:experiment_setup_postproc}
+
+Every closure row in the results TSV is post-hoc labeled with the
+Algorithm~\ref{alg:validity} decision reason and the
+Algorithm~\ref{alg:test_filter} filter reason. The distribution of
+decision reasons per path (Table~\ref{tab:disagreement_by_path}) is
+the primary judge--metric disagreement diagnostic; the distribution of
+filter reasons per (cell, path) triple is the primary diagnostic for
+the phi-4-in-test-stage attribution (Section~\ref{sec:discussion_rq3}).
+
+\subsection{Capability-preservation protocol}
+\label{sec:appendix_capability_protocol}
+\label{sec:experiment_setup_capability}
+
+For each path, we identify the strongest mono baseline (M4 for
+Paths~1 and~3; M3 for Path~2) and restrict analysis to samples on
+which that baseline achieves valid closure. For every other cell, the
+\emph{capability-preservation rate} is the fraction of those same
+samples on which the cell also achieves valid closure. Values near~$1$
+indicate that the cell does not sacrifice mono strengths; substantially
+lower values expose cells where specialization costs capability on
+samples the strongest mono handles cleanly. Results are reported in
+Table~\ref{tab:capability_preservation} and discussed in
+Section~\ref{sec:discussion_capability}.

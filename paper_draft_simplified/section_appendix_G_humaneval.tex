@@ -1,0 +1,46 @@
+\section{Full human-evaluation protocol}
+\label{sec:appendix_human_eval_protocol}
+
+The main-body summary (Section~\ref{sec:experiment_setup_human_eval})
+gives the essentials of the five-annotator human evaluation. This
+appendix records the full pre-registered protocol.
+
+\paragraph{Sampling.} We pre-registered a 60-pair sample drawn from the
+completed sweep, stratified into three 20-pair buckets:
+(a) the \emph{frontier} bucket, drawn uniformly from cells with
+mid-range closure rates and rows where the judge and metric agree on
+validity;
+(b) the \emph{agreement} bucket, rows where both signals mark the row
+valid or both mark invalid; and
+(c) the \emph{disputed} bucket, rows where the judge and metric
+disagree.
+All 60 pairs are drawn from the core-sweep results TSV; the pair
+sample is committed to the replication package
+(\texttt{results/human\_eval\_pairs\_60.tsv}) and is independent of
+the annotators.
+
+\paragraph{Annotator interface and blinding.} Annotators rate each
+pair on the same $0$--$4$ rubric used by the judge SLM:
+$4 = $ identical, $3 = $ equivalent (same observable behavior),
+$2 = $ approximately equivalent, $1 = $ clearly different,
+$0 = $ unrelated (Section~\ref{sec:framework}). Each annotator sees
+the pairs in a per-annotator deterministic order (SHA-256 seed on the
+annotator identifier) and is blinded to cell identity, closure path,
+judge rating, and bucket assignment. Ratings and one-sentence written
+justifications are captured through a Streamlit annotation app; the
+app auto-saves after each rating and is fully resumable across
+sessions.
+
+\paragraph{Analysis plan (pre-registered).} The pre-registered
+analysis plan computes: (i) Krippendorff's ordinal $\alpha$
+(Eq.~\ref{eq:alpha}, Appendix~\ref{sec:appendix_kappa_alpha}) across
+all human annotators; (ii) pairwise linear- and quadratic-weighted
+Cohen's $\kappa$ (Eq.~\ref{eq:kappa}) for each pair of raters;
+(iii) Cohen's $\kappa$ between the judge SLM and the majority-vote
+human rating (ties broken toward the higher category); (iv)
+coarse-resolution within-1 agreement rates (fraction of pairs where
+two ratings differ by at most one category); and (v) an FPR/FNR
+ablation of metric-only vs.\ judge-only vs.\ strict-AND decision
+policies against the majority-human ground truth. Results appear in
+Section~\ref{sec:results_human_eval}; the strict-AND policy ablation
+is in Appendix~\ref{sec:human_eval_strict_and}.
