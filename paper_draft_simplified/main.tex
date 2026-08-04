@@ -38,6 +38,10 @@
 \usepackage{float}    % Provides [H] placement: figures anchored at source position,
                       % no floating. Prevents cas-sc's aggressive float-queueing
                       % from clustering all figures on a dedicated page.
+\usepackage{capt-of}  % \captionof allows non-floating figure captions;
+                      % lets us skip the figure environment entirely for
+                      % figures that MUST appear at source (cas-sc's
+                      % figure env can override [H] under some settings).
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds}
 
