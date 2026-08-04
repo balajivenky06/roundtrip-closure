@@ -93,27 +93,57 @@ def tab_doe_summary() -> tuple[str, str]:
 # Table 3 — Closure rate matrix (cell × path)
 # ──────────────────────────────────────────────────────────────────────
 def tab_closure_rate_matrix(df: pd.DataFrame) -> tuple[str, str]:
-    """Mean closure rate per (cell, path) with n_valid in parentheses."""
-    from analyze.load_results import filter_valid
-    valid = filter_valid(df)
-    if valid.empty:
+    """Metric mean $\\bar{Y}_{a, p}$ per (cell, path) with strict-AND n_valid in parentheses.
+
+    Canonical convention (aligned with Table 5 in the manuscript and
+    Eq. valid_closure_frac):
+      - $\\bar{Y}$ is the mean of ``metric_value`` on rows where it is
+        non-NaN (pandas ``mean()`` skips NaN by default). This does NOT
+        pre-filter by the legacy per-row ``valid`` flag, which uses a
+        different definition and would silently reintroduce the
+        ``n_valid = n_metric_ok`` denominator confusion caught in the
+        round-3 audit.
+      - Parenthetical n_valid is the strict-AND count:
+        |{r : Y_r > 0 AND J_r >= 3}| — matches Eq. valid_closure_frac
+        numerator and enables V = n_valid / N (N = 150 for mono,
+        75 for hetero/null; H1 has 89 on Paths 1-2 and 88 on Path 3
+        after the human-evaluation re-sweep).
+    """
+    if df.empty:
         empty = pd.DataFrame()
         return _df_to_latex(empty, caption="(no data)", label="tab:closure_rate_matrix"), ""
 
-    mean = valid.pivot_table(index="cell_id", columns="path",
-                              values="metric_value", aggfunc="mean")
-    n = valid.pivot_table(index="cell_id", columns="path",
-                           values="metric_value", aggfunc="count")
+    d = df.copy()
+    d["metric_value"] = pd.to_numeric(d["metric_value"], errors="coerce")
+    d["judge_rating"] = pd.to_numeric(d["judge_rating"], errors="coerce")
+
+    # Ȳ: mean of metric_value across all rows per (cell, path); NaN metric skipped.
+    mean = d.pivot_table(index="cell_id", columns="path",
+                          values="metric_value", aggfunc="mean")
+
+    # n_valid: strict-AND count (metric > 0 AND judge >= 3), per (cell, path).
+    d["_strict_and"] = ((d["metric_value"] > 0) & (d["judge_rating"] >= 3)).astype(int)
+    n_valid = d.pivot_table(index="cell_id", columns="path",
+                             values="_strict_and", aggfunc="sum")
+
     out = pd.DataFrame(index=mean.index)
     for p in (1, 2, 3):
         if p in mean.columns:
-            out[f"Path {p}"] = mean[p].round(3).astype(str) + " (" + n[p].astype(str) + ")"
+            ybar_col = mean[p].round(3).map(lambda v: f"{v:.3f}" if pd.notna(v) else "---")
+            nv_col   = n_valid[p].fillna(0).astype(int).astype(str)
+            out[f"Path {p}"] = ybar_col + "~(" + nv_col + ")"
 
     out = out.reset_index().rename(columns={"cell_id": "Cell"})
     latex = _df_to_latex(out, caption=(
-        "Mean closure rate per cell $\\times$ path with $n_{\\text{valid}}$ "
-        "in parentheses. Path 1: mutation kill rate; Path 2: reference-test "
-        "pass rate; Path 3: BERTScore F1."), label="tab:closure_rate_matrix")
+        "Metric mean $\\bar{Y}_{a, p}$ per cell $\\times$ path "
+        "(Eq.~\\ref{eq:metric_mean}); the parenthetical is the strict-AND "
+        "valid-closure count $n_{\\text{valid}} = |\\{r : Y_r > 0 \\wedge "
+        "J_r \\geq 3\\}|$, from which $V_{a, p} = n_{\\text{valid}} / N$ "
+        "can be computed ($N = 150$ for mono; $N = 75$ for hetero and null; "
+        "H1 has $N = 89$ on Paths 1--2 and $N = 88$ on Path 3 after the "
+        "human-evaluation re-sweep). Metric $Y$: kill rate (Path~1), "
+        "reference-test pass rate (Path~2), rescaled BERTScore F1 "
+        "(Path~3)."), label="tab:closure_rate_matrix")
     return latex, out.to_csv(index=False)
 
 

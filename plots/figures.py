@@ -119,13 +119,24 @@ def make_fig_1_methodology(output_path: Path = PLOTS_OUTPUT / "fig1_methodology.
 # ──────────────────────────────────────────────────────────────────────
 def make_fig_2_closure_heatmap(df: pd.DataFrame,
                                output_path: Path = PLOTS_OUTPUT / "fig2_closure_heatmap.png") -> Path:
+    """Cells × paths metric-mean heatmap (Ybar, Eq. metric_mean).
+
+    Canonical convention aligned with Table 5 (see
+    ``analyze.tables.tab_closure_rate_matrix``): Ybar is the mean of
+    ``metric_value`` across all rows per (cell, path); pandas' ``mean()``
+    skips NaN metric rows. We do NOT pre-filter by the legacy per-row
+    ``valid`` flag, which would silently reintroduce the
+    ``n = n_metric_ok`` denominator confusion caught in the round-3 audit.
+    """
     apply_publication_style()
-    valid = filter_valid(df)
-    if valid.empty:
+    if df.empty:
         return _save_empty(output_path, "fig2_closure_heatmap")
 
-    pivot = valid.pivot_table(index="cell_id", columns="path",
-                                values="metric_value", aggfunc="mean")
+    d = df.copy()
+    d["metric_value"] = pd.to_numeric(d["metric_value"], errors="coerce")
+
+    pivot = d.pivot_table(index="cell_id", columns="path",
+                           values="metric_value", aggfunc="mean")
     # Stable cell-order: mono → hetero → null
     cell_order = sorted(pivot.index,
                         key=lambda c: ({"M": 0, "H": 1, "N": 2}.get(c[0], 3),
@@ -145,8 +156,8 @@ def make_fig_2_closure_heatmap(df: pd.DataFrame,
             ax.text(j, i, f"{v:.2f}" if not np.isnan(v) else "—",
                     ha="center", va="center",
                     color="white" if v < 0.5 else "black", fontsize=9)
-    fig.colorbar(im, ax=ax, label="Mean closure rate", shrink=0.6)
-    ax.set_title("Mean closure rate per cell × path")
+    fig.colorbar(im, ax=ax, label=r"Metric mean $\bar{Y}_{a, p}$", shrink=0.6)
+    ax.set_title(r"Metric mean $\bar{Y}_{a, p}$ per cell $\times$ path")
     fig.savefig(output_path)
     plt.close(fig)
     return output_path
