@@ -52,7 +52,7 @@ A sixth methodological contribution is the demonstration that open-weight SLM ev
 
 Because the design is multi-dimensional (20 cells $\times$ 3 paths, two per-cell aggregates, five mutation operators, two source benchmarks), Table~\ref{tab:findings_glance} previews each research question's headline answer and the evidence behind it, so that the detailed results of Section~\ref{sec:results} can be read against a fixed map. Throughout the paper, cells are named M1--M6 (mono: one SLM at all three stages), H1--H11 (hetero: different SLMs across stages), and N1--N3 (null controls); the full stage-to-model assignment for every cell is given in Table~\ref{tab:doe_summary}, and the two per-cell aggregates --- metric mean $\bar{Y}$ and strict-AND valid-closure fraction $V$ --- are defined in Section~\ref{sec:framework_cell_aggregates}.
 
-\begin{table}[t]
+\begin{table}[!htbp]
 \centering
 \small
 \caption{Findings at a glance: headline answer, key quantitative evidence, and the section where each is developed. Compositions: H1 = phi-4 spec + qwen-coder test/code; H4 = qwen-coder spec/test + llama3.2 code; H10 = mistral spec + phi-4 test + qwen-coder code; H11 = phi-4 spec + gemma-4 test + qwen-coder code; M3 = qwen3.6 mono; M4 = gemma-4 mono.}

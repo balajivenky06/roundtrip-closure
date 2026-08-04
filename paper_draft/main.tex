@@ -62,9 +62,17 @@
   \setmathfont{Latin Modern Math}
 \fi
 
-%% -- Float placement (prevents figures from clustering at end) --------------
-\usepackage[section]{placeins}   % \FloatBarrier automatically at each \section
-% If a figure still floats past its subsection, add \FloatBarrier manually.
+%% -- Float placement --------------------------------------------------------
+%% Relax cas-sc's aggressive float defaults, which force floats onto their own
+%% pages and leave large white gaps before section breaks. The plain (non-
+%% ``[section]'') placeins gives us \FloatBarrier as an explicit tool without
+%% barrier-ing every section. Standard float-placement parameters below let
+%% floats share pages with text more freely and prevent nearly-empty pages.
+\usepackage{placeins}
+\renewcommand{\topfraction}{0.9}       % up to 90% of top page can be float
+\renewcommand{\bottomfraction}{0.8}    % up to 80% of bottom
+\renewcommand{\textfraction}{0.1}      % text page needs only 10% text
+\renewcommand{\floatpagefraction}{0.75}% float-only page needs 75% floats
 
 %% -- Colors for placeholders + comments ------------------------------------
 \usepackage{xcolor}
@@ -73,8 +81,9 @@
 \begin{document}
 
 \let\WriteBookmarks\relax
-\def\floatpagepagefraction{1}
-\def\textpagefraction{.001}
+%% Note: cas-sc's built-in \def\floatpagepagefraction and \def\textpagefraction
+%% are misnamed no-ops (the standard names are \floatpagefraction and
+%% \textfraction, set via \renewcommand above). Removed to avoid confusion.
 
 %% ============================================================================
 %% Short-title / short-authors (cas-sc mandatory for running heads)
