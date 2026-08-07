@@ -19,18 +19,6 @@ Five empirical contributions emerge from the 5{,}890-row sweep and the six post-
   \item \textbf{Capability preservation is not uniform.} Section~\ref{sec:results_stage_attribution} and Section~\ref{sec:discussion_capability} report that well-composed hetero cells (H11, H7, H9, H1) preserve $76$--$91\%$ of the strongest mono baseline's capability, while wrong-model-at-wrong-stage cells sacrifice materially (H10 preserves $34.9\%$ of Path~1 reference capability; H4 preserves $56.5\%$ of Path~2). Heterogeneity is not free; the stage assignment must match the demanded per-stage strength.
 \end{enumerate}
 
-\subsection{Design guidelines for practitioners}
-
-Three guidelines follow from the empirical findings, targeted at practitioners assembling multi-SLM SE pipelines:
-
-\begin{itemize}
-  \item \textbf{G1: Place the strongest available model at the bottleneck stage.} The stage-attribution decomposition (Section~\ref{sec:results_stage_attribution}) and the per-operator table (Section~\ref{sec:results_per_operator}) both identify per-stage strengths that dominate closure success. Selecting stage models based on the pipeline's bottleneck --- rather than on aggregate model capability --- consistently produces higher closure rates.
-
-  \item \textbf{G2: Match test-generation choice to the docstring style upstream, not to the model's general capability.} The phi-4-in-test-stage pathology (Section~\ref{sec:discussion_rq3}) shows that a model's test-generation capability \emph{de novo} does not transfer when the test model is downstream of a docstring produced by a different model. Stage models should be chosen jointly, not marginally.
-
-  \item \textbf{G3: Use two-signal validity when reporting closure rates.} No single automated metric was found to correlate reliably with judge semantic equivalence on all three paths (Section~\ref{sec:results_judge_metric_corr}). The strict-AND validity policy of Algorithm~\ref{alg:validity} produces conservative closure counts with interpretable disagreement modes (Section~\ref{sec:discussion_rq2}). Single-signal validity risks systematic misestimation.
-\end{itemize}
-
 \subsection{Future work}
 
 Four directions extend this study.
