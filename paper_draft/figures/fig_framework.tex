@@ -75,8 +75,16 @@
       {\textbf{Strict-AND validity decision (Algorithm~\ref{alg:validity})}:\;
        $\text{valid} \iff (\text{metric} > \tau) \;\wedge\; (\text{judge rating} \geq \rho)$};
 
-    \draw[->, dashed, gray!70] (P1J.south) -- ++(0,-0.15) |- (validity.east);
-    \draw[->, dashed, gray!70] (P2J.south) -- ++(0,-0.15) |- (validity.east);
+    %% Judges → validity: three connectors landing on the top edge (not the
+    %% side) of the validity box, so no line crosses the box text.
+    %% P3J points straight down; P1J and P2J curve down-and-left to land at
+    %% distinct points along the top-right region of the validity box.
+    \draw[->, dashed, gray!70] (P1J.south)
+      to[out=-90, in=60, looseness=0.9]
+      ([xshift=-1.0cm]validity.north east);
+    \draw[->, dashed, gray!70] (P2J.south)
+      to[out=-90, in=50, looseness=0.7]
+      ([xshift=-2.2cm]validity.north east);
     \draw[->, dashed, gray!70] (P3J.south) -- (validity.north);
 
     %% -- Legend -----------------------------------------------------
