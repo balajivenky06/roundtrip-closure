@@ -8,194 +8,355 @@
 %% ============================================================================
 
 @inproceedings{Allamanis2024RTC,
-  author    = {Allamanis, Miltiadis and Panthaplackel, Sheena and Yin, Pengcheng},
-  title     = {Unsupervised Evaluation of Code {LLM}s with Round-Trip Correctness},
-  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
-  year      = {2024},
-  note      = {arXiv:2402.08699},
+  title={Unsupervised Evaluation of Code LLMs with Round-Trip Correctness},
+  author={Miltiadis Allamanis and Sheena Panthaplackel and Pengcheng Yin},
+  booktitle={International Conference on Machine Learning},
+  year={2024},
+  url={https://api.semanticscholar.org/CorpusID:267657978}
 }
 
-@article{Zhang2025CodingTriangle,
-  author  = {Zhang, Taolin and Chen, Xinshu and Chen, Yiran and Zhu, Yuxin and He, Junyu and Sun, Chengyu and Xu, Zhihuan and Wu, Zenan and Fu, Wei and Wang, Tao},
-  title   = {Coding Triangle: How Does Large Language Model Understand Code?},
-  journal = {arXiv preprint arXiv:2507.06138},
-  year    = {2025},
+@misc{
+Zhang2025CodingTriangle,
+title={Coding Triangle: How Does Large Language Model Understand Code?},
+author={Taolin Zhang and Zihan Ma and Maosongcao and Junnan Liu and Songyang Zhang and Kai Chen},
+year={2026},
+url={https://openreview.net/forum?id=3BHs9QaHYd}
 }
 
-@article{Tian2024MBCT,
-  author  = {Tian, Zhouyang and Chen, Junjie and Hu, Qi and Xie, Xiaoyu and Shen, Boyuan and Zhang, Yingfei},
-  title   = {Mutation-Based Consistency Testing for Evaluating the Code Understanding Capability of {LLM}s},
-  journal = {arXiv preprint arXiv:2401.05940},
-  year    = {2024},
+@inproceedings{Tian2024MBCT,
+author = {Li, Ziyu and Shin, Donghwan},
+title = {Mutation-based Consistency Testing for Evaluating the Code Understanding Capability of LLMs},
+year = {2024},
+isbn = {9798400705915},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3644815.3644946},
+doi = {10.1145/3644815.3644946},
+abstract = {Large Language Models (LLMs) have shown remarkable capabilities in processing both natural and programming languages, which have enabled various applications in software engineering, such as requirement engineering, code generation, and software testing. However, existing code generation benchmarks do not necessarily assess the code understanding performance of LLMs, especially for the subtle inconsistencies that may arise between code and its semantics described in natural language.In this paper, we propose a novel method, called Mutation-based Consistency Testing (MCT), to systematically assess the code understanding performance of LLMs, particularly focusing on subtle differences between code and its descriptions, by introducing code mutations to existing code generation datasets. Code mutations are small changes that alter the semantics of the original code, creating a mismatch with the natural language description. MCT uses different types of code mutations, such as operator replacement and statement deletion, to generate inconsistent code-description pairs. MCT then uses these pairs to test the ability of LLMs to detect the inconsistencies correctly.We conduct a case study on the two popular LLMs, GPT-3.5 and GPT-4, using the state-of-the-art code generation benchmark, HumanEval-X, which consists of 164 programming problems written in six programming languages (Python, C++, Java, Go, JavaScript, and Rust). The results show that the LLMs have significant variations in their code understanding performance and that they have different strengths and weaknesses depending on the mutation type and language. We further explain conditions under which the LLMs result in correct answers using input characteristics (e.g., number of tokens) and investigate to what extent the test results can be improved using one-shot prompts (i.e., providing an additional example). Our MCT method and the case study results provide valuable implications for future research and development of LLM-based software engineering.},
+booktitle = {Proceedings of the IEEE/ACM 3rd International Conference on AI Engineering - Software Engineering for AI},
+pages = {150–159},
+numpages = {10},
+keywords = {large language models, software engineering, mutation analysis},
+location = {Lisbon, Portugal},
+series = {CAIN '24}
 }
 
 %% ============================================================================
 %% LLM-based test generation and SBST (§2.1)
 %% ============================================================================
 
+
 @inproceedings{Fraser2011EvoSuite,
-  author    = {Fraser, Gordon and Arcuri, Andrea},
-  title     = {{EvoSuite}: Automatic Test Suite Generation for Object-Oriented Software},
-  booktitle = {Proc. ESEC/FSE},
-  year      = {2011},
+author = {Fraser, Gordon and Arcuri, Andrea},
+title = {EvoSuite: automatic test suite generation for object-oriented software},
+year = {2011},
+isbn = {9781450304436},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2025113.2025179},
+doi = {10.1145/2025113.2025179},
+abstract = {To find defects in software, one needs test cases that execute the software systematically, and oracles that assess the correctness of the observed behavior when running these test cases. This paper presents EvoSuite, a tool that automatically generates test cases with assertions for classes written in Java code. To achieve this, EvoSuite applies a novel hybrid approach that generates and optimizes whole test suites towards satisfying a coverage criterion. For the produced test suites, EvoSuite suggests possible oracles by adding small and effective sets of assertions that concisely summarize the current behavior; these assertions allow the developer to detect deviations from expected behavior, and to capture the current behavior in order to protect against future defects breaking this behavior.},
+booktitle = {Proceedings of the 19th ACM SIGSOFT Symposium and the 13th European Conference on Foundations of Software Engineering},
+pages = {416–419},
+numpages = {4},
+keywords = {test case generation, search based soft- ware testing, assertion generation},
+location = {Szeged, Hungary},
+series = {ESEC/FSE '11}
 }
 
-@article{Lukasczyk2022Pynguin,
-  author  = {Lukasczyk, Stephan and Fraser, Gordon},
-  title   = {Pynguin: Automated Unit Test Generation for {Python}},
-  journal = {IEEE/ACM International Conference on Software Engineering (ICSE)},
-  year    = {2022},
+@inproceedings{Lukasczyk2022Pynguin,
+author = {Lukasczyk, Stephan and Fraser, Gordon},
+title = {Pynguin: automated unit test generation for Python},
+year = {2022},
+isbn = {9781450392235},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3510454.3516829},
+doi = {10.1145/3510454.3516829},
+abstract = {Automated unit test generation is a well-known methodology aiming to reduce the developers' effort of writing tests manually. Prior research focused mainly on statically typed programming languages like Java. In practice, however, dynamically typed languages have received a huge gain in popularity over the last decade. This introduces the need for tools and research on test generation for these languages, too. We introduce Pynguin, an extendable testgeneration framework for Python, which generates regression tests with high code coverage. Pynguin is designed to be easily usable by practitioners; it is also extensible to allow researchers to adapt it for their needs and to enable future research. We provide a demo of Pynguin at https://youtu.be/UiGrG25Vts0; further information, documentation, the tool, and its source code are available at https://www.pynguin.eu.},
+booktitle = {Proceedings of the ACM/IEEE 44th International Conference on Software Engineering: Companion Proceedings},
+pages = {168–172},
+numpages = {5},
+keywords = {automated test generation, Python},
+location = {Pittsburgh, Pennsylvania},
+series = {ICSE '22}
 }
 
-@inproceedings{Schafer2023LLMTest,
-  author    = {Sch{\"a}fer, Max and others},
-  title     = {An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation},
-  booktitle = {Proc. ICSE},
-  year      = {2023},
+@article{Schafer2023LLMTest,
+author = {Sch{\"a}fer, Max and Nadi, Sarah and Eghbali, Aryaz and Tip, Frank},
+title = {An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation},
+year = {2024},
+issue_date = {Jan. 2024},
+publisher = {IEEE Press},
+volume = {50},
+number = {1},
+issn = {0098-5589},
+url = {https://doi.org/10.1109/TSE.2023.3334955},
+doi = {10.1109/TSE.2023.3334955},
+abstract = {Unit tests play a key role in ensuring the correctness of software. However, manually creating unit tests is a laborious task, motivating the need for automation. Large Language Models (LLMs) have recently been applied to various aspects of software development, including their suggested use for automated generation of unit tests, but while requiring additional training or few-shot learning on examples of existing tests. This paper presents a large-scale empirical evaluation on the effectiveness of LLMs for automated unit test generation without requiring additional training or manual effort. Concretely, we consider an approach where the LLM is provided with prompts that include the signature and implementation of a function under test, along with usage examples extracted from documentation. Furthermore, if a generated test fails, our approach attempts to generate a new test that fixes the problem by re-prompting the model with the failing test and error message. We implement our approach in <sc>TestPilot</sc>, an adaptive LLM-based test generation tool for JavaScript that automatically generates unit tests for the methods in a given project's API. We evaluate <sc>TestPilot</sc> using OpenAI's <italic>gpt3.5-turbo</italic> LLM on 25 npm packages with a total of 1,684 API functions. The generated tests achieve a median statement coverage of 70.2\% and branch coverage of 52.8\%. In contrast, the state-of-the feedback-directed JavaScript test generation technique, Nessie, achieves only 51.3\% statement coverage and 25.6\% branch coverage. Furthermore, experiments with excluding parts of the information included in the prompts show that all components contribute towards the generation of effective test suites. We also find that 92.8\% of <sc>TestPilot</sc>'s generated tests have <inline-formula><tex-math notation="LaTeX">$leq$</tex-math><alternatives><mml:math display="inline"><mml:mo>≤</mml:mo></mml:math><inline-graphic xlink:href="schaefer-ieq1-3334955.gif"/></alternatives></inline-formula> 50\% similarity with existing tests (as measured by normalized edit distance), with none of them being exact copies. Finally, we run <sc>TestPilot</sc> with two additional LLMs, OpenAI's older <italic>code-cushman-002</italic> LLM and <italic>StarCoder</italic>, an LLM for which the training process is publicly documented. Overall, we observed similar results with the former (68.2\% median statement coverage), and somewhat worse results with the latter (54.0\% median statement coverage), suggesting that the effectiveness of the approach is influenced by the size and training set of the LLM, but does not fundamentally depend on the specific model.},
+journal = {IEEE Trans. Softw. Eng.},
+month = jan,
+pages = {85–105},
+numpages = {21}
 }
 
-@inproceedings{Tufano2022LLMTest,
-  author    = {Tufano, Michele and others},
-  title     = {Unit Test Case Generation with Transformers and Focal Context},
-  booktitle = {Proc. IEEE International Conference on Software Testing},
-  year      = {2022},
+@article{Tufano2022LLMTest,
+  title   = {Unit Test Case Generation with Transformers and Focal Context},
+  author  = {Michele Tufano and Dawn Drain and Alexey Svyatkovskiy and Shao Kun Deng and Neel Sundaresan},
+  year    = {2020},
+  journal = {arXiv preprint arXiv: 2009.05617}
 }
 
 @article{Dakhel2024MuTAP,
-  author  = {Dakhel, Arghavan Moradi and Nikanjam, Amin and Majdinasab, Vahid and Khomh, Foutse and Desmarais, Michel C.},
-  title   = {Effective Test Generation Using Pre-trained Large Language Models and Mutation Testing},
-  journal = {Information and Software Technology},
-  volume  = {171},
-  year    = {2024},
-  note    = {arXiv:2308.16557},
+title = {Effective test generation using pre-trained Large Language Models and mutation testing},
+journal = {Information and Software Technology},
+volume = {171},
+pages = {107468},
+year = {2024},
+issn = {0950-5849},
+doi = {https://doi.org/10.1016/j.infsof.2024.107468},
+url = {https://www.sciencedirect.com/science/article/pii/S0950584924000739},
+author = {Arghavan Moradi Dakhel and Amin Nikanjam and Vahid Majdinasab and Foutse Khomh and Michel C. Desmarais},
+keywords = {Test generation, Large language model, Mutation testing},
+abstract = {Context:
+One of the critical phases in the software development life cycle is software testing. Testing helps with identifying potential bugs and reducing maintenance costs. The goal of automated test generation tools is to ease the development of tests by suggesting efficient bug-revealing tests. Recently, researchers have leveraged Large Language Models (LLMs) of code to generate unit tests. While the code coverage of generated tests was usually assessed, the literature has acknowledged that the coverage is weakly correlated with the efficiency of tests in bug detection.
+Objective:
+To improve over this limitation, in this paper, we introduce MuTAP (Mutation Test case generation using Augmented Prompt) for improving the effectiveness of test cases generated by LLMs in terms of revealing bugs by leveraging mutation testing.
+Methods:
+Our goal is achieved by augmenting prompts with surviving mutants, as those mutants highlight the limitations of test cases in detecting bugs. MuTAP is capable of generating effective test cases in the absence of natural language descriptions of the Program Under Test (PUTs). We employ different LLMs within MuTAP and evaluate their performance on different benchmarks.
+Results:
+Our results show that our proposed method is able to detect up to 28% more faulty human-written code snippets. Among these, 17% remained undetected by both the current state-of-the-art fully-automated test generation tool (i.e., Pynguin) and zero-shot/few-shot learning approaches on LLMs. Furthermore, MuTAP achieves a Mutation Score (MS) of 93.57% on synthetic buggy code, outperforming all other approaches in our evaluation.
+Conclusion:
+Our findings suggest that although LLMs can serve as a useful tool to generate test cases, they require specific post-processing steps to enhance the effectiveness of the generated test cases which may suffer from syntactic or functional errors and may be ineffective in detecting certain types of bugs and testing corner cases in PUTs.}
 }
 
-@inproceedings{Chen2023CodeT,
-  author    = {Chen, Bei and Zhang, Fengji and Nguyen, Anh and Zan, Daoguang and Lin, Zeqi and Lou, Jian-Guang and Chen, Weizhu},
-  title     = {{CodeT}: Code Generation with Generated Tests},
-  booktitle = {The Eleventh International Conference on Learning Representations (ICLR)},
-  year      = {2023},
-  note      = {arXiv:2207.10397},
+
+@article{Chen2023CodeT,
+  title={CodeT: Code Generation with Generated Tests},
+  author={Bei Chen and Fengji Zhang and A. Nguyen and Daoguang Zan and Zeqi Lin and Jian-Guang Lou and Weizhu Chen},
+  journal={ArXiv},
+  year={2022},
+  volume={abs/2207.10397},
+  url={https://api.semanticscholar.org/CorpusID:250920542}
 }
 
 @inproceedings{Xie2024ChatUniTest,
-  author    = {Xie, Zejun and Chen, Yanlin and Zhang, Chunrong and Xu, Jiazheng and Kong, Weisong and Yao, Yongjie and Zang, Zan and Ma, Yuchi and Chen, Junjie},
-  title     = {{ChatUniTest}: A ChatGPT-based Automated Unit Test Generation Tool},
-  booktitle = {Proc.\ ACM International Conference on the Foundations of Software Engineering (FSE), Demo Track},
-  year      = {2024},
-  note      = {arXiv:2305.04764},
+author = {Chen, Yinghao and Hu, Zehao and Zhi, Chen and Han, Junxiao and Deng, Shuiguang and Yin, Jianwei},
+title = {ChatUniTest: A Framework for LLM-Based Test Generation},
+year = {2024},
+isbn = {9798400706585},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3663529.3663801},
+doi = {10.1145/3663529.3663801},
+abstract = {Unit testing is an essential yet frequently arduous task. Various automated unit test generation tools have been introduced to mitigate this challenge. Notably, methods based on large language models (LLMs) have garnered considerable attention and exhibited promising results in recent years. Nevertheless, LLM-based tools encounter limitations in generating accurate unit tests. This paper presents ChatUniTest, an LLM-based automated unit test generation framework. ChatUniTest incorporates an adaptive focal context mechanism to encompass valuable context in prompts and adheres to a generation-validation-repair mechanism to rectify errors in generated unit tests.  Subsequently, we have developed ChatUniTest Core, a common library that implements core workflow, complemented by the ChatUniTest Toolchain, a suite of seamlessly integrated tools enhancing the capabilities of ChatUniTest. Our effectiveness evaluation reveals that ChatUniTest outperforms TestSpark and EvoSuite in half of the evaluated projects, achieving the highest overall line coverage.  Furthermore, insights from our user study affirm that ChatUniTest delivers substantial value to various stakeholders in the software testing domain.  ChatUniTest is available at https://github.com/ZJU-ACES-ISE/ChatUniTest, and the demo video is available at https://www.youtube.com/watch?v=GmfxQUqm2ZQ.},
+booktitle = {Companion Proceedings of the 32nd ACM International Conference on the Foundations of Software Engineering},
+pages = {572–576},
+numpages = {5},
+keywords = {Automatic Unit Testing Generation, Large Language Models},
+location = {Porto de Galinhas, Brazil},
+series = {FSE 2024}
 }
 
 @article{Schafer2024TestPilot,
-  author  = {Sch{\"a}fer, Max and Nadi, Sarah and Eghbali, Aryaz and Tip, Frank},
-  title   = {An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation},
-  journal = {IEEE Transactions on Software Engineering},
-  volume  = {50},
-  number  = {1},
-  year    = {2024},
-  note    = {TestPilot; extended arXiv:2302.06527},
+author = {Sch{\"a}fer, Max and Nadi, Sarah and Eghbali, Aryaz and Tip, Frank},
+title = {An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation},
+year = {2024},
+issue_date = {Jan. 2024},
+publisher = {IEEE Press},
+volume = {50},
+number = {1},
+issn = {0098-5589},
+url = {https://doi.org/10.1109/TSE.2023.3334955},
+doi = {10.1109/TSE.2023.3334955},
+abstract = {Unit tests play a key role in ensuring the correctness of software. However, manually creating unit tests is a laborious task, motivating the need for automation. Large Language Models (LLMs) have recently been applied to various aspects of software development, including their suggested use for automated generation of unit tests, but while requiring additional training or few-shot learning on examples of existing tests. This paper presents a large-scale empirical evaluation on the effectiveness of LLMs for automated unit test generation without requiring additional training or manual effort. Concretely, we consider an approach where the LLM is provided with prompts that include the signature and implementation of a function under test, along with usage examples extracted from documentation. Furthermore, if a generated test fails, our approach attempts to generate a new test that fixes the problem by re-prompting the model with the failing test and error message. We implement our approach in <sc>TestPilot</sc>, an adaptive LLM-based test generation tool for JavaScript that automatically generates unit tests for the methods in a given project's API. We evaluate <sc>TestPilot</sc> using OpenAI's <italic>gpt3.5-turbo</italic> LLM on 25 npm packages with a total of 1,684 API functions. The generated tests achieve a median statement coverage of 70.2\% and branch coverage of 52.8\%. In contrast, the state-of-the feedback-directed JavaScript test generation technique, Nessie, achieves only 51.3\% statement coverage and 25.6\% branch coverage. Furthermore, experiments with excluding parts of the information included in the prompts show that all components contribute towards the generation of effective test suites. We also find that 92.8\% of <sc>TestPilot</sc>'s generated tests have <inline-formula><tex-math notation="LaTeX">$leq$</tex-math><alternatives><mml:math display="inline"><mml:mo>≤</mml:mo></mml:math><inline-graphic xlink:href="schaefer-ieq1-3334955.gif"/></alternatives></inline-formula> 50\% similarity with existing tests (as measured by normalized edit distance), with none of them being exact copies. Finally, we run <sc>TestPilot</sc> with two additional LLMs, OpenAI's older <italic>code-cushman-002</italic> LLM and <italic>StarCoder</italic>, an LLM for which the training process is publicly documented. Overall, we observed similar results with the former (68.2\% median statement coverage), and somewhat worse results with the latter (54.0\% median statement coverage), suggesting that the effectiveness of the approach is influenced by the size and training set of the LLM, but does not fundamentally depend on the specific model.},
+journal = {IEEE Trans. Softw. Eng.},
+month = jan,
+pages = {85–105},
+numpages = {21}
 }
 
-@inproceedings{Huang2024AgentCoder,
-  author    = {Huang, Dong and Bu, Qingwen and Zhang, Jie and Luck, Michael and Cui, Heming},
-  title     = {{AgentCoder}: Multi-Agent-based Code Generation with Iterative Testing and Optimisation},
-  booktitle = {arXiv preprint arXiv:2312.13010},
-  year      = {2024},
+@article{Huang2024AgentCoder,
+  title={AgentCoder: Multi-Agent-based Code Generation with Iterative Testing and Optimisation},
+  author={Dong Huang and Qingwen Bu and Jie M. Zhang and Michael Luck and Heming Cui},
+  journal={ArXiv},
+  year={2023},
+  volume={abs/2312.13010},
+  url={https://api.semanticscholar.org/CorpusID:266374622}
 }
+
 
 @article{Dong2024SelfCollaboration,
-  author  = {Dong, Yihong and Jiang, Xue and Jin, Zhi and Li, Ge},
-  title   = {Self-Collaboration Code Generation via {ChatGPT}},
-  journal = {ACM Transactions on Software Engineering and Methodology},
-  year    = {2024},
-  note    = {arXiv:2304.07590},
+author = {Dong, Yihong and Jiang, Xue and Jin, Zhi and Li, Ge},
+title = {Self-Collaboration Code Generation via ChatGPT},
+year = {2024},
+issue_date = {September 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {33},
+number = {7},
+issn = {1049-331X},
+url = {https://doi.org/10.1145/3672459},
+doi = {10.1145/3672459},
+abstract = {Although large language models (LLMs) have demonstrated remarkable code-generation ability, they still struggle with complex tasks. In real-world software development, humans usually tackle complex tasks through collaborative teamwork, a strategy that significantly controls development complexity and enhances software quality. Inspired by this, we present a self-collaboration framework for code generation employing LLMs, exemplified by ChatGPT. Specifically, through role instructions, (1) Multiple LLM agents act as distinct “experts,” each responsible for a specific subtask within a complex task; (2) Specify the way to collaborate and interact, so that different roles form a virtual team to facilitate each other’s work, ultimately the virtual team addresses code generation tasks collaboratively without the need for human intervention. To effectively organize and manage this virtual team, we incorporate software-development methodology into the framework. Thus, we assemble an elementary team consisting of three LLM roles (i.e., analyst, coder, and tester) responsible for software development’s analysis, coding, and testing stages. We conduct comprehensive experiments on various code-generation benchmarks. Experimental results indicate that self-collaboration code generation relatively improves 29.9–47.1\% Pass@1 compared to the base LLM agent. Moreover, we showcase that self-collaboration could potentially enable LLMs to efficiently handle complex repository-level tasks that are not readily solved by the single LLM agent.},
+journal = {ACM Trans. Softw. Eng. Methodol.},
+month = sep,
+articleno = {189},
+numpages = {38},
+keywords = {Code generation, large language models, multi-agent collaboration, software development}
 }
 
-@article{Andrews2005MutationAnalysis,
-  author  = {Andrews, James H. and Briand, Lionel C. and Labiche, Yvan},
-  title   = {Is Mutation an Appropriate Tool for Testing Experiments?},
-  journal = {IEEE Trans. Software Engineering},
-  year    = {2005},
+
+@inproceedings{Andrews2005MutationAnalysis,
+author = {Andrews, J. H. and Briand, L. C. and Labiche, Y.},
+title = {Is mutation an appropriate tool for testing experiments?},
+year = {2005},
+isbn = {1581139632},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1062455.1062530},
+doi = {10.1145/1062455.1062530},
+abstract = {The empirical assessment of test techniques plays an important role in software testing research. One common practice is to instrument faults, either manually or by using mutation operators. The latter allows the systematic, repeatable seeding of large numbers of faults; however, we do not know whether empirical results obtained this way lead to valid, representative conclusions. This paper investigates this important question based on a number of programs with comprehensive pools of test cases and known faults. It is concluded that, based on the data available thus far, the use of mutation operators is yielding trustworthy results (generated mutants are similar to real faults). Mutants appear however to be different from hand-seeded faults that seem to be harder to detect than real faults.},
+booktitle = {Proceedings of the 27th International Conference on Software Engineering},
+pages = {402–411},
+numpages = {10},
+keywords = {hand-seeded faults, mutants, real faults},
+location = {St. Louis, MO, USA},
+series = {ICSE '05}
 }
+
 
 @inproceedings{Just2014MutationAnalysis,
-  author    = {Just, Ren{\'e} and others},
-  title     = {Are Mutants a Valid Substitute for Real Faults in Software Testing?},
-  booktitle = {Proc. FSE},
-  year      = {2014},
+author = {Just, Ren{\'e} and Jalali, Darioush and Inozemtseva, Laura and Ernst, Michael D. and Holmes, Reid and Fraser, Gordon},
+title = {Are mutants a valid substitute for real faults in software testing?},
+year = {2014},
+isbn = {9781450330565},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2635868.2635929},
+doi = {10.1145/2635868.2635929},
+abstract = {A good test suite is one that detects real faults. Because the set of faults in a program is usually unknowable, this definition is not useful to practitioners who are creating test suites, nor to researchers who are creating and evaluating tools that generate test suites. In place of real faults, testing research often uses mutants, which are artificial faults -- each one a simple syntactic variation -- that are systematically seeded throughout the program under test. Mutation analysis is appealing because large numbers of mutants can be automatically-generated and used to compensate for low quantities or the absence of known real faults. Unfortunately, there is little experimental evidence to support the use of mutants as a replacement for real faults. This paper investigates whether mutants are indeed a valid substitute for real faults, i.e., whether a test suite’s ability to detect mutants is correlated with its ability to detect real faults that developers have fixed. Unlike prior studies, these investigations also explicitly consider the conflating effects of code coverage on the mutant detection rate. Our experiments used 357 real faults in 5 open-source applications that comprise a total of 321,000 lines of code. Furthermore, our experiments used both developer-written and automatically-generated test suites. The results show a statistically significant correlation between mutant detection and real fault detection, independently of code coverage. The results also give concrete suggestions on how to improve mutation analysis and reveal some inherent limitations.},
+booktitle = {Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering},
+pages = {654–665},
+numpages = {12},
+keywords = {Test effectiveness, code coverage, mutation analysis, real faults},
+location = {Hong Kong, China},
+series = {FSE 2014}
 }
 
 %% ============================================================================
 %% RAG and LLM-based docstring generation (§2.2)
 %% ============================================================================
 
-@article{Lewis2020RAG,
-  author  = {Lewis, Patrick and others},
-  title   = {Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks},
-  journal = {NeurIPS},
-  year    = {2020},
+@inproceedings{Lewis2020RAG,
+author = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and K{\"u}ttler, Heinrich and Lewis, Mike and Yih, Wen-tau and Rockt{\"a}schel, Tim and Riedel, Sebastian and Kiela, Douwe},
+title = {Retrieval-augmented generation for knowledge-intensive NLP tasks},
+year = {2020},
+isbn = {9781713829546},
+publisher = {Curran Associates Inc.},
+address = {Red Hook, NY, USA},
+abstract = {Large pre-trained language models have been shown to store factual knowledge in their parameters, and achieve state-of-the-art results when fine-tuned on downstream NLP tasks. However, their ability to access and precisely manipulate knowledge is still limited, and hence on knowledge-intensive tasks, their performance lags behind task-specific architectures. Additionally, providing provenance for their decisions and updating their world knowledge remain open research problems. Pre-trained models with a differentiable access mechanism to explicit non-parametric memory can overcome this issue, but have so far been only investigated for extractive downstream tasks. We explore a general-purpose fine-tuning recipe for retrieval-augmented generation (RAG) — models which combine pre-trained parametric and non-parametric memory for language generation. We introduce RAG models where the parametric memory is a pre-trained seq2seq model and the non-parametric memory is a dense vector index of Wikipedia, accessed with a pre-trained neural retriever. We compare two RAG formulations, one which conditions on the same retrieved passages across the whole generated sequence, and another which can use different passages per token. We fine-tune and evaluate our models on a wide range of knowledge-intensive NLP tasks and set the state of the art on three open domain QA tasks, outperforming parametric seq2seq models and task-specific retrieve-and-extract architectures. For language generation tasks, we find that RAG models generate more specific, diverse and factual language than a state-of-the-art parametric-only seq2seq baseline.},
+booktitle = {Proceedings of the 34th International Conference on Neural Information Processing Systems},
+articleno = {793},
+numpages = {16},
+location = {Vancouver, BC, Canada},
+series = {NIPS '20}
 }
 
-@article{Liu2024RAGSurvey,
-  author  = {Liu, Junyi and Ma, Yaozhen and Han, Rundong and Zheng, Xiaoyi and Zhang, Ge and Sun, Kai},
-  title   = {A Survey of Retrieval-Augmented Generation for Code Tasks},
-  journal = {arXiv preprint arXiv:2408.15694},
-  year    = {2024},
-}
-
-@article{Zhang2023RAGCode,
-  author  = {Zhang, Fengji and Chen, Bei and Zhang, Yue and Keung, Jacky and Liu, Jin and Zan, Daoguang and Mao, Yi and Lou, Jian-Guang and Chen, Weizhu},
-  title   = {{RepoCoder}: Repository-Level Code Completion Through Iterative Retrieval and Generation},
-  journal = {arXiv preprint arXiv:2303.12570},
-  year    = {2023},
+@inproceedings{Zhang2023RAGCode,
+    title = "{R}epo{C}oder: Repository-Level Code Completion Through Iterative Retrieval and Generation",
+    author = "Zhang, Fengji  and
+      Chen, Bei  and
+      Zhang, Yue  and
+      Keung, Jacky  and
+      Liu, Jin  and
+      Zan, Daoguang  and
+      Mao, Yi  and
+      Lou, Jian-Guang  and
+      Chen, Weizhu",
+    editor = "Bouamor, Houda  and
+      Pino, Juan  and
+      Bali, Kalika",
+    booktitle = "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    month = dec,
+    year = "2023",
+    address = "Singapore",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.emnlp-main.151/",
+    doi = "10.18653/v1/2023.emnlp-main.151",
+    pages = "2471--2484",
+    abstract = "The task of repository-level code completion is to continue writing the unfinished code based on a broader context of the repository. While for automated code completion tools, it is difficult to utilize the useful information scattered in different files. We propose RepoCoder, a simple, generic, and effective framework to address the challenge. It streamlines the repository-level code completion process by incorporating a similarity-based retriever and a pre-trained code language model in an iterative retrieval-generation pipeline. RepoCoder makes effective utilization of repository-level information for code completion and has the ability to generate code at various levels of granularity. Moreover, we propose a new benchmark RepoBench, which consists of the latest and high-quality real-world repositories covering line, API invocation, and function body completion scenarios. Experimental results indicate that RepoCoder significantly improves the In-File completion baseline by over 10{\%} in all settings and consistently outperforms the vanilla retrieval-augmented code completion approach. Furthermore, we validate the effectiveness of RepoCoder through comprehensive analysis, providing valuable insights for future research. Our source code and benchmark will be publicly available after the paper review."
 }
 
 %% ============================================================================
 %% LLM-as-judge protocols (§2.4)
 %% ============================================================================
 
+
 @article{Zheng2023LLMJudge,
-  author  = {Zheng, Lianmin and others},
-  title   = {Judging {LLM}-as-a-Judge with {MT}-Bench and Chatbot Arena},
-  journal = {arXiv preprint},
-  year    = {2023},
-  note    = {arXiv:2306.05685},
+  title={Judging LLM-as-a-judge with MT-Bench and Chatbot Arena},
+  author={Lianmin Zheng and Wei-Lin Chiang and Ying Sheng and Siyuan Zhuang and Zhanghao Wu and Yonghao Zhuang and Zi Lin and Zhuohan Li and Dacheng Li and Eric P. Xing and Haotong Zhang and Joseph E. Gonzalez and Ion Stoica},
+  journal={ArXiv},
+  year={2023},
+  volume={abs/2306.05685},
+  url={https://api.semanticscholar.org/CorpusID:259129398}
 }
+
 
 @article{Panickssery2024JudgeBias,
-  author  = {Panickssery, Aditya and others},
-  title   = {{LLM} Evaluators Recognize and Favor Their Own Generations},
-  journal = {arXiv preprint},
-  year    = {2024},
+  title={LLM Evaluators Recognize and Favor Their Own Generations},
+  author={Arjun Panickssery and Samuel R. Bowman and Shi Feng},
+  journal={ArXiv},
+  year={2024},
+  volume={abs/2404.13076},
+  url={https://api.semanticscholar.org/CorpusID:269293311}
 }
 
-@article{Wang2024JudgeBias,
-  author  = {Wang, Peiyi and Li, Lei and Chen, Liang and Cai, Zefan and Zhu, Dawei and Lin, Binghuai and Cao, Yunbo and Liu, Qi and Liu, Tianyu and Sui, Zhifang},
-  title   = {Large Language Models are not Fair Evaluators},
-  journal = {arXiv preprint arXiv:2305.17926},
-  year    = {2024},
+
+@inproceedings{Wang2024JudgeBias,
+    title = "Large Language Models are not Fair Evaluators",
+    author = "Wang, Peiyi  and
+      Li, Lei  and
+      Chen, Liang  and
+      Cai, Zefan  and
+      Zhu, Dawei  and
+      Lin, Binghuai  and
+      Cao, Yunbo  and
+      Kong, Lingpeng  and
+      Liu, Qi  and
+      Liu, Tianyu  and
+      Sui, Zhifang",
+    editor = "Ku, Lun-Wei  and
+      Martins, Andre  and
+      Srikumar, Vivek",
+    booktitle = "Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.acl-long.511/",
+    doi = "10.18653/v1/2024.acl-long.511",
+    pages = "9440--9450",
+    abstract = "In this paper, we uncover a positional bias in the evaluation paradigm of adopting large language models (LLMs), e.g., GPT-4, as a referee to score and compare the quality of responses generated by candidate models. We find that the quality ranking of candidate responses can be easily hacked by simply altering their order of appearance in the context. This manipulation allows us to skew the evaluation result, making one model appear considerably superior to the other, e.g., Vicuna-13B could beat ChatGPT on 66 over 80 tested queries with ChatGPT as an evaluator. We propose a simple yet effective calibration framework to address our discovered positional bias.To evaluate the effectiveness of our framework, we manually annotate the ``win/tie/lose'' outcomes of responses from ChatGPT and Vicuna-13B in the Vicuna Benchmark{'}s question prompt. Extensive experiments demonstrate that our approach successfully alleviates evaluation bias, resulting in closer alignment with human judgments."
 }
+
 
 @article{Fanous2025SycEval,
-  author  = {Fanous, Ahmed and others},
-  title   = {{SycEval}: Evaluating {LLM} Sycophancy},
-  journal = {arXiv preprint},
-  year    = {2025},
+  title={SycEval: Evaluating LLM Sycophancy},
+  author={A.H. Fanous and Jacob Goldberg and Ank A. Agarwal and Joanna Lin and Anson Y. Zhou and Roxana Daneshjou and Oluwasanmi Koyejo},
+  journal={ArXiv},
+  year={2025},
+  volume={abs/2502.08177},
+  url={https://api.semanticscholar.org/CorpusID:276287766}
 }
 
-@inproceedings{Du2023MAD,
-  author    = {Du, Yilun and Li, Shuang and Torralba, Antonio and Tenenbaum, Joshua B. and Mordatch, Igor},
-  title     = {Improving Factuality and Reasoning in Language Models through Multiagent Debate},
-  booktitle = {Proceedings of the 41st International Conference on Machine Learning (ICML)},
-  year      = {2024},
-  note      = {arXiv:2305.14325},
-}
 
-@article{Wynn2025DebateHarm,
-  author  = {Wynn, Alexandra R. and Farhat, Mohamed Abdelfattah and Ackerman, Rachel Freedman},
-  title   = {Multi-Agent Debate Can Be Actively Harmful},
-  journal = {arXiv preprint arXiv:2502.05374},
-  year    = {2025},
+@misc{
+Du2023MAD,
+title={Improving Factuality and Reasoning in Language Models through Multiagent Debate},
+author={Yilun Du and Shuang Li and Antonio Torralba and Joshua B. Tenenbaum and Igor Mordatch},
+year={2024},
+url={https://openreview.net/forum?id=QAwaaLJNCk}
 }
 
 %% ============================================================================
@@ -203,25 +364,39 @@
 %% ============================================================================
 
 @article{Bai2022ConstitutionalAI,
-  author  = {Bai, Yuntao and others},
-  title   = {Constitutional {AI}: Harmlessness from {AI} Feedback},
-  journal = {Anthropic technical report},
-  year    = {2022},
-  note    = {arXiv:2212.08073},
+  title={Constitutional AI: Harmlessness from AI Feedback},
+  author={Yuntao Bai and Saurav Kadavath and Sandipan Kundu and Amanda Askell and John Kernion and Andy Jones and Anna Chen and Anna Goldie and Azalia Mirhoseini and Cameron McKinnon and Carol Chen and Catherine Olsson and Chris Olah and Danny Hernandez and Dawn Drain and Deep Ganguli and Dustin Li and Eli Tran-Johnson and E Perez and Jamie Kerr and Jared Mueller and Jeffrey Ladish and J Landau and Kamal Ndousse and Kamilė Luko{\vs}iūtė and Liane Lovitt and Michael Sellitto and Nelson Elhage and Nicholas Schiefer and Noem'i Mercado and Nova Dassarma and Robert Lasenby and Robin Larson and Sam Ringer and Scott Johnston and Shauna Kravec and Sheer El Showk and Stanislav Fort and Tamera Lanham and Timothy Telleen-Lawton and Tom Conerly and Thomas Henighan and Tristan Hume and Sam Bowman and Zac Hatfield-Dodds and Benjamin Mann and Dario Amodei and Nicholas Joseph and Sam McCandlish and Tom B. Brown and Jared Kaplan},
+  journal={ArXiv},
+  year={2022},
+  volume={abs/2212.08073},
+  url={https://api.semanticscholar.org/CorpusID:254823489}
 }
 
 @article{Xiong2025DelphiAgent,
-  author  = {Xiong, Miao and Miao, Ning and Zhang, Yifan and Pang, Tianyu and Du, Chao and Zhou, Zhewei and Ye, Jiancheng and Wang, Jing and Kwok, James T. and Kim, Jae Jin and Weld, Daniel S.},
-  title   = {{DelphiAgent}: Fact Verification via Multi-Agent Consensus},
-  journal = {arXiv preprint arXiv:2510.14371},
-  year    = {2025},
+author = {Xiong, Cheng and Zheng, Gengfeng and Ma, Xiao and Li, Chunlin and Zeng, Jiangfeng},
+title = {DelphiAgent: A trustworthy multi-agent verification framework for automated fact verification},
+year = {2025},
+issue_date = {Nov 2025},
+publisher = {Pergamon Press, Inc.},
+address = {USA},
+volume = {62},
+number = {6},
+issn = {0306-4573},
+url = {https://doi.org/10.1016/j.ipm.2025.104241},
+doi = {10.1016/j.ipm.2025.104241},
+journal = {Inf. Process. Manage.},
+month = nov,
+numpages = {17},
+keywords = {Large language models, Fact-checking, Delphi method, Agentic system, Hallucinations}
 }
 
 @article{Meier2025CausalDelphi,
-  author  = {Meier, Fabian and Loechner, Thomas and Zimmermann, Cornelius},
-  title   = {Multi-Agent Delphi for Causal Discovery with Specialised Language Models},
-  journal = {arXiv preprint arXiv:2504.19571},
-  year    = {2025},
+  title={Multi-Agent Causal Discovery Using Large Language Models},
+  author={Hao Duong Le and Xin Xia and Zhan Chen},
+  journal={ArXiv},
+  year={2024},
+  volume={abs/2407.15073},
+  url={https://api.semanticscholar.org/CorpusID:271329110}
 }
 
 %% ============================================================================
@@ -229,62 +404,72 @@
 %% ============================================================================
 
 @article{Chen2021HumanEval,
-  author  = {Chen, Mark and others},
-  title   = {Evaluating Large Language Models Trained on Code},
-  journal = {arXiv preprint},
-  year    = {2021},
-  note    = {arXiv:2107.03374 (HumanEval)},
+  title={Evaluating Large Language Models Trained on Code},
+  author={Mark Chen and Jerry Tworek and Heewoo Jun and Qiming Yuan and Henrique Pond{\'e} and Jared Kaplan and Harrison Edwards and Yura Burda and Nicholas Joseph and Greg Brockman and Alex Ray and Raul Puri and Gretchen Krueger and Michael Petrov and Heidy Khlaaf and Girish Sastry and Pamela Mishkin and Brooke Chan and Scott Gray and Nick Ryder and Mikhail Pavlov and Alethea Power and Lukasz Kaiser and Mo Bavarian and Clemens Winter and Phil Tillet and Felipe Petroski Such and David W. Cummings and Matthias Plappert and Fotios Chantzis and Elizabeth Barnes and Ariel Herbert-Voss and William H. Guss and Alex Nichol and Igor Babuschkin and Suchir Balaji and Shantanu Jain and Andrew Carr and Jan Leike and Josh Achiam and Vedant Misra and Evan Morikawa and Alec Radford and Matthew M. Knight and Miles Brundage and Mira Murati and Katie Mayer and Peter Welinder and Bob McGrew and Dario Amodei and Sam McCandlish and Ilya Sutskever and Wojciech Zaremba},
+  journal={ArXiv},
+  year={2021},
+  volume={abs/2107.03374},
+  url={https://api.semanticscholar.org/CorpusID:235755472}
 }
+
 
 @article{Austin2021MBPP,
-  author  = {Austin, Jacob and others},
-  title   = {Program Synthesis with Large Language Models},
-  journal = {arXiv preprint},
-  year    = {2021},
-  note    = {arXiv:2108.07732 (MBPP)},
+  title={Program Synthesis with Large Language Models},
+  author={Jacob Austin and Augustus Odena and Maxwell Nye and Maarten Bosma and Henryk Michalewski and David Dohan and Ellen Jiang and Carrie J. Cai and Michael Terry and Quoc V. Le and Charles Sutton},
+  journal={ArXiv},
+  year={2021},
+  volume={abs/2108.07732},
+  url={https://api.semanticscholar.org/CorpusID:237142385}
 }
 
-@inproceedings{Zhang2020BERTScore,
-  author    = {Zhang, Tianyi and Kishore, Varsha and Wu, Felix and Weinberger, Kilian Q. and Artzi, Yoav},
-  title     = {{BERTScore}: Evaluating Text Generation with {BERT}},
-  booktitle = {The Eighth International Conference on Learning Representations (ICLR)},
-  year      = {2020},
-  note      = {arXiv:1904.09675},
+@article{Zhang2020BERTScore,
+  title={BERTScore: Evaluating Text Generation with BERT},
+  author={Tianyi Zhang and Varsha Kishore and Felix Wu and Kilian Q. Weinberger and Yoav Artzi},
+  journal={ArXiv},
+  year={2019},
+  volume={abs/1904.09675},
+  url={https://api.semanticscholar.org/CorpusID:127986044}
 }
 
 %% ============================================================================
 %% Statistical methods (§3.8, §6)
 %% ============================================================================
 
-@book{Cohen2013StatPower,
-  author    = {Cohen, Jacob},
-  title     = {Statistical Power Analysis for the Behavioral Sciences},
-  edition   = {2nd},
-  publisher = {Routledge},
-  year      = {2013},
+@article{Cohen2013StatPower,
+  title={Statistical Power Analysis for the Behavioral Sciences},
+  author={Jacob Cohen},
+  journal={The SAGE Encyclopedia of Research Design},
+  year={1969},
+  url={https://api.semanticscholar.org/CorpusID:123217261}
 }
 
-@book{Wohlin2012ExperimentSE,
-  author    = {Wohlin, Claes and others},
-  title     = {Experimentation in Software Engineering},
-  publisher = {Springer},
-  year      = {2012},
+
+@inproceedings{Wohlin2012ExperimentSE,
+  title={Experimentation in Software Engineering},
+  author={Claes Wohlin and Per Runeson and Martin H{\"o}st and Magnus C. Ohlsson and Bj{\"o}rn Regnell and Anders Wessl{\'e}n},
+  booktitle={Springer Berlin Heidelberg},
+  year={2012},
+  url={https://api.semanticscholar.org/CorpusID:9558494}
 }
 
 @article{Brand2015CRediT,
-  author  = {Brand, Amy and others},
-  title   = {Beyond authorship: attribution, contribution, collaboration, and credit},
-  journal = {Learned Publishing},
-  year    = {2015},
+  title={Beyond authorship: attribution, contribution, collaboration, and credit},
+  author={Amy Brand and Liz Allen and Micah Altman and Marjorie M. K. Hlava and Jo Scott},
+  journal={Learned Publishing},
+  year={2015},
+  volume={28},
+  url={https://api.semanticscholar.org/CorpusID:45167271}
 }
 
 @article{Marzi2024KrippendorffAlpha,
-  author  = {Marzi, Giacomo and Balzano, Marco and Marchiori, Davide},
-  title   = {K-Alpha Calculator---Krippendorff's Alpha Calculator: A user-friendly tool for computing Krippendorff's Alpha inter-rater reliability coefficient},
-  journal = {MethodsX},
-  volume  = {12},
-  year    = {2024},
-  note    = {102545, doi:10.1016/j.mex.2023.102545},
+author = {Marzi, Giacomo and Balzano, Marco and Marchiori, Davide},
+year = {2024},
+month = {06},
+pages = {102545},
+title = {K-Alpha Calculator —Krippendorff's Alpha Calculator: A User-Friendly Tool for Computing Krippendorff's Alpha Inter-Rater Reliability Coefficient},
+volume = {12},
+journal = {MethodsX},
+doi = {10.1016/j.mex.2023.102545}
 }
 
 %% ============================================================================
@@ -350,135 +535,119 @@
   note        = {deepseek-r1:14b Ollama tag; used as external judge SLM},
 }
 
+
 @article{Lacoste2019MLCO2Emissions,
-  author  = {Lacoste, Alexandre and Luccioni, Alexandra and Schmidt, Victor and Dandres, Thomas},
-  title   = {Quantifying the Carbon Emissions of Machine Learning},
-  journal = {arXiv preprint arXiv:1910.09700},
-  year    = {2019},
-  note    = {MLCO$_2$ Machine Learning Impact Calculator},
+  title={Quantifying the Carbon Emissions of Machine Learning},
+  author={Alexandre Lacoste and Alexandra Sasha Luccioni and Victor Schmidt and Thomas Dandres},
+  journal={ArXiv},
+  year={2019},
+  volume={abs/1910.09700},
+  url={https://api.semanticscholar.org/CorpusID:204823751}
 }
 
 %% ============================================================================
 %% Recent LLM-for-SE + LLM-as-judge + benchmarks (2025-2026)
 %% ============================================================================
 
-@inproceedings{Jain2025LiveCodeBench,
-  author    = {Jain, Naman and Han, King and Gu, Alex and Li, Wen-Ding and Yan, Fanjia and Zhang, Tianjun and Wang, Sida and Solar-Lezama, Armando and Sen, Koushik and Stoica, Ion},
-  title     = {LiveCodeBench: Holistic and Contamination-Free Evaluation of Large Language Models for Code},
-  booktitle = {The Thirteenth International Conference on Learning Representations},
-  year      = {2025},
-  note      = {arXiv:2403.07974},
+@inproceedings{
+Jain2025LiveCodeBench,
+title={LiveCodeBench: Holistic and Contamination Free Evaluation of Large Language Models for Code},
+author={Naman Jain and King Han and Alex Gu and Wen-Ding Li and Fanjia Yan and Tianjun Zhang and Sida Wang and Armando Solar-Lezama and Koushik Sen and Ion Stoica},
+booktitle={The Thirteenth International Conference on Learning Representations},
+year={2025},
+url={https://openreview.net/forum?id=chfJJYC3iL}
 }
 
-@inproceedings{Zhuo2025BigCodeBench,
-  author    = {Zhuo, Terry Yue and Vu, Minh Chien and Chim, Jenny and Hu, Han and Yu, Wenhao and Widyasari, Ratnadira and Yusuf, Imam Nur Bani and Zhan, Haolan and He, Junda and Paul, Indraneil and others},
-  title     = {{BigCodeBench}: Benchmarking Code Generation with Diverse Function Calls and Complex Instructions},
-  booktitle = {The Thirteenth International Conference on Learning Representations},
-  year      = {2025},
-  note      = {arXiv:2406.15877},
+
+@inproceedings{
+Zhuo2025BigCodeBench,
+title={BigCodeBench: Benchmarking Code Generation with Diverse Function Calls and Complex Instructions},
+author={Terry Yue Zhuo and Vu Minh Chien and Jenny Chim and Han Hu and Wenhao Yu and Ratnadira Widyasari and Imam Nur Bani Yusuf and Haolan Zhan and Junda He and Indraneil Paul and Simon Brunner and Chen GONG and James Hoang and Armel Randy Zebaze and Xiaoheng Hong and Wen-Ding Li and Jean Kaddour and Ming Xu and Zhihan Zhang and Prateek Yadav and Naman Jain and Alex Gu and Zhoujun Cheng and Jiawei Liu and Qian Liu and Zijian Wang and David Lo and Binyuan Hui and Niklas Muennighoff and Daniel Fried and Xiaoning Du and Harm de Vries and Leandro Von Werra},
+booktitle={The Thirteenth International Conference on Learning Representations},
+year={2025},
+url={https://openreview.net/forum?id=YrycTjllL0}
 }
+
 
 @article{Gu2025CruxEval,
-  author  = {Gu, Alex and Rozi{\`e}re, Baptiste and Leather, Hugh and Solar-Lezama, Armando and Synnaeve, Gabriel and Wang, Sida I.},
-  title   = {{CRUXEval}: A Benchmark for Code Reasoning, Understanding and Execution},
-  journal = {Journal of Machine Learning Research},
-  volume  = {26},
-  year    = {2025},
-  note    = {arXiv:2401.03065},
+  title={CRUXEval: A Benchmark for Code Reasoning, Understanding and Execution},
+  author={Alex Gu and Baptiste Rozi{\`e}re and Hugh Leather and Armando Solar-Lezama and Gabriel Synnaeve and Sida Wang},
+  journal={ArXiv},
+  year={2024},
+  volume={abs/2401.03065},
+  url={https://api.semanticscholar.org/CorpusID:266844690}
 }
 
-@inproceedings{Li2025MultiAgentBench,
-  author    = {Li, Kevin and Liu, Yang and Zhang, Yuanzhi and Chen, Zhaoyi and Wang, Yang},
-  title     = {A Survey of Multi-Agent LLM Frameworks for Code Generation},
-  booktitle = {2025 IEEE/ACM International Conference on Software Engineering (ICSE)},
-  year      = {2025},
-  publisher = {IEEE},
+@inproceedings{
+Hong2025MetaGPT,
+title={Meta{GPT}: Meta Programming for A Multi-Agent Collaborative Framework},
+author={Sirui Hong and Mingchen Zhuge and Jonathan Chen and Xiawu Zheng and Yuheng Cheng and Jinlin Wang and Ceyao Zhang and Zili Wang and Steven Ka Shing Yau and Zijuan Lin and Liyang Zhou and Chenyu Ran and Lingfeng Xiao and Chenglin Wu and J{\"u}rgen Schmidhuber},
+booktitle={The Twelfth International Conference on Learning Representations},
+year={2024},
+url={https://openreview.net/forum?id=VtmBAGCN7o}
 }
 
-@inproceedings{Hong2025MetaGPT,
-  author    = {Hong, Sirui and Zhuge, Mingchen and Chen, Jiaqi and Zheng, Xiawu and Cheng, Yuheng and Wang, Jinlin and Zhang, Ceyao and Wang, Zili and Yau, Steven Ka Shing and Lin, Zijuan and others},
-  title     = {{MetaGPT}: Meta Programming for a Multi-Agent Collaborative Framework},
-  booktitle = {The Twelfth International Conference on Learning Representations},
-  year      = {2024},
+
+@inproceedings{
+Wu2024AutoGen,
+title={AutoGen: Enabling Next-Gen {LLM} Applications via Multi-Agent Conversations},
+author={Qingyun Wu and Gagan Bansal and Jieyu Zhang and Yiran Wu and Beibin Li and Erkang Zhu and Li Jiang and Xiaoyun Zhang and Shaokun Zhang and Jiale Liu and Ahmed Hassan Awadallah and Ryen W White and Doug Burger and Chi Wang},
+booktitle={First Conference on Language Modeling},
+year={2024},
+url={https://openreview.net/forum?id=BAakY1hNKS}
 }
 
-@inproceedings{Wu2024AutoGen,
-  author    = {Wu, Qingyun and Bansal, Gagan and Zhang, Jieyu and Wu, Yiran and Li, Beibin and Zhu, Erkang and Jiang, Li and Zhang, Xiaoyun and Zhang, Shaokun and Liu, Jiale and Awadallah, Ahmed and White, Ryen and Burger, Doug and Wang, Chi},
-  title     = {{AutoGen}: Enabling Next-Gen {LLM} Applications via Multi-Agent Conversation},
-  booktitle = {COLM 2024},
-  year      = {2024},
-  note      = {arXiv:2308.08155},
-}
-
-@inproceedings{Khattab2024DSPy,
-  author    = {Khattab, Omar and Singhvi, Arnav and Maheshwari, Paridhi and Zhang, Zhiyuan and Santhanam, Keshav and Vardhamanan, Sri and Haq, Saiful and Sharma, Ashutosh and Joshi, Thomas T. and Moazam, Hanna and Miller, Heather and Zaharia, Matei and Potts, Christopher},
-  title     = {{DSPy}: Compiling Declarative Language Model Calls into State-of-the-Art Pipelines},
-  booktitle = {The Twelfth International Conference on Learning Representations},
-  year      = {2024},
-}
-
-@article{Chen2025LLMJudgeSurvey,
-  author  = {Chen, Guiming Hardy and Chen, Shunian and Liu, Ziche and Jiang, Feng and Wang, Benyou},
-  title   = {A Survey on {LLM-as-a-Judge}},
-  journal = {arXiv preprint arXiv:2411.15594},
-  year    = {2025},
+@article{Khattab2024DSPy,
+  title   = {DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines},
+  author  = {Omar Khattab and Arnav Singhvi and Paridhi Maheshwari and Zhiyuan Zhang and Keshav Santhanam and Sri Vardhamanan and Saiful Haq and Ashutosh Sharma and Thomas T. Joshi and Hanna Moazam and Heather Miller and Matei Zaharia and Christopher Potts},
+  year    = {2023},
+  journal = {arXiv preprint arXiv: 2310.03714}
 }
 
 @article{Li2025JudgeBench,
-  author  = {Li, Zhen and Fu, Peng and Lin, Yiyi and Yang, Zhen and Xu, Bo and Wang, Suhang and Yang, Jing},
-  title   = {{JudgeBench}: A Benchmark for Evaluating {LLM}-based Judges},
-  journal = {arXiv preprint arXiv:2410.12784},
-  year    = {2025},
-}
-
-@inproceedings{Wei2025BiasJudge,
-  author    = {Wei, Hui and Yang, Shenghua and He, Tianqi and Zhang, Xudong and Lin, Zhicheng and Xie, Pengtao},
-  title     = {Systematic Biases in {LLM} Judges and Effective Mitigation Strategies},
-  booktitle = {Findings of ACL 2025},
-  year      = {2025},
+  title={JudgeBench: A Benchmark for Evaluating LLM-based Judges},
+  author={Sijun Tan and Siyuan Zhuang and Kyle Montgomery and William YM Tang and Alejandro Cuadron and Chenguang Wang and Raluca A. Popa and Ion Stoica},
+  journal={ArXiv},
+  year={2024},
+  volume={abs/2410.12784},
+  url={https://api.semanticscholar.org/CorpusID:273374769}
 }
 
 @inproceedings{Balloccu2025LLMDataContamination,
-  author    = {Balloccu, Simone and Schmidtova, Patricia and Lango, Mateusz and Du{\v{s}}ek, Ond{\v{r}}ej},
-  title     = {Leak, Cheat, Repeat: Data Contamination and Evaluation Malpractices in Closed-Source {LLM}s},
-  booktitle = {Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics},
-  year      = {2025},
-}
-
-@article{Sallou2025PreregistrationSE,
-  author  = {Sallou, June and Panichella, Annibale and Zaidman, Andy},
-  title   = {Pre-Registration in Empirical Software Engineering: Motivation, Practice, and Challenges},
-  journal = {Empirical Software Engineering},
-  volume  = {30},
-  year    = {2025},
-}
-
-@article{Dou2025LLMTestSurvey,
-  author  = {Dou, Shihan and Liu, Yueming and Jia, Haoxiang and Zhou, Enyu and Xiong, Limao and Shen, Junjie and Shan, Jun and Huang, Caishuang and Wang, Xiao and Fan, Xiaoran and Wang, Zhiheng and Chen, Muling and Ren, Wentao and Zhu, Chenyang and Zhu, Zhichao and Huang, Yisheng and Zhou, Yuhao and Ru, Dongyue and Chen, Jing and Chen, Weijun and Ye, Xun and Yao, Jing and Cui, Yifan and Zheng, Rui and Zhang, Qi and Huang, Xuanjing},
-  title   = {A Comprehensive Survey of {LLM}-Based Test Case Generation Methods},
-  journal = {IEEE Transactions on Software Engineering},
-  year    = {2025},
-}
-
-@inproceedings{Panichella2024OpenScienceSE,
-  author    = {Panichella, Sebastiano and Panichella, Annibale and Ernst, Neil A.},
-  title     = {Open Science in Empirical Software Engineering: Progress and Roadblocks},
-  booktitle = {ACM Transactions on Software Engineering and Methodology},
-  year      = {2024},
+    title = "Leak, Cheat, Repeat: Data Contamination and Evaluation Malpractices in Closed-Source {LLM}s",
+    author = "Balloccu, Simone  and
+      Schmidtov{\'a}, Patr{\'i}cia  and
+      Lango, Mateusz  and
+      Dusek, Ondrej",
+    editor = "Graham, Yvette  and
+      Purver, Matthew",
+    booktitle = "Proceedings of the 18th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = mar,
+    year = "2024",
+    address = "St. Julian{'}s, Malta",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.eacl-long.5/",
+    doi = "10.18653/v1/2024.eacl-long.5",
+    pages = "67--93",
+    abstract = "Natural Language Processing (NLP) research is increasingly focusing on the use of Large Language Models (LLMs), with some of the most popular ones being either fully or partially closed-source. The lack of access to model details, especially regarding training data, has repeatedly raised concerns about data contamination among researchers. Several attempts have been made to address this issue, but they are limited to anecdotal evidence and trial and error. Additionally, they overlook the problem of indirect data leaking, where modelsare iteratively improved by using data coming from users. In this work, we conduct the first systematic analysis of work using OpenAI{'}s GPT-3.5 and GPT-4, the most prominently used LLMs today, in the context of data contamination. By analysing 255 papers and considering OpenAI{'}s data usage policy, we extensively document the amount of data leaked to these models during the first year after the model{'}s release. We report that these models have been globally exposed to {\ensuremath{\sim}}4.7M samples from 263 benchmarks. At the same time, we document a number of evaluation malpractices emerging in the reviewed papers, such as unfair or missing baseline comparisons and reproducibility issues. We release our results as a collaborative project on \url{https://leak-llm.github.io/}, where other researchers can contribute to our efforts."
 }
 
 @article{Kang2025LLMHallucinationInCode,
-  author  = {Kang, Sungmin and Lee, Sungjae and Yoo, Shin and Ryu, Sukyoung},
-  title   = {A Quantitative and Qualitative Evaluation of {LLM}-based Code Generation: Beyond Accuracy},
-  journal = {Empirical Software Engineering},
-  volume  = {30},
-  year    = {2025},
+author = {Kang, Sungmin and An, Gabin and Yoo, Shin},
+title = {A Quantitative and Qualitative Evaluation of LLM-Based Explainable Fault Localization},
+year = {2024},
+issue_date = {July 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {1},
+number = {FSE},
+url = {https://doi.org/10.1145/3660771},
+doi = {10.1145/3660771},
+abstract = {Fault Localization (FL), in which a developer seeks to identify which part of the code is malfunctioning and needs to be fixed, is a recurring challenge in debugging. To reduce developer burden, many automated FL techniques have been proposed. However, prior work has noted that existing techniques fail to provide rationales for the suggested locations, hindering developer adoption of these techniques. With this in mind, we propose AutoFL, a Large Language Model (LLM)-based FL technique that generates an explanation of the bug along with a suggested fault location. AutoFL prompts an LLM to use function calls to navigate a repository, so that it can effectively localize faults over a large software repository and overcome the limit of the LLM context length. Extensive experiments on 798 real-world bugs in Java and Python reveal AutoFL improves method-level acc@1 by up to 233.3\% over baselines. Furthermore, developers were interviewed on their impression of AutoFL-generated explanations, showing that developers generally liked the natural language explanations of AutoFL, and that they preferred reading a few, high-quality explanations instead of many.},
+journal = {Proc. ACM Softw. Eng.},
+month = jul,
+articleno = {64},
+numpages = {23},
+keywords = {language models, fault localization, debugging}
 }
 
-@article{Marino2026SelfConsistency,
-  author  = {Marino, Ludovico and Cambronero, Jos{\'e} and Sutton, Charles and Yin, Pengcheng},
-  title   = {Self-Consistency and Round-Trip Evaluation of Large Language Models for Program Synthesis},
-  journal = {Journal of Automated Software Engineering},
-  volume  = {33},
-  year    = {2026},
-}
