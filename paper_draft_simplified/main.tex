@@ -17,13 +17,16 @@
 %%    10. Author bios (optional; disabled below)
 %% ============================================================================
 
-\documentclass[a4paper,fleqn]{cas-sc}
+\documentclass[a4paper,fleqn,colorlinks,hidelinks]{cas-sc}
 
 %% Bibliography via natbib (cas-sc does not bundle it)
 \usepackage[authoryear,longnamesfirst]{natbib}
 
 %% -- Math -------------------------------------------------------------------
-\usepackage{amsmath, amssymb, amsthm}
+%% Note: amssymb is loaded conditionally in the font block below (skipped under
+%% LuaLaTeX because unicode-math provides all AMS symbols and clashes with
+%% amssymb's \not=, \not<, \not> definitions).
+\usepackage{amsmath, amsthm}
 \usepackage{dsfont}         % for \mathds{1}
 
 %% -- Algorithms -------------------------------------------------------------
@@ -49,7 +52,7 @@
 \usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds}
 
 %% -- Hyperlinks + cleveref (after amsmath) ----------------------------------
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
 \usepackage{url}
 \usepackage{cleveref}
 
@@ -70,6 +73,8 @@
 \ifluatex
   \usepackage{unicode-math}
   \setmathfont{Latin Modern Math}
+\else
+  \usepackage{amssymb}
 \fi
 
 %% -- Float placement --------------------------------------------------------
@@ -144,44 +149,46 @@
 %% Abstract (≤ 250 words for IPM cap; EMSE more generous)
 %% ============================================================================
 \begin{abstract}
-Do multi-stage Small-Language-Model (SLM) pipelines for software
-engineering depend on which SLM sits at which stage? We report the
-first cross-LLM $\times$ cross-stage evaluation of round-trip closure
-on the docstring--test--code triangle, using a pre-registered 20-cell
-design across six open-weight SLMs on 150 HumanEval/MBPP functions.
-Closure is decided under a strict two-signal policy combining an
-SE-validated metric (mutation kill rate, reference test pass rate, or
-BERTScore F1) with an external judge SLM (DeepSeek-R1). Five findings
-emerge. First, the H1 composition (phi-4 spec + qwen-coder test/code)
-empirically leads on four of five mutation operators (two operator wins
-with tight Wilson 95\% CIs, two consistent-with-dominance at smaller
-mutant counts). Second, phi-4
-in the test stage produces filter-failing tests on ${\sim}50\%$ of
-samples across three cells---invisible in single-stage evaluations.
-Third, BERTScore F1 is only weakly correlated per benchmark with the
-judge on the docstring path ($r^2 \leq 0.045$; both benchmarks),
-with a categorical disagreement flip across benchmarks
-($\chi^2 = 368$, $p < 0.001$). Fourth, the three closure paths carry
-non-redundant information ($F(36, 4867) = 6.47$, partial
-$\eta^2 = 0.046$). Fifth, well-composed hetero cells preserve
-$76$--$91\%$ of the strongest mono baseline; poorly-composed cells
-collapse. A frontier-judge replay confirms weak judge--human agreement
-is a general LLM-as-judge property, and a HumanEval-Mutated
-decontamination re-sweep shows behavioral-path closure rates hold or
-improve under function-rename + docstring-paraphrase. We derive three
-design guidelines and release an open replication package with 67
-unit tests.
+Multi-stage Small Language Model (SLM) pipelines for software
+engineering compose a specification model, a test-generation model,
+and a code-synthesis model; no prior study evaluates whether the
+mapping of specific models to specific stages matters. We report a
+pre-registered 20-cell design of experiments across six open-weight
+SLMs on 150 HumanEval and MBPP functions, yielding $5{,}890$
+per-sample observations, and decide round-trip closure across three
+paths (behavioral, reference-test, docstring) under a strict
+two-signal policy combining an SE-validated metric with an external
+judge SLM. The best composition (phi-4 specification + qwen-coder
+test and code) achieves the highest per-operator kill rate on four of
+five mutation-operator families, with Wilson 95\% CIs confirming
+dominance on arithmetic ($n = 33$) and boundary ($n = 64$). Placing
+phi-4 in the test stage instead produces filter-failing tests on
+$44$--$55\%$ of samples across three cells --- a cross-stage
+interaction invisible in single-stage evaluations. BERTScore F1
+correlates only weakly per benchmark with the judge on the docstring
+path ($r^2 \leq 0.045$) and its residual disagreement flips
+categorically across benchmarks ($\chi^2 = 368$, $p < 0.001$). The
+three closure paths carry non-redundant information
+($F(36, 4867) = 6.47$, partial $\eta^2 = 0.046$). Well-composed
+heterogeneous cells preserve $76$--$91\%$ of the strongest same-model
+baseline; poorly-composed cells collapse. A four-judge human-anchored
+replay on 60 stratified pairs confirms weak judge--human agreement
+($\kappa_{\textsf{quad}} \leq 0.20$) is a general LLM-as-judge
+property, and a 25-sample HumanEval-Mutated decontamination re-sweep
+shows behavioral-path closure holds under function-rename and
+docstring-paraphrase. We derive three design guidelines and release
+an open replication package with 67 unit tests.
 \end{abstract}
 
 %% ============================================================================
 %% Highlights (mandatory; 3-5 bullets, ≤ 85 chars each)
 %% ============================================================================
 \begin{highlights}
-\item First cross-LLM $\times$ cross-stage study of round-trip closure in SE pipelines
-\item Pre-registered 20-cell DOE across six open-weight SLMs on HumanEval and MBPP
-\item H1 (phi-4 spec + qwen-coder test/code) leads on 4 of 5 mutation operators (Wilson 95\% CIs)
-\item BERTScore only weakly agrees with judge equivalence on Path 3 ($r^2 \leq 0.045$ per benchmark)
-\item Weak LLM-judge agreement with humans is general, not DeepSeek-R1-specific
+\item First empirical study to evaluate whether specific model-to-stage assignments affect closure of the docstring--test--code triangle in multi-stage language-model pipelines for software engineering
+\item Pre-registered 20-cell design of experiments across six open-weight small language models on 150 HumanEval and MBPP functions, yielding 5,890 per-sample observations across three closure paths
+\item Composing a strong specification model with a strong test-and-code model yields the highest per-operator mutation kill rate on four of five operator families, with confirmed dominance on two
+\item Reveals that BERTScore F1 tracks surface-form similarity rather than semantic equivalence on docstring--docstring closure (per-benchmark r-squared at most 0.045; disagreement flips categorically across benchmarks)
+\item Weak language-model-judge agreement with human consensus is a general LLM-as-judge property, replicated across four independent judges spanning open- and closed-weight models
 \end{highlights}
 
 %% ============================================================================
