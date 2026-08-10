@@ -1,0 +1,276 @@
+%% ============================================================================
+%% response_to_editor.tex — Point-by-point response to IP&M editor pre-screen
+%% for the manuscript "Heterogeneous Multi-SLM Closure of the Docstring--Test
+%% --Code Triangle: A Cross-Stage Empirical Study".
+%%
+%% Compiles with pdflatex or lualatex (no cas-sc, no unicode-math required).
+%% ============================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+
+%% -- Environments -----------------------------------------------------------
+\newenvironment{editorquote}
+  {\begin{tcolorbox}[colback=black!5, colframe=black!15, boxrule=0.3pt,
+                     arc=1pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+                     breakable]\itshape}
+  {\end{tcolorbox}}
+
+\newcommand{\comment}[1]{\subsection*{Editor Comment #1}}
+
+\newcommand{\response}{\noindent\textbf{Response:}\ }
+\newcommand{\loc}{\medskip\noindent\textit{Location of change:}\ }
+
+%% Slightly tighter itemize inside responses
+\setlist[itemize]{leftmargin=1.6em, itemsep=2pt, topsep=4pt}
+\setlist[enumerate]{leftmargin=1.6em, itemsep=2pt, topsep=4pt}
+
+\begin{document}
+
+\begin{flushright}
+August 10, 2026
+\end{flushright}
+
+\vspace{0.5em}
+
+\noindent
+Dr.\ Jim Jansen\\
+Editor-in-Chief\\
+\textit{Information Processing \& Management}
+
+\vspace{1em}
+
+\noindent
+\textbf{Re: Response to Editor --- Manuscript Revision}\\
+\textit{``Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle: A Cross-Stage Empirical Study''}
+
+\vspace{1em}
+
+Dear Dr.\ Jansen,
+
+IP\&M is a natural home for empirical evaluations of language-model-based information systems, and we appreciate the speed of the initial editorial screen --- turnaround this fast at a Tier-1 journal is genuinely rare.
+
+Thank you for the detailed pre-screen feedback. The comments were clear and, on reflection, correct --- each one pointed to something that needed fixing before the manuscript could be sent for external review. We have addressed all eight points in full; the changes are summarised in the table below, followed by a point-by-point response.
+
+We also confirm our commitment to reviewing for IP\&M and will provide substantive, timely reviews when invited.
+
+\vspace{1em}
+
+\noindent\textbf{Summary of Changes}
+
+\medskip
+\noindent
+\begin{tabular}{@{}p{0.4cm}p{5.6cm}p{9.2cm}@{}}
+\toprule
+\# & Editor Comment & Change Made \\
+\midrule
+1 & Highlights too long, don't emphasize novelty & Five-bullet rewrite, each 22--29 words, novelty-forward verbs, deaccronymized \\
+\addlinespace
+2 & Abstract lacks specifics on sample, effect sizes, results & Rewritten to $\sim$230 words with sample sizes ($n = 5{,}890$, $n = 33$, $n = 64$, 60 pairs, four judges) and effect sizes ($\chi^2 = 368$, $\kappa_{\text{quad}} \leq 0.20$, $r^2 \leq 0.045$, partial $\eta^2 = 0.046$) front-loaded \\
+\addlinespace
+3 & Shorter is better; add specifics & Combined with Comment~2 --- abstract net-shortened from $\sim$260 to $\sim$230 words while adding specifics; well within IP\&M's 250-word cap \\
+\addlinespace
+4 & Explicit research objectives required, ideally in a subsection & New Section~1.2 ``Research Objectives'' (O1--O3) added between the closure-question introduction and the research-questions subsection \\
+\addlinespace
+5 & Theoretical and practical implications unclear; differences from existing work not highlighted & Discussion (\S6) restructured: \S6.7 renamed ``Practical Implications''; new \S6.8 ``Theoretical Implications'' added with three named blocks; positioning against prior work sharpened in \S2.5 \\
+\addlinespace
+6 & Language editing needed for international readership & Depth-B pass across \S1--\S6: acronym expansion on first use (LLM, DOE, MoE, GLMM, Wilson CI, etc.), eight long-sentence splits, venue-neutral phrasing, math-notation simplification \\
+\addlinespace
+7 & References must tie to IS/CS community; more recent (last two years) work needed & Five substantively-relevant references added: three IP\&M-native (Han et~al.\ 2026; Li et~al.\ 2026; Xiong et~al.\ 2025) and two from ACL/EMNLP 2023 (Chiang \& Lee; Sainz et~al.); weak-fit candidates explicitly rejected \\
+\addlinespace
+8 & Reference list formatting; no hallucinated references & Every entry re-audited against public sources; two cosmetic citation-key mismatches fixed; bibliography style switched from \texttt{cas-model2-names} to \texttt{elsarticle-harv} (Elsevier's APA-compliant Harvard) \\
+\bottomrule
+\end{tabular}
+
+\vspace{1.5em}
+
+\begin{center}\rule{0.7\textwidth}{0.4pt}\end{center}
+
+\section*{Point-by-Point Response}
+
+%% ---------------------------------------------------------------------------
+\comment{1}
+
+\begin{editorquote}
+``The current highlights do not sufficiently emphasize the distinctive contributions of the research, and some are overly long. Please revise them to focus on what is novel and important about the study. As a general guide, each highlight should be approximately one or two concise sentences, or about 15--30 words.''
+\end{editorquote}
+
+\response{}
+We thank the editor for this specific guidance. All five highlights have been rewritten. Each is now within the recommended range at 22--29 words, and each leads with a novelty-forward verb (``\emph{Introduces}'', ``\emph{Reports}'', ``\emph{Composing}'', ``\emph{Reveals}'', ``\emph{Establishes}'') rather than a background statement. Domain-internal jargon that was opaque to a general IP\&M reader (H1, DOE, phi-4, DeepSeek-R1, Path~3) has been replaced with accessible phrasing (``strong specification model with a strong test-and-code model''; ``docstring-to-docstring closure''; ``four independent judges spanning open- and closed-weight models''). Numerical anchors that convey contribution scale --- 5,890 per-sample observations, 20-cell design of experiments, six models, 150 functions, four of five operator families, $r^2 \leq 0.045$ --- have been retained.
+
+\loc{} Highlights section of \texttt{main.tex}.
+
+%% ---------------------------------------------------------------------------
+\comment{2}
+
+\begin{editorquote}
+``The abstract currently devotes considerable space to background information but provides relatively few specifics about the study and its findings. Please consider shortening the background and including relevant details, such as the sample size, dataset size, principal results, effect sizes, or percentage improvements.''
+\end{editorquote}
+
+\response{}
+The abstract has been fully rewritten to foreground study specifics from the second sentence onward. Motivation is compressed to a single opening sentence. The revised abstract now states, in order of appearance:
+
+\begin{itemize}
+  \item the dataset size and per-sample observation count: 150 HumanEval and MBPP functions, yielding 5,890 per-sample observations across a 20-cell design of experiments spanning six open-weight small language models;
+  \item Wilson 95\% confidence-interval sample sizes for the two operator families with confirmed H1 dominance ($n = 33$ arithmetic; $n = 64$ boundary);
+  \item the per-cell filter-failure range for the phi-4-in-test-stage pathology (44--55\% across three independent cells);
+  \item the docstring-path judge--metric correlation bound ($r^2 \leq 0.045$ per benchmark) and the categorical benchmark-conditional disagreement-flip statistic ($\chi^2 = 368$, $p < 0.001$);
+  \item the cell $\times$ path interaction ANOVA ($F(36, 4867) = 6.47$, partial $\eta^2 = 0.046$);
+  \item the capability-preservation band for well-composed heterogeneous cells (76--91\% of the strongest same-model baseline);
+  \item the four-judge human-anchored replay on 60 stratified pairs, with weak judge--human agreement ($\kappa_{\text{quad}} \leq 0.20$);
+  \item the 25-sample HumanEval-Mutated decontamination re-sweep result.
+\end{itemize}
+
+\loc{} Abstract of the revised manuscript.
+
+%% ---------------------------------------------------------------------------
+\comment{3}
+
+\begin{editorquote}
+``Shorter is better. Remove some of the background material and add some details of your research if possible. To aid in this, here is one of many good articles concerning crafting an abstract [\dots]. Again, it is good to provide some specifics (e.g., sample size, dataset size, numbers from results, etc.).''
+\end{editorquote}
+
+\response{}
+Addressed jointly with Comment~2. The revised abstract is approximately 230~words --- \emph{shortened} from the original $\sim$260 words while \emph{adding} the specific numerical details listed above. This is comfortably within IP\&M's 250-word cap. Background material has been reduced to a single opening sentence: the original ``Do multi-stage SLM pipelines depend on which SLM sits at which stage?'' framing question and the ``Five findings emerge'' enumeration have been removed in favour of direct substance.
+
+\loc{} Abstract of the revised manuscript (same location as Comment~2).
+
+%% ---------------------------------------------------------------------------
+\comment{4}
+
+\begin{editorquote}
+``Please state the research objective or objectives explicitly, preferably in a clearly identified subsection. This would enable readers to understand more readily the specific questions or problems addressed by the study.''
+\end{editorquote}
+
+\response{}
+We have added a dedicated Section~1.2 ``Research Objectives'' to the Introduction, positioned between the closure-question framing (\S1.1) and the specific research questions (now \S1.3). The section defines three interlocking objectives:
+
+\begin{itemize}
+  \item \textbf{O1} (empirical characterization). Quantify, at cell resolution, how the assignment of specific small open-weight language models to specific stages of a three-stage software-engineering pipeline affects the pipeline's round-trip closure rate on the docstring--test--code triangle.
+  \item \textbf{O2} (metric validation). Establish whether the automated closure metric used at each stage agrees with an external judge language model's semantic-equivalence rating, and whether the residual disagreement has a structural signature that identifies which of the two signals is closer to human judgment.
+  \item \textbf{O3} (methodological transfer). Deliver a pre-registered design of experiments, an open replication package, and three practitioner-facing design guidelines that other empirical studies of multi-model information-processing pipelines can adopt, adapt, or refute.
+\end{itemize}
+
+The four research questions (RQ1--RQ4) are now presented as operationalizations of these three objectives, with an explicit cross-reference from \S1.3 back to \S1.2. The roadmap paragraph has been updated to reflect the new subsection sequence.
+
+\loc{} Section~1.2 of the revised manuscript (Introduction).
+
+%% ---------------------------------------------------------------------------
+\comment{5}
+
+\begin{editorquote}
+``Please clarify the theoretical and practical implications of the research and explain more explicitly how the study differs from and advances existing work. A dedicated section discussing the results and their implications would be helpful.''
+\end{editorquote}
+
+\response{}
+The Discussion section (\S6) has been restructured to make theoretical and practical implications explicit and separable, and the positioning against prior work has been sharpened in Related Work:
+
+\begin{itemize}
+  \item \textbf{\S6.1--\S6.6} --- Existing per-RQ discussion subsections retained (RQ1 heterogeneous vs.\ mono closure; RQ2 judge--metric agreement and the BERTScore surface-form finding; RQ3 per-stage bottleneck and the phi-4-in-test-stage pathology; RQ4 false-closure rate; capability preservation; threshold sensitivity).
+  \item \textbf{\S6.7 --- Practical Implications} (renamed from ``Design guidelines''). The three design guidelines G1--G3 --- place the strongest model at the bottleneck stage, match test-generator to upstream docstring style, use two-signal validity when reporting closure rates --- are the concrete practical implications for practitioners deploying multi-SLM software-engineering pipelines.
+  \item \textbf{\S6.8 --- Theoretical Implications} (new subsection). Three named blocks: (i) \emph{stage-attributable variance as a first-class construct}, arguing that variance in multi-model pipeline outcomes decomposes non-uniformly across stages and that stage-attributable variance is itself a measurable, reportable quantity; (ii) \emph{surface-form vs.\ semantic-equivalence metric diagnostics}, generalising our Path~3 BERTScore finding into a benchmark-flip test that can be applied to any embedding-based evaluation metric on any new corpus (two per-benchmark stratifications plus one $\chi^2$ test, no human annotation required); (iii) \emph{LLM-as-judge validity against human anchoring}, arguing that inter-judge agreement without judge--human agreement is theoretically the signature of a shared bias, not a shared signal, so validation against human consensus remains necessary in any LLM-as-judge protocol.
+\end{itemize}
+
+Differences from and advances over existing work are addressed both in \S2.5 (Positioning of this work) --- which enumerates five orthogonal axes of contribution relative to prior round-trip and consistency-testing studies (RTC, Coding Triangle, MBCT) --- and in the new \S6.8, which contrasts our stage-attributable variance finding with the single-stage evaluation paradigm dominant in the LLM-benchmark literature.
+
+\loc{} Sections~6.7 and 6.8 of the revised manuscript (Discussion); Section~2.5 (Related Work).
+
+%% ---------------------------------------------------------------------------
+\comment{6}
+
+\begin{editorquote}
+``The manuscript would benefit from thorough language editing. Because IP\&M serves a broad international readership, including many readers whose first language is not English, clear, coherent, and accessible writing is especially important.''
+\end{editorquote}
+
+\response{}
+We conducted a targeted language-editing pass across Sections~1--6 with three focuses.
+
+\begin{enumerate}
+  \item \textbf{Acronym first-use expansion.} Every domain acronym is now spelt out on first appearance: large language model (LLM), design of experiments (DOE), mixture-of-experts (MoE), generalized linear mixed model (GLMM), Wilson 95\% confidence interval (CI), retrieval-augmented generation (RAG), search-based software testing (SBST), Round-Trip Correctness (RTC), Mutation-Based Consistency Testing (MBCT), HumanEval-Mutated (HEM).
+  \item \textbf{Long-sentence splits.} Eight sentences over 40~words have been split into shorter clauses. Examples: the multi-dimensional-design sentence in \S1.4; the two-aggregate paragraph in \S3.5; the DOE-summary, model-list, dataset, and mixed-effects paragraphs in \S4; the results-opening and contamination-motivation paragraphs in \S5; the BERTScore-flip explanation and RQ3-answer paragraphs in \S6.
+  \item \textbf{Venue-neutral phrasing.} Software-engineering-specific coinages have been replaced with information-processing-community-neutral equivalents where possible: ``cross-LLM $\times$ cross-stage'' $\to$ ``cross-model, cross-stage''; ``LLM-based tools'' $\to$ ``language-model-based tools''; ``owned by different LLM families'' $\to$ ``assigned to different language-model families''. Dense mathematical notation in prose contexts has been rephrased: for example, ``$|\mathcal{M}| \times |\mathcal{S}| = 6 \times 3 = 18$ (model, stage) pairings'' is now written as ``the 18 (model, stage) pairings induced by six models and three stages''.
+\end{enumerate}
+
+Structural terms specific to our design --- mono/hetero/null cell strata; the $L_{\text{spec}}$, $L_{\text{test}}$, $L_{\text{code}}$ stage-model notation --- are now inline-glossed on first appearance in \S1 rather than being deferred to later definitions.
+
+\loc{} Sections~1--6 of the revised manuscript.
+
+%% ---------------------------------------------------------------------------
+\comment{7}
+
+\begin{editorquote}
+``Your references need to tie this research into the computing and information science community, which is the central community of IP\&M readers, reviewers, and authors. Certainly, more recent (within the last two years --- in many fields, the last two months are needed!) research on this topic has been published in information science and/or computer science outlets. An academic search on the topic (using keywords from the manuscript's title) shows that there is recent work in this area. Therefore, you must update your literature review.''
+\end{editorquote}
+
+\response{}
+We conducted a targeted search of IP\&M 2024--2026 and adjacent information-science and natural-language-processing venues, and added five substantively-relevant references. Three of the five are IP\&M-native:
+
+\begin{enumerate}
+  \item \textbf{Han, An \& Li (2026)} --- ``Which LLM performs best in crisis knowledge generation? Automatic evaluation across multiple events and knowledge categories.'' \emph{IP\&M}, 2026. doi:\href{https://doi.org/10.1016/j.ipm.2026.104808}{10.1016/j.ipm.2026.104808}. Cited in \S2.4 (LLM-as-judge protocols). Their dual-path evaluation framework, combining rule-based objective computation with LLM-based intelligent scoring, is architecturally identical to our strict-AND two-signal validity policy. They independently reach the conclusion that single-signal LLM judgment is insufficient from a very different application domain --- a convergence that strengthens our design justification.
+  \item \textbf{Li, Ke \& He (2026)} --- ``Towards evidence-aware retrieval-augmented generation via self-corrective chain-of-thought.'' \emph{IP\&M}, 2026. doi:\href{https://doi.org/10.1016/j.ipm.2025.104369}{10.1016/j.ipm.2025.104369}. Cited in \S2.2 (LLM-based documentation generation) as the current state of the art in RAG evaluation. Their SC-RAG self-correction mechanism is thematically adjacent to our judge-adjudicated closure decision.
+  \item \textbf{Xiong et al.\ (2025)} --- ``DelphiAgent: A trustworthy multi-agent verification framework for automated fact verification.'' \emph{IP\&M}, 2025. doi:\href{https://doi.org/10.1016/j.ipm.2025.104241}{10.1016/j.ipm.2025.104241}. Cited in \S2.5 (multi-agent architectural specialization) as a key contrast point: consensus-based multi-agent verification versus our cross-stage single-model composition.
+\end{enumerate}
+
+Two additional references from the adjacent NLP-evaluation community were added:
+
+\begin{enumerate}[resume]
+  \item \textbf{Chiang \& Lee (2023)} --- ``Can Large Language Models Be an Alternative to Human Evaluations?'' ACL 2023. doi:\href{https://doi.org/10.18653/v1/2023.acl-long.870}{10.18653/v1/2023.acl-long.870}. Cited in \S2.4 as the foundational empirical study of LLM-vs-human evaluation, complementing the Zheng et~al.\ (2023) LLM-as-judge formalisation already cited.
+  \item \textbf{Sainz et al.\ (2023)} --- ``NLP Evaluation in Trouble: On the Need to Measure LLM Data Contamination for each Benchmark.'' Findings of EMNLP 2023. doi:\href{https://doi.org/10.18653/v1/2023.findings-emnlp.722}{10.18653/v1/2023.findings-emnlp.722}. Cited in \S5.11 as the direct motivation for our HumanEval-Mutated per-benchmark decontamination sensitivity check.
+\end{enumerate}
+
+We explicitly rejected several candidate references (Shao 2026 event generalization; Es et~al.\ RAGAs; Saad-Falcon et~al.\ ARES; Deng et~al.\ 2024 contamination) after a substance-first fit audit determined that their methodological overlap with our work was too thin to justify inclusion. We prefer a smaller number of substantively-relevant citations over broader but weaker coverage.
+
+\loc{} References list; Sections~2.2, 2.4, 2.5, and 5.11 of the revised manuscript.
+
+%% ---------------------------------------------------------------------------
+\comment{8}
+
+\begin{editorquote}
+``Your reference list needs tidying up, as there are references missing items or formatting issues. Please be consistent with the formatting and use a standard formatting style. IP\&M uses APA for published articles if this helps. Make sure there is no hallucinated references.''
+\end{editorquote}
+
+\response{}
+Two actions were taken.
+
+\textbf{Reference audit for hallucinations.} Every entry in \texttt{references.bib} was re-audited against public sources (Google Scholar, DOI resolvers, ACL Anthology, ACM Digital Library, OpenReview, Elsevier ScienceDirect). Six entries flagged in an earlier internal audit as unverifiable were investigated in detail. Four were confirmed real and correctly cited (Zhang et~al.\ 2025 Coding Triangle; Zhang et~al.\ 2023 RepoCoder; Xiong et~al.\ 2025 DelphiAgent; Marzi et~al.\ 2024 Krippendorff's Alpha Calculator). Two had cosmetic citation-key mismatches --- the citation key did not match the actual first author, though the rendered PDF was correct because BibTeX renders the \texttt{author} field, not the key. Both keys were fixed for consistency:
+
+\begin{itemize}
+  \item \texttt{Tian2024MBCT} $\to$ \texttt{Li2024MBCT} \quad (actual authors: Li \& Shin, 2024, CAIN'24).
+  \item \texttt{Meier2025CausalDelphi} $\to$ \texttt{Le2024CausalDiscovery} \quad (actual authors: Le, Xia \& Chen, 2024, arXiv 2407.15073).
+\end{itemize}
+
+The final reference list contains 53 unique cited keys, 100\% resolved to a bibliography entry, and no fabricated entries.
+
+\textbf{Bibliography style switched to APA-compliant.} The bibliography style has been changed from the previous \texttt{cas-model2-names} to \texttt{elsarticle-harv}, Elsevier's Harvard/APA-hybrid style that ships with the \texttt{cas-sc} manuscript class. Every reference entry has been cross-verified for author names, publication year, title, venue, volume and issue, page numbers or article ID, and DOI where applicable.
+
+\loc{} References list; \texttt{\textbackslash bibliographystyle} line in \texttt{main.tex}.
+
+\vspace{1em}
+
+\begin{center}\rule{0.7\textwidth}{0.4pt}\end{center}
+
+\vspace{0.5em}
+
+We are confident that the revised manuscript addresses all eight of the editor's pre-screen comments in full. No experimental results have been changed and no numerical claims altered; every revision is structural, presentational, or reference-related. The manuscript is stronger and more accessible as a result of this process, and we look forward to it entering formal review.
+
+We remain available to address any further questions.
+
+\vspace{2em}
+
+\noindent Yours sincerely,
+
+\vspace{2em}
+
+\noindent The Authors
+
+\end{document}
