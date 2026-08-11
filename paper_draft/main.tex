@@ -177,11 +177,11 @@ an open replication package with 67 unit tests.
 %% Highlights (mandatory; 3-5 bullets, ≤ 85 chars each)
 %% ============================================================================
 \begin{highlights}
-\item First empirical study to evaluate whether specific model-to-stage assignments affect closure of the docstring--test--code triangle in multi-stage language-model pipelines for software engineering
-\item Pre-registered 20-cell design of experiments across six open-weight small language models on 150 HumanEval and MBPP functions, yielding 5,890 per-sample observations across three closure paths
-\item Composing a strong specification model with a strong test-and-code model yields the highest per-operator mutation kill rate on four of five operator families, with confirmed dominance on two
-\item Reveals that BERTScore F1 tracks surface-form similarity rather than semantic equivalence on docstring--docstring closure (per-benchmark r-squared at most 0.045; disagreement flips categorically across benchmarks)
-\item Weak language-model-judge agreement with human consensus is a general LLM-as-judge property, replicated across four independent judges spanning open- and closed-weight models
+\item First study to test whether assigning different small language models to different pipeline stages --- documentation, test generation, and code --- affects the fidelity of generated artifacts to the original code
+\item Pre-registered 20-cell factorial evaluation across six open-weight small language models on 150 functions from the HumanEval and MBPP Python benchmarks, yielding 5,890 per-sample measurements across three consistency paths
+\item Assigning a strong model to the docstring stage and another strong model to both the test and code stages produces tests that detect injected code defects best on four of five defect categories
+\item Reveals that the widely-used BERTScore text-similarity metric captures surface wording rather than meaning on docstring comparison, with the mismatch direction reversing categorically across the HumanEval and MBPP benchmarks
+\item Establishes that weak agreement between language-model judges and human raters is a general property of LLM-as-judge evaluation, replicated across four leading judges spanning open- and closed-weight models
 \end{highlights}
 
 %% ============================================================================
