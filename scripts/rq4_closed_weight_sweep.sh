@@ -94,7 +94,7 @@ for cell in "${CELLS[@]}"; do
     DATASET=core \
     N_SAMPLES="$N_SAMPLES" \
     RESULTS_PATH="$RESULTS_PATH" \
-        python3 train_roundtrip.py
+        python3 -u train_roundtrip.py
 done
 
 echo ""
