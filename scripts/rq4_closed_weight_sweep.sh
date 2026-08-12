@@ -6,14 +6,15 @@
 # M7_gpt as a post-pre-registration cross-provider extension.
 #
 # Pipeline SLM calls route through llm_dispatch:
-#   - Claude Sonnet 4.5 / GPT-4o-mini calls go to OpenRouter (needs
+#   - Claude Sonnet 5 / GPT-5.4 Mini calls go to OpenRouter (needs
 #     OPENROUTER_API_KEY in env; account balance ≥ $30 recommended)
 #   - Open-weight qwen3.6 / qwen3-coder calls (in H2_closed, H8_closed)
 #     go to the local Ollama server as usual
 #
 # Judge SLM (DeepSeek-R1:14B) is Ollama-local as in the primary sweep.
 #
-# Estimated cost: ~$25-35 USD API for 4 cells × 60 samples × 3 paths.
+# Estimated cost: ~$19-31 USD API for 4 cells × 60 samples × 3 paths at
+# Sonnet-5 pricing ($2/$10 per 1M) + GPT-5.4-mini pricing ($0.75/$4.50 per 1M).
 # Estimated Colab time: ~10-14 hours (API latency + local Ollama judge +
 # local mutation-testing). Sweep is resume-safe; kill any time and rerun.
 #
@@ -69,8 +70,8 @@ echo ""
 echo "─── OpenRouter probe (verifies key + balance) ─────────────────"
 python3 -c "
 import llm_dispatch
-from config import CLAUDE_SONNET_45, GPT_4O_MINI
-for m in (CLAUDE_SONNET_45, GPT_4O_MINI):
+from config import CLAUDE_SONNET_5, GPT_5_4_MINI
+for m in (CLAUDE_SONNET_5, GPT_5_4_MINI):
     ok = llm_dispatch.ensure_model_available(m)
     print(f'  {m.ollama_tag}: {\"OK\" if ok else \"FAIL\"}')
 "

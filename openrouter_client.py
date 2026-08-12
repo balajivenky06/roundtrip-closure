@@ -173,7 +173,7 @@ def call_llm(
     messages.append({"role": "user", "content": prompt})
 
     payload = {
-        "model": model.ollama_tag,   # slug like "anthropic/claude-sonnet-4.5"
+        "model": model.ollama_tag,   # slug like "anthropic/claude-sonnet-5"
         "messages": messages,
         "temperature": temperature,
         "top_p": top_p,

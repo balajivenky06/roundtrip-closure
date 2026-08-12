@@ -35,7 +35,7 @@ for d in (DATA_DIR, CHECKPOINTS_DIR, CACHE_DIR, RESULTS_DIR, LOGS_DIR):
 class ModelSpec:
     """One SLM's identity + properties."""
     ollama_tag: str          # e.g. "qwen3.6:27b" for Ollama models, or
-                             # "anthropic/claude-sonnet-4.5" for OpenRouter.
+                             # "anthropic/claude-sonnet-5" for OpenRouter.
     short_name: str          # e.g. "qwen3.6" — used in TSV / log columns
     family: str              # e.g. "Alibaba" — used in family-diversity analyses
     size_b: float            # parameter count in billions (0 for closed-weight)
@@ -115,25 +115,25 @@ DEEPSEEK_R1_14B = ModelSpec(
 # / H8_closed / M7_gpt cells to answer RQ4 (open-weight closure vs closed-weight
 # ceiling) that was pre-registered in the concept note but deferred at the
 # original sweep due to API-cost budget constraints. See scripts/rq4_closed_weight_sweep.sh.
-CLAUDE_SONNET_45 = ModelSpec(
-    ollama_tag="anthropic/claude-sonnet-4.5",
-    short_name="claude-sonnet-4.5",
+CLAUDE_SONNET_5 = ModelSpec(
+    ollama_tag="anthropic/claude-sonnet-5",
+    short_name="claude-sonnet-5",
     family="Anthropic",
     size_b=0.0,                # undisclosed (closed-weight)
     architecture="unknown",
     generation_year=2026,
     provider="openrouter",
-    notes="Anthropic Claude Sonnet 4.5 via OpenRouter; RQ4 closed-weight reference.",
+    notes="Anthropic Claude Sonnet 5 via OpenRouter; RQ4 closed-weight reference (current-generation frontier Sonnet as of Jun 2026). 1M-token context; supports adaptive thinking with selectable reasoning effort (default effort used). Pricing $2/$10 per 1M input/output tokens.",
 )
-GPT_4O_MINI = ModelSpec(
-    ollama_tag="openai/gpt-4o-mini",
-    short_name="gpt-4o-mini",
+GPT_5_4_MINI = ModelSpec(
+    ollama_tag="openai/gpt-5.4-mini",
+    short_name="gpt-5.4-mini",
     family="OpenAI",
     size_b=0.0,                # undisclosed
     architecture="unknown",
-    generation_year=2024,
+    generation_year=2026,
     provider="openrouter",
-    notes="OpenAI GPT-4o-mini via OpenRouter; RQ4 closed-weight post-pre-registration extension.",
+    notes="OpenAI GPT-5.4 Mini via OpenRouter; RQ4 closed-weight post-pre-registration extension. Released Mar 2026; balances capability and cost for cross-provider closed-weight coverage. 400K context; pricing $0.75/$4.50 per 1M input/output tokens.",
 )
 
 
@@ -146,7 +146,7 @@ PIPELINE_MODELS: tuple[ModelSpec, ...] = (
     MISTRAL_SMALL_3_2_24B,
     QWEN_3_CODER_30B,
 )
-CLOSED_WEIGHT_MODELS: tuple[ModelSpec, ...] = (CLAUDE_SONNET_45, GPT_4O_MINI)
+CLOSED_WEIGHT_MODELS: tuple[ModelSpec, ...] = (CLAUDE_SONNET_5, GPT_5_4_MINI)
 JUDGE_MODEL: ModelSpec = DEEPSEEK_R1_14B
 ALL_MODELS: tuple[ModelSpec, ...] = PIPELINE_MODELS + CLOSED_WEIGHT_MODELS + (JUDGE_MODEL,)
 

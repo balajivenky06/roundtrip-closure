@@ -5,14 +5,14 @@ RQ4 analysis — closed-weight ceiling vs open-weight closure.
 
 Reads:
     results/results_roundtrip.tsv                (primary open-weight sweep)
-    results/results_rq4_closed_weight.tsv        (Claude + GPT-4o-mini sweep)
+    results/results_rq4_closed_weight.tsv        (Claude + GPT-5.4 Mini sweep)
 
 Computes per-cell per-path strict-AND closure rates and the pairwise
 comparisons that matter for RQ4:
 
     - M5_closed (Claude mono) vs M4 (best open-weight mono, qwen-coder)
     - M5_closed vs M3 (2nd best open-weight mono, qwen3.6)
-    - M7_gpt (GPT-4o-mini mono) vs M4 and M3
+    - M7_gpt (GPT-5.4 Mini mono) vs M4 and M3
     - H2_closed (Claude spec + open test/code) vs H1 (best open-weight hetero)
     - H8_closed (Claude spec + Claude test + open code) vs H1, H4
 
@@ -99,10 +99,10 @@ def main() -> None:
 
     # Cells to report; each row is (closed_cell, open_baseline_cell, comparison_note)
     comparisons = [
-        ("M5_closed", "M4", "Claude Sonnet 4.5 mono vs qwen-coder mono (best open Path 1/3)"),
-        ("M5_closed", "M3", "Claude Sonnet 4.5 mono vs qwen3.6 mono (best open Path 2)"),
-        ("M7_gpt",    "M4", "GPT-4o-mini mono vs qwen-coder mono"),
-        ("M7_gpt",    "M3", "GPT-4o-mini mono vs qwen3.6 mono"),
+        ("M5_closed", "M4", "Claude Sonnet 5 mono vs qwen-coder mono (best open Path 1/3)"),
+        ("M5_closed", "M3", "Claude Sonnet 5 mono vs qwen3.6 mono (best open Path 2)"),
+        ("M7_gpt",    "M4", "GPT-5.4 Mini mono vs qwen-coder mono"),
+        ("M7_gpt",    "M3", "GPT-5.4 Mini mono vs qwen3.6 mono"),
         ("H2_closed", "H1", "Closed spec + open test/code vs best open hetero (H1)"),
         ("H8_closed", "H1", "Closed spec + closed test + open code vs H1"),
         ("H8_closed", "H4", "H8_closed vs best-Path-1 open hetero (H4)"),
@@ -159,9 +159,9 @@ def main() -> None:
         r"  \centering",
         r"  \small",
         r"  \caption{RQ4: closed-weight closure rate versus open-weight baseline,"
-        r" per cell and closure path. Closed-weight cells are Claude Sonnet 4.5"
+        r" per cell and closure path. Closed-weight cells are Claude Sonnet 5"
         r" (\emph{M5\_closed}, \emph{H2\_closed}, \emph{H8\_closed}) and"
-        r" GPT-4o-mini (\emph{M7\_gpt}) via OpenRouter. Open baselines: M4"
+        r" GPT-5.4 Mini (\emph{M7\_gpt}) via OpenRouter. Open baselines: M4"
         r" (qwen-coder mono), M3 (qwen3.6 mono), H1 (best open hetero)."
         r" Positive $\Delta$ = closed-weight ceiling premium.}",
         r"  \label{tab:rq4_closed_vs_open}",
@@ -173,8 +173,9 @@ def main() -> None:
     for e in report["comparisons"]:
         for path in (1, 2, 3):
             p = e["paths"][str(path)]
+            closed_esc = e["closed"].replace("_", r"\_")
             lines.append(
-                f"    {e['closed'].replace('_', r'\_')} & "
+                f"    {closed_esc} & "
                 f"{e['open']} & {path} & "
                 f"{fmt(p['closed_rate'])} & "
                 f"{fmt(p['open_rate'])} & "

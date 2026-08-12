@@ -36,8 +36,8 @@ from config import (
     GEMMA_4_26B,
     MISTRAL_SMALL_3_2_24B,
     QWEN_3_CODER_30B,
-    CLAUDE_SONNET_45,
-    GPT_4O_MINI,
+    CLAUDE_SONNET_5,
+    GPT_5_4_MINI,
 )
 
 
@@ -221,14 +221,14 @@ N3 = Cell(
 # constraints (documented as a deviation in §6.5). These four cells restore
 # the pre-registered closed-weight compositions (adjusted to Claude Sonnet
 # 4.5 as the current-generation Anthropic model on OpenRouter) plus one
-# GPT-4o-mini extension. They are run via OpenRouter through llm_dispatch.
-CLAUDE = CLAUDE_SONNET_45   # local alias for readability
+# GPT-5.4 Mini extension. They are run via OpenRouter through llm_dispatch.
+CLAUDE = CLAUDE_SONNET_5    # local alias for readability
 
 M5_CLOSED = Cell(
     cell_id="M5_closed",
     stratum="mono",
     L_spec=CLAUDE, L_test=CLAUDE, L_code=CLAUDE,
-    hypothesis="Closed-weight ceiling (Claude Sonnet 4.5 at all stages); pre-registered as M5 in concept-note commit 30a5e1c.",
+    hypothesis="Closed-weight ceiling (Claude Sonnet 5 at all stages); pre-registered as M5 in concept-note commit 30a5e1c.",
 )
 H2_CLOSED = Cell(
     cell_id="H2_closed",
@@ -245,8 +245,8 @@ H8_CLOSED = Cell(
 M7_GPT = Cell(
     cell_id="M7_gpt",
     stratum="mono",
-    L_spec=GPT_4O_MINI, L_test=GPT_4O_MINI, L_code=GPT_4O_MINI,
-    hypothesis="GPT-4o-mini closed-weight second reference (post-pre-registration extension for cross-provider closed-weight coverage).",
+    L_spec=GPT_5_4_MINI, L_test=GPT_5_4_MINI, L_code=GPT_5_4_MINI,
+    hypothesis="GPT-5.4 Mini closed-weight second reference (post-pre-registration extension for cross-provider closed-weight coverage).",
 )
 
 CLOSED_WEIGHT_CELLS: tuple[Cell, ...] = (M5_CLOSED, H2_CLOSED, H8_CLOSED, M7_GPT)
