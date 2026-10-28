@@ -224,22 +224,38 @@ def tukey_hsd(df: pd.DataFrame,
 # ──────────────────────────────────────────────────────────────────────
 # 4. Per-stage bottleneck decomposition  (RQ3)
 # ──────────────────────────────────────────────────────────────────────
+# Which stages are actually invoked on each path (R2 Comment 1).
+# Path 1 (C -> D -> T):     L_spec generates D; L_test generates T from D. L_code is NOT used.
+# Path 2 (D -> T -> C):     L_test generates T from D; L_code generates C from (D, T). L_spec is NOT used.
+# Path 3 (C -> T -> D):     L_test generates T from C; L_spec recovers D from T. L_code is NOT used.
+# Including inactive stages in the bottleneck ranking produces spurious
+# attributions; restrict comparisons to active stages per path.
+_ACTIVE_STAGES_BY_PATH: dict[int, tuple[str, ...]] = {
+    1: ("spec", "test"),
+    2: ("test", "code"),
+    3: ("spec", "test"),
+}
+
+
 def per_stage_bottleneck(df: pd.DataFrame) -> pd.DataFrame:
     """
     For each hetero cell, ask: which stage is the bottleneck?
 
-    Approach: compare the hetero cell's closure rate to (a) the mono
-    cell that uses its L_spec, (b) the mono cell that uses its L_test,
-    (c) the mono cell that uses its L_code. The hetero cell's mean is
-    bounded above by max(mono_a, mono_b, mono_c) if every stage adds
-    value; if mean(hetero) << min(mono), the stage with the lowest
-    mono is the bottleneck.
+    Approach: compare the hetero cell's closure rate to the mono cell
+    that uses the same model at each ACTIVE stage for the path, and
+    pick the stage whose mono baseline is lowest. The hetero cell's
+    mean is bounded above by max(mono_a, mono_b, ...) across active
+    stages if every stage adds value; if mean(hetero) << min(active
+    monos), the stage with the lowest mono is the bottleneck.
+
+    Inactive stages per path are set to NaN and excluded from the
+    bottleneck ranking (R2 Comment 1).
 
     Returns DataFrame per (hetero_cell, path):
         hetero_cell, path, hetero_mean,
-        mono_spec, mono_test, mono_code,
+        mono_spec, mono_test, mono_code,   # inactive stages NaN
         bottleneck_stage  : 'spec' | 'test' | 'code' | 'none'
-        bottleneck_delta  : (hetero_mean - min_mono_for_bottleneck_stage)
+        bottleneck_delta  : (hetero_mean - min_active_mono)
     """
     from doe import MONO_CELLS, HETERO_CELLS, CELLS_BY_ID
 
@@ -265,27 +281,35 @@ def per_stage_bottleneck(df: pd.DataFrame) -> pd.DataFrame:
             test_tag = cell.L_test.ollama_tag if cell.L_test else "(none)"
             code_tag = cell.L_code.ollama_tag if cell.L_code else "(none)"
 
+            # All three mono means for reference display
             spec_mean = mono_means.get((spec_tag, path), float("nan"))
             test_mean = mono_means.get((test_tag, path), float("nan"))
             code_mean = mono_means.get((code_tag, path), float("nan"))
 
-            # Bottleneck = the stage whose mono cell has the lowest mean
-            stages = {"spec": spec_mean, "test": test_mean, "code": code_mean}
-            valid_stages = {k: v for k, v in stages.items() if not np.isnan(v)}
-            if not valid_stages:
+            # Restrict ranking to ACTIVE stages per path (R2 Comment 1)
+            active = _ACTIVE_STAGES_BY_PATH[path]
+            all_means = {"spec": spec_mean, "test": test_mean, "code": code_mean}
+            active_valid = {s: all_means[s] for s in active if not np.isnan(all_means[s])}
+            if not active_valid:
                 bottleneck = "none"
                 delta = float("nan")
             else:
-                bottleneck = min(valid_stages, key=valid_stages.get)
-                delta = hetero_mean - valid_stages[bottleneck]
+                bottleneck = min(active_valid, key=active_valid.get)
+                delta = hetero_mean - active_valid[bottleneck]
+
+            # NaN out the inactive-stage columns in output so the TSV + table
+            # reflect the active-only restriction visibly.
+            display_spec = spec_mean if "spec" in active else float("nan")
+            display_test = test_mean if "test" in active else float("nan")
+            display_code = code_mean if "code" in active else float("nan")
 
             out_rows.append({
                 "hetero_cell": cell.cell_id,
                 "path": path,
                 "hetero_mean": hetero_mean,
-                "mono_spec": spec_mean,
-                "mono_test": test_mean,
-                "mono_code": code_mean,
+                "mono_spec": display_spec,
+                "mono_test": display_test,
+                "mono_code": display_code,
                 "bottleneck_stage": bottleneck,
                 "bottleneck_delta": delta,
             })
