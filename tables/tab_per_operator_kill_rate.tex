@@ -1,7 +1,7 @@
 \begin{table*}[!htbp]
 \centering
 \scriptsize
-\caption{Per-mutation-operator kill rate with 95\% Wilson confidence intervals and total mutants $n$. Each cell shows kill rate followed by [95\% CI] and $(n)$ mutants. \textbf{Bold} marks the highest point-estimate per operator column: H1 leads on 4 of 5 operators (arithmetic, boundary, comparison, negate\_bool); H6 leads on return\_none. Cells with $n < 20$ mutants on an operator produce wide intervals. Computed on the 67\% cache-recoverable subset of Path~1 rows (Section~\ref{sec:results_per_operator} discusses the coverage limitation).}
+\caption{Per-mutation-operator kill rate with 95\% \emph{Clopper--Pearson exact} binomial confidence intervals and total mutants $n$. Each cell shows kill rate followed by [95\% CI] and $(n)$ mutants. \textbf{Bold} marks the highest point-estimate per operator column: H1 leads on 4 of 5 operators (arithmetic, boundary, comparison, negate\_bool); H6 leads on return\_none. Cells with $n < 20$ mutants on an operator produce wide intervals; the H1 negate\_bool entry ($n = 2$) spans [0.16, 1.00] under Clopper--Pearson and is reported for completeness but should not be interpreted as evidence of dominance. Pairwise H1-vs-mono dominance claims accounting for clustering by sample and multiple mutants per sample are supported by the paired bootstrap in Section~\ref{sec:results_per_operator}. Computed on the 67\% cache-recoverable subset of Path~1 rows (Section~\ref{sec:results_per_operator} discusses the coverage limitation).}
 \label{tab:per_operator_kill_rate}
 \begin{tabular}{@{}llllll@{}}
 \toprule
