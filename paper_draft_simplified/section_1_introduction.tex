@@ -78,7 +78,7 @@ RQ1 & Hetero compositions \emph{match} the strongest mono baseline on aggregate 
 \addlinespace
 RQ2 & The judge agrees moderately with the Path-2 metric, weakly with Path~1, and only very weakly with BERTScore on Path~3, whose disagreement flips direction across benchmarks & $r_1 = 0.192$, $r_2 = 0.523$; Path~3 per-benchmark $r^2 \leq 0.045$; MBPP over-credits ($29.2\%$) vs.\ HumanEval under-credits ($30.0\%$), $\chi^2 = 368$ & \S\ref{sec:discussion_rq2} \\
 \addlinespace
-RQ3 & The spec stage is the most frequent weakest link, but only test-stage substitutions have significant marginal effects; phi-4 at the test stage is pathological & Spec bottleneck in 15 of 33 triples; mixed-model test-stage coefficients $-10$ to $-27$~pp ($p < 0.01$); phi-4-at-test filter failure on $44$--$55\%$ of samples & \S\ref{sec:discussion_rq3} \\
+RQ3 & The test stage is the plurality bottleneck and the only stage with significant marginal effects; phi-4 at the test stage is pathological & Test bottleneck in 17 of 33 triples (spec 12, code 4; active-stages-only attribution); mixed-model test-stage coefficients $-10$ to $-27$~pp ($p < 0.01$); phi-4-at-test filter failure on $44$--$55\%$ of samples & \S\ref{sec:discussion_rq3} \\
 \addlinespace
 RQ4 & False-closure rates sit at or below the empirical noise floor for every cell except the one carrying the phi-4 pathology & Mean $11.4\%$ at the strong-success bar; N1 noise floor $26.3\%$; only H10 above it ($28.6\%$, Path~1) & \S\ref{sec:discussion_rq4} \\
 \midrule

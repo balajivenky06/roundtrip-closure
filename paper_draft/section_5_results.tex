@@ -70,13 +70,14 @@ The bottleneck-attribution table (Table~\ref{tab:per_stage_bottleneck}) is compu
 
 \input{../tables/tab_per_stage_bottleneck.tex}
 
-Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's metric mean to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{Y}_{a,s}$ is the metric mean of the mono cell using $a(s)$ at all stages. The \emph{bottleneck stage} is the stage whose baseline is the lowest, and $\Delta_a = \bar{Y}_a - \min_s \hat{Y}_{a,s}$ is the improvement from specializing the other two stages.
+Table~\ref{tab:per_stage_bottleneck} attributes each hetero cell's metric mean to the mono cell whose model appears at the same slot: for hetero cell $a$ and stage $s$, the \emph{stage baseline} $\hat{Y}_{a,s}$ is the metric mean of the mono cell using $a(s)$ at all stages. The ranking is restricted to the \emph{active stages per path}: L\_spec and L\_test on Path~1 ($C \to D \to T$); L\_test and L\_code on Path~2 ($D \to T \to C$); L\_spec and L\_test on Path~3 ($C \to T \to D$). Inactive stages are excluded from the min() by construction. The \emph{bottleneck stage} is the active stage whose baseline is the lowest, and $\Delta_a = \bar{Y}_a - \min_{s \in \textsf{active}(p)} \hat{Y}_{a,s}$ is the improvement from specializing the other active stage(s). (The submitted manuscript did not restrict to active stages; the corrected analysis is reported here per R2 Comment 1 and reverses the plurality finding, see below.)
 
-Across the 11 hetero cells, spec-stage attribution accounts for 15 of the 33 (cell $\times$ path) triples; test-stage 10; code-stage 8. The most striking single-stage attributions are:
+Across the 11 hetero cells, test-stage attribution accounts for 17 of the 33 (cell $\times$ path) triples; spec-stage 12; code-stage 4 --- making the \emph{test stage} the plurality bottleneck across the DOE. This result converges with the mixed-effects logit (Section~\ref{sec:results_mixed_logit}), which independently identifies test-stage substitutions as the only significant per-stage marginal effects. The most striking single-stage attributions are:
 
 \begin{itemize}
-  \item \textbf{H4 code attribution, $\Delta = 0.285$ (Path~1)} --- qwen-coder at $L_{\textsf{spec}}$ and $L_{\textsf{test}}$, llama3.2 at $L_{\textsf{code}}$. Even the ``cheap drafter at the code stage'' composition recovers $28$ percentage points of kill rate over the llama3.2 mono baseline, suggesting that spec and test quality can compensate substantially for weak synthesis.
-  \item \textbf{H5 spec attribution, $\Delta = 0.234$ (Path~1)} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $23$ percentage points of kill rate that llama3.2 mono cannot achieve alone; the same composition recovers $\Delta = 0.300$ on Path~2.
+  \item \textbf{H5 spec attribution, $\Delta = +0.234$ (Path~1)} --- llama3.2 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$. Substituting stronger models at test and code stages recovers $23$ percentage points of kill rate that llama3.2 mono cannot achieve alone.
+  \item \textbf{H5 spec attribution, $\Delta = +0.300$ (Path~2)} --- the same composition on Path~2 (where L\_spec is inactive and so the attribution falls on the test and code stages) recovers $30$ percentage points over the llama3.2 baseline, the largest single-cell gain in the DOE.
+  \item \textbf{H3 test attribution, $\Delta = +0.138$ (Path~2)} --- qwen-coder at $L_{\textsf{code}}$ with mistral at $L_{\textsf{test}}$ outperforms the mistral mono test baseline by nearly 14 percentage points.
 \end{itemize}
 
 \clearpage

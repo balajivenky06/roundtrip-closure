@@ -1,44 +1,44 @@
 \begin{table}[!htbp]
 \centering
-\caption{Per-stage bottleneck decomposition. For each hetero cell + path, the bottleneck stage is the one whose mono-cell mean is lowest. $\Delta$ to bottleneck $=$ hetero\_mean $-$ mono(bottleneck) --- positive means the hetero pipeline outperformed the bottleneck stage alone. \textbf{Bold} $\Delta$ marks the two largest heterogeneity gains (H4 Path~1 $\Delta = +0.285$ and H5 Path~2 $\Delta = +0.300$) --- both cases where a strong-model substitution at the non-bottleneck stages recovers substantial closure lost to the weak-stage baseline.}
+\caption{Per-stage bottleneck decomposition over active stages only (R2 Comment 1 fix). For each hetero cell + path, the bottleneck stage is the \emph{active} stage (per the path's generative structure) whose mono-cell mean is lowest. $\Delta$ to bottleneck $=$ hetero\_mean $-$ mono(bottleneck) --- positive means the hetero pipeline outperformed the bottleneck stage alone. Inactive stages per path (L\_code on Paths~1 and~3; L\_spec on Path~2) are shown as `---' and excluded from the ranking. \textbf{Bold} $\Delta$ marks the two largest heterogeneity gains (H5 Path~2 $\Delta = +0.300$ and H5 Path~1 $\Delta = +0.234$). \emph{Correction note:} the submitted manuscript's version of this table incorrectly included inactive stages, which inflated the spec-stage bottleneck count. The corrected plurality bottleneck is the \textbf{test stage} (17 of 33 hetero (cell, path) triples), followed by spec (12) and code (4) --- see Section~\ref{sec:results_stage_attribution}. This correction aligns the min-baseline attribution with the mixed-effects logit of Section~\ref{sec:results_mixed_logit}, which already identifies test-stage substitutions as the only significant per-stage marginal effects.}
 \label{tab:per_stage_bottleneck}
 \begin{tabular}{@{}lccccccc@{}}
 \toprule
 Hetero & Path & Hetero mean & Mono(L\_spec) & Mono(L\_test) & Mono(L\_code) & Bottleneck stage & $\Delta$ to bottleneck \\
 \midrule
-H1 & 1 & 0.854 & 0.769 & 0.862 & 0.862 & spec & 0.085 \\
-H1 & 2 & 0.674 & 0.547 & 0.647 & 0.647 & spec & 0.127 \\
-H1 & 3 & 0.194 & 0.185 & 0.219 & 0.219 & spec & 0.009 \\
-H2 & 1 & 0.862 & 0.9 & 0.769 & 0.862 & test & 0.093 \\
-H2 & 2 & 0.613 & 0.647 & 0.547 & 0.647 & test & 0.067 \\
-H2 & 3 & 0.185 & 0.208 & 0.185 & 0.219 & test & 0.0 \\
-H3 & 1 & 0.787 & 0.856 & 0.781 & 0.862 & test & 0.006 \\
-H3 & 2 & 0.627 & 0.647 & 0.533 & 0.647 & test & 0.093 \\
-H3 & 3 & 0.174 & 0.282 & 0.261 & 0.219 & code & -0.046 \\
-H4 & 1 & 0.862 & 0.862 & 0.862 & 0.577 & code & $\mathbf{0.285}$ \\
-H4 & 2 & 0.453 & 0.647 & 0.647 & 0.367 & code & 0.087 \\
-H4 & 3 & 0.199 & 0.219 & 0.219 & 0.245 & spec & -0.021 \\
-H5 & 1 & 0.811 & 0.577 & 0.862 & 0.862 & spec & 0.234 \\
-H5 & 2 & 0.667 & 0.367 & 0.647 & 0.647 & spec & $\mathbf{0.300}$ \\
-H5 & 3 & 0.218 & 0.245 & 0.219 & 0.219 & test & -0.002 \\
-H6 & 1 & 0.882 & 0.769 & 0.9 & 0.769 & spec & 0.113 \\
-H6 & 2 & 0.6 & 0.547 & 0.647 & 0.547 & spec & 0.053 \\
-H6 & 3 & 0.184 & 0.185 & 0.208 & 0.185 & spec & -0.001 \\
-H7 & 1 & 0.872 & 0.862 & 0.9 & 0.769 & code & 0.103 \\
-H7 & 2 & 0.6 & 0.647 & 0.647 & 0.547 & code & 0.053 \\
-H7 & 3 & 0.2 & 0.219 & 0.208 & 0.185 & code & 0.015 \\
-H8 & 1 & 0.846 & 0.856 & 0.862 & 0.781 & code & 0.065 \\
-H8 & 2 & 0.6 & 0.647 & 0.647 & 0.533 & code & 0.067 \\
-H8 & 3 & 0.26 & 0.282 & 0.219 & 0.261 & test & 0.04 \\
-H9 & 1 & 0.881 & 0.862 & 0.9 & 0.862 & spec & 0.019 \\
-H9 & 2 & 0.627 & 0.647 & 0.647 & 0.647 & spec & -0.02 \\
-H9 & 3 & 0.202 & 0.219 & 0.208 & 0.219 & test & -0.006 \\
-H10 & 1 & 0.764 & 0.781 & 0.769 & 0.862 & test & -0.005 \\
-H10 & 2 & 0.613 & 0.533 & 0.547 & 0.647 & spec & 0.08 \\
-H10 & 3 & 0.248 & 0.261 & 0.185 & 0.219 & test & 0.062 \\
-H11 & 1 & 0.872 & 0.769 & 0.856 & 0.862 & spec & 0.103 \\
-H11 & 2 & 0.653 & 0.547 & 0.647 & 0.647 & spec & 0.107 \\
-H11 & 3 & 0.173 & 0.185 & 0.282 & 0.219 & spec & -0.012 \\
+H1 & 1 & 0.854 & 0.769 & 0.862 & --- & spec & 0.085 \\
+H1 & 2 & 0.674 & --- & 0.647 & 0.647 & test & 0.027 \\
+H1 & 3 & 0.194 & 0.185 & 0.219 & --- & spec & 0.009 \\
+H2 & 1 & 0.862 & 0.900 & 0.769 & --- & test & 0.093 \\
+H2 & 2 & 0.613 & --- & 0.547 & 0.647 & test & 0.067 \\
+H2 & 3 & 0.185 & 0.208 & 0.185 & --- & test & 0.000 \\
+H3 & 1 & 0.787 & 0.856 & 0.781 & --- & test & 0.006 \\
+H3 & 2 & 0.671 & --- & 0.533 & 0.647 & test & $\mathbf{+0.138}$ \\
+H3 & 3 & 0.221 & 0.282 & 0.261 & --- & test & -0.041 \\
+H4 & 1 & 0.862 & 0.862 & 0.862 & --- & spec & -0.000 \\
+H4 & 2 & 0.453 & --- & 0.647 & 0.367 & code & 0.087 \\
+H4 & 3 & 0.199 & 0.219 & 0.219 & --- & spec & -0.021 \\
+H5 & 1 & 0.811 & 0.577 & 0.862 & --- & spec & $\mathbf{+0.234}$ \\
+H5 & 2 & 0.667 & --- & 0.647 & 0.647 & test & 0.020 \\
+H5 & 3 & 0.218 & 0.245 & 0.219 & --- & test & -0.002 \\
+H6 & 1 & 0.882 & 0.769 & 0.900 & --- & spec & 0.113 \\
+H6 & 2 & 0.600 & --- & 0.647 & 0.547 & code & 0.053 \\
+H6 & 3 & 0.184 & 0.185 & 0.208 & --- & spec & -0.001 \\
+H7 & 1 & 0.872 & 0.862 & 0.900 & --- & spec & 0.010 \\
+H7 & 2 & 0.600 & --- & 0.647 & 0.547 & code & 0.053 \\
+H7 & 3 & 0.200 & 0.219 & 0.208 & --- & test & -0.008 \\
+H8 & 1 & 0.846 & 0.856 & 0.862 & --- & spec & -0.010 \\
+H8 & 2 & 0.600 & --- & 0.647 & 0.533 & code & 0.067 \\
+H8 & 3 & 0.260 & 0.282 & 0.219 & --- & test & 0.040 \\
+H9 & 1 & 0.881 & 0.862 & 0.900 & --- & spec & 0.019 \\
+H9 & 2 & 0.627 & --- & 0.647 & 0.647 & test & -0.020 \\
+H9 & 3 & 0.202 & 0.219 & 0.208 & --- & test & -0.006 \\
+H10 & 1 & 0.764 & 0.781 & 0.769 & --- & test & -0.005 \\
+H10 & 2 & 0.613 & --- & 0.547 & 0.647 & test & 0.067 \\
+H10 & 3 & 0.248 & 0.261 & 0.185 & --- & test & 0.062 \\
+H11 & 1 & 0.872 & 0.769 & 0.856 & --- & spec & 0.103 \\
+H11 & 2 & 0.653 & --- & 0.647 & 0.647 & test & 0.007 \\
+H11 & 3 & 0.173 & 0.185 & 0.282 & --- & spec & -0.012 \\
 \bottomrule
 \end{tabular}
 \end{table}
