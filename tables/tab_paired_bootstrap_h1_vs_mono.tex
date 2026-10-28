@@ -1,0 +1,40 @@
+\begin{table*}[!htbp]
+\centering
+\small
+\caption{Paired bootstrap 95\% confidence intervals on the per-operator H1-vs-mono kill-rate \emph{difference} (R2 Comment 4). Each row reports $\Delta = \mathrm{kill\_rate}(H1) - \mathrm{kill\_rate}(\mathrm{mono})$ averaged over the shared set of samples where both cells have an observation on the operator. The bootstrap resamples $n_{\text{shared}}$ samples with replacement $B = 10{,}000$ times (seed 42), respecting the clustering of mutants within a sample. Positive CIs excluding zero establish H1 dominance over that mono baseline on that operator in a paired sense, which is stronger than the marginal Clopper-Pearson intervals of Table~\ref{tab:per_operator_kill_rate}. $^\dagger$ marks the best-mono comparator (highest mean kill-rate on the operator); $\mathbf{bold}$ marks CIs that exclude zero from below (H1 statistically dominant).}
+\label{tab:paired_bootstrap_h1_vs_mono}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Operator & Mono & $n_{\text{shared}}$ & $\Delta$ & $\text{CI}_{\text{lo}}$ & $\text{CI}_{\text{hi}}$ \\
+\midrule
+arithmetic & M1 & 10 & $\mathbf{+0.400}$ & $\mathbf{+0.100}$ & $\mathbf{+0.700}$ \\
+arithmetic & M5 & 8 & +0.188 & +0.000 & +0.438 \\
+arithmetic & M2 & 8 & +0.031 & +0.000 & +0.094 \\
+arithmetic & M3$^\dagger$ & 11 & +0.000 & +0.000 & +0.000 \\
+arithmetic & M4 & 11 & +0.000 & +0.000 & +0.000 \\
+arithmetic & M6 & 6 & +0.000 & +0.000 & +0.000 \\
+\midrule
+boundary & M1 & 16 & $\mathbf{+0.284}$ & $\mathbf{+0.114}$ & $\mathbf{+0.472}$ \\
+boundary & M2 & 13 & +0.019 & -0.212 & +0.231 \\
+boundary & M4 & 17 & -0.059 & -0.176 & +0.000 \\
+boundary & M5 & 12 & -0.069 & -0.340 & +0.174 \\
+boundary & M6 & 10 & -0.087 & -0.300 & +0.037 \\
+boundary & M3$^\dagger$ & 16 & -0.117 & -0.305 & +0.023 \\
+\midrule
+comparison & M1 & 12 & +0.167 & +0.000 & +0.417 \\
+comparison & M2 & 8 & +0.125 & +0.000 & +0.375 \\
+comparison & M3$^\dagger$ & 12 & +0.000 & +0.000 & +0.000 \\
+comparison & M4 & 12 & +0.000 & +0.000 & +0.000 \\
+comparison & M5 & 8 & +0.000 & +0.000 & +0.000 \\
+comparison & M6 & 6 & +0.000 & +0.000 & +0.000 \\
+\midrule
+\midrule
+return_none & M1 & 25 & $\mathbf{+0.220}$ & $\mathbf{+0.080}$ & $\mathbf{+0.380}$ \\
+return_none & M2 & 20 & +0.050 & +0.000 & +0.150 \\
+return_none & M3$^\dagger$ & 23 & +0.000 & +0.000 & +0.000 \\
+return_none & M4 & 26 & +0.000 & +0.000 & +0.000 \\
+return_none & M5 & 18 & +0.000 & +0.000 & +0.000 \\
+return_none & M6 & 16 & +0.000 & +0.000 & +0.000 \\
+\bottomrule
+\end{tabular}
+\end{table*}
