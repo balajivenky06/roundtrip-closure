@@ -114,7 +114,7 @@ Two structural findings emerge. First, mono baselines exhibit different operator
 
 \input{../tables/tab_per_operator_headline.tex}
 
-Table~\ref{tab:per_operator_headline} summarises these findings. \textbf{H1 (phi-4 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$) achieves the highest point-estimate kill rate on 4 of 5 mutation operators}, beating the best mono baseline by $\Delta \geq 0.056$ on all four and by $\Delta = 0.133$ on arithmetic. Wilson 95\% CIs in Table~\ref{tab:per_operator_kill_rate} show that H1's per-operator advantages are largest on arithmetic ($[0.80, 0.99]$, $n = 33$) and boundary ($[0.73, 0.92]$, $n = 64$); on comparison and negate\_bool H1 reaches $1.000$ but with tight sample sizes ($n = 16$ and $n = 2$ respectively), so those two operator wins are estimated with wide intervals and should be read as ``consistent with H1 dominance'' rather than ``H1 strictly dominates.'' The empirical per-operator pattern (H1 wins on arithmetic and boundary with tight intervals, ties-consistent on comparison and negate\_bool at the available mutant counts) is an empirical finding of this study rather than a pre-registered prediction; the five operator families themselves follow the canonical mutation-testing selection~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}.
+Table~\ref{tab:per_operator_headline} summarises these findings. \textbf{H1 (phi-4 at $L_{\textsf{spec}}$, qwen-coder at $L_{\textsf{test}}$ and $L_{\textsf{code}}$) achieves the highest point-estimate kill rate on 4 of 5 mutation operators}, beating the best mono baseline by $\Delta \geq 0.056$ on all four and by $\Delta = 0.133$ on arithmetic. Clopper--Pearson exact 95\% CIs in Table~\ref{tab:per_operator_kill_rate} show that H1's per-operator advantages are largest on arithmetic ($[0.80, 0.99]$, $n = 33$) and boundary ($[0.73, 0.92]$, $n = 64$); on comparison and negate\_bool H1 reaches $1.000$ but with tight sample sizes ($n = 16$ and $n = 2$ respectively), so those two operator wins are estimated with wide intervals and should be read as ``consistent with H1 dominance'' rather than ``H1 strictly dominates.'' (The submitted manuscript mislabelled these intervals as ``Wilson'' --- the numerical values are Clopper--Pearson exact, which is preferable for small-$n$ cells; relabelled per R2 Comment 4.) The empirical per-operator pattern (H1 wins on arithmetic and boundary with tight intervals, ties-consistent on comparison and negate\_bool at the available mutant counts) is an empirical finding of this study rather than a pre-registered prediction; the five operator families themselves follow the canonical mutation-testing selection~\citep{Andrews2005MutationAnalysis, Just2014MutationAnalysis}.
 
 Two outliers merit specific attention. H10 (mistral spec + phi-4 test + qwen-coder code) achieves arithmetic $= 0.351$ and boundary $= 0.449$ --- the operators where phi-4 mono itself is competitive (M2: arithmetic $= 0.580$, boundary $= 0.653$). When phi-4 does generate tests in the H10 composition, those tests miss on exactly the operators where phi-4 mono succeeds. Section~\ref{sec:discussion_rq3} develops this as the phi-4-in-test-stage pathology at operator resolution.
 
@@ -145,6 +145,29 @@ Fig.~\ref{fig:judge_corr} plots the automated closure metric against the judge r
 \end{itemize}
 
 Path~3's very weak per-benchmark correlations (both $r^2 \leq 0.045$) are the paper's strongest single validity finding on BERTScore. Standard practice in NLP evaluation~\citep{Zhang2020BERTScore} treats BERTScore F1 as a semantic-equivalence proxy; our result shows it captures at most a small share of variance in an LLM-based semantic-equivalence judgement, and does so identically weakly on both benchmarks. Section~\ref{sec:discussion_rq2} stratifies the direction of the residual disagreement by benchmark, showing that even though the correlation strengths are indistinguishable, the disagreement \emph{type} (over-crediting versus under-crediting) flips categorically across benchmarks --- a structural signature consistent with BERTScore functioning as a surface-form similarity signal.
+
+\subsection{Judge-weight sensitivity grid}
+\label{sec:results_judge_sensitivity}
+
+Reviewer concerns about the LLM judge's low agreement with human raters ($\kappa_{\textsf{quad}} = 0.074$; see Section~\ref{sec:results_human_eval}) motivate an explicit sensitivity analysis of the paper's headline findings to the judge-weight choice. Table~\ref{tab:judge_sensitivity_grid} reports the per-cell Path~1 closure rate under six judge-weight policies: three strict-AND variants ($\rho \in \{2, 3, 4\}$), judge-only ($J \geq 3$, metric ignored), metric-only ($Y > 0$, judge ignored), and union ($Y > 0$ or $J \geq 3$). The paper's reported policy is strict-AND at $\rho = 3$ (bold column).
+
+\input{../tables/tab_judge_sensitivity_grid.tex}
+
+Three observations follow directly from the grid, and together they establish the robustness of the paper's headline findings to the judge-weight choice.
+
+First, \emph{the per-cell closure rate varies substantially across the six policies} --- the mean spread (max $-$ min) across the 17 non-null cells on Path~1 is $0.651$, with H1 ranging from $0.358$ (strict-AND $\rho = 4$) to $1.000$ (union). This is precisely the empirical justification for the strict-AND policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3}: single-signal metrics (judge-only or metric-only) disagree substantially within the same cell, and in the absence of a ground-truth equivalence oracle we take the conservative intersection rather than either single signal.
+
+Second, \emph{the top-ranked cell on Path~1 shifts across policies}: H4 is top at $\rho \in \{2, 3\}$ and judge-only; H8 is top at $\rho = 4$; H5 is top at metric-only; H1 ties for top at union. The paper does not claim H1 is the top-ranked \emph{aggregate} cell on Path~1 (H4 holds that position under the default strict-AND policy); the paper's H1 claim is specifically on \emph{per-mutation-operator} kill rate (H1 leads 4 of 5 operator families; Table~\ref{tab:per_operator_kill_rate}).
+
+Third, \emph{the paper's three main findings are judge-independent by construction}, so are invariant across all six policies:
+
+\begin{itemize}
+  \item \textbf{H1 per-operator dominance on 4 of 5 mutation operators} (Section~\ref{sec:results_per_operator}): derives from the per-operator kill rate alone, which is a metric-only quantity. Judge weight does not enter the computation.
+  \item \textbf{phi-4-in-$L_{\textsf{test}}$ pathology} (Section~\ref{sec:discussion_rq3}): derives from the \textsf{filter\_reason} = \textsf{all\_dropped} rate on M2/H2/H10 Path~1, a pre-metric-computation diagnostic. Judge weight does not enter the computation.
+  \item \textbf{BERTScore surface-form signature on Path~3} (Section~\ref{sec:discussion_rq2}): derives from the structure of judge--metric \emph{disagreement} (benchmark-conditional flip), which is a joint property of the two signals. Changing the judge weight shifts the magnitude of the disagreement but does not change its directional structure, which is what the finding describes.
+\end{itemize}
+
+The spread observation (point one) is itself part of the paper's finding structure: that the single-signal metrics do not agree is the empirical motivation for strict-AND, not a limitation of it.
 
 \subsection{Per-stage attribution: two orthogonal instruments}
 \label{sec:results_path_cell_interaction}

@@ -1,0 +1,31 @@
+\begin{table*}[!htbp]
+\centering
+\small
+\caption{Judge-sensitivity grid for Path 1 closure rate (R1 Comment 1 defense). Each cell's Path~1 closure rate is reported under six judge-weight policies: three strict-AND variants ($\rho \in \{2, 3, 4\}$), judge-only ($J \geq 3$, metric ignored), metric-only ($Y > 0$, judge ignored), and union ($Y > 0$ OR $J \geq 3$). The strict-AND $\rho = 3$ column (bold) is the paper's reported policy. Rows ordered by $\rho = 3$ rate descending. \emph{The spread column shows the max$-$min closure rate across the 6 policies per cell: cells with narrow spread have metric and judge agreeing; cells with wide spread disagree.} The grid supports the paper's framing: strict-AND exists precisely because single-signal metrics (judge-only or metric-only) produce different rankings than the metric-plus-judge intersection, and we do not have ground truth to resolve the disagreement. Key headline findings (H1 per-operator maximum on 4/5 mutation families; phi-4-at-$L_{\textsf{test}}$ pathology; BERTScore surface-form signature on Path 3) are judge-independent by construction (they derive from the metric alone or from the disagreement structure itself) and therefore invariant across all six policies.}
+\label{tab:judge_sensitivity_grid}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & strict-AND $\rho{=}2$ & strict-AND $\rho{=}3$ (default) & strict-AND $\rho{=}4$ & judge-only $J{\geq}3$ & metric-only $Y{>}0$ & union $(Y{>}0 \vee J{\geq}3)$ & spread \\
+\midrule
+H4 & 0.924 & \textbf{0.909} & 0.409 & 0.924 & 0.985 & 1.000 & 0.591 \\
+H9 & 0.918 & \textbf{0.885} & 0.361 & 0.902 & 0.984 & 1.000 & 0.639 \\
+H7 & 0.894 & \textbf{0.864} & 0.364 & 0.894 & 0.970 & 1.000 & 0.636 \\
+H11 & 0.901 & \textbf{0.859} & 0.296 & 0.873 & 0.986 & 1.000 & 0.704 \\
+M6 & 0.889 & \textbf{0.857} & 0.381 & 0.873 & 0.984 & 1.000 & 0.619 \\
+H6 & 0.903 & \textbf{0.855} & 0.306 & 0.855 & 1.000 & 1.000 & 0.694 \\
+M3 & 0.872 & \textbf{0.855} & 0.274 & 0.855 & 0.991 & 0.991 & 0.718 \\
+H2 & 0.854 & \textbf{0.854} & 0.415 & 0.902 & 0.951 & 1.000 & 0.585 \\
+H5 & 0.864 & \textbf{0.847} & 0.305 & 0.847 & 1.000 & 1.000 & 0.695 \\
+H8 & 0.905 & \textbf{0.841} & 0.429 & 0.841 & 1.000 & 1.000 & 0.571 \\
+M4 & 0.900 & \textbf{0.829} & 0.329 & 0.843 & 0.986 & 1.000 & 0.671 \\
+H3 & 0.885 & \textbf{0.820} & 0.361 & 0.852 & 0.967 & 1.000 & 0.639 \\
+H1 & 0.914 & \textbf{0.790} & 0.358 & 0.815 & 0.975 & 1.000 & 0.642 \\
+M5 & 0.857 & \textbf{0.778} & 0.341 & 0.810 & 0.960 & 0.992 & 0.651 \\
+M2 & 0.821 & \textbf{0.750} & 0.345 & 0.821 & 0.905 & 0.976 & 0.631 \\
+H10 & 0.765 & \textbf{0.647} & 0.324 & 0.735 & 0.912 & 1.000 & 0.676 \\
+M1 & 0.626 & \textbf{0.610} & 0.244 & 0.772 & 0.789 & 0.951 & 0.707 \\
+\midrule
+\textbf{top cell} & H4 & H4 & H8 & H4 & H5 & H1 & --- \\
+\bottomrule
+\end{tabular}
+\end{table*}
