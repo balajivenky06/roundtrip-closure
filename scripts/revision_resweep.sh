@@ -63,14 +63,23 @@ try:
     out = call_llm(
         PHI_4_14B,
         prompt="Return exactly: OK",
-        system="You are a terse test probe.",
+        system_prompt="You are a terse test probe.",
+        role_hint="probe",
+        use_cache=False,
     )
+    if out.error:
+        print(f"  ✗ phi4:14b chat FAILED: {out.error}")
+        print(f"  → H10 re-run (A1b) will not produce clean results until fixed.")
+        print(f"  → Possible fixes: update Ollama to latest, pull a different")
+        print(f"    phi4 variant (e.g. phi4-mini:3.8b), or set SKIP_A1B=1.")
+        sys.exit(1)
     if "OK" in (out.text or ""):
-        print("  ✓ phi4:14b chat endpoint OK")
+        print(f"  ✓ phi4:14b chat endpoint OK (returned {out.text.strip()!r})")
     else:
-        print(f"  ⚠ phi4:14b returned unexpected: {out.text[:60]!r}")
+        print(f"  ⚠ phi4:14b returned unexpected text: {(out.text or '')[:60]!r}")
+        print(f"  → chat endpoint is working but model response was off. Proceeding.")
 except Exception as exc:
-    print(f"  ✗ phi4:14b chat FAILED: {exc}")
+    print(f"  ✗ phi4:14b chat FAILED with exception: {exc}")
     print(f"  → H10 re-run (A1b) will not produce clean results until fixed.")
     print(f"  → Possible fixes: update Ollama to latest, pull a different")
     print(f"    phi4 variant (e.g. phi4-mini:3.8b), or set SKIP_A1B=1.")
