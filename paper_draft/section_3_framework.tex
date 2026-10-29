@@ -129,6 +129,17 @@ and analogously for Paths 2 and 3:
 
 The two-signal \emph{strict-AND} policy is deliberate: it prevents metric noise or judge parse failures from spuriously inflating closure rates. We adopt the strict policy because the alternative --- single-signal validity --- was the failure mode responsible for inflated closure rates observed in the 30-function pilot; the strict policy also makes the false-closure rate (Section~5) well-defined.
 
+\paragraph{What ``closure'' means --- and what it does not (R1 Comment 7).}
+Reviewer 1 correctly observed that ``passing a test suite does not necessarily establish complete functional equivalence.'' We agree and define closure precisely:
+
+\begin{quote}
+\emph{Closure}, as used in this paper, denotes passing the strict-AND two-signal policy of Eq.~\ref{eq:valid1}--\ref{eq:valid3} at the threshold pair $(\tau = 0, \rho = 3)$. A valid closure means that (a) the stage-pair's SE-validated metric $Y$ exceeds $\tau$ (the generated artifact passed a defect-detection-grounded empirical test) \emph{and} (b) the external judge SLM rated the reconstruction at $\rho$ or higher on the equivalence rubric. Closure is thus a \emph{probabilistic validity signal} supported by two independent heuristics; it is not a certificate of formal functional equivalence.
+\end{quote}
+
+Three implications follow. First, two code implementations that pass identical reference test suites and receive identical judge ratings can still differ on untested inputs. For example, a function returning the first-encountered palindromic substring and a function returning the lexicographically smallest palindromic substring would both pass tests like \texttt{assert f("a") == "a"} and \texttt{assert f("aba") == "aba"}, yet are not functionally equivalent on inputs with multiple palindromic substrings. Our closure signal does not detect this class of divergence. Second, the strict-AND policy inherits the limitations of its two component signals: the metric cannot detect behavioural divergence on untested inputs, and the judge cannot detect divergence it does not identify in the rubric prompt. Both components are empirical heuristics with measurable error rates (Section~\ref{sec:results_judge_metric_corr}, Section~\ref{sec:results_human_eval}), not proofs. Third, the paper's claims about closure \emph{rate differences} across cells remain valid under this probabilistic interpretation: if two cells have different valid-closure fractions, that is a real difference in how often the strict-AND policy's two heuristics agree, independent of whether either heuristic captures formal equivalence.
+
+In the remainder of the paper, ``closure'' always refers to this probabilistic validity signal. Where we need to compare against a stricter notion (true semantic equivalence), we rely on the human-evaluation protocol (Section~\ref{sec:results_human_eval}), which anchors to five independent annotators; even then, inter-annotator agreement is only moderate (Krippendorff's $\alpha = 0.193$), so human consensus itself is a bounded reference rather than a formal oracle.
+
 Every closure row is additionally categorized by Algorithm~\ref{alg:validity} into one of five decision-reason labels that exhaust the two-signal decision space. The disagreement categories (\textsf{false\_closure\_candidate} and \textsf{metric\_false\_negative}) do not count as valid closures, but they become the analytical hooks in Section~\ref{sec:results} for characterizing \emph{where} the automated metric and the judge diverge.
 
 \begin{algorithm}[h]
