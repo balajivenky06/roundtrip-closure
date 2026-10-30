@@ -132,14 +132,19 @@ def main() -> None:
         r"test failed on the original code (genuine phi-4 test-filter failure); "
         r"\textsf{kill\_rate\_zero} / \textsf{\_low} / \textsf{\_high} = kept tests "
         r"achieved kill rate $=0$ / $(0, 0.5)$ / $\geq 0.5$. The submitted manuscript "
-        r"reported `all\_dropped' rates of $44\%$ (M2), $45\%$ (H2), and $55\%$ (H10); "
-        r"this forensic breakdown shows M2 and H2 reflect genuine phi-4 test-quality "
-        r"failure uncontaminated by infrastructure, while H10's $55\%$ comprises "
-        r"$33\%$ infrastructure (API 400) plus $33\%$ genuine phi-4 failure in the "
-        r"remaining 50 non-infrastructure rows ($25/50 = 50\%$ relative). After "
-        r"controlling for the H10-specific API contamination, the genuine phi-4-at-"
-        r"$L_{\textsf{test}}$ failure rate is $44$--$50\%$ across the three cells, "
-        r"supporting the paper's cross-cell-replication claim with corrected numbers.}",
+        r"reported `all\_dropped' rates of $44\%$ (M2), $45\%$ (H2), and $55\%$ (H10). "
+        r"This forensic breakdown shows M2 and H2 reflect genuine phi-4 test-quality "
+        r"failure uncontaminated by infrastructure. H10's apparent $55\%$ comprises "
+        r"$33\%$ API-induced rows plus $33\%$ genuine filter failures in the non-API "
+        r"subset. A clean fresh re-run of H10 Path 1 ($n = 70$ samples, 2026-10-30) "
+        r"with the Ollama issue resolved shows an all\_dropped rate of $54.3\%$ "
+        r"($38/70$), confirming that the phi-4-at-$L_{\textsf{test}}$ pathology "
+        r"replicates at $\sim$$54\%$ when infrastructure is clean --- modestly higher "
+        r"than the forensic $25/50$ decomposition predicted. Cross-cell replication "
+        r"therefore shows M2 ($44\%$), H2 ($44\%$), and H10 ($54\%$ clean) all exhibit "
+        r"the phi-4-at-$L_{\textsf{test}}$ pathology, with H10's upstream mistral spec "
+        r"producing slightly worse downstream test generation than H2's qwen3.6 spec "
+        r"($+10$~pp).}",
         r"\label{tab:phi4_failure_modes}",
         r"\begin{tabular}{@{}lrrrrrr@{}}",
         r"\toprule",
