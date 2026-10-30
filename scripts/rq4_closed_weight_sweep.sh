@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
 #
-# RQ4 closed-weight sweep — restores the concept-note-pre-registered
-# closed-weight cells (M5_closed, H2_closed, H8_closed) that were
-# substituted with open-weight variants during the primary sweep, plus
-# M7_gpt as a post-pre-registration cross-provider extension.
+# RQ4 closed-weight sweep — COLAB-HARDENED version.
+#
+# Features (all designed around Colab's ephemeral filesystem + flaky GPUs):
+#
+#   1. Auto-mounts Google Drive at /content/drive if not already mounted
+#   2. Restores TSV from Drive at startup if local copy is missing
+#      (e.g., post-reconnect to a fresh runtime)
+#   3. Background sync daemon copies TSV + checkpoints to Drive every
+#      SYNC_INTERVAL seconds (default 300s / 5 min)
+#   4. Status heartbeat prints progress (rows done / expected, elapsed,
+#      ETA, cost estimate) alongside each sync
+#   5. Exit trap does a final guaranteed sync on normal exit, Ctrl+C,
+#      or GPU/kernel kill — zero manual intervention needed
+#   6. Live Drive status log at /content/drive/.../rq4_status.log
+#      (readable from any other Colab notebook or your laptop via
+#      Drive web UI — useful for monitoring from your phone)
 #
 # Pipeline SLM calls route through llm_dispatch:
 #   - Claude Sonnet 5 / GPT-5.4 Mini calls go to OpenRouter (needs
-#     OPENROUTER_API_KEY in env; account balance ≥ $30 recommended)
+#     OPENROUTER_API_KEY in env; account balance ≥ $40 recommended
+#     — 1.5x the $19-31 estimate as a retry buffer)
 #   - Open-weight qwen3.6 / qwen3-coder calls (in H2_closed, H8_closed)
 #     go to the local Ollama server as usual
 #
@@ -15,72 +28,216 @@
 #
 # Estimated cost: ~$19-31 USD API for 4 cells × 60 samples × 3 paths at
 # Sonnet-5 pricing ($2/$10 per 1M) + GPT-5.4-mini pricing ($0.75/$4.50 per 1M).
-# Estimated Colab time: ~10-14 hours (API latency + local Ollama judge +
-# local mutation-testing). Sweep is resume-safe; kill any time and rerun.
+# Estimated Colab time: ~10-14 hours. Sweep is resume-safe at the (cell,
+# sample, path) level; if the runtime dies, re-run the same command and
+# it skips completed closures.
 #
 # Run on Colab (from repo root):
 #   export OPENROUTER_API_KEY=<fresh-key>
 #   bash scripts/rq4_closed_weight_sweep.sh
 #
-# Skip a specific cell via env: SKIP_M5=1 / SKIP_H2=1 / SKIP_H8=1 / SKIP_GPT=1
-# Override sample count: N_SAMPLES=150 bash scripts/rq4_closed_weight_sweep.sh
+# Monitor progress from a second notebook / your phone:
+#   open https://drive.google.com/drive/u/0/my-drive
+#   navigate to roundtrip_backup/rq4_status.log and refresh
+#
+# Env flags (optional):
+#   SKIP_M5_CLOSED=1   skip Claude Sonnet 5 mono
+#   SKIP_H2_CLOSED=1   skip Claude spec + open test/code
+#   SKIP_H8_CLOSED=1   skip Claude spec + Claude test + open code
+#   SKIP_M7_GPT=1      skip GPT-5.4-mini mono
+#   MODE=fast          2 monos × 30 samples instead of 4 × 60 (~3-4h, ~$8-12)
+#   MODE=full          4 × 150 samples (~22-34h, ~$45-70)
+#   SYNC_INTERVAL=120  shorter backup interval (default 300s)
 #
 set -euo pipefail
 
+# ─── 1. Config ────────────────────────────────────────────────────────
 if [[ -z "${OPENROUTER_API_KEY:-}" ]]; then
     echo "! OPENROUTER_API_KEY not set. Aborting."
+    echo "  Get a key from https://openrouter.ai/keys and:"
+    echo "    export OPENROUTER_API_KEY=sk-or-v1-..."
     exit 1
 fi
 
-MODE="${MODE:-pre-registered}"   # fast | pre-registered | full  (default = pre-registered)
+MODE="${MODE:-pre-registered}"
 if [[ -n "${CELLS_OVERRIDE:-}" ]]; then
     read -r -a CELLS <<<"$CELLS_OVERRIDE"
     N_SAMPLES="${N_SAMPLES:-60}"
 elif [[ "$MODE" == "fast" ]]; then
-    # Compressed 3-4h variant — 2 monos × 30 samples × 3 paths = 180 closures
-    # Answers RQ4 headline (open vs closed ceiling) with dual-provider coverage.
-    # Defers H2/H8 stage-decomposition cells to future work.
     CELLS=("M5_closed" "M7_gpt")
     N_SAMPLES="${N_SAMPLES:-30}"
 elif [[ "$MODE" == "pre-registered" ]]; then
-    # Concept-note-pre-registered 3-cell RQ4 (M5 + H2 + H8) at N=60.
-    # Adds M7_gpt as a post-pre-registration extension. ~10-14h.
     CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt")
     N_SAMPLES="${N_SAMPLES:-60}"
 elif [[ "$MODE" == "full" ]]; then
-    # Full pre-registered N=150. ~22-34h across multiple Colab sessions.
     CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt")
     N_SAMPLES="${N_SAMPLES:-150}"
 else
-    echo "! Unknown MODE=$MODE. Choose one of: fast | pre-registered | full"
-    echo "  Or override with: CELLS_OVERRIDE=\"cell1 cell2\" N_SAMPLES=X"
+    echo "! Unknown MODE=$MODE. Choose: fast | pre-registered | full"
     exit 1
 fi
 
 RESULTS_PATH="results/results_rq4_closed_weight.tsv"
+DRIVE_BACKUP="${DRIVE_BACKUP:-/content/drive/MyDrive/roundtrip_backup}"
+SYNC_INTERVAL="${SYNC_INTERVAL:-300}"
+STATUS_LOG="${DRIVE_BACKUP}/rq4_status.log"
+EXPECTED_ROWS=$(( ${#CELLS[@]} * N_SAMPLES * 3 ))
 
-echo "RQ4 closed-weight sweep config (mode=$MODE):"
-echo "  cells:      ${CELLS[*]}"
-echo "  N_samples:  $N_SAMPLES"
-echo "  results:    $RESULTS_PATH"
-echo "  API key:    ${OPENROUTER_API_KEY:0:14}…"
+# ─── 2. Mount Drive (auto, idempotent) ────────────────────────────────
+echo "─── Pre-flight: Google Drive mount ─────────────────────────────"
+if [[ ! -d /content/drive/MyDrive ]]; then
+    echo "  Drive not mounted — mounting now via google.colab.drive.mount()"
+    python3 -c "
+from google.colab import drive
+drive.mount('/content/drive', force_remount=False)
+" || {
+        echo "! Drive mount failed. Aborting — would run without a safety net."
+        echo "  Mount Drive manually in a Colab cell then re-run this script."
+        exit 1
+    }
+fi
+mkdir -p "$DRIVE_BACKUP"
+echo "  ✓ Drive mounted; backup dir = $DRIVE_BACKUP"
 echo ""
 
-# Small probe first — verifies key + balance + model slugs
-echo "─── OpenRouter probe (verifies key + balance) ─────────────────"
+# ─── 3. Restore TSV from Drive if local copy is missing ───────────────
+mkdir -p "$(dirname "$RESULTS_PATH")"
+DRIVE_TSV="${DRIVE_BACKUP}/results_rq4_closed_weight.tsv"
+if [[ ! -f "$RESULTS_PATH" && -f "$DRIVE_TSV" ]]; then
+    echo "─── Restoring TSV from Drive (local copy missing) ──────────────"
+    cp "$DRIVE_TSV" "$RESULTS_PATH"
+    restored_rows=$(wc -l < "$RESULTS_PATH")
+    echo "  ✓ Restored $(( restored_rows - 1 )) completed rows from Drive"
+    echo "  Resume will skip these and continue."
+    echo ""
+fi
+
+# Restore checkpoints tarball too, if present
+DRIVE_CKPT="${DRIVE_BACKUP}/checkpoints_rq4_final.tar.gz"
+if [[ ! -d checkpoints && -f "$DRIVE_CKPT" ]]; then
+    echo "─── Restoring checkpoints cache from Drive ─────────────────────"
+    tar xzf "$DRIVE_CKPT"
+    echo "  ✓ Restored checkpoints/ ($(du -sh checkpoints | cut -f1))"
+    echo ""
+fi
+
+# ─── 4. Config summary ────────────────────────────────────────────────
+echo "─── RQ4 config summary ────────────────────────────────────────"
+echo "  mode:            $MODE"
+echo "  cells:           ${CELLS[*]}"
+echo "  N_samples/cell:  $N_SAMPLES"
+echo "  expected rows:   $EXPECTED_ROWS"
+echo "  results TSV:     $RESULTS_PATH"
+echo "  Drive backup:    $DRIVE_BACKUP"
+echo "  sync interval:   ${SYNC_INTERVAL}s"
+echo "  status log:      $STATUS_LOG"
+echo "  API key prefix:  ${OPENROUTER_API_KEY:0:14}…"
+echo ""
+
+# ─── 5. OpenRouter + model probe ──────────────────────────────────────
+echo "─── Pre-flight: OpenRouter probe (verifies key + model slugs) ──"
 python3 -c "
+import sys
 import llm_dispatch
 from config import CLAUDE_SONNET_5, GPT_5_4_MINI
+ok_all = True
 for m in (CLAUDE_SONNET_5, GPT_5_4_MINI):
     ok = llm_dispatch.ensure_model_available(m)
     print(f'  {m.ollama_tag}: {\"OK\" if ok else \"FAIL\"}')
-"
+    if not ok: ok_all = False
+if not ok_all:
+    print('! One or more OpenRouter models unavailable. Check key balance + slugs.')
+    sys.exit(1)
+" || exit 1
+echo ""
+
+# ─── 6. Background sync daemon ────────────────────────────────────────
+# Writes a heartbeat with cost + progress estimate alongside each
+# backup. The daemon copies RESULTS_PATH and tarballs checkpoints/.
+# Exit cleanup kills the daemon and does one final guaranteed sync.
+export START_TIME=$(date +%s)
+
+sync_loop() {
+    local prev_rows=0
+    while true; do
+        sleep "$SYNC_INTERVAL"
+        local n_lines=$(wc -l < "$RESULTS_PATH" 2>/dev/null || echo 1)
+        local n_rows=$(( n_lines - 1 ))
+        local elapsed=$(( $(date +%s) - START_TIME ))
+        local new_rows=$(( n_rows - prev_rows ))
+        prev_rows=$n_rows
+
+        # Cost estimate: rough per-row scaling from mid-sweep snapshot.
+        # Pre-reg has 4 cells × 60 × 3 = 720 rows expected; $19-31 total.
+        # Linear scaling: cost ≈ ($19 to $31) × (rows_done / 720)
+        local cost_lo=$(awk -v r="$n_rows" 'BEGIN{printf "%.2f", r/720*19}')
+        local cost_hi=$(awk -v r="$n_rows" 'BEGIN{printf "%.2f", r/720*31}')
+
+        # ETA
+        local eta_s=0
+        if (( n_rows > 0 && elapsed > 0 )); then
+            local remaining=$(( EXPECTED_ROWS - n_rows ))
+            eta_s=$(awk -v r="$remaining" -v d="$n_rows" -v e="$elapsed" 'BEGIN{if(d>0)printf "%d", r*e/d; else print 0}')
+        fi
+
+        {
+            printf "[%s] " "$(date +'%Y-%m-%d %H:%M:%S')"
+            printf "rows=%d/%d  (+%d since last sync)  elapsed=%ds  eta=%ds  cost≈\$%s-\$%s\n" \
+                "$n_rows" "$EXPECTED_ROWS" "$new_rows" "$elapsed" "$eta_s" "$cost_lo" "$cost_hi"
+            cp "$RESULTS_PATH" "$DRIVE_TSV" 2>/dev/null \
+                && echo "  → TSV synced to Drive ($(stat -c%s "$DRIVE_TSV" 2>/dev/null || stat -f%z "$DRIVE_TSV") bytes)" \
+                || echo "  → TSV sync failed"
+            # Tarball checkpoints only every 4th sync (every ~20 min at default)
+            if (( (elapsed / SYNC_INTERVAL) % 4 == 0 )); then
+                tar czf "${DRIVE_BACKUP}/checkpoints_rq4_progress.tar.gz" checkpoints/ 2>/dev/null \
+                    && echo "  → checkpoints tarball refreshed" \
+                    || echo "  → checkpoints tarball failed"
+            fi
+        } | tee -a "$STATUS_LOG"
+    done
+}
+
+# ─── 7. Exit trap — guaranteed final sync ─────────────────────────────
+# Fires on: normal exit, Ctrl+C (SIGINT), kernel kill (SIGTERM),
+# unexpected error (set -e). This is the most important safety net.
+cleanup() {
+    local exit_code=$?
+    echo ""
+    echo "═══════════════════════════════════════════════════════════"
+    echo "  ⚠ FINAL SYNC on exit (code=$exit_code)"
+    echo "═══════════════════════════════════════════════════════════"
+    if [[ -n "${SYNC_PID:-}" ]]; then
+        kill "$SYNC_PID" 2>/dev/null || true
+    fi
+    if [[ -f "$RESULTS_PATH" ]]; then
+        cp "$RESULTS_PATH" "$DRIVE_TSV" 2>/dev/null && \
+            echo "  ✓ TSV copied to Drive ($(wc -l < "$DRIVE_TSV") lines)"
+    fi
+    tar czf "${DRIVE_BACKUP}/checkpoints_rq4_final.tar.gz" checkpoints/ 2>/dev/null && \
+        echo "  ✓ Checkpoints tarballed to Drive"
+    ls -lh "$DRIVE_BACKUP/" 2>/dev/null
+    echo "═══════════════════════════════════════════════════════════"
+    # Append the final status line
+    {
+        printf "[%s] FINAL exit_code=%d  rows=%d/%d\n" \
+            "$(date +'%Y-%m-%d %H:%M:%S')" "$exit_code" \
+            "$(( $(wc -l < "$RESULTS_PATH" 2>/dev/null || echo 1) - 1 ))" "$EXPECTED_ROWS"
+    } >> "$STATUS_LOG" 2>/dev/null
+}
+trap cleanup EXIT INT TERM
+
+# ─── 8. Launch background sync, then run sweep ────────────────────────
+echo "─── Launching background sync daemon (PID=\$!) ─────────────────"
+sync_loop &
+SYNC_PID=$!
+echo "  ✓ sync daemon PID=$SYNC_PID; will sync every ${SYNC_INTERVAL}s"
+echo "  ✓ follow status: tail -f $STATUS_LOG"
+echo ""
+
+echo "─── Starting sweep ───────────────────────────────────────────"
 echo ""
 
 for cell in "${CELLS[@]}"; do
-    # skip flag: SKIP_M5=1 → skips "M5_closed"; SKIP_GPT=1 → skips "M7_gpt"
-    # Skip flag: env var name is SKIP_<CELL_ID_UPPER>
-    # e.g. SKIP_M5_CLOSED=1 skips M5_closed only; SKIP_M7_GPT=1 skips M7_gpt only.
     skip_var="SKIP_${cell^^}"
     if [[ "${!skip_var:-0}" == "1" ]]; then
         echo "SKIP $cell (${skip_var}=1)"
@@ -88,7 +245,7 @@ for cell in "${CELLS[@]}"; do
     fi
     echo ""
     echo "════════════════════════════════════════════════════════════"
-    echo "  RQ4 sweep: cell=$cell dataset=core N=$N_SAMPLES"
+    echo "  cell=$cell  dataset=core  N=$N_SAMPLES  started $(date +%H:%M:%S)"
     echo "════════════════════════════════════════════════════════════"
     CELL_ID="$cell" \
     DATASET=core \
@@ -99,9 +256,13 @@ done
 
 echo ""
 echo "════════════════════════════════════════════════════════════"
-echo "  RQ4 closed-weight sweep complete"
+echo "  RQ4 closed-weight sweep complete at $(date +%H:%M:%S)"
 echo "════════════════════════════════════════════════════════════"
-echo "  results: $RESULTS_PATH"
+echo "  rows written: $(( $(wc -l < "$RESULTS_PATH") - 1 )) / $EXPECTED_ROWS"
+echo "  local TSV:    $RESULTS_PATH"
+echo "  Drive TSV:    $DRIVE_TSV"
 echo ""
-echo "  Next: sync TSV to laptop, then"
-echo "    python3 analyze/rq4_closed_vs_open.py"
+echo "  Next steps:"
+echo "    1. Download $DRIVE_TSV to laptop (into results_rerun/)"
+echo "    2. python3 analyze/rq4_closed_vs_open.py"
+# The exit trap will fire after this echo, doing a final sync + ls.
