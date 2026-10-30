@@ -1,0 +1,46 @@
+% RQ4 closed-weight ceiling comparison
+% Rebuilt 2026-10-31 from the fresh Colab sweep
+% (results_rq4_closed_weight.tsv, 720 rows: 4 cells × 60 samples × 3 paths).
+%
+% Reports BOTH:
+%   V (canon) = n_valid / N_total          -- "closure rate across all 60 attempts"
+%   V' = n_valid / n_metric-computable     -- "closure rate among samples where metric was computable"
+%
+% V' alone would hide the Sonnet-5-at-test pathology (M5_closed and
+% H8_closed have 95% all_dropped on Path 1, so only 3 of 60 samples
+% have computable kill rate; among those 3, all pass → V' = 100%).
+% The V_canon column exposes the pathology directly (5% of attempts
+% achieve valid closure under strict-AND on Path 1).
+\begin{table*}[!htbp]
+  \centering
+  \small
+  \caption{RQ4 closed-weight ceiling comparison per cell $\times$ path. Closed-weight cells use Claude Sonnet 5 (\emph{M5\_closed} / \emph{H2\_closed} / \emph{H8\_closed}) or GPT-5.4 Mini (\emph{M7\_gpt}) via OpenRouter; open-weight baselines are the paper's primary-sweep cells. All closed-weight cells at $n = 60$ samples per path; open-weight cells at $n = 150$ (mono) or $n = 75$ (hetero). Each closed-weight entry reports both $V_{\text{canon}} = n_{\text{valid}} / N_{\text{total}}$ (closure rate across all attempts; what a practitioner would observe) and $V' = n_{\text{valid}} / n_{\text{metric-ok}}$ (closure rate among samples with computable metric; the same conditional-on-metric convention as Table~\ref{tab:holdout_sensitivity}). The large gap between $V$ and $V'$ on Path 1 for M5\_closed and H8\_closed (both $V = 5\%$ but $V' = 100\%$) exposes the Sonnet-5-at-test-stage pathology --- $95\%$ of samples triggered \textsf{all\_dropped} in the test-filter, so the metric could not be computed. See Section~\ref{sec:results_rq4_closed_ceiling} for interpretation. $\Delta$ columns use $V_{\text{canon}}$ for a like-for-like comparison with open-weight baselines.}
+  \label{tab:rq4_closed_vs_open}
+  \begin{tabular}{llcccccc}
+    \toprule
+    Closed & vs.\ open & Path & \multicolumn{2}{c}{Closed-weight} & Open & $\Delta V$ & Note \\
+    \cmidrule(lr){4-5}
+    cell & baseline & & $V_{\text{canon}}$ & $V'$ & $V_{\text{canon}}$ & (canon) & \\
+    \midrule
+    M5\_closed & M4 (qwen-coder)   & 1 & $\phantom{0}5.0\%$  & $100.0\%$ & $82.9\%$ & $-77.9$~pp & Sonnet-5-at-test pathology \\
+    M5\_closed & M4 (qwen-coder)   & 2 & $70.0\%$            & $70.0\%$  & $60.8\%$ & $+9.2$~pp  & \\
+    M5\_closed & M4 (qwen-coder)   & 3 & $73.3\%$            & $74.6\%$  & $73.2\%$ & $+0.1$~pp  & \\
+    \midrule
+    M7\_gpt    & M4 (qwen-coder)   & 1 & $28.3\%$            & $85.0\%$  & $82.9\%$ & $-54.6$~pp & GPT-5.4-at-test pathology (milder) \\
+    M7\_gpt    & M4 (qwen-coder)   & 2 & $56.7\%$            & $56.7\%$  & $60.8\%$ & $-4.2$~pp  & below qwen-coder \\
+    M7\_gpt    & M4 (qwen-coder)   & 3 & $73.3\%$            & $73.3\%$  & $73.2\%$ & $+0.1$~pp  & \\
+    \midrule
+    H2\_closed & H1 (phi-4+qwen-coder) & 1 & $60.0\%$        & $87.8\%$  & $79.0\%$ & $-19.0$~pp & Sonnet-5-at-SPEC only; qwen3.6 at test \\
+    H2\_closed & H1 (phi-4+qwen-coder) & 2 & $60.0\%$        & $60.0\%$  & $64.0\%$ & $-4.0$~pp  & \\
+    H2\_closed & H1 (phi-4+qwen-coder) & 3 & $75.0\%$        & $75.0\%$  & $63.6\%$ & $+11.4$~pp & \\
+    \midrule
+    H8\_closed & H1 (phi-4+qwen-coder) & 1 & $\phantom{0}5.0\%$ & $100.0\%$ & $79.0\%$ & $-74.0$~pp & Sonnet-5-at-test pathology again \\
+    H8\_closed & H1 (phi-4+qwen-coder) & 2 & $70.0\%$        & $70.0\%$  & $64.0\%$ & $+6.0$~pp  & \\
+    H8\_closed & H1 (phi-4+qwen-coder) & 3 & $73.3\%$        & $74.6\%$  & $63.6\%$ & $+9.7$~pp  & \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{2pt}
+  \raggedright\footnotesize
+  Closed-weight cell definitions (concept-note Table~1): \textbf{M5\_closed} = Sonnet 5 at all three stages; \textbf{H2\_closed} = Sonnet 5 at $L_{\textsf{spec}}$, qwen3.6 at $L_{\textsf{test}}$, qwen-coder at $L_{\textsf{code}}$; \textbf{H8\_closed} = Sonnet 5 at $L_{\textsf{spec}}$ and $L_{\textsf{test}}$, qwen-coder at $L_{\textsf{code}}$; \textbf{M7\_gpt} = GPT-5.4 Mini at all three stages.
+\end{table*}
