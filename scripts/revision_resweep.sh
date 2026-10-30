@@ -58,9 +58,9 @@ python3 - <<'EOF'
 """Probe phi4:14b /api/chat to catch the HTTP 400 regression early."""
 import sys
 try:
-    from ollama_client import call_llm
+    import llm_dispatch
     from config import PHI_4_14B
-    out = call_llm(
+    out = llm_dispatch.call_llm(
         PHI_4_14B,
         prompt="Return exactly: OK",
         system_prompt="You are a terse test probe.",
