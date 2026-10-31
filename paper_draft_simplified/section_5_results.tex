@@ -184,7 +184,9 @@ The spread observation (point one) is itself part of the paper's finding structu
 
 Two independent statistical instruments --- a cell $\times$ path interaction ANOVA and a mixed-effects logit --- test whether the three closure paths carry non-redundant per-cell information and which stage carries that information.
 
-\paragraph{Interaction ANOVA.} Fitting Eq.~\ref{eq:anova_interact} on $n = 5{,}073$ rows (after excluding structural NaN entries and cells present only on a subset of paths) under Type-III sums of squares, the cell $\times$ path interaction is significant: $F(36, 4867) = 6.47$, $p < 0.001$, partial $\eta^2 = 0.046$. The four effects are of comparable size once Type-III controls each for the others (sample $\eta^2_p = 0.234$; interaction $0.046$; cell main $0.044$; path main $0.042$, all $p < 0.001$). There is no single dominant effect, and the practical interpretation rests on the interaction.
+\paragraph{Interaction ANOVA.} Fitting Eq.~\ref{eq:anova_interact} on $n = 5{,}073$ rows (after excluding structural NaN entries and cells present only on a subset of paths) under Type-III sums of squares, the cell $\times$ path interaction is significant: $F(36, 4867) = 6.47$, $p < 0.001$, partial $\eta^2 = 0.046$. The four effects are of comparable size once Type-III controls each for the others (sample $\eta^2_p = 0.234$; interaction $0.046$; cell main $0.044$; path main $0.042$, all $p < 0.001$). There is no single dominant effect, and the practical interpretation rests on the interaction. Full F-statistics, degrees of freedom, p-values, and effect sizes for every ANOVA factor are reported in Table~\ref{tab:anova_interaction}.
+
+\input{../tables/tab_anova_interaction.tex}
 
 Because the response variable stacks three different-scale metrics, the path main effect is partly a response-scale artifact. Per-path rank-transformed ANOVAs (Appendix~\ref{sec:appendix_rank_transformed}) confirm the cell effect is significant on every path independently, with even stronger effect sizes than the stacked model. Cell assignment is also a significant predictor on both HumanEval and MBPP separately (Appendix~\ref{sec:appendix_per_benchmark}).
 
