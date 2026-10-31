@@ -47,6 +47,31 @@ More recent multi-agent SE work on role separation --- for example, AgentCoder~\
 
 \subsection{Positioning of this work}
 
+Table~\ref{tab:related_work_comparison} summarises the eight most-overlapping prior studies against this work along seven methodologically-relevant axes (R1 Comment 10). The axes are chosen to make the paper's four pre-registered claim-of-novelty qualifiers (\emph{pre-registered}, \emph{open-weight}, \emph{defect-detection-grounded}, \emph{cross-model-and-cross-stage}) directly verifiable against the surveyed literature.
+
+\begin{table*}[!htbp]
+\centering
+\scriptsize
+\caption{Comparison of this work against the eight most-overlapping prior studies (R1 Comment 10). Columns: \textbf{Method} = pipeline design (single-LLM, multi-agent, multi-stage, RAG, etc.); \textbf{Dataset(s)} = benchmark used; \textbf{Models} = LLM / SLM lineup; \textbf{Metric} = primary evaluation signal; \textbf{Pre-reg.} = pre-registration status (hypotheses committed before data collection); \textbf{Judge-val.} = whether an LLM judge is used and validated against human raters; \textbf{Cross-stage} = whether the evaluation varies model assignments across pipeline stages (yes/no, with family count in parens).}
+\label{tab:related_work_comparison}
+\begin{tabular}{@{}lp{2.4cm}p{1.8cm}p{2.0cm}p{1.8cm}cp{1.6cm}c@{}}
+\toprule
+Study & Method & Dataset(s) & Models & Metric & Pre-reg. & Judge-val. & Cross-stage \\
+\midrule
+\citet{Allamanis2024RTC}        & single-LLM round-trip (code $\to$ NL $\to$ code) & HumanEval + MBPP & GPT-4, Codex & functional test exec & no  & no & no \\
+\citet{Zhang2025CodingTriangle} & single-LLM triangular consistency & competitive programming & GPT-4-class & hidden-test accuracy & no  & no & no \\
+\citet{Li2024MBCT}              & mutation-based consistency testing (single-LLM) & HumanEval-X & GPT-3.5, GPT-4 & inconsistency detection rate & no  & no & no \\
+\citet{Dakhel2024MuTAP}         & mutation-guided test gen (single-LLM, self-repair) & HumanEval & GPT-3.5, GPT-4 & mutation kill rate & no  & no & no \\
+\citet{Schafer2024TestPilot}    & LLM test gen with coverage feedback & 25 npm packages & GPT-3.5 & branch coverage, kill rate & no  & no & no \\
+\citet{Zheng2023LLMJudge}       & LLM-as-judge for NLP eval & MT-Bench, Chatbot Arena & GPT-4 & judge-human agreement & no  & yes (frontier only) & no \\
+\citet{Han2026CrisisKnowledge}  & dual-path LLM eval (rule-based + LLM-judge) & CKEval (crisis knowledge) & 8 mainstream LLMs & 5-dim quality rubric & no  & implicit (dual-path) & no \\
+\citet{Xiong2025DelphiAgent}    & multi-agent Delphi fact-checking & factuality benchmarks & 3+ LLMs & accuracy, agreement & no  & no & yes (role-level, 1 fam.) \\
+\midrule
+\textbf{This work}              & \textbf{heterogeneous multi-SLM round-trip closure} & \textbf{HumanEval + MBPP + HEM-25 + 4 closed-weight extensions} & \textbf{6 open-weight SLMs + 3 closed-weight frontier models (4 families)} & \textbf{mutation kill rate + ref pass + BERTScore F1, strict-AND with judge} & \textbf{yes (concept note, 2026-05)} & \textbf{yes (5-annotator, 4-judge replay)} & \textbf{yes (3 stages, 4 families)} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
 The present study is, to our knowledge, the first \emph{pre-registered}, \emph{open-weight}, \emph{defect-detection-grounded}, cross-model, cross-stage empirical evaluation of round-trip closure in a software-engineering pipeline. Each qualifier is load-bearing: closed-weight cross-stage work exists (though not under the pre-registered + defect-detection-grounded combination), and single-LLM round-trip protocols are the prior state of the art~\citep{Allamanis2024RTC, Zhang2025CodingTriangle, Li2024MBCT}. The five distinguishing contributions relative to the surveyed literature are:
 
 \begin{itemize}
