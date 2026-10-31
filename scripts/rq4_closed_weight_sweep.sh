@@ -75,7 +75,9 @@ elif [[ "$MODE" == "gemini" ]]; then
     # Separate TSV path so this doesn't collide with the pre-registered sweep's TSV.
     CELLS=("M9_gemini" "H9_gemini")
     N_SAMPLES="${N_SAMPLES:-60}"
-    RESULTS_PATH="${RESULTS_PATH:-results/results_rq4_gemini.tsv}"
+    # Unconditionally override — don't use ${VAR:-default} because RESULTS_PATH
+    # has a default assigned above and we need to clobber it in gemini mode.
+    RESULTS_PATH="results/results_rq4_gemini.tsv"
 elif [[ "$MODE" == "full" ]]; then
     CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt" "M9_gemini" "H9_gemini")
     N_SAMPLES="${N_SAMPLES:-150}"
@@ -84,7 +86,9 @@ else
     exit 1
 fi
 
-RESULTS_PATH="results/results_rq4_closed_weight.tsv"
+# RESULTS_PATH default: used by all modes EXCEPT gemini (which overrides above).
+# Use :- so a MODE-specific override higher up takes precedence.
+RESULTS_PATH="${RESULTS_PATH:-results/results_rq4_closed_weight.tsv}"
 DRIVE_BACKUP="${DRIVE_BACKUP:-/content/drive/MyDrive/roundtrip_backup}"
 SYNC_INTERVAL="${SYNC_INTERVAL:-300}"
 STATUS_LOG="${DRIVE_BACKUP}/rq4_status.log"
