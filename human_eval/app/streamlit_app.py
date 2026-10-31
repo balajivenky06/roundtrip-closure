@@ -30,17 +30,32 @@ import streamlit as st
 # ────────────────────────────────────────────────────────────────────────
 HERE = Path(__file__).resolve().parent
 DATA_DIR = HERE.parent / "data"
-PAIRS_PATH = DATA_DIR / "pairs_60_full.jsonl"
+
+# Env overrides let the SAME app drive the second (uniform-draw) 60-pair
+# human-eval study without duplicating code (R1 Comment 2 + R2 Comment 2
+# extension). Defaults = original stratified study. For the uniform-draw
+# study, launch with:
+#   HUMAN_EVAL_PAIRS_JSONL=/path/to/pairs_60_uniform_full.jsonl \
+#   HUMAN_EVAL_RATINGS_SUFFIX=_uniform \
+#       streamlit run human_eval/app/streamlit_app.py
+import os
+PAIRS_PATH = Path(os.environ.get(
+    "HUMAN_EVAL_PAIRS_JSONL",
+    str(DATA_DIR / "pairs_60_full.jsonl")
+))
+RATINGS_SUFFIX = os.environ.get("HUMAN_EVAL_RATINGS_SUFFIX", "")
 
 
 def annotator_files(annotator_id: str) -> tuple[Path, Path]:
-    """Return (ratings_tsv, events_log_jsonl) paths for this annotator."""
+    """Return (ratings_tsv, events_log_jsonl) paths for this annotator.
+    Uses RATINGS_SUFFIX (e.g. "_uniform") to keep second-study outputs
+    separate from original stratified-study outputs."""
     safe = "".join(c for c in annotator_id if c.isalnum() or c in "_-")
     if not safe:
         safe = "unknown"
     return (
-        DATA_DIR / f"annotator_{safe}_ratings.tsv",
-        DATA_DIR / f"annotator_{safe}_events.jsonl",
+        DATA_DIR / f"annotator_{safe}{RATINGS_SUFFIX}_ratings.tsv",
+        DATA_DIR / f"annotator_{safe}{RATINGS_SUFFIX}_events.jsonl",
     )
 
 

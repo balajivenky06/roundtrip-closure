@@ -47,9 +47,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-PAIRS_TSV = PROJECT_ROOT / "results" / "human_eval_pairs_60.tsv"
+
+# Env-var overrides for the uniform-draw second study (R1 Comment 2 + R2 Comment 2
+# extension; see human_eval/prep/build_uniform_draw_sample.py). Defaults match
+# the original stratified 60-pair study.
+import os
+PAIRS_TSV = Path(os.environ.get(
+    "HUMAN_EVAL_PAIRS_TSV",
+    str(PROJECT_ROOT / "results" / "human_eval_pairs_60.tsv")
+))
 SAMPLES_JSONL = PROJECT_ROOT / "data" / "core_sample_150.jsonl"
-OUT_JSONL = Path(__file__).resolve().parent.parent / "data" / "pairs_60_full.jsonl"
+OUT_JSONL = Path(os.environ.get(
+    "HUMAN_EVAL_OUT_JSONL",
+    str(Path(__file__).resolve().parent.parent / "data" / "pairs_60_full.jsonl")
+))
+# Column name of the pair identifier (original uses "pair_id"; uniform-draw
+# uses "uniform_pair_id" to avoid P001-P060 collision)
+PAIR_ID_COL = os.environ.get("HUMAN_EVAL_PAIR_ID_COL", "pair_id")
 
 
 def load_pairs_tsv() -> list[dict]:
@@ -178,7 +192,7 @@ def main() -> None:
     n_miss = 0
     with OUT_JSONL.open("w", encoding="utf-8") as f:
         for row in pairs:
-            pair_id = row["pair_id"]
+            pair_id = row[PAIR_ID_COL]
             cell_id = row["cell_id"]
             sample_idx = int(row["sample_idx"])
             path = int(row["path"])
