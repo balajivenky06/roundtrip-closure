@@ -139,7 +139,7 @@ Conclusion-validity threats concern whether the statistical inferences reported 
 
 \textbf{Threat.} Mono cells were run on $N = 150$ core samples; hetero and null cells on $N = 75$ samples each. The unbalanced design gives narrower confidence intervals to mono cells than to hetero and null cells.
 
-\textbf{Mitigation.} The Tukey pairwise tests use the harmonic-mean sample size (Eq.~\ref{eq:tukey}) to handle the unbalanced design. Per-cell confidence intervals for hetero cells are reported in Table~\ref{tab:closure_rate_matrix}. Effect sizes are computed with partial $\eta^2$, which is sample-size-invariant.
+\textbf{Mitigation.} The Tukey pairwise tests use the harmonic-mean sample size (Eq.~\ref{eq:tukey}) to handle the unbalanced design. Per-operator Clopper--Pearson exact 95\% confidence intervals for every cell are reported in Table~\ref{tab:per_operator_kill_rate}; per-cell metric means and strict-AND valid-closure counts are reported in Table~\ref{tab:closure_rate_matrix}. Effect sizes are computed with partial $\eta^2$, which is sample-size-invariant.
 
 \textbf{Residual risk.} Hetero-cell effect estimates are noisier than mono-cell estimates. Consequently, the ``no significant Tukey pair between H6 and M3'' finding (Section~\ref{sec:results_mono_vs_hetero}) could reflect either genuine equivalence or insufficient power at the hetero sample size. A follow-up study with $N = 150$ on hetero cells would tighten this.
 
