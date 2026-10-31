@@ -135,6 +135,16 @@ GPT_5_4_MINI = ModelSpec(
     provider="openrouter",
     notes="OpenAI GPT-5.4 Mini via OpenRouter; RQ4 closed-weight post-pre-registration extension. Released Mar 2026; balances capability and cost for cross-provider closed-weight coverage. 400K context; pricing $0.75/$4.50 per 1M input/output tokens.",
 )
+GEMINI_2_5_PRO = ModelSpec(
+    ollama_tag="google/gemini-2.5-pro",  # VERIFY: paste current OpenRouter slug for Gemini 2.5 Pro
+    short_name="gemini-2.5-pro",
+    family="Google",
+    size_b=0.0,                # undisclosed (closed-weight)
+    architecture="unknown",
+    generation_year=2026,
+    provider="openrouter",
+    notes="Google Gemini 2.5 Pro via OpenRouter; RQ4 post-pre-registration extension adding fourth model family (Google) to the closed-weight pathology-replication evidence. Covers the generalization-gap concern from R1.6 across all four major closed-weight providers.",
+)
 
 
 # Convenience tuples
@@ -146,7 +156,7 @@ PIPELINE_MODELS: tuple[ModelSpec, ...] = (
     MISTRAL_SMALL_3_2_24B,
     QWEN_3_CODER_30B,
 )
-CLOSED_WEIGHT_MODELS: tuple[ModelSpec, ...] = (CLAUDE_SONNET_5, GPT_5_4_MINI)
+CLOSED_WEIGHT_MODELS: tuple[ModelSpec, ...] = (CLAUDE_SONNET_5, GPT_5_4_MINI, GEMINI_2_5_PRO)
 JUDGE_MODEL: ModelSpec = DEEPSEEK_R1_14B
 ALL_MODELS: tuple[ModelSpec, ...] = PIPELINE_MODELS + CLOSED_WEIGHT_MODELS + (JUDGE_MODEL,)
 

@@ -38,6 +38,7 @@ from config import (
     QWEN_3_CODER_30B,
     CLAUDE_SONNET_5,
     GPT_5_4_MINI,
+    GEMINI_2_5_PRO,
 )
 
 
@@ -248,8 +249,20 @@ M7_GPT = Cell(
     L_spec=GPT_5_4_MINI, L_test=GPT_5_4_MINI, L_code=GPT_5_4_MINI,
     hypothesis="GPT-5.4 Mini closed-weight second reference (post-pre-registration extension for cross-provider closed-weight coverage).",
 )
+M9_GEMINI = Cell(
+    cell_id="M9_gemini",
+    stratum="mono",
+    L_spec=GEMINI_2_5_PRO, L_test=GEMINI_2_5_PRO, L_code=GEMINI_2_5_PRO,
+    hypothesis="Google Gemini 2.5 Pro mono — fourth model family added to the closed-weight pathology-replication evidence base (post-pre-registration extension answering R1.6 generalization concern across all four major providers).",
+)
+H9_GEMINI = Cell(
+    cell_id="H9_gemini",
+    stratum="hetero",
+    L_spec=GEMINI_2_5_PRO, L_test=QWEN_3_6_27B, L_code=QWEN_3_CODER_30B,
+    hypothesis="Google Gemini 2.5 Pro at spec + qwen3.6 at test + qwen-coder at code — negative control for the Gemini-at-test pathology hypothesis; mirrors H2_closed structure but with Google at the frontier slot.",
+)
 
-CLOSED_WEIGHT_CELLS: tuple[Cell, ...] = (M5_CLOSED, H2_CLOSED, H8_CLOSED, M7_GPT)
+CLOSED_WEIGHT_CELLS: tuple[Cell, ...] = (M5_CLOSED, H2_CLOSED, H8_CLOSED, M7_GPT, M9_GEMINI, H9_GEMINI)
 
 
 # ──────────────────────────────────────────────────────────────────────

@@ -69,11 +69,18 @@ elif [[ "$MODE" == "fast" ]]; then
 elif [[ "$MODE" == "pre-registered" ]]; then
     CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt")
     N_SAMPLES="${N_SAMPLES:-60}"
+elif [[ "$MODE" == "gemini" ]]; then
+    # Google Gemini 2.5 Pro extension — fourth model family (post-pre-registration).
+    # Expected cost ~$12-18 at Gemini 2.5 Pro pricing. ~1-2h on Colab.
+    # Separate TSV path so this doesn't collide with the pre-registered sweep's TSV.
+    CELLS=("M9_gemini" "H9_gemini")
+    N_SAMPLES="${N_SAMPLES:-60}"
+    RESULTS_PATH="${RESULTS_PATH:-results/results_rq4_gemini.tsv}"
 elif [[ "$MODE" == "full" ]]; then
-    CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt")
+    CELLS=("M5_closed" "H2_closed" "H8_closed" "M7_gpt" "M9_gemini" "H9_gemini")
     N_SAMPLES="${N_SAMPLES:-150}"
 else
-    echo "! Unknown MODE=$MODE. Choose: fast | pre-registered | full"
+    echo "! Unknown MODE=$MODE. Choose: fast | pre-registered | gemini | full"
     exit 1
 fi
 
@@ -102,7 +109,7 @@ echo ""
 
 # ─── 3. Restore TSV from Drive if local copy is missing ───────────────
 mkdir -p "$(dirname "$RESULTS_PATH")"
-DRIVE_TSV="${DRIVE_BACKUP}/results_rq4_closed_weight.tsv"
+DRIVE_TSV="${DRIVE_BACKUP}/$(basename "$RESULTS_PATH")"
 if [[ ! -f "$RESULTS_PATH" && -f "$DRIVE_TSV" ]]; then
     echo "─── Restoring TSV from Drive (local copy missing) ──────────────"
     cp "$DRIVE_TSV" "$RESULTS_PATH"
@@ -135,13 +142,33 @@ echo "  API key prefix:  ${OPENROUTER_API_KEY:0:14}…"
 echo ""
 
 # ─── 5. OpenRouter + model probe ──────────────────────────────────────
+export CELLS_PROBE="$(IFS=,; echo "${CELLS[*]}")"
 echo "─── Pre-flight: OpenRouter probe (verifies key + model slugs) ──"
 python3 -c "
 import sys
 import llm_dispatch
-from config import CLAUDE_SONNET_5, GPT_5_4_MINI
+from config import CLAUDE_SONNET_5, GPT_5_4_MINI, GEMINI_2_5_PRO
+# Only probe the models actually used by the selected CELLS.
+# Reads CELLS from env (bash-exported via \$CELLS_PROBE)
+import os
+cells_probe = os.environ.get('CELLS_PROBE', '').split(',')
+models_needed = set()
+for c in cells_probe:
+    c = c.strip()
+    if c.startswith('M5') or c.startswith('H2_closed') or c.startswith('H8'):
+        models_needed.add('sonnet')
+    if c == 'M7_gpt':
+        models_needed.add('gpt')
+    if c.startswith('M9_gemini') or c.startswith('H9_gemini'):
+        models_needed.add('gemini')
+probe_list = []
+if 'sonnet' in models_needed: probe_list.append(CLAUDE_SONNET_5)
+if 'gpt' in models_needed:    probe_list.append(GPT_5_4_MINI)
+if 'gemini' in models_needed: probe_list.append(GEMINI_2_5_PRO)
+if not probe_list:  # default: probe all (safer when cells list is non-standard)
+    probe_list = [CLAUDE_SONNET_5, GPT_5_4_MINI, GEMINI_2_5_PRO]
 ok_all = True
-for m in (CLAUDE_SONNET_5, GPT_5_4_MINI):
+for m in probe_list:
     ok = llm_dispatch.ensure_model_available(m)
     print(f'  {m.ollama_tag}: {\"OK\" if ok else \"FAIL\"}')
     if not ok: ok_all = False
