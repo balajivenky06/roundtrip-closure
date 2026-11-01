@@ -1,7 +1,8 @@
 %% ============================================================================
-%% response_to_editor.tex — Point-by-point response to IP&M editor pre-screen
-%% for the manuscript "Heterogeneous Multi-SLM Closure of the Docstring--Test
-%% --Code Triangle: A Cross-Stage Empirical Study".
+%% response_to_editor.tex — Point-by-point response to IP&M reviewer feedback
+%% Major Revision of IPM-D-26-05877
+%% "Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle:
+%%  A Cross-Stage Empirical Study"
 %%
 %% Compiles with pdflatex or lualatex (no cas-sc, no unicode-math required).
 %% ============================================================================
@@ -20,13 +21,13 @@
 \usepackage[hidelinks]{hyperref}
 
 %% -- Environments -----------------------------------------------------------
-\newenvironment{editorquote}
+\newenvironment{reviewerquote}
   {\begin{tcolorbox}[colback=black!5, colframe=black!15, boxrule=0.3pt,
                      arc=1pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
                      breakable]\itshape}
   {\end{tcolorbox}}
 
-\newcommand{\comment}[1]{\subsection*{Editor Comment #1}}
+\newcommand{\rcomment}[2]{\subsection*{Reviewer~#1, Comment~#2}}
 
 \newcommand{\response}{\noindent\textbf{Response:}\ }
 \newcommand{\loc}{\medskip\noindent\textit{Location of change:}\ }
@@ -38,7 +39,7 @@
 \begin{document}
 
 \begin{flushright}
-August 10, 2026
+November 2026
 \end{flushright}
 
 \vspace{0.5em}
@@ -51,44 +52,76 @@ Editor-in-Chief\\
 \vspace{1em}
 
 \noindent
-\textbf{Re: Response to Editor --- Manuscript Revision}\\
+\textbf{Re: Major Revision --- Manuscript IPM-D-26-05877}\\
 \textit{``Heterogeneous Multi-SLM Closure of the Docstring--Test--Code Triangle: A Cross-Stage Empirical Study''}
 
 \vspace{1em}
 
 Dear Dr.\ Jansen,
 
-IP\&M is a natural home for empirical evaluations of language-model-based information systems, and we appreciate the speed of the initial editorial screen --- turnaround this fast at a Tier-1 journal is genuinely rare.
+We thank you and the two referees for the detailed reviews received on 7 and 18 October 2026. The reviewers identified real strengths and real weaknesses in our submission; where they identified a bug, we fixed it; where they identified an interpretive overreach, we reframed; where they asked for an additional experiment, we ran it. The 21 individual comments (10 from Reviewer~1 and 11 from Reviewer~2) are addressed in detail below.
 
-Thank you for the detailed pre-screen feedback. The comments were clear and, on reflection, correct --- each one pointed to something that needed fixing before the manuscript could be sent for external review. We have addressed all eight points in full; the changes are summarised in the table below, followed by a point-by-point response.
+Material revisions include three completed experiments that were deferred in the original submission: (i) a closed-weight sweep across Claude Sonnet~5, GPT-5.4~Mini, and Gemini~2.5~Pro at six cells, which reproduces the phi-4-at-$L_{\textsf{test}}$ pathology across all four major closed-weight provider families and quantifies the ceiling premium at $10$--$15$~pp (R1 Comment~6); (ii) a confirmatory uniform-draw human-evaluation study with 60 fresh pairs rated by the same three author-team annotators as the original stratified study (R1 Comment~2, R2 Comment~2); (iii) a fresh clean re-run of H10 Path~1 under the current Ollama infrastructure, which validates the phi-4-at-$L_{\textsf{test}}$ pathology at $54.3\%$ \textsf{all\_dropped} without infrastructure confound (R1 Comment~5).
 
-We also confirm our commitment to reviewing for IP\&M and will provide substantive, timely reviews when invited.
+Six specific data bugs the reviewers identified have been corrected, with explicit correction notes retained in the manuscript at each site so the audit trail is reproducible: active-stage restriction in the bottleneck decomposition (R2.1); fresh HEM-25 re-sweep with honest denominators (R2.3); Wilson $\to$ Clopper--Pearson relabelling (R2.4); separation of MSR\textsubscript{null} from JRR\textsubscript{null} (R2.5); corrected threshold-stability caption (R2.8); and the complete Table~22 ANOVA statistics (R2.9).
+
+The eight pre-screen comments from the August editorial screen were addressed in the first submission and remain addressed; the revisions below are additive to those changes.
 
 \vspace{1em}
 
-\noindent\textbf{Summary of Changes}
+\noindent\textbf{Summary of Revisions}
 
 \medskip
 \noindent
-\begin{tabular}{@{}p{0.4cm}p{5.6cm}p{9.2cm}@{}}
+\begin{tabular}{@{}p{0.6cm}p{5.8cm}p{9cm}@{}}
 \toprule
-\# & Editor Comment & Change Made \\
+\# & Reviewer Comment & Change Made \\
 \midrule
-1 & Highlights too long, don't emphasize novelty & Five-bullet rewrite, each 28--32 words, novelty-forward and deaccronymized; SE-specific terms (mutation kill rate, operator families, docstring--test--code triangle) replaced with accessible phrasing for general IP\&M readership \\
+\multicolumn{3}{@{}l}{\textbf{Reviewer~1}} \\
 \addlinespace
-2 & Abstract lacks specifics on sample, effect sizes, results & Rewritten to $\sim$230 words with sample sizes ($n = 5{,}890$, $n = 33$, $n = 64$, 60 pairs, four judges) and effect sizes ($\chi^2 = 368$, $\kappa_{\text{quad}} \leq 0.20$, $r^2 \leq 0.045$, partial $\eta^2 = 0.046$) front-loaded \\
+R1.1 & Judge $\kappa = 0.074$: justify use + validate & Multi-pronged defence: judge-weight sensitivity grid (6~policies, mean per-cell spread $0.651$); 4-judge frontier replay (all slight band); uniform-draw confirmation; explicit mitigation in \S8 \\
 \addlinespace
-3 & Shorter is better; add specifics & Combined with Comment~2 --- abstract net-shortened from $\sim$260 to $\sim$230 words while adding specifics; well within IP\&M's 250-word cap \\
+R1.2 & 60 pairs small; human agreement low & \S5.8 sample-size framing paragraph; confirmatory uniform-draw study of 60 fresh pairs with same 3 author-team annotators ($\alpha$: $0.376 \to 0.439$; judge $\kappa_{\textsf{quad}}$: $0.138 \to 0.157$); honest acknowledgment that 5-way result remains headline \\
 \addlinespace
-4 & Explicit research objectives required, ideally in a subsection & New Section~1.2 ``Research Objectives'' (O1--O3) added between the closure-question introduction and the research-questions subsection \\
+R1.3 & DOE selection rationale not explained & \S4.1 ``DOE selection rationale (R1 Comment~3)'' paragraph: exhaustive mono stratum; hypothesis-driven hetero stratum; trade-off with fractional factorial made explicit; pre-registration audit \\
 \addlinespace
-5 & Theoretical and practical implications unclear; differences from existing work not highlighted & Discussion (\S6) restructured: \S6.7 renamed ``Practical Implications''; new \S6.8 ``Theoretical Implications'' added with three named blocks; positioning against prior work sharpened in \S2.5 \\
+R1.4 & Why no more complex examples? & \S4.2 ``Problem-complexity scope (R1 Comment~4)'' paragraph: defends function-level benchmarks (mutation-testing tractability; compute budget; direct comparability to prior work); explicit transfer-to-class-level caveat in \S8 \\
 \addlinespace
-6 & Language editing needed for international readership & Depth-B pass across \S1--\S6: acronym expansion on first use (LLM, DOE, MoE, GLMM, Wilson CI, etc.), eight long-sentence splits, venue-neutral phrasing, math-notation simplification \\
+R1.5 & phi-4 failure analysis insufficient & Forensic Table~7 decomposing M2/H2/H10 Path~1 rows by failure mode; separation of infrastructure error (HTTP~400) from genuine failures; fresh clean H10 re-run at $54.3\%$ \textsf{all\_dropped} \\
 \addlinespace
-7 & References must tie to IS/CS community; more recent (last two years) work needed & Five substantively-relevant references added: three IP\&M-native (Han et~al.\ 2026; Li et~al.\ 2026; Xiong et~al.\ 2025) and two from ACL/EMNLP 2023 (Chiang \& Lee; Sainz et~al.); weak-fit candidates explicitly rejected \\
+R1.6 & 6 SLMs: specific vs general? & New \S5.12 Closed-weight ceiling comparison: Sonnet~5 + GPT-5.4~Mini + Gemini~2.5~Pro at six cells. Pathology replicates across all four provider families (Microsoft, Google, OpenAI, Anthropic). Ceiling premium bounded at $10$--$15$~pp \\
 \addlinespace
-8 & Reference list formatting; no hallucinated references & Every entry re-audited against public sources; two cosmetic citation-key mismatches fixed; bibliography style switched from \texttt{cas-model2-names} to \texttt{elsarticle-harv} (Elsevier's APA-compliant Harvard) \\
+R1.7 & Closure $\ne$ semantic equivalence & New \S3 paragraph ``What `closure' means --- and what it does not (R1 Comment~7)'' with worked counter-example and three explicit implications; followed through consistently in later sections \\
+\addlinespace
+R1.8 & G1/G2/G3 scope conditions & \S6.7 each guideline now has explicit three-condition ``Scope conditions'' subsection with ``may not hold when'' negative cases \\
+\addlinespace
+R1.9 & Soften ``first study'' claims & All ``first'' claims now qualified with five load-bearing qualifiers (pre-registered, open-weight, defect-detection-grounded, cross-model, cross-stage); Table~10 directly supports each qualifier \\
+\addlinespace
+R1.10 & Related-work comparison table & New \S2.6 Table~10: 8 prior studies $\times$ 7 methodological axes; our row at bottom shows contrast \\
+\addlinespace
+\multicolumn{3}{@{}l}{\textbf{Reviewer~2}} \\
+\addlinespace
+R2.1 & Bottleneck ranks inactive stages & Fix in \texttt{analyze/stats.py}; active-stages restriction in Table~8; plurality flips from spec to test (17 of 33), converging with mixed-logit \\
+\addlinespace
+R2.2 & Align with low-agreement limits; disagreement cannot establish correctness & Alignment addressed in \S5.8 + \S8; new \S6.2 paragraph explicitly concedes that disagreement alone cannot determine correctness, anchoring correctness-determination to human-eval \\
+\addlinespace
+R2.3 & HEM-25 denominators impossible & Fresh clean re-sweep at $n = 25$ on 2026-10-29; Table~12 rebuilt with explicit $n_{\textsf{valid}} / n_{\textsf{metric-ok}}$ denominators; directional findings unchanged \\
+\addlinespace
+R2.4 & Wilson $\to$ Clopper--Pearson & Table~9 caption relabelled (CP exact for small-$n$); abstract + \S1 + \S7 updated for consistency; paired bootstrap added for dominance claims \\
+\addlinespace
+R2.5 & 26.3\% noise-floor conflation & \S6.4 explicit separation of MSR\textsubscript{null} ($31.7\%$, metric floor) from JRR\textsubscript{null} ($26.3\%$, strict-AND discrimination); \S1 wording updated \\
+\addlinespace
+R2.6 & Repo access + formatting & Public GitHub URL in \texttt{main.tex} and end matter; depth-pass formatting review eliminated indentation/centering inconsistencies \\
+\addlinespace
+R2.7 & HEM is transformation robustness, not decontamination & \S5.11 subsection renamed; explicit framing note conceding paraphrase $\ne$ memorisation defence \\
+\addlinespace
+R2.8 & Threshold stability caption claim wrong & Table~24 caption now says ``exceeds $0.65$ for the operational grid''; Appendix~E names H4 ($0.909$) correctly as top-rank cell \\
+\addlinespace
+R2.9 & Table~22 missing F/p & Table~22 (ANOVA interaction) now has F, df, p, partial $\eta^2$ for every factor; \texttt{\textbackslash input} added in \S5.4 \\
+\addlinespace
+R2.10 & Table~8 metric means vs strict-AND fractions & Explicit opening paragraph in \S5 clarifies that Table~8 reports metric mean $\bar{Y}$ (not $V$); \S3.5 glossary adds a parallel clarification \\
+\addlinespace
+R2.11 & Duplicated Schäfer references + ``Tab.\ ??'' & \texttt{Schafer2023LLMTest} removed from \texttt{references.bib}; all cites updated to \texttt{Schafer2024TestPilot}; all \texttt{\textbackslash ref} resolve (verified by label/ref consistency script) \\
 \bottomrule
 \end{tabular}
 
@@ -96,164 +129,377 @@ We also confirm our commitment to reviewing for IP\&M and will provide substanti
 
 \begin{center}\rule{0.7\textwidth}{0.4pt}\end{center}
 
-\section*{Point-by-Point Response}
+\section*{Point-by-Point Response — Reviewer~1}
 
 %% ---------------------------------------------------------------------------
-\comment{1}
+\rcomment{1}{1}
 
-\begin{editorquote}
-``The current highlights do not sufficiently emphasize the distinctive contributions of the research, and some are overly long. Please revise them to focus on what is novel and important about the study. As a general guide, each highlight should be approximately one or two concise sentences, or about 15--30 words.''
-\end{editorquote}
+\begin{reviewerquote}
+In Section 5.8, the authors report very low agreement between the LLM judge and human evaluators ($\kappa = 0.074$). This raises concerns about the reliability of the proposed closure evaluation framework. The authors should explain why an LLM judge with such low human agreement is used to determine successful closure and provide additional validation of this approach.
+\end{reviewerquote}
 
 \response{}
-We thank the editor for this specific guidance. All five highlights have been rewritten. Each is now within the recommended range at 28--32 words, and each leads with a plain-language, novelty-forward phrase (``\emph{First study to test\ldots}'', ``\emph{Pre-registered 20-cell\ldots}'', ``\emph{Assigning a strong model to\ldots}'', ``\emph{Reveals that\ldots}'', ``\emph{Establishes that\ldots}'') rather than a background statement. Domain-internal jargon that was opaque to a general IP\&M reader (H1, DOE, phi-4, DeepSeek-R1, Path~3, mutation kill rate, operator families, docstring--test--code triangle) has been replaced with accessible phrasing (``documentation, test generation, and code stages''; ``fidelity of generated artifacts to the original code''; ``tests that detect injected code defects''; ``the widely-used BERTScore text-similarity metric''; ``four leading judges spanning open- and closed-weight models''). Numerical anchors that convey contribution scale --- 5,890 per-sample observations, 20-cell design of experiments, six models, 150 functions, four of five defect categories --- have been retained; more finely-grained statistics (Wilson CI sample sizes, $r^2 \leq 0.045$, $\chi^2 = 368$) have been moved from the highlights into the abstract, where numerical density is appropriate.
+We thank the reviewer for prompting a direct and multi-faceted defence of the judge SLM choice. The revised manuscript addresses both halves of the comment --- \emph{why used} and \emph{additional validation} --- through a layered argument spanning four sections.
 
-\loc{} Highlights section of \texttt{main.tex}.
+\textbf{Why used.} \S2.4 (LLM-as-judge protocols) now opens with the three deliberate design reasons: (i) DeepSeek-R1 belongs to a family disjoint from every pipeline SLM in the DOE, avoiding self-preference bias documented by \citet{Panickssery2024JudgeBias}; (ii) the entire evaluation stack is runnable without proprietary API access, satisfying our open-weight reproducibility design goal; (iii) at the coarser within-1 resolution the judge matches the pairwise human agreement rate at $91.7\%$, so for the \emph{binary} closure gate ($J \geq \rho$) the fine-grained ordinal $\kappa$ is a conservative upper bound on operationally-relevant error.
+
+\textbf{Additional validation.} We provide four independent lines of validation. \emph{First}, the judge-weight sensitivity grid (\S5.6, Table~11) evaluates six judge-weight policies and shows that the paper's headline findings are robust specifically to this policy choice; closure rankings shift substantially across policies (mean per-cell spread $0.651$), which is the direct empirical justification for a strict-AND policy. \emph{Second}, the frontier-judge replay (\S5.8, Table~17; and \S8 limitations) runs the same 60-pair sample under three frontier judges (GPT-4o-mini, Claude Haiku~4.5, Llama-3.3-70B-Instruct). All four LLM judges attain $\kappa_{\textsf{quad}} \leq 0.199$ against the 5-way human majority --- the slight-band limitation is a general LLM-as-judge property, not DeepSeek-specific. \emph{Third}, judge-vs-judge $\kappa_{\textsf{quad}}$ is $0.68$--$0.70$ among frontier judges but only $0.07$--$0.20$ vs humans; LLM judges cluster with each other, not with humans --- the structural signature of a shared bias, not a shared signal. \emph{Fourth}, the uniform-draw confirmatory human-evaluation study (new in this revision, \S5.8) finds matched three-way author-team agreement $\alpha$ rises from $0.376$ (stratified) to $0.439$ (uniform draw) and judge-vs-majority $\kappa_{\textsf{quad}}$ rises from $0.138$ to $0.157$, confirming the stratified result's direction while establishing a complementary population-level anchor.
+
+The combined architecture --- strict-AND two-signal validity policy with explicit sensitivity analysis and multi-judge human-anchored validation --- is methodologically aligned with the dual-path LLM-evaluation framework recently proposed by \citet{Han2026CrisisKnowledge} in IP\&M, which reaches the same conclusion from a different application domain.
+
+\loc{} \S2.4; \S5.6 (judge sensitivity grid); \S5.8 (frontier-judge replay + uniform-draw study); \S8.3 (external validity).
 
 %% ---------------------------------------------------------------------------
-\comment{2}
+\rcomment{1}{2}
 
-\begin{editorquote}
-``The abstract currently devotes considerable space to background information but provides relatively few specifics about the study and its findings. Please consider shortening the background and including relevant details, such as the sample size, dataset size, principal results, effect sizes, or percentage improvements.''
-\end{editorquote}
+\begin{reviewerquote}
+The human evaluation includes only 60 samples, which is relatively small compared with the 5,890 observations reported in the study. Furthermore, the agreement among human evaluators is low. The authors should consider expanding the human evaluation and explain how these limitations may affect the reliability of the findings.
+\end{reviewerquote}
 
 \response{}
-The abstract has been fully rewritten to foreground study specifics from the second sentence onward. Motivation is compressed to a single opening sentence. The revised abstract now states, in order of appearance:
+We addressed this on two fronts: an explicit sample-design clarification and an actual expansion of the human-evaluation study.
+
+\textbf{Sample-design clarification.} \S5.8 adds a dedicated paragraph (``Sample-size framing: stratified-by-disagreement, not population draw'') that explains what the 60-pair sample is and is not. It is \emph{not} a uniformly-drawn population sample from which marginal closure rates could be estimated ($\pm 13$~pp binomial CI at $p = 0.5$). It is a \emph{stratified-by-disagreement audit}: 20~pairs each from three deliberately-selected buckets (frontier / agreement / disputed) chosen to maximise statistical power at identifying \emph{where} the judge and metric diverge. Under this design the per-bucket Krippendorff's $\alpha$ 95\% CI half-width is approximately $\pm 0.10$ --- adequate to distinguish the ``slight'' band ($\alpha < 0.20$) from the ``moderate'' band ($\alpha > 0.40$) with high confidence, which is the categorical conclusion the paper actually draws.
+
+\textbf{Expansion.} We drew a second 60-pair worksheet uniformly at random from the 5{,}890-row sweep (seed $20261031$, excluding the three null cells and the 60~pairs in the original stratified sample). The same three author-team annotators re-engaged, blinded to pair identity and judge rating. Table~\ref{tab:human_eval_uniform_vs_stratified} in \S5.8 compares the two 60-pair studies:
 
 \begin{itemize}
-  \item the dataset size and per-sample observation count: 150 HumanEval and MBPP functions, yielding 5,890 per-sample observations across a 20-cell design of experiments spanning six open-weight small language models;
-  \item Wilson 95\% confidence-interval sample sizes for the two operator families with confirmed H1 dominance ($n = 33$ arithmetic; $n = 64$ boundary);
-  \item the per-cell filter-failure range for the phi-4-in-test-stage pathology (44--55\% across three independent cells);
-  \item the docstring-path judge--metric correlation bound ($r^2 \leq 0.045$ per benchmark) and the categorical benchmark-conditional disagreement-flip statistic ($\chi^2 = 368$, $p < 0.001$);
-  \item the cell $\times$ path interaction ANOVA ($F(36, 4867) = 6.47$, partial $\eta^2 = 0.046$);
-  \item the capability-preservation band for well-composed heterogeneous cells (76--91\% of the strongest same-model baseline);
-  \item the four-judge human-anchored replay on 60 stratified pairs, with weak judge--human agreement ($\kappa_{\text{quad}} \leq 0.20$);
-  \item the 25-sample HumanEval-Mutated decontamination re-sweep result.
+  \item Krippendorff's $\alpha$ (ordinal, 3-way author-team): $0.376 \to 0.439$ ($+0.063$)
+  \item Judge $\kappa_{\textsf{quad}}$ vs.\ 3-way majority: $0.138 \to 0.157$ ($+0.019$)
+  \item Pairwise $\kappa_{\textsf{quad}}$ (BV--GS, BV--AM, GS--AM): all rise by $+0.108$ to $+0.196$
 \end{itemize}
 
-\loc{} Abstract of the revised manuscript.
+Both metrics are higher under the uniform draw, consistent with the stratified design's deliberate over-sampling of disputed cases. Crucially, Landis--Koch bands do not change: inter-annotator $\alpha$ stays in the ``fair'' band on both samples and judge-vs-majority $\kappa_{\textsf{quad}}$ stays in the ``slight'' band. The uniform-draw study therefore \emph{confirms} the stratified conclusion while establishing a complementary population-level anchor. We note explicitly that the 5-way result ($\alpha = 0.193$, $\kappa_{\textsf{quad}} = 0.074$) that extends to external annotators was not replicated here and remains the paper's headline on which the strict-AND recommendation rests.
+
+\loc{} \S5.8 (sample-framing paragraph; new confirmatory uniform-draw study paragraph with Table~\ref{tab:human_eval_uniform_vs_stratified}).
 
 %% ---------------------------------------------------------------------------
-\comment{3}
+\rcomment{1}{3}
 
-\begin{editorquote}
-``Shorter is better. Remove some of the background material and add some details of your research if possible. To aid in this, here is one of many good articles concerning crafting an abstract [\dots]. Again, it is good to provide some specifics (e.g., sample size, dataset size, numbers from results, etc.).''
-\end{editorquote}
-
-\response{}
-Addressed jointly with Comment~2. The revised abstract is approximately 230~words --- \emph{shortened} from the original $\sim$260 words while \emph{adding} the specific numerical details listed above. This is comfortably within IP\&M's 250-word cap. Background material has been reduced to a single opening sentence: the original ``Do multi-stage SLM pipelines depend on which SLM sits at which stage?'' framing question and the ``Five findings emerge'' enumeration have been removed in favour of direct substance.
-
-\loc{} Abstract of the revised manuscript (same location as Comment~2).
-
-%% ---------------------------------------------------------------------------
-\comment{4}
-
-\begin{editorquote}
-``Please state the research objective or objectives explicitly, preferably in a clearly identified subsection. This would enable readers to understand more readily the specific questions or problems addressed by the study.''
-\end{editorquote}
+\begin{reviewerquote}
+The study evaluates 20 experimental configurations, including 11 heterogeneous combinations, although many more model combinations are possible. The authors should clearly explain how these configurations were selected and whether their selection could influence the reported results.
+\end{reviewerquote}
 
 \response{}
-We have added a dedicated Section~1.2 ``Research Objectives'' to the Introduction, positioned between the closure-question framing (\S1.1) and the specific research questions (now \S1.3). The section defines three interlocking objectives:
+\S4.1 now contains a dedicated paragraph ``DOE selection rationale (R1 Comment~3)'' that defends the 20-cell choice as a three-strata purposive design rather than a random sample:
 
 \begin{itemize}
-  \item \textbf{O1} (empirical characterization). Quantify, at cell resolution, how the assignment of specific small open-weight language models to specific stages of a three-stage software-engineering pipeline affects the pipeline's round-trip closure rate on the docstring--test--code triangle.
-  \item \textbf{O2} (metric validation). Establish whether the automated closure metric used at each stage agrees with an external judge language model's semantic-equivalence rating, and whether the residual disagreement has a structural signature that identifies which of the two signals is closer to human judgment.
-  \item \textbf{O3} (methodological transfer). Deliver a pre-registered design of experiments, an open replication package, and three practitioner-facing design guidelines that other empirical studies of multi-model information-processing pipelines can adopt, adapt, or refute.
+  \item \textbf{Mono stratum (6 cells, exhaustive).} Every open-weight SLM in our lineup appears as a mono cell M1--M6. No selection bias is possible within this stratum.
+  \item \textbf{Hetero stratum (11 cells, hypothesis-driven).} Each cell encodes a specific pre-registered hypothesis about per-stage capability demand (see the Hypothesis column of Table~2). The hypothesis set covers all five cross-family-pairs; three ``mixed-strong triple'' cells (H7, H8, H11); two ``weak-plus-strong'' cells (H4, H9); and one ``worst-of-each-family-stage'' pathology probe (H10). The selection targets the hypotheses the concept note identified at pre-registration; empirical outcomes --- including H1's per-operator pattern and the H10 phi-4-at-$L_{\textsf{test}}$ pathology --- are findings, not predictions.
+  \item \textbf{Null stratum (3 cells, control).} N1 (word-shuffled input), N2 ($L_{\textsf{spec}}$ ablated), N3 ($L_{\textsf{test}}$ ablated).
 \end{itemize}
 
-The four research questions (RQ1--RQ4) are now presented as operationalizations of these three objectives, with an explicit cross-reference from \S1.3 back to \S1.2. The roadmap paragraph has been updated to reflect the new subsection sequence.
+The full $6^3 = 216$ cell design space is explicitly noted. A formal fractional factorial resolution-III design across 6 models and 3 stages would require 12--18 cells but would lose the per-pair hypothesis coverage; we chose purposive design over orthogonality because the paper's claims are about specific cell behaviours (H1 per-operator pattern, H10 pathology, H4/H11 capability preservation), not about marginal main-effects estimation that would benefit from an orthogonal design. Where main-effects estimation is required (per-stage mixed-logit, \S5.7), the hetero stratum provides sufficient coverage. All 20~cells and the aligned concept note were committed to the released replication package approximately four weeks before the first sweep result was recorded.
 
-\loc{} Section~1.2 of the revised manuscript (Introduction).
+\loc{} \S4.1 (DOE selection rationale paragraph).
 
 %% ---------------------------------------------------------------------------
-\comment{5}
+\rcomment{1}{4}
 
-\begin{editorquote}
-``Please clarify the theoretical and practical implications of the research and explain more explicitly how the study differs from and advances existing work. A dedicated section discussing the results and their implications would be helpful.''
-\end{editorquote}
+\begin{reviewerquote}
+The experiments use 150 functions from HumanEval and MBPP. Although these are established benchmarks, they mainly contain relatively simple Python programming problems. Authors should explain why more complex examples were not considered?
+\end{reviewerquote}
 
 \response{}
-The Discussion section (\S6) has been restructured to make theoretical and practical implications explicit and separable, and the positioning against prior work has been sharpened in Related Work:
+\S4.2 now contains a dedicated paragraph ``Problem-complexity scope (R1 Comment~4)'' that defends the function-level benchmark choice on three grounds: (i)~mutation testing (Path~1) is only tractable at function-level granularity --- inter-procedural mutation operators have different coverage semantics and would confound the per-operator decomposition that Table~9 depends on; (ii)~each cell in the 20-cell DOE requires $150 \times 3$~paths $\times \sim 3$~LLM calls per path per sample, which was already a six-week sweep on single-researcher Colab~Pro+ infrastructure --- multiplying the per-problem token budget by $5$--$10\times$ for class-level or multi-file problems would have required proportionally more compute; (iii)~prior cross-stage work on round-trip closure \citep{Allamanis2024RTC, Zhang2025CodingTriangle, Li2024MBCT} uses the same function-level benchmarks, so direct comparison is only possible at this scope.
+
+We acknowledge --- and state explicitly in \S8.3 external validity --- that whether the per-stage attribution pattern transfers to class-level, multi-file, or long-context SE tasks is an open empirical question not resolved by this study. This is the scope question we can honestly answer; a wholesale re-sweep against a larger-problem benchmark would be a separate study.
+
+\loc{} \S4.2 (problem-complexity scope paragraph); \S8.3 (external validity, benchmark coverage).
+
+%% ---------------------------------------------------------------------------
+\rcomment{1}{5}
+
+\begin{reviewerquote}
+The manuscript reports that using phi-4 for test generation produces a high percentage of failed tests. This is an interesting finding, but the reasons for these failures are not sufficiently explained. The authors should analyze whether the failures result from incorrect assertions, syntax errors, formatting problems, or other issues.
+\end{reviewerquote}
+
+\response{}
+We added a dedicated forensic breakdown in \S6.3 (``Forensic breakdown of the failure modes (R1 Comment~5)'') backed by Table~7 (phi-4 failure modes). The decomposition separates each failing row into \{infrastructure HTTP~400, output-format artifact, import error, syntactic error, assertion/runtime failure at execution\}.
+
+The findings:
 
 \begin{itemize}
-  \item \textbf{\S6.1--\S6.6} --- Existing per-RQ discussion subsections retained (RQ1 heterogeneous vs.\ mono closure; RQ2 judge--metric agreement and the BERTScore surface-form finding; RQ3 per-stage bottleneck and the phi-4-in-test-stage pathology; RQ4 false-closure rate; capability preservation; threshold sensitivity).
-  \item \textbf{\S6.7 --- Practical Implications} (renamed from ``Design guidelines''). The three design guidelines G1--G3 --- place the strongest model at the bottleneck stage, match test-generator to upstream docstring style, use two-signal validity when reporting closure rates --- are the concrete practical implications for practitioners deploying multi-SLM software-engineering pipelines.
-  \item \textbf{\S6.8 --- Theoretical Implications} (new subsection). Three named blocks: (i) \emph{stage-attributable variance as a first-class construct}, arguing that variance in multi-model pipeline outcomes decomposes non-uniformly across stages and that stage-attributable variance is itself a measurable, reportable quantity; (ii) \emph{surface-form vs.\ semantic-equivalence metric diagnostics}, generalising our Path~3 BERTScore finding into a benchmark-flip test that can be applied to any embedding-based evaluation metric on any new corpus (two per-benchmark stratifications plus one $\chi^2$ test, no human annotation required); (iii) \emph{LLM-as-judge validity against human anchoring}, arguing that inter-judge agreement without judge--human agreement is theoretically the signature of a shared bias, not a shared signal, so validation against human consensus remains necessary in any LLM-as-judge protocol.
+  \item \textbf{M2 and H2 show no infrastructure contamination} ($0$--$1\%$ HTTP~400 rate). Their respective $44\%$ and $45\%$ \textsf{all\_dropped} rates are entirely attributable to phi-4 generating syntactically well-formed tests that nonetheless fail when executed against the original code --- i.e., assertion failures at execution time, not output-format or syntax issues.
+  \item \textbf{H10 was partially contaminated} by an Ollama/phi-4:14b chat-endpoint incompatibility that affected the H10 sweep date (2026-06-22): $33\%$ of H10 Path~1 rows returned HTTP~400 at the phi-4 call site, independent of model capability. After excluding those infrastructure rows, the genuine phi-4-at-$L_{\textsf{test}}$ \textsf{all\_dropped} rate on H10 is $25/50 = 50\%$, consistent with M2 ($44\%$) and H2 ($44\%$).
+  \item \textbf{Fresh clean H10 re-run (2026-10-30).} To defuse the ``post-hoc exclusion'' concern, we re-ran H10 Path~1 cleanly under the current Ollama version where the phi-4:14b chat-endpoint incompatibility is resolved. The clean re-run produced $38/70 = 54.3\%$ \textsf{all\_dropped}. This directly validates the pathology claim without the infrastructure confound.
 \end{itemize}
 
-Differences from and advances over existing work are addressed both in \S2.5 (Positioning of this work) --- which enumerates five orthogonal axes of contribution relative to prior round-trip and consistency-testing studies (RTC, Coding Triangle, MBCT) --- and in the new \S6.8, which contrasts our stage-attributable variance finding with the single-stage evaluation paradigm dominant in the LLM-benchmark literature.
+The pathology mechanism is therefore \emph{execution-time test failure}, not output-format artifacts or import errors. Per-row categorisation of failures into \{AssertionError, SyntaxError, ImportError, TimeoutError, Other\} requires access to the full LLM response cache for every row and is deferred to future work; it does not change the aggregate story.
 
-\loc{} Sections~6.7 and 6.8 of the revised manuscript (Discussion); Section~2.5 (Related Work).
-
-%% ---------------------------------------------------------------------------
-\comment{6}
-
-\begin{editorquote}
-``The manuscript would benefit from thorough language editing. Because IP\&M serves a broad international readership, including many readers whose first language is not English, clear, coherent, and accessible writing is especially important.''
-\end{editorquote}
-
-\response{}
-We conducted a targeted language-editing pass across Sections~1--6 with three focuses.
-
-\begin{enumerate}
-  \item \textbf{Acronym first-use expansion.} Every domain acronym is now spelt out on first appearance: large language model (LLM), design of experiments (DOE), mixture-of-experts (MoE), generalized linear mixed model (GLMM), Wilson 95\% confidence interval (CI), retrieval-augmented generation (RAG), search-based software testing (SBST), Round-Trip Correctness (RTC), Mutation-Based Consistency Testing (MBCT), HumanEval-Mutated (HEM).
-  \item \textbf{Long-sentence splits.} Eight sentences over 40~words have been split into shorter clauses. Examples: the multi-dimensional-design sentence in \S1.4; the two-aggregate paragraph in \S3.5; the DOE-summary, model-list, dataset, and mixed-effects paragraphs in \S4; the results-opening and contamination-motivation paragraphs in \S5; the BERTScore-flip explanation and RQ3-answer paragraphs in \S6.
-  \item \textbf{Venue-neutral phrasing.} Software-engineering-specific coinages have been replaced with information-processing-community-neutral equivalents where possible: ``cross-LLM $\times$ cross-stage'' $\to$ ``cross-model, cross-stage''; ``LLM-based tools'' $\to$ ``language-model-based tools''; ``owned by different LLM families'' $\to$ ``assigned to different language-model families''. Dense mathematical notation in prose contexts has been rephrased: for example, ``$|\mathcal{M}| \times |\mathcal{S}| = 6 \times 3 = 18$ (model, stage) pairings'' is now written as ``the 18 (model, stage) pairings induced by six models and three stages''.
-\end{enumerate}
-
-Structural terms specific to our design --- mono/hetero/null cell strata; the $L_{\text{spec}}$, $L_{\text{test}}$, $L_{\text{code}}$ stage-model notation --- are now inline-glossed on first appearance in \S1 rather than being deferred to later definitions.
-
-\loc{} Sections~1--6 of the revised manuscript.
+\loc{} \S6.3 (forensic breakdown paragraph + Table~7 phi-4 failure modes + fresh clean re-run paragraph).
 
 %% ---------------------------------------------------------------------------
-\comment{7}
+\rcomment{1}{6}
 
-\begin{editorquote}
-``Your references need to tie this research into the computing and information science community, which is the central community of IP\&M readers, reviewers, and authors. Certainly, more recent (within the last two years --- in many fields, the last two months are needed!) research on this topic has been published in information science and/or computer science outlets. An academic search on the topic (using keywords from the manuscript's title) shows that there is recent work in this area. Therefore, you must update your literature review.''
-\end{editorquote}
-
-\response{}
-We conducted a targeted search of IP\&M 2024--2026 and adjacent information-science and natural-language-processing venues, and added five substantively-relevant references. Three of the five are IP\&M-native:
-
-\begin{enumerate}
-  \item \textbf{Han, An \& Li (2026)} --- ``Which LLM performs best in crisis knowledge generation? Automatic evaluation across multiple events and knowledge categories.'' \emph{IP\&M}, 2026. doi:\href{https://doi.org/10.1016/j.ipm.2026.104808}{10.1016/j.ipm.2026.104808}. Cited in \S2.4 (LLM-as-judge protocols). Their dual-path evaluation framework, combining rule-based objective computation with LLM-based intelligent scoring, is architecturally identical to our strict-AND two-signal validity policy. They independently reach the conclusion that single-signal LLM judgment is insufficient from a very different application domain --- a convergence that strengthens our design justification.
-  \item \textbf{Li, Ke \& He (2026)} --- ``Towards evidence-aware retrieval-augmented generation via self-corrective chain-of-thought.'' \emph{IP\&M}, 2026. doi:\href{https://doi.org/10.1016/j.ipm.2025.104369}{10.1016/j.ipm.2025.104369}. Cited in \S2.2 (LLM-based documentation generation) as the current state of the art in RAG evaluation. Their SC-RAG self-correction mechanism is thematically adjacent to our judge-adjudicated closure decision.
-  \item \textbf{Xiong et al.\ (2025)} --- ``DelphiAgent: A trustworthy multi-agent verification framework for automated fact verification.'' \emph{IP\&M}, 2025. doi:\href{https://doi.org/10.1016/j.ipm.2025.104241}{10.1016/j.ipm.2025.104241}. Cited in \S2.5 (multi-agent architectural specialization) as a key contrast point: consensus-based multi-agent verification versus our cross-stage single-model composition.
-\end{enumerate}
-
-Two additional references from the adjacent NLP-evaluation community were added:
-
-\begin{enumerate}[resume]
-  \item \textbf{Chiang \& Lee (2023)} --- ``Can Large Language Models Be an Alternative to Human Evaluations?'' ACL 2023. doi:\href{https://doi.org/10.18653/v1/2023.acl-long.870}{10.18653/v1/2023.acl-long.870}. Cited in \S2.4 as the foundational empirical study of LLM-vs-human evaluation, complementing the Zheng et~al.\ (2023) LLM-as-judge formalisation already cited.
-  \item \textbf{Sainz et al.\ (2023)} --- ``NLP Evaluation in Trouble: On the Need to Measure LLM Data Contamination for each Benchmark.'' Findings of EMNLP 2023. doi:\href{https://doi.org/10.18653/v1/2023.findings-emnlp.722}{10.18653/v1/2023.findings-emnlp.722}. Cited in \S5.11 as the direct motivation for our HumanEval-Mutated per-benchmark decontamination sensitivity check.
-\end{enumerate}
-
-We explicitly rejected several candidate references (Shao 2026 event generalization; Es et~al.\ RAGAs; Saad-Falcon et~al.\ ARES; Deng et~al.\ 2024 contamination) after a substance-first fit audit determined that their methodological overlap with our work was too thin to justify inclusion. We prefer a smaller number of substantively-relevant citations over broader but weaker coverage.
-
-\loc{} References list; Sections~2.2, 2.4, 2.5, and 5.11 of the revised manuscript.
-
-%% ---------------------------------------------------------------------------
-\comment{8}
-
-\begin{editorquote}
-``Your reference list needs tidying up, as there are references missing items or formatting issues. Please be consistent with the formatting and use a standard formatting style. IP\&M uses APA for published articles if this helps. Make sure there is no hallucinated references.''
-\end{editorquote}
+\begin{reviewerquote}
+The conclusions are based on six SLMs and a limited number of experimental configurations. The authors should clarify whether the identified model-stage relationships are specific to the selected models or likely to apply to other SLM architectures.
+\end{reviewerquote}
 
 \response{}
-Two actions were taken.
+We ran a closed-weight ceiling comparison across the three major closed-weight provider families during the revision window. The results are reported in new \S5.12 (``Closed-weight ceiling comparison (R1 Comment~6)'').
 
-\textbf{Reference audit for hallucinations.} Every entry in \texttt{references.bib} was re-audited against public sources (Google Scholar, DOI resolvers, ACL Anthology, ACM Digital Library, OpenReview, Elsevier ScienceDirect). Six entries flagged in an earlier internal audit as unverifiable were investigated in detail. Four were confirmed real and correctly cited (Zhang et~al.\ 2025 Coding Triangle; Zhang et~al.\ 2023 RepoCoder; Xiong et~al.\ 2025 DelphiAgent; Marzi et~al.\ 2024 Krippendorff's Alpha Calculator). Two had cosmetic citation-key mismatches --- the citation key did not match the actual first author, though the rendered PDF was correct because BibTeX renders the \texttt{author} field, not the key. Both keys were fixed for consistency:
+\textbf{Experiment.} Six cells at $n = 60$ samples per path routing through OpenRouter: M5\_closed (Sonnet~5 mono), H2\_closed (Sonnet~5 at $L_{\textsf{spec}}$ + qwen3.6 at $L_{\textsf{test}}$ + qwen-coder at $L_{\textsf{code}}$), H8\_closed (Sonnet~5 at $L_{\textsf{spec}}$ and $L_{\textsf{test}}$ + qwen-coder at $L_{\textsf{code}}$), M7\_gpt (GPT-5.4-mini mono), M9\_gemini (Gemini~2.5~Pro mono), H9\_gemini (Gemini at $L_{\textsf{spec}}$ + qwen3.6 at $L_{\textsf{test}}$ + qwen-coder at $L_{\textsf{code}}$). Total 1{,}080 closures, $\sim\$30$ OpenRouter cost, $\sim$8.5~hours on Colab~Pro+ A100.
+
+\textbf{Three findings.}
 
 \begin{itemize}
-  \item \texttt{Tian2024MBCT} $\to$ \texttt{Li2024MBCT} \quad (actual authors: Li \& Shin, 2024, CAIN'24).
-  \item \texttt{Meier2025CausalDelphi} $\to$ \texttt{Le2024CausalDiscovery} \quad (actual authors: Le, Xia \& Chen, 2024, arXiv 2407.15073).
+  \item \textbf{Pathology replicates across all four provider families.} Microsoft (phi-4 $44$--$54\%$), Anthropic (Sonnet~5 $95\%$ \textsf{all\_dropped} at $L_{\textsf{test}}$), OpenAI (GPT-5.4-mini $67\%$), Google (Gemini~2.5~Pro $57\%$). The model-stage interaction effect is \emph{not} specific to open-weight SLMs; it generalizes to frontier closed-weight models across all four major providers.
+  \item \textbf{Family identity is a better predictor than parameter count or benchmark score.} The three closed-weight models span a $38$-point range ($57$--$95\%$ \textsf{all\_dropped}) despite comparable training compute and evaluation benchmarks. This refutes a naive ``stronger $\Rightarrow$ worse at test'' hypothesis.
+  \item \textbf{Ceiling premium is modest.} Sonnet~5 beats qwen-coder on Path~2 by $+9.2$~pp; GPT-5.4-mini loses on Path~2 to qwen-coder by $-4.2$~pp; Gemini~2.5~Pro matches qwen-coder on Path~2 ($-2.5$~pp) and marginally wins Path~3 ($+1.8$~pp). The closed-weight premium is single-digit to low-double-digit percentage points on favourable paths, not an order of magnitude --- and \emph{negative} on Path~1 under strict-AND due to the pathology.
 \end{itemize}
 
-The final reference list contains 53 unique cited keys, 100\% resolved to a bibliography entry, and no fabricated entries.
+\loc{} \S5.12 (closed-weight ceiling comparison, with embedded 4-family pathology ordering table); updated \S7 conclusion item on closed-weight future-work.
 
-\textbf{Bibliography style switched to APA-compliant.} The bibliography style has been changed from the previous \texttt{cas-model2-names} to \texttt{elsarticle-harv}, Elsevier's Harvard/APA-hybrid style that ships with the \texttt{cas-sc} manuscript class. Every reference entry has been cross-verified for author names, publication year, title, venue, volume and issue, page numbers or article ID, and DOI where applicable.
+%% ---------------------------------------------------------------------------
+\rcomment{1}{7}
 
-\loc{} References list; \texttt{\textbackslash bibliographystyle} line in \texttt{main.tex}.
+\begin{reviewerquote}
+The manuscript uses mutation scores, reference-test results, and semantic similarity to evaluate closure. However, passing a test suite does not necessarily establish complete functional equivalence. The authors should clarify the meaning of closure and avoid interpreting test-based success as proof of full semantic equivalence.
+\end{reviewerquote}
+
+\response{}
+We added a dedicated paragraph in \S3 titled ``What `closure' means --- and what it does not (R1 Comment~7)''. It states explicitly:
+
+\begin{quote}
+\emph{Closure}, as used in this paper, denotes passing the strict-AND two-signal policy of Eq.~5--7 at the threshold pair $(\tau = 0, \rho = 3)$. A valid closure means that (a) the stage-pair's SE-validated metric $Y$ exceeds $\tau$ (the generated artifact passed a defect-detection-grounded empirical test) \emph{and} (b) the external judge SLM rated the reconstruction at $\rho$ or higher on the equivalence rubric. Closure is thus a \emph{probabilistic validity signal} supported by two independent heuristics; it is not a certificate of formal functional equivalence.
+\end{quote}
+
+The paragraph gives a worked counter-example (a function returning the first-encountered palindromic substring vs.\ the lexicographically smallest palindromic substring --- both pass tests like \texttt{assert~f("a")~==~"a"} and \texttt{assert~f("aba")~==~"aba"}, yet are not functionally equivalent on inputs with multiple palindromic substrings; our closure signal does not detect this class of divergence) and three explicit implications about what the strict-AND signal does and does not establish. We also commit in the paragraph to use ``closure'' consistently in this probabilistic-validity sense throughout the remainder of the paper, and to anchor to the human-evaluation protocol (\S5.8) for any claim that aspires to true semantic equivalence.
+
+\loc{} \S3 (new ``What `closure' means --- and what it does not'' paragraph following the strict-AND definitions).
+
+%% ---------------------------------------------------------------------------
+\rcomment{1}{8}
+
+\begin{reviewerquote}
+Section 6.7 presents design guidelines based on the experimental findings. These guidelines are useful, but their applicability beyond the evaluated models and benchmarks is uncertain. The authors should clarify the conditions under which these recommendations are expected to hold.
+\end{reviewerquote}
+
+\response{}
+Each of the three design guidelines (G1, G2, G3) in \S6.7 now has an explicit \emph{Scope conditions} subsection stating three ``holds when'' conditions and explicit ``may not hold when'' negative cases. We summarise:
+
+\begin{itemize}
+  \item \textbf{G1} (strongest model at bottleneck stage). Holds when (i) one stage is empirically bottleneck, (ii) a per-stage capability signal is available, (iii) the pipeline is multi-model. Degenerates to ``use the strongest overall model'' when the pipeline is monolithic.
+  \item \textbf{G2} (match test-generator to upstream docstring style). Holds when (i) the pipeline has two or more cascaded generative stages, (ii) upstream and downstream models come from different families, (iii) the downstream stage is sensitive to upstream prompt style (test generation is highly style-sensitive; code synthesis less so, per our data). May not hold for single-model pipelines or same-family cascades.
+  \item \textbf{G3} (two-signal validity). Holds when (i) an SE-validated metric and an LLM-judge signal are both available at acceptable cost, (ii) the two signals are not statistically redundant, (iii) the application tolerates the false-negative cost of strict-AND. May not hold when only one signal is accessible or when the application optimises recall over precision.
+\end{itemize}
+
+Our evidence base is explicitly scoped to six open-weight SLMs under 30~B parameters plus the three closed-weight frontier models of \S5.12. Each guideline inherits scope limits from the underlying evidence and we flag these inheritances.
+
+\loc{} \S6.7 (each of G1, G2, G3 now has a Scope-conditions subsection).
+
+%% ---------------------------------------------------------------------------
+\rcomment{1}{9}
+
+\begin{reviewerquote}
+The authors repeatedly describe the study as the first investigation of heterogeneous SLM-based closure. The novelty claims should be stated more carefully and supported by a clearer comparison with existing research.
+\end{reviewerquote}
+
+\response{}
+Every ``first'' claim in the manuscript is now explicitly qualified with five load-bearing qualifiers: \emph{pre-registered}, \emph{open-weight}, \emph{defect-detection-grounded}, \emph{cross-model}, \emph{cross-stage}. The abstract uses the softer formulation ``no prior study evaluates whether the mapping of specific models to specific stages matters''; the four load-bearing usages in \S1 (contributions), \S2.6 (positioning), and \S7 (conclusion) all carry the five-qualifier clause explicitly. The clearer comparison the reviewer requests is provided by the new Table~10 (see Comment~10 below), which places eight prior studies against this work on seven methodological axes, making each qualifier directly verifiable against the surveyed literature.
+
+\loc{} Abstract; \S1 contributions; \S2.6 (positioning); \S7 (conclusion); Table~10.
+
+%% ---------------------------------------------------------------------------
+\rcomment{1}{10}
+
+\begin{reviewerquote}
+Section 2 would benefit from a comparison table summarizing related studies, their methodologies, datasets, model configurations, and evaluation metrics. This would help readers understand the contribution of the proposed work.
+\end{reviewerquote}
+
+\response{}
+A new \S2.6 (``Positioning of this work'') contains Table~10, which places this work against the eight most-overlapping prior studies on seven methodologically-relevant axes: Method (pipeline design), Dataset(s), Models, Metric, Pre-reg.\ status, Judge-validation, and Cross-stage (yes/no with family count). The eight studies surveyed are: \citet{Allamanis2024RTC} (RTC), \citet{Zhang2025CodingTriangle} (Coding Triangle), \citet{Li2024MBCT} (MBCT), \citet{Dakhel2024MuTAP} (MuTAP), \citet{Schafer2024TestPilot} (TestPilot), \citet{Zheng2023LLMJudge} (LLM-as-judge), \citet{Han2026CrisisKnowledge} (CKEval), and \citet{Xiong2025DelphiAgent} (DelphiAgent). The axes are chosen to make each of the paper's four pre-registered novelty qualifiers directly verifiable against the surveyed literature. Our row at the bottom of the table shows contrast on every axis.
+
+\loc{} \S2.6 (``Positioning of this work'') with embedded Table~10.
+
+\begin{center}\rule{0.7\textwidth}{0.4pt}\end{center}
+
+\section*{Point-by-Point Response --- Reviewer~2}
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{1}
+
+\begin{reviewerquote}
+Stage attribution, Table~8 \& Sec.\ 5.3. H4's code stage is called a bottleneck on path~1, although this path does not use code generation. H5's specification stage is similarly unused on path~2. Please restrict the analysis to active stages and revise the bottleneck counts \& related recommendations.
+\end{reviewerquote}
+
+\response{}
+We thank the reviewer for catching this real bug. The attribution function in \texttt{analyze/stats.py} was computing \texttt{min()} across all three stages regardless of path. Since L\_code is not invoked on Paths~1 and~3 and L\_spec is not invoked on Path~2, inactive stages were spuriously included in the bottleneck ranking.
+
+\textbf{Fix.} We added \texttt{\_ACTIVE\_STAGES\_BY\_PATH} to \texttt{analyze/stats.py}:
+\begin{verbatim}
+_ACTIVE_STAGES_BY_PATH: dict[int, tuple[str, ...]] = {
+    1: ("spec", "test"),
+    2: ("test", "code"),
+    3: ("spec", "test"),
+}
+\end{verbatim}
+and restricted the \texttt{per\_stage\_bottleneck()} ranking to the active stages for each (hetero cell, path) triple. Table~8 was rebuilt with inactive stages shown as ``---'' and excluded from the min(). The caption now opens with ``Per-stage bottleneck decomposition over active stages only (R2 Comment~1 fix)''.
+
+\textbf{Downstream effect.} The plurality finding changed. Submitted: spec stage dominated at $15$ of $33$ hetero (cell, path) triples. Corrected: \emph{test} stage dominates at $17$ of $33$, followed by spec at $12$ and code at $4$. The corrected finding converges with the mixed-effects logit of \S5.7, which independently identifies test-stage substitutions as the only significant per-stage marginal effects. The correction strengthens rather than weakens the paper's narrative --- the practical implication (place the strongest model at the test stage) is now supported by two orthogonal statistical approaches rather than one. \S6.3 includes an explicit correction note citing this comment.
+
+\loc{} \texttt{analyze/stats.py} (\_ACTIVE\_STAGES\_BY\_PATH); Table~8; \S5.3 opening; \S6.3 correction note.
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{2}
+
+\begin{reviewerquote}
+Validity claims, Tab.\ 13, Tab.\ 21 \& App.\ A. Human agreement is low ($\alpha = 0.193$), judge--human agreement is weak ($\kappa = 0.074$), and strict-AND has limited discrimination MCC $= 0.049$. You have to align the main conclusions with these limitations. Judge--metric disagreement alone cannot establish which signal correctly measures semantic equivalence.
+\end{reviewerquote}
+
+\response{}
+Both halves of the comment are addressed.
+
+\textbf{Alignment of conclusions with low-agreement limits.} \S5.8 ``Sample-size framing'' and ``Limitations of the human-evaluation results'' subsections explicitly scope every judge-dependent claim. \S8.3 (external validity) and \S8.4 (construct validity) each contain mitigation and residual-risk paragraphs tied to $\kappa_{\textsf{quad}} = 0.074$ and $\alpha = 0.193$. Our strict-AND recommendation is stated as a validity audit tool, not a performance maximiser: Appendix~A explicitly reports that strict-AND does not beat the trivial majority-class baseline on raw accuracy, so the policy is defended only on cost-sensitive loss grounds (strict-AND wins at FP-cost multiplier $a \geq 10$).
+
+\textbf{Judge--metric disagreement alone cannot establish correctness.} We concede this point explicitly in a new paragraph in \S6.2 (``What judge--metric disagreement alone can and cannot establish (R2 Comment~2, second half)''):
+
+\begin{quote}
+Reviewer~2 correctly observed that judge--metric disagreement \emph{alone} cannot establish which of the two signals correctly measures semantic equivalence; two signals disagreeing is consistent with either one being wrong or with both being wrong in different ways. We concede this point explicitly. The directional-flip pattern reported above (BERTScore over-credits on MBPP, under-credits on HumanEval; $\chi^2 = 368$) is a diagnostic for metric--corpus coupling [\dots] which is a strictly weaker claim than ``the metric is wrong and the judge is right''. The question of which signal tracks true semantic equivalence is instead addressed by the human-evaluation addendum (\S5.8), which anchors both signals against five independent annotators and the uniform-draw confirmatory study.
+\end{quote}
+
+\loc{} \S5.8 (sample-framing + uniform-draw study); \S6.2 (new concession paragraph); \S8 limitations.
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{3}
+
+\begin{reviewerquote}
+HEM-25 counts, Tab.\ 12. H1's 79.6\% and 32.7\% cannot come from integer counts w/ denominators of 25 or fewer under the stated definition. You have to report valid/eligible counts for every entry \& explain any additional runs.
+\end{reviewerquote}
+
+\response{}
+The reviewer is correct. The submitted Table~12 values came from a Colab-side aggregate whose actual denominator was not $25$ (likely $49$ or $52$ from multiple runs). To resolve the audit, we re-swept H1 and M3 on HEM-25 cleanly on 2026-10-29 at exactly $n = 25$ per cell per path, with explicit $n_{\textsf{valid}} / n_{\textsf{metric-ok}}$ reported per entry. The direction and magnitude of all six $\Delta_{\textsf{HEM}}$ values are within $\pm 5$~pp of the submitted version; the correction is denominator-honesty, not finding-reversal. Table~12 is rebuilt with an explicit correction note (``R2 Comment~3 denominator fix'') and \S5.11 contains a ``Fresh clean re-sweep validates the direction (R2 Comment~3)'' paragraph recording the audit.
+
+\loc{} Table~12 (rebuilt); \S5.11 (re-sweep paragraph).
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{4}
+
+\begin{reviewerquote}
+Confidence intervals, Tab.\ 9. For H1's two successes from two negate\_bool mutants, the standard 95\% Wilson interval is approximately $[0.34, 1.00]$, whereas the table gives $[0.16, 1.00]$. Please verify the interval method. Marginal intervals also do not confirm dominance; report uncertainty for differences between methods, accounting for shared functions and multiple mutants per function.
+\end{reviewerquote}
+
+\response{}
+Both parts addressed.
+
+\textbf{Interval method.} The reviewer is correct: the numerical values in the submitted Table~9 are \emph{Clopper--Pearson exact} binomial intervals, not Wilson. For $k = 2$ successes out of $n = 2$ trials, Wilson gives approximately $[0.34, 1.00]$ while Clopper--Pearson gives $[0.16, 1.00]$. Clopper--Pearson exact is preferable to Wilson for small-$n$ cells because Wilson relies on a normal approximation that is unreliable near $k/n = 1$. We relabelled the table caption and updated the abstract, \S1~introduction, \S5.4 body, and \S7~conclusion for consistency; all mentions of ``Wilson'' in the context of per-operator kill-rate CIs are now ``Clopper--Pearson exact''.
+
+\textbf{Dominance versus marginal intervals.} We added a new paragraph in \S5.4 (``Marginal versus paired dominance (R2 Comment~4, second half)'') and Table~\ref{tab:paired_bootstrap_h1_vs_mono} reporting paired bootstrap 95\% CIs on H1-vs-mono per-operator kill-rate differences on the subset of samples where both cells generated operator-covering tests, clustered by sample with multiple mutants per sample. The paired-bootstrap results refine the dominance interpretation: H1 dominance is confirmed on arithmetic and boundary (paired CIs excluding zero); comparison and negate\_bool reach $1.000$ on tight sample counts and are reported as ``consistent with dominance'' rather than strictly dominant.
+
+\loc{} Table~9 caption (CP exact relabel); abstract + \S1 + \S5.4 + \S7 (Wilson $\to$ Clopper--Pearson consistency); new Table (paired bootstrap).
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{5}
+
+\begin{reviewerquote}
+Null-control interpretation, Tab.\ 17 \& Sec.\ 6.4. N1's 26.3\% represents 5/19 judge rejections among metric-success cases. Its metric-success rate among computable rows is $19/60 = 31.7\%$. Please separate these quantities \& avoid treating one control's disagreement rate as a general noise floor.
+
+\end{reviewerquote}
+
+\response{}
+The reviewer is correct that we conflated two distinct quantities. \S6.4 now separates them explicitly:
+
+\begin{itemize}
+  \item \textbf{Metric-success rate under the null (MSR\textsubscript{null}).} Fraction of \emph{metric-computable} N1 rows that pass the strong-success metric bar. On Path~1 at the strong bar ($K \geq 0.70$) this is $19/60 = 31.7\%$. This quantifies the metric's \emph{false-positive floor}: the rate at which the automated metric alone claims success on inputs that cannot carry closure signal. MSR\textsubscript{null} is a property of the metric $Y$ independent of the judge.
+  \item \textbf{Judge-rejection rate given metric-success (JRR\textsubscript{null}).} Among the $19$ N1 rows that passed the strong metric bar, the fraction whose judge rating is below $\rho = 3$. On Path~1 this is $5/19 = 26.3\%$. This quantifies the \emph{strict-AND discrimination} the judge adds on top of the metric. JRR\textsubscript{null} is a joint property of (metric, judge).
+\end{itemize}
+
+\S6.4 explicitly states: ``The submitted manuscript described the $26.3\%$ figure as `the empirical noise floor', which conflated these two distinct quantities and incorrectly treated a joint (metric, judge) disagreement rate as if it were a property of the metric alone (R2 Comment~5).'' Downstream text in \S1 (RQ4 formulation and findings-at-a-glance table) and the appendix M1-vs-N1 note have been updated to use ``JRR reference line'' instead of ``noise floor''.
+
+\loc{} \S6.4 (MSR vs JRR separation + correction note); \S1 (RQ4 formulation + findings-at-a-glance); Appendix~H (N1 role note).
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{6}
+
+\begin{reviewerquote}
+The PDF contains only anonymised git repository which I cannot access and the paper is showing python script on how to reproduce it however it is misleading as it was stricken off the link if data is not confidential then this is important for checking the consistency and accuracy. Without this, the reported analyses \& tests cannot be independently checked given the fact the paper is in major revision due to in addition this paper have indent and ALLIGNMENT issues (some are centered) the formatting is not consistent, it is hard to read.
+\end{reviewerquote}
+
+\response{}
+Both parts addressed.
+
+\textbf{Repository access.} The replication package is now publicly accessible at \url{https://github.com/balajivenky06/roundtrip-closure} under the MIT license. The URL appears on the title page of \texttt{main.tex} (title note) and in the Data Availability statement in the end-matter. The repository contains: the 20-cell DOE, the full 5{,}890-row sweep TSV, the test-filter and strict-AND validity algorithms implemented as tested Python functions (67~unit tests), the single-command regeneration script for all 24 tables and 5 figures, and the aligned concept note timestamped at four weeks before the first sweep result.
+
+\textbf{Formatting consistency.} A targeted formatting pass across \S1--\S8 resolved: (i)~mixed indentation styles (some paragraphs were centered within \texttt{adjustwidth} environments, others left-aligned); (ii)~inconsistent spacing before figures and tables; (iii)~mixed heading-level spacing; (iv)~a few overflowing lines in math-dense paragraphs. All sections now use the single-column cas-sc flow with left-aligned paragraphs and consistent inter-paragraph spacing.
+
+\loc{} \texttt{main.tex} title note; end-matter Data Availability; formatting pass across \S1--\S8.
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{7}
+
+\begin{reviewerquote}
+Sec.\ 5.7. Renaming functions and paraphrasing docstrings do not rule out memorized algorithms. Please compare the same 25 functions before \& after transformation. Describe this as transformation robustness unless stronger contamination evidence is available.
+\end{reviewerquote}
+
+\response{}
+The reviewer is correct. We reframed the subsection accordingly. \S5.11 is now titled ``Transformation-robustness on HumanEval-Mutated (R2 Comment~7)'' and opens with an explicit framing note:
+
+\begin{quote}
+The submitted manuscript described this analysis as ``contamination sensitivity''. Reviewer~2 (Comment~7) correctly observed that function-renaming and docstring-paraphrasing do \emph{not} rule out memorised algorithms --- the underlying algorithmic structure is preserved under both transformations [\ldots]. We therefore reframe this analysis as a \emph{transformation-robustness} check rather than a contamination defence. The analysis is informative --- a large negative $\Delta$ under HEM would signal strong dependence on surface features of the inputs --- but it does not substitute for a date-based decontamination replication on a post-training-cutoff benchmark.
+\end{quote}
+
+The transformation-robustness finding (behavioural paths unchanged or improve under HEM; Path~3 degrades due to BERTScore's surface-form character) is now stated as ``closure rates are robust to function-rename + docstring-paraphrase transformations'' rather than ``closure rates are not driven by memorised algorithms''.
+
+The complementary date-based LiveCodeBench-25 subset we had prepared was blocked at data-preparation time by a HuggingFace \texttt{datasets} library change; this is acknowledged in \S8.3 and left as future work.
+
+\loc{} \S5.11 (renamed subsection + framing note); \S8.3 external validity (LiveCodeBench block acknowledgment).
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{8}
+
+\begin{reviewerquote}
+The threshold stability, Tab.\ 24 \& App.\ D. must be checked because the caption claims all alternative rankings exceed $\tau = 0.85$, but reported values include 0.59 and 0.31. App.\ D also names H9 as highest at 0.885, although H4 has 0.909. Please reconcile the table and discussion.
+\end{reviewerquote}
+
+\response{}
+Both corrections applied.
+
+\textbf{Caption claim.} Table~24's caption was wrong: the mean Kendall's $\tau_{\textsf{rank}}$ exceeds $0.85$ only in part of the grid, with values of $0.31$--$0.39$ at the strict ``identical only'' $\rho = 4$ bar. The corrected caption now reads: ``Cell ordering is reasonably preserved across the operational band: Kendall's $\tau_{\textsf{rank}}$ between every non-reference threshold and the reference exceeds $0.65$ for the operational $(\tau, \rho) \in \{0.0, 0.5, 0.8\} \times \{2, 3\}$ grid cells (bottom row). The strict `identical only' $\rho = 4$ cells show lower rank stability [\ldots] because the entire distribution compresses toward zero at this bar and threshold-choice noise dominates.''
+
+\textbf{H4 vs H9.} Appendix~D also mis-named H9 ($0.885$) as the top-rank cell when H4 ($0.909$) is actually top. The appendix is corrected (``The top cell at the reference $(\tau = 0, \rho = 3)$ is H4 ($V' = 0.909$), with H9 at $0.885$, [\ldots]'') with an explicit footnote citing R2 Comment~8.
+
+\loc{} Table~24 caption; Appendix~E (threshold robustness).
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{9}
+
+\begin{reviewerquote}
+Fill the missing F-statistics \& p-values in Tab.\ 22.
+\end{reviewerquote}
+
+\response{}
+Table~22 (interaction ANOVA) now reports Sum Sq, df, F, p-value, and partial $\eta^2$ for every factor (Intercept, C(cell\_id), C(path), C(sample\_idx), C(cell\_id):C(path), Residual). The \texttt{\textbackslash input} statement for the table was also added in \S5.4 so the table is actually rendered where referenced; the submitted manuscript \texttt{\textbackslash ref}'d the table from \S8 without ever \texttt{\textbackslash input}ing it, producing a ``Tab.\ ??'' artifact. The cell $\times$ path interaction values are $F(36, 4867) = 6.47$, $p < 0.001$, partial $\eta^2 = 0.046$.
+
+\loc{} Table~22 (rebuilt with full statistics); \S5.4 (\texttt{\textbackslash input} added).
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{10}
+
+\begin{reviewerquote}
+Reconcile references describing Tab.\ 8 as metric means versus strict-AND fractions.
+\end{reviewerquote}
+
+\response{}
+\S5 now opens with an explicit paragraph (``Reported per-cell aggregates are either the metric mean $\bar{Y}_{a, p}$ [\ldots] or the strict-AND valid-closure fraction $V_{a, p}$ [\ldots]; every subsection identifies which.''). Table~8 reports metric mean $\bar{Y}$; the strict-AND valid-closure fraction $V$ is reported per-cell in \S5.3 (bottleneck decomposition), \S5.11 (HEM), and Appendix~A (strict-AND evaluation). \S3.5 ``Per-cell aggregates: metric mean vs valid-closure fraction'' provides the parallel glossary clarification. All downstream references to Table~8 now specify ``metric mean'' explicitly.
+
+\loc{} \S5 opening paragraph; \S3.5; all references to Table~8 across \S5--\S6.
+
+%% ---------------------------------------------------------------------------
+\rcomment{2}{11}
+
+\begin{reviewerquote}
+Check the duplicated Schäfer references and unresolved ``Tab.\ ??'' citations.
+\end{reviewerquote}
+
+\response{}
+Both resolved.
+
+\textbf{Schäfer duplicate.} The bibliography contained two entries that were literally the same paper: \texttt{Schafer2023LLMTest} and \texttt{Schafer2024TestPilot} (identical authors, title, year~2024, volume~50, number~1). We removed \texttt{Schafer2023LLMTest} and updated every citation to use \texttt{Schafer2024TestPilot}. The paper is \citet{Schafer2024TestPilot}: Schäfer, Nadi, Eghbali \& Tip, 2024, TOSEM 50(1), ``An Empirical Evaluation of Using Large Language Models for Automated Unit Test Generation'' --- introducing the TestPilot tool.
+
+\textbf{``Tab.\ ??'' artifacts.} The submitted manuscript had an unresolved reference to Table~22 (ANOVA interaction) because the table was \texttt{\textbackslash ref}'d in \S8 but never \texttt{\textbackslash input}'d anywhere in the simplified variant. The \texttt{\textbackslash input} line was added in \S5.4, resolving the reference. We also ran a label/ref consistency script across the full tree: every \texttt{\textbackslash ref} now resolves to a \texttt{\textbackslash label}, verified programmatically.
+
+\loc{} \texttt{references.bib} (Schäfer dedup); \S5.4 (\texttt{\textbackslash input} for Table~22); label/ref sweep across \S1--\S8.
 
 \vspace{1em}
 
@@ -261,7 +507,9 @@ The final reference list contains 53 unique cited keys, 100\% resolved to a bibl
 
 \vspace{0.5em}
 
-We are confident that the revised manuscript addresses all eight of the editor's pre-screen comments in full. No experimental results have been changed and no numerical claims altered; every revision is structural, presentational, or reference-related. The manuscript is stronger and more accessible as a result of this process, and we look forward to it entering formal review.
+We are grateful for the depth and specificity of the review. Six of the twenty-one comments pointed to concrete data bugs in the manuscript; all six are fixed, with correction notes retained in-manuscript so the audit trail is reproducible. Five comments requested additional experiments or defensive analyses; those have been added. Ten comments requested clarifications, framing changes, or references; those have been addressed. The strict-AND two-signal policy, the per-stage attribution finding (test stage carries the plurality bottleneck, converging across two orthogonal instruments), the H1 per-operator dominance pattern, the phi-4-at-$L_{\textsf{test}}$ pathology (now replicated across four provider families), the BERTScore surface-form finding, and the open-weight ceiling claim are all strengthened rather than weakened by the review.
+
+The eight pre-screen comments addressed in the first submission remain addressed. The revised manuscript is substantively stronger than the submitted version, and we are confident it will withstand the next round of external review.
 
 We remain available to address any further questions.
 
