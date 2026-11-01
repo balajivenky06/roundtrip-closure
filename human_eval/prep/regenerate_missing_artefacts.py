@@ -48,6 +48,17 @@ SAMPLES_JSONL = PROJECT_ROOT / "data" / "core_sample_150.jsonl"
 JSONL_PATH = PROJECT_ROOT / "human_eval" / "data" / "pairs_60_uniform_full.jsonl"
 PAIR_ID_COL = "uniform_pair_id"
 
+# Optional Drive backup — if set, the JSONL is also written here after each
+# pair so a VM disconnect does not lose progress. Set to any writable path;
+# unset or empty to disable (useful for laptop runs).
+import os as _os
+DRIVE_BACKUP = _os.environ.get(
+    "REGEN_DRIVE_BACKUP",
+    "/content/drive/MyDrive/roundtrip_backup/pairs_60_uniform_full.jsonl",
+)
+if DRIVE_BACKUP and not Path(DRIVE_BACKUP).parent.exists():
+    DRIVE_BACKUP = ""  # parent not mounted; silently disable
+
 
 def load_pair_meta() -> dict[str, dict]:
     meta: dict[str, dict] = {}
@@ -172,6 +183,14 @@ def main() -> None:
         with JSONL_PATH.open("w", encoding="utf-8") as f:
             for p in pairs:
                 f.write(json.dumps(p) + "\n")
+        # Also mirror to Drive so a Colab VM disconnect doesn't lose work
+        if DRIVE_BACKUP:
+            try:
+                with open(DRIVE_BACKUP, "w", encoding="utf-8") as f:
+                    for p in pairs:
+                        f.write(json.dumps(p) + "\n")
+            except OSError as e:
+                print(f"  warn: Drive mirror failed: {e}")
 
     total_elapsed = time.time() - t0
     print(f"\n{'='*60}")
