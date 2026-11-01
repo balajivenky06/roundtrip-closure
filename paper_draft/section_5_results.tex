@@ -250,6 +250,16 @@ Reviewer 2 observed that the HEM-25 numbers in the submitted Table~\ref{tab:hold
 
 The behavioral-path robustness to HEM transformations, together with the H1--M3 pattern preservation on HEM, is consistent with the paper's central claim that the observed cross-stage composition effects reflect genuine capability differences rather than surface-form shortcut effects. A date-based decontamination replication on a post-training-cutoff benchmark remains the complementary diagnostic required to additionally rule out algorithm-level memorisation; this is deferred to future work (see Section~\ref{sec:conclusion}).
 
+\subsection{Complexity-stratified robustness (R1 Comment 4 strengthening)}
+\label{sec:results_complexity_stratified}
+
+\input{../tables/tab_complexity_stratified.tex}
+
+Reviewer 1 asked why more complex examples were not considered (Section~\ref{sec:experiment_setup_datasets}). As a within-benchmark strengthening of the scope defence given there, we stratify the 150-sample core by function-length quartile and report the strict-AND valid-closure fraction $V_{a, p}$ per quartile for H1 (hetero champion) and M3 (strongest mono baseline). Quartile cuts are: Q1 $\leq 5$~lines ($n = 46$), Q2 $= 6$--$8$ ($n = 36$), Q3 $= 9$--$13$ ($n = 33$), Q4 $= 14$--$50$ ($n = 35$); median $= 8$~lines, mean $= 9.7$. Table~\ref{tab:complexity_stratified} reports per-quartile $V$ and the within-quartile H1-vs-M3 difference.
+
+Three findings emerge, each of which directly addresses the complexity-generalisation question. \textbf{First, the headline H1-vs-M3 advantage on Path~1 holds at every quartile.} The $\Delta_{\text{H1}-\text{M3}}$ gap on Path~1 is positive at all four complexity tiers ($+0.086$ to $+0.179$), with the two shortest-code quartiles showing the largest gaps ($+0.157$, $+0.179$) and the two longest-code quartiles showing a smaller but still positive gap ($+0.085$, $+0.086$). The RQ1 claim ``well-composed hetero cells match or exceed the strongest mono baseline'' is not an artifact of short-function samples; it holds across the complexity range the benchmarks contain. \textbf{Second, within-cell $V$ declines only modestly from the shortest to the longest quartile.} H1's Path~1 $V$ drops $-0.104$ from Q1 ($0.962$) to Q4 ($0.857$); M3's drops $-0.033$ ($0.804 \to 0.771$). The hetero-vs-mono gap narrows at longer functions (expected: both cells approach their respective capability ceilings) but the ranking is preserved. \textbf{Third, Paths~2 and~3 are complexity-stable at the ceiling.} Both H1 and M3 reach $V = 1.000$ on Paths~2 and~3 at every quartile; the strict-AND criterion saturates for these cells on the full line-count range the core sample covers.
+
+The complexity-stratified result does not substitute for a sweep against a larger-problem benchmark (BigCodeBench, class-level projects) --- the scope limitation stated in Section~\ref{sec:limitations_external} remains in force --- but it does establish that \emph{within} the complexity range HumanEval and MBPP contain, the paper's headline findings generalise across the full line-count distribution.
 
 \subsection{Closed-weight ceiling comparison (R1 Comment 6)}
 \label{sec:results_rq4_closed_ceiling}

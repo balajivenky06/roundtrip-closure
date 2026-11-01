@@ -85,7 +85,7 @@ R1.2 & 60 pairs small; human agreement low & \S5.8 sample-size framing paragraph
 \addlinespace
 R1.3 & DOE selection rationale not explained & \S4.1 ``DOE selection rationale (R1 Comment~3)'' paragraph: exhaustive mono stratum; hypothesis-driven hetero stratum; trade-off with fractional factorial made explicit; pre-registration audit \\
 \addlinespace
-R1.4 & Why no more complex examples? & \S4.2 ``Problem-complexity scope (R1 Comment~4)'' paragraph: defends function-level benchmarks (mutation-testing tractability; compute budget; direct comparability to prior work); explicit transfer-to-class-level caveat in \S8 \\
+R1.4 & Why no more complex examples? & \S4.2 ``Problem-complexity scope'' paragraph with empirical quartile cuts; new \S5.11.1 within-benchmark complexity-stratified robustness check (Table~\ref{tab:complexity_stratified}) showing the H1-vs-M3 Path~1 advantage holds at every length quartile; explicit transfer-to-class-level caveat in \S8 \\
 \addlinespace
 R1.5 & phi-4 failure analysis insufficient & Forensic Table~7 decomposing M2/H2/H10 Path~1 rows by failure mode; separation of infrastructure error (HTTP~400) from genuine failures; fresh clean H10 re-run at $54.3\%$ \textsf{all\_dropped} \\
 \addlinespace
@@ -201,11 +201,21 @@ The experiments use 150 functions from HumanEval and MBPP. Although these are es
 \end{reviewerquote}
 
 \response{}
-\S4.2 now contains a dedicated paragraph ``Problem-complexity scope (R1 Comment~4)'' that defends the function-level benchmark choice on three grounds: (i)~mutation testing (Path~1) is only tractable at function-level granularity --- inter-procedural mutation operators have different coverage semantics and would confound the per-operator decomposition that Table~9 depends on; (ii)~each cell in the 20-cell DOE requires $150 \times 3$~paths $\times \sim 3$~LLM calls per path per sample, which was already a six-week sweep on single-researcher Colab~Pro+ infrastructure --- multiplying the per-problem token budget by $5$--$10\times$ for class-level or multi-file problems would have required proportionally more compute; (iii)~prior cross-stage work on round-trip closure \citep{Allamanis2024RTC, Zhang2025CodingTriangle, Li2024MBCT} uses the same function-level benchmarks, so direct comparison is only possible at this scope.
+We address the comment on two levels: (a)~an empirical within-benchmark strengthening and (b)~an explicit scope defence.
 
-We acknowledge --- and state explicitly in \S8.3 external validity --- that whether the per-stage attribution pattern transfers to class-level, multi-file, or long-context SE tasks is an open empirical question not resolved by this study. This is the scope question we can honestly answer; a wholesale re-sweep against a larger-problem benchmark would be a separate study.
+\textbf{Empirical within-benchmark complexity-stratified check.} We added \S5.11.1 and Table~\ref{tab:complexity_stratified}, which split the 150-sample core by function-length quartiles (Q1 $\leq 5$~lines, $n = 46$; Q2 $= 6$--$8$, $n = 36$; Q3 $= 9$--$13$, $n = 33$; Q4 $= 14$--$50$, $n = 35$; median $= 8$, mean $= 9.7$) and report strict-AND valid-closure fraction $V_{a, p}$ per quartile for H1 (hetero champion) and M3 (strongest mono baseline). Three findings:
 
-\loc{} \S4.2 (problem-complexity scope paragraph); \S8.3 (external validity, benchmark coverage).
+\begin{itemize}
+  \item The headline H1-vs-M3 advantage on Path~1 is positive at every quartile ($\Delta \in \{+0.157, +0.179, +0.085, +0.086\}$), with the two shortest-code quartiles showing the largest gaps and the two longest-code quartiles showing a smaller but still positive gap. The RQ1 claim ``well-composed hetero cells match or exceed the strongest mono baseline'' is not an artifact of short-function samples; it holds across the complexity range the benchmarks contain.
+  \item Within-cell $V$ declines only modestly from the shortest to the longest quartile (H1 $-0.104$; M3 $-0.033$). The ranking is preserved; the hetero-vs-mono gap narrows at longer functions as both cells approach their respective capability ceilings.
+  \item Paths~2 and~3 are complexity-stable: both H1 and M3 reach $V = 1.000$ on these paths at every quartile.
+\end{itemize}
+
+\textbf{Scope defence.} \S4.2 now contains a dedicated paragraph that defends the function-level benchmark choice on three substantive grounds: (i)~mutation testing (Path~1) is only tractable at function-level granularity --- inter-procedural mutation operators have different coverage semantics and would confound the per-operator decomposition that Table~9 depends on; (ii)~each cell in the 20-cell DOE requires $150 \times 3$~paths $\times \sim 3$~LLM calls per path per sample, which was already a six-week sweep on single-researcher Colab~Pro+ infrastructure --- multiplying the per-problem token budget by $5$--$10\times$ for class-level or multi-file problems would have required proportionally more compute; (iii)~prior cross-stage work on round-trip closure \citep{Allamanis2024RTC, Zhang2025CodingTriangle, Li2024MBCT} uses the same function-level benchmarks, so direct comparison is only possible at this scope.
+
+The within-benchmark result does not substitute for a sweep against a larger-problem benchmark (BigCodeBench, class-level projects) --- the external-validity caveat in \S8.3 remains in force --- but it does establish empirically that the paper's headline findings generalise across the full line-count distribution of HumanEval and MBPP.
+
+\loc{} \S4.2 (problem-complexity scope paragraph with empirical quartile cuts); \S5.11.1 (new complexity-stratified robustness check with Table~\ref{tab:complexity_stratified}); \S8.3 (external validity, benchmark coverage).
 
 %% ---------------------------------------------------------------------------
 \rcomment{1}{5}
