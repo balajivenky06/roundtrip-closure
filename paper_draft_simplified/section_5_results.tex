@@ -277,8 +277,8 @@ Finding 1 strengthens G2 (Section~\ref{sec:discussion_practical}) decisively: th
 
 The human-evaluation protocol pre-registered in
 Section~\ref{sec:experiment_setup_human_eval} was executed with five
-annotators: three from the author team (BV, GS, AM) and two recruited
-independently and calibrated on the shared rubric (DR, RR). This
+annotators: three from the author team (A1, A2, A3) and two recruited
+independently and calibrated on the shared rubric (E1, E2). This
 subsection reports the inter-rater and judge--human agreement
 statistics on the full five-way sample, contrasts them with the
 three-way (author-team-only) numbers, and interprets the implications
@@ -289,8 +289,8 @@ study's closure decisions.
 \label{sec:human_eval_conduct}
 
 Five annotators rated the 60 pre-registered pairs on the 5-level rubric
-described in Section~\ref{sec:framework}. Three (BV, GS, AM) are members
-of the author team; two additional annotators (DR, RR) were recruited
+described in Section~\ref{sec:framework}. Three (A1, A2, A3) are members
+of the author team; two additional annotators (E1, E2) were recruited
 independently of the pipeline runners and attended the shared calibration
 session on the ten rubric anchor items. Sampling was as pre-registered:
 20 pairs from the ``frontier'' bucket (judge and metric agree on
@@ -301,15 +301,15 @@ seed on the annotator identifier) and were blinded to cell identity,
 closure path, judge rating, and bucket assignment. All five annotators
 completed the full 60 pairs and provided a written justification for
 every rating (0 empty across all $60 \times 5 = 300$ ratings). Only
-one revision was issued in total (by GS).
+one revision was issued in total (by A2).
 
 The rating distributions differ meaningfully between the author-team and
 external annotators. All five annotators place the modal rating at~3
-(``equivalent''), but external annotator DR uses the low end of the
+(``equivalent''), but external annotator E1 uses the low end of the
 scale more aggressively (six ratings at $0$ or $1$ versus $1$--$5$ for
-the other four), and external annotator RR is more permissive at the
-top of the scale (20~ratings at~$4$, similar to AM's~21 but higher than
-BV/GS/DR at $11$--$16$). The external annotators are therefore not
+the other four), and external annotator E2 is more permissive at the
+top of the scale (20~ratings at~$4$, similar to A3's~21 but higher than
+A1/A2/E1 at $11$--$16$). The external annotators are therefore not
 outliers as much as they occupy a wider band on the ordinal scale than
 the more clustered author-team ratings.
 
@@ -319,11 +319,11 @@ Reviewers 1 and 2 both flagged the 60-pair human-evaluation sample as small rela
 The low observed $\alpha = 0.193$ with the resulting $\pm 0.10$ CI ($[0.09, 0.29]$ at the full 60-pair level) therefore \emph{is} informative: it rules out ``moderate'' agreement at the 95\% level and locates the judge in Landis and Koch's ``slight'' band. The 60-pair sample is small for a point estimate but adequate for the categorical conclusion the paper draws (``judge agreement with humans is slight, strict-AND policy is necessary'').
 
 \paragraph{Confirmatory uniform-draw study (R1 Comment 2 + R2 Comment 2).}
-To test whether the stratified-by-disagreement result would hold under a representative sample from the same population, we drew a second 60-pair worksheet uniformly at random from the $5{,}890$-row sweep (seed $20261031$, excluding the three null cells and the 60 pairs in the original stratified sample). The same three author-team annotators (BV, GS, AM) re-engaged, blinded to pair identity and judge rating, and rated the uniform-draw pairs on the identical 5-level rubric. Table~\ref{tab:human_eval_uniform_vs_stratified} compares the two 60-pair studies at matched three-way author-team resolution.
+To test whether the stratified-by-disagreement result would hold under a representative sample from the same population, we drew a second 60-pair worksheet uniformly at random from the $5{,}890$-row sweep (seed $20261031$, excluding the three null cells and the 60 pairs in the original stratified sample). The same three author-team annotators (A1, A2, A3) re-engaged, blinded to pair identity and judge rating, and rated the uniform-draw pairs on the identical 5-level rubric. Table~\ref{tab:human_eval_uniform_vs_stratified} compares the two 60-pair studies at matched three-way author-team resolution.
 
 \begin{table}[!htbp]
   \centering
-  \caption{Three-way author-team agreement (BV, GS, AM) on two 60-pair
+  \caption{Three-way author-team agreement (A1, A2, A3) on two 60-pair
     samples. The uniform-draw study (seed $20261031$) is a confirmatory
     population estimate; the stratified-by-disagreement study is the
     original design, oversampling disputed cases to maximise power at
@@ -337,9 +337,9 @@ To test whether the stratified-by-disagreement result would hold under a represe
     Judge $\kappa_{\textsf{quad}}$ vs.\ 3-way majority & $0.138$ & $0.157$ & $+0.019$ \\
     Judge within-1 vs.\ 3-way majority        & ---     & $71.7\%$ & --- \\
     \midrule
-    Pairwise $\kappa_{\textsf{quad}}$: BV--GS & $0.334$ & $0.524$ & $+0.190$ \\
-    Pairwise $\kappa_{\textsf{quad}}$: BV--AM & $0.332$ & $0.440$ & $+0.108$ \\
-    Pairwise $\kappa_{\textsf{quad}}$: GS--AM & $0.426$ & $0.622$ & $+0.196$ \\
+    Pairwise $\kappa_{\textsf{quad}}$: A1--A2 & $0.334$ & $0.524$ & $+0.190$ \\
+    Pairwise $\kappa_{\textsf{quad}}$: A1--A3 & $0.332$ & $0.440$ & $+0.108$ \\
+    Pairwise $\kappa_{\textsf{quad}}$: A2--A3 & $0.426$ & $0.622$ & $+0.196$ \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -355,10 +355,10 @@ Table~\ref{tab:human_eval_agreement} reports the primary agreement
 statistics on the full five-way sample.
 
 \textbf{Adding independent annotators materially lowers Krippendorff's
-$\alpha$.} On the three author-team annotators alone (BV, GS, AM), the
+$\alpha$.} On the three author-team annotators alone (A1, A2, A3), the
 ordinal $\alpha$ was $0.376$ --- itself below Krippendorff's
 $\alpha \geq 0.667$ threshold for tentative inferential use but at least
-weakly positive. Adding DR alone drops $\alpha$ to $0.244$; adding RR as
+weakly positive. Adding E1 alone drops $\alpha$ to $0.244$; adding E2 as
 well drops it further to $\alpha = 0.193$. This monotonic decline is
 consistent with the interpretation that the author-team-only $\alpha$
 was inflated by shared calibration (all three share supervisory or
@@ -371,7 +371,7 @@ the three-way as a documented contrast.
 \textbf{Pairwise Cohen's $\kappa$ shows the same pattern.} Pairwise
 linear-weighted $\kappa$ within the author team ranges $0.170$--$0.338$;
 between author-team and external annotators it drops to $-0.017$--$0.185$
-(with BV-vs-RR marginally negative). Quadratic-weighted $\kappa$, which
+(with A1-vs-E2 marginally negative). Quadratic-weighted $\kappa$, which
 penalises adjacent-category disagreements less harshly and is the more
 common ordinal convention, follows the same ordering but at somewhat
 higher values ($0.334$--$0.426$ within team; $0.009$--$0.263$
@@ -503,8 +503,8 @@ point estimates only. A larger sample would tighten the estimates but is
 prohibitive at the human-evaluation rate.
 
 Second, the annotator pool has \emph{partial} independence from the
-author team: two of five annotators (DR, RR) are independent of the
-pipeline runners, but three (BV, GS, AM) share supervisory or
+author team: two of five annotators (E1, E2) are independent of the
+pipeline runners, but three (A1, A2, A3) share supervisory or
 co-authorship relationships. The direct effect of this partial
 independence is quantified in Section~\ref{sec:human_eval_agreement_results}
 (three-way $\alpha = 0.376$ collapses to five-way $\alpha = 0.193$ when

@@ -6,16 +6,23 @@ R1 Comment 2 + R2 Comment 2 extension — analyze the second (uniform-draw)
 disagreement) 60-pair study.
 
 Reads:
-    human_eval/data/annotator_{BV,GS,AM}_uniform_ratings.tsv
+    human_eval/data/annotator_{A1,A2,A3}_uniform_ratings.tsv
                                  — three author-team annotators' ratings
                                    on the uniform-draw 60 pairs
+                                   (default filenames; see RAW_IDS)
     results/human_eval_pairs_60_uniform.tsv
                                  — ground-truth metadata: cell_id, path,
                                    metric_value, judge_rating per pair
     results/human_eval_pairs_60.tsv
                                  — stratified-sample metadata (for comparison)
-    human_eval/data/annotator_{BV,GS,AM}_ratings.tsv
+    human_eval/data/annotator_{A1,A2,A3}_ratings.tsv
                                  — stratified-study ratings for comparison
+
+Anonymization: input TSVs can live under either anonymised labels
+(A1, A2, A3, E1, E2) or legacy real-initial labels (BV, GS, AM, DR, RR).
+The loader tries anonymised first, then falls back to legacy; all
+output artefacts (JSON, TeX table) always use the anonymised labels so
+the published repo contains no annotator initials.
 
 Writes:
     results/human_eval_uniform_agreement.json
@@ -46,10 +53,24 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-AUTHOR_IDS = ["BV", "GS", "AM"]
+# Public anonymised author-team labels used in all outputs
+AUTHOR_IDS = ["A1", "A2", "A3"]
+# Legacy real-initial labels — only used to find input TSVs if the
+# researcher still has them under the pre-anonymisation filenames
+RAW_IDS = {"A1": "BV", "A2": "GS", "A3": "AM"}
 UNIFORM_PAIRS_TSV = ROOT / "results" / "human_eval_pairs_60_uniform.tsv"
 STRATIFIED_PAIRS_TSV = ROOT / "results" / "human_eval_pairs_60.tsv"
 DATA_DIR = ROOT / "human_eval" / "data"
+
+
+def ratings_file(annotator_id: str, suffix: str = "_uniform") -> Path:
+    """Return the TSV path, preferring the anonymised filename but
+    falling back to the pre-anonymisation real-initial filename."""
+    anon = DATA_DIR / f"annotator_{annotator_id}{suffix}_ratings.tsv"
+    if anon.exists():
+        return anon
+    raw = DATA_DIR / f"annotator_{RAW_IDS.get(annotator_id, annotator_id)}{suffix}_ratings.tsv"
+    return raw
 
 OUT_JSON = ROOT / "results" / "human_eval_uniform_agreement.json"
 OUT_TEX = ROOT / "tables" / "tab_human_eval_uniform_agreement.tex"
@@ -230,7 +251,7 @@ def main() -> None:
     # Load uniform-draw annotator ratings
     uniform_ratings = {}
     for aid in AUTHOR_IDS:
-        path = DATA_DIR / f"annotator_{aid}_uniform_ratings.tsv"
+        path = ratings_file(aid, suffix="_uniform")
         uniform_ratings[aid] = load_ratings_tsv(path)
         print(f"  {aid} uniform ratings: {len(uniform_ratings[aid])}/60 "
               f"from {path.name}")
@@ -241,7 +262,7 @@ def main() -> None:
     # Load stratified ratings for comparison
     stratified_ratings = {}
     for aid in AUTHOR_IDS:
-        path = DATA_DIR / f"annotator_{aid}_ratings.tsv"
+        path = ratings_file(aid, suffix="")
         stratified_ratings[aid] = load_ratings_tsv(path)
 
     # Compute per-annotator vs judge, three-way α, majority-vs-judge
