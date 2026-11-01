@@ -45,11 +45,24 @@ OUT_ZIP = ROOT / "ipm_blind_resubmission.zip"
 
 
 def flatten_paths(text: str) -> str:
-    """Convert ../tables/ and ../plots/ paths to flat Overleaf-layout paths."""
+    """Convert nested paths to flat Overleaf-layout paths.
+
+    Three nested path prefixes exist in the local tree:
+      ../tables/        - sibling tables/ directory
+      ../plots/output/  - sibling plots/output/ directory
+      figures/          - subdirectory of the draft dir
+    All three must be flattened for the Overleaf flat layout.
+    """
     text = re.sub(r"\\input\{\.\./tables/([^}]+)\}", r"\\input{\1}", text)
     text = re.sub(r"\\input\{\.\./plots/[^/]+/([^}]+)\}", r"\\input{\1}", text)
+    text = re.sub(r"\\input\{figures/([^}]+)\}", r"\\input{\1}", text)
     text = re.sub(
         r"\\includegraphics(\[[^\]]*\])?\{\.\./plots/[^/]+/([^}]+)\}",
+        r"\\includegraphics\1{\2}",
+        text,
+    )
+    text = re.sub(
+        r"\\includegraphics(\[[^\]]*\])?\{figures/([^}]+)\}",
         r"\\includegraphics\1{\2}",
         text,
     )
@@ -140,7 +153,31 @@ def main() -> int:
         if new != txt:
             p.write_text(new)
 
-    # Phase 7: verification — fail build if de-identification is incomplete
+    # Phase 7a: verify every \input and \includegraphics target exists
+    # inside the build dir. This catches path-flattening gaps that would
+    # otherwise manifest only as "no PDF produced" on Overleaf.
+    print("Phase 7a: verify referenced files exist")
+    missing_refs = []
+    for p in sorted(BUILD.glob("*.tex")):
+        txt = p.read_text()
+        for m in re.finditer(r"\\input\{([^}]+)\}", txt):
+            fname = m.group(1)
+            if not fname.endswith(".tex"):
+                fname += ".tex"
+            if not (BUILD / fname).exists():
+                missing_refs.append(f"{p.name} → \\input{{{m.group(1)}}}")
+        for m in re.finditer(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", txt):
+            raw = m.group(1)
+            candidates = [raw, f"{raw}.png", f"{raw}.pdf", f"{raw}.jpg"]
+            if not any((BUILD / c).exists() for c in candidates):
+                missing_refs.append(f"{p.name} → \\includegraphics{{{raw}}}")
+    if missing_refs:
+        print("  FAIL: missing referenced files")
+        for r in missing_refs[:15]:
+            print(f"    {r}")
+        return 2
+
+    # Phase 7b: de-identification sweep
     allowed_in_quote = ["response_to_editor", "section_6_discussion"]
 
     def grep(pattern: str) -> list[str]:
