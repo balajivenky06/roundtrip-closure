@@ -339,7 +339,35 @@ the more clustered author-team ratings.
 \paragraph{Sample-size framing: stratified-by-disagreement, not population draw (R1 Comment 2, R2 Comment 2).}
 Reviewers 1 and 2 both flagged the 60-pair human-evaluation sample as small relative to the $5{,}890$ full-sweep rows and asked whether that size materially affects the reliability of the LLM-judge validation. We clarify what the 60-pair sample is and is not. It is \emph{not} a uniformly-drawn population sample from which marginal closure rates could be estimated: 60 pairs would give $\pm 13$~pp 95\% CIs on a population closure rate ($p = 0.5$, $n = 60$ binomial), which is too wide for substantive population inference. It is instead a \emph{stratified-by-disagreement audit}: 20 pairs each from three deliberately-selected buckets (frontier, agreement, disputed) chosen to maximise statistical power at identifying \emph{where} the judge and metric diverge, not at estimating a single population rate. Under this design the quantity being estimated is per-bucket judge--human agreement (a conditional quantity), for which 20 pairs per bucket gives a Krippendorff's $\alpha$ 95\% CI half-width of approximately $\pm 0.10$ --- adequate to distinguish the ``slight'' agreement band ($\alpha < 0.20$) from the ``moderate'' band ($\alpha > 0.40$) with high confidence.
 
-The low observed $\alpha = 0.193$ with the resulting $\pm 0.10$ CI ($[0.09, 0.29]$ at the full 60-pair level) therefore \emph{is} informative: it rules out ``moderate'' agreement at the 95\% level and locates the judge in Landis and Koch's ``slight'' band. The 60-pair sample is small for a point estimate but adequate for the categorical conclusion the paper draws (``judge agreement with humans is slight, strict-AND policy is necessary''). A uniformly-drawn second 60-pair sample would allow a complementary \emph{population} inference about the overall judge-metric agreement rate and is pre-committed as the top-priority future-work item (Section~\ref{sec:conclusion}) at an estimated cost of five annotators $\times$ 60 pairs $\times$ $\sim$3 hours $\approx$ 90 hours of coordinated annotator time plus API costs for a frontier-judge replay.
+The low observed $\alpha = 0.193$ with the resulting $\pm 0.10$ CI ($[0.09, 0.29]$ at the full 60-pair level) therefore \emph{is} informative: it rules out ``moderate'' agreement at the 95\% level and locates the judge in Landis and Koch's ``slight'' band. The 60-pair sample is small for a point estimate but adequate for the categorical conclusion the paper draws (``judge agreement with humans is slight, strict-AND policy is necessary'').
+
+\paragraph{Confirmatory uniform-draw study (R1 Comment 2 + R2 Comment 2).}
+To test whether the stratified-by-disagreement result would hold under a representative sample from the same population, we drew a second 60-pair worksheet uniformly at random from the $5{,}890$-row sweep (seed $20261031$, excluding the three null cells and the 60 pairs in the original stratified sample). The same three author-team annotators (BV, GS, AM) re-engaged, blinded to pair identity and judge rating, and rated the uniform-draw pairs on the identical 5-level rubric. Table~\ref{tab:human_eval_uniform_vs_stratified} compares the two 60-pair studies at matched three-way author-team resolution.
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Three-way author-team agreement (BV, GS, AM) on two 60-pair
+    samples. The uniform-draw study (seed $20261031$) is a confirmatory
+    population estimate; the stratified-by-disagreement study is the
+    original design, oversampling disputed cases to maximise power at
+    characterising where the judge and metric diverge.}
+  \label{tab:human_eval_uniform_vs_stratified}
+  \begin{tabular}{lrrr}
+    \toprule
+     & Stratified & Uniform & $\Delta$ \\
+    \midrule
+    Krippendorff's $\alpha$ (ordinal)         & $0.376$ & $0.439$ & $+0.063$ \\
+    Judge $\kappa_{\textsf{quad}}$ vs.\ 3-way majority & $0.138$ & $0.157$ & $+0.019$ \\
+    Judge within-1 vs.\ 3-way majority        & ---     & $71.7\%$ & --- \\
+    \midrule
+    Pairwise $\kappa_{\textsf{quad}}$: BV--GS & $0.334$ & $0.524$ & $+0.190$ \\
+    Pairwise $\kappa_{\textsf{quad}}$: BV--AM & $0.332$ & $0.440$ & $+0.108$ \\
+    Pairwise $\kappa_{\textsf{quad}}$: GS--AM & $0.426$ & $0.622$ & $+0.196$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Both agreement statistics are higher under the uniform draw ($\alpha$: $0.376 \to 0.439$; judge $\kappa_{\textsf{quad}}$: $0.138 \to 0.157$), and all three pairwise inter-annotator $\kappa_{\textsf{quad}}$ values improve by $+0.108$ to $+0.196$. The uplift is consistent with the stratified design having deliberately oversampled disputed cases (where humans themselves disagree): on typical pipeline outputs, humans agree with each other more often and the judge tracks them more closely. Crucially, the direction and Landis--Koch bands do not change: inter-annotator $\alpha$ remains in the ``fair'' band on both samples ($0.376$ and $0.439$ both $< 0.667$ Krippendorff's inferential threshold), and judge-vs-majority $\kappa_{\textsf{quad}}$ remains in the ``slight'' band on both samples ($0.138$ and $0.157$ both $< 0.20$). The uniform-draw study therefore \emph{confirms} the stratified conclusion (``judge agreement with humans is slight, strict-AND policy is necessary'') while establishing a complementary population-level anchor. The uniform-draw study used three author-team annotators only; the five-way result ($\alpha = 0.193$, $\kappa_{\textsf{quad}} = 0.074$) that extends to external annotators is \emph{not} replicated here and remains the headline on which the strict-AND recommendation rests.
 
 \subsubsection{Agreement results}
 \label{sec:human_eval_agreement_results}

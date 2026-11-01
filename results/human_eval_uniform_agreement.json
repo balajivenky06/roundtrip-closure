@@ -1,0 +1,66 @@
+{
+  "uniform": {
+    "per_annotator_vs_judge": {
+      "BV": {
+        "n_shared": 60,
+        "kappa_quad": -0.05140186915887868,
+        "kappa_linear": -0.012461059190031376,
+        "exact_agree": 0.3333333333333333,
+        "within_1_agree": 0.7166666666666667
+      },
+      "GS": {
+        "n_shared": 60,
+        "kappa_quad": 0.10459587955625993,
+        "kappa_linear": 0.033742331288343586,
+        "exact_agree": 0.2833333333333333,
+        "within_1_agree": 0.75
+      },
+      "AM": {
+        "n_shared": 60,
+        "kappa_quad": 0.21154341664519438,
+        "kappa_linear": 0.11042944785276076,
+        "exact_agree": 0.35,
+        "within_1_agree": 0.7333333333333333
+      }
+    },
+    "krippendorff_alpha_ordinal": 0.43886523002951683,
+    "pairwise_kappa_quad": {
+      "BV-GS": {
+        "n": 60,
+        "kappa_quad": 0.5238095238095238
+      },
+      "BV-AM": {
+        "n": 60,
+        "kappa_quad": 0.43979933110367886
+      },
+      "GS-AM": {
+        "n": 60,
+        "kappa_quad": 0.6221441124780316
+      }
+    },
+    "majority_vs_judge": {
+      "n": 60,
+      "kappa_quad": 0.1573516766981945,
+      "kappa_linear": 0.08246859639541226,
+      "exact_agree": 0.38333333333333336,
+      "within_1_agree": 0.7166666666666667
+    }
+  },
+  "stratified": {
+    "krippendorff_alpha_ordinal": 0.37575290881314705,
+    "pairwise_kappa_quad": {
+      "BV-GS": {
+        "n": 60,
+        "kappa_quad": 0.3340611353711791
+      },
+      "BV-AM": {
+        "n": 60,
+        "kappa_quad": 0.33168316831683164
+      },
+      "GS-AM": {
+        "n": 60,
+        "kappa_quad": 0.4263363754889179
+      }
+    }
+  }
+}
