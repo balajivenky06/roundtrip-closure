@@ -1,0 +1,61 @@
+pair_id	rating	justification	ts_iso	is_revision
+P001	4	Both artefacts produce identical outputs for all valid inputs	2026-07-15T05:14:30.926507+00:00	false
+P002	4	Both implementations are identical in logic and output for all valid inputs	2026-07-15T05:14:32.058743+00:00	false
+P003	4	Both docstrings describe the same functionality and expected output	2026-07-15T05:14:33.088498+00:00	false
+P004	1	The two functions produce different outputs for common inputs, particularly for values of s less than 3	2026-07-15T05:14:34.864556+00:00	false
+P005	1	Different output on common inputs due to type checking and encoding differences	2026-07-15T05:14:36.045131+00:00	false
+P006	3	Both functions remove digits from a list of strings but use different implementations	2026-07-15T05:14:37.762020+00:00	false
+P007	1	The two functions produce different outputs for common inputs, particularly when c is zero	2026-07-15T05:14:38.887374+00:00	false
+P008	3	Both artefacts check for binary strings but differ in output format and detail	2026-07-15T05:14:39.933868+00:00	false
+P009	4	Both docstrings describe the same function behavior and requirements	2026-07-15T05:14:41.086185+00:00	false
+P010	4	Both functions produce the same output for every valid input	2026-07-15T05:14:42.484993+00:00	false
+P011	3	Both functions check if all elements in a tuple are of the same type, but B includes handling for empty tuples	2026-07-15T05:14:43.876848+00:00	false
+P012	0	The artefacts describe different functionalities and problems	2026-07-15T05:14:45.425772+00:00	false
+P013	3	Both functions achieve the same goal but use different data structures and approaches	2026-07-15T05:14:48.164930+00:00	false
+P014	2	The two functions differ in handling empty strings and signs, affecting edge cases	2026-07-15T05:14:50.075193+00:00	false
+P015	4	Both descriptions convey the same functionality and expected output for the same inputs	2026-07-15T05:14:51.776118+00:00	false
+P016	1	The two functions have different checks and assumptions, leading to different outputs for common inputs	2026-07-15T05:14:53.192862+00:00	false
+P017	4	Both docstrings describe the same functionality and provide identical examples	2026-07-15T05:14:54.292384+00:00	false
+P018	1	The descriptions indicate different operations on the data structures	2026-07-15T05:14:55.348145+00:00	false
+P019	4	Both artefacts describe the same function and its behavior accurately	2026-07-15T05:14:56.365750+00:00	false
+P020	4	Both artefacts describe the same functionality and behavior	2026-07-15T05:14:57.381911+00:00	false
+P021	3	Both artefacts describe the same functionality with different levels of detail	2026-07-15T05:14:58.681262+00:00	false
+P022	3	Both artefacts describe the same functionality with different wording and details	2026-07-15T05:15:00.475104+00:00	false
+P023	3	Both describe counting element frequencies in nested structures but differ in detail and implementation specifics	2026-07-15T05:15:02.309024+00:00	false
+P024	3	Both functions count the frequency of elements in a list of lists, but use different implementations	2026-07-15T05:15:04.382768+00:00	false
+P025	3	Both functions compute the sum of the series of n with decrements of 2, but they implement it differently	2026-07-15T05:15:06.163982+00:00	false
+P026	4	Both functions sort a mixed list of integers and strings in the same way	2026-07-15T05:15:07.426768+00:00	false
+P027	1	The descriptions indicate different operations on tuples versus a list of tuples	2026-07-15T05:15:08.554761+00:00	false
+P028	4	Both docstrings describe the same functionality and output for the same inputs	2026-07-15T05:15:10.178562+00:00	false
+P029	3	Both describe the same behavior of generating a list of stones per level, though with different wording	2026-07-15T05:15:11.997378+00:00	false
+P030	4	Both artefacts are identical in functionality and output	2026-07-15T05:15:13.245656+00:00	false
+P031	3	Both functions return the same sorted list of odd numbers from the Collatz sequence but differ in implementation and input validation	2026-07-15T05:15:14.535407+00:00	false
+P032	4	Both docstrings are identical and provide the same output for all valid inputs	2026-07-15T05:15:16.243058+00:00	false
+P033	3	Both functions compute the same series sum but differ in implementation details	2026-07-15T05:15:18.010007+00:00	false
+P034	1	The two functions produce different outputs for common inputs, particularly when n is 0	2026-07-15T05:15:19.973765+00:00	false
+P035	3	Both functions sort elements at indices divisible by three while preserving others, but implement it differently	2026-07-15T05:15:21.803351+00:00	false
+P036	3	Both functions check for distinct elements in a tuple but use different implementations	2026-07-15T05:15:23.349351+00:00	false
+P037	1	The second artefact excludes the number itself, changing the output	2026-07-15T05:15:25.060829+00:00	false
+P038	1	The two functions produce different outputs for common inputs, especially with empty or single-element arrays	2026-07-15T05:15:27.211791+00:00	false
+P039	4	Both docstrings describe the same functionality and constraints without any differences	2026-07-15T05:15:28.441688+00:00	false
+P040	1	The descriptions indicate different operations on tuples versus lists of tuples	2026-07-15T05:15:29.447291+00:00	false
+P041	0	The two functions solve different problems entirely	2026-07-15T05:15:30.470781+00:00	false
+P042	0	The artefacts describe different functionalities and do not solve the same problem	2026-07-15T05:15:32.423820+00:00	false
+P043	1	The descriptions indicate different checks and outputs based on distinct criteria	2026-07-15T05:15:33.975783+00:00	false
+P044	1	The second artefact introduces additional constraints and behavior not present in the first	2026-07-15T05:15:36.054467+00:00	false
+P045	4	Both artefacts describe the same process of generating a list of stones based on the parity of n	2026-07-15T05:15:37.553253+00:00	false
+P046	1	The outputs differ for common inputs, as A returns "Yes" or "No" while B returns True or False	2026-07-15T05:15:39.131501+00:00	false
+P047	4	Both docstrings describe the same functionality and behavior	2026-07-15T05:15:40.616238+00:00	false
+P048	1	The outputs differ for common inputs, as one returns "Yes"/"No" and the other returns True/False	2026-07-15T05:15:42.777043+00:00	false
+P049	3	Both describe the same function behavior but differ in implementation details and indexing explanation	2026-07-15T05:15:45.972070+00:00	false
+P050	2	The two functions handle parentheses differently, leading to potential discrepancies in output for certain inputs	2026-07-15T05:15:48.432994+00:00	false
+P051	1	The descriptions indicate different outputs and processing methods for the encoded list	2026-07-15T05:15:50.182093+00:00	false
+P052	3	Both artefacts describe finding the top k frequent integers, but one specifies sorted distinct integers while the other refers to a 2D list	2026-07-15T05:15:51.794173+00:00	false
+P053	3	Both describe the derivative of a polynomial but differ in detail and edge case handling	2026-07-15T05:15:53.673149+00:00	false
+P054	3	Both functions generate hexagon coordinates in a grid, but they use different methods for calculation	2026-07-15T05:15:55.340250+00:00	false
+P055	1	The first artefact describes a function to calculate, while the second checks for a magic square	2026-07-15T05:15:57.310197+00:00	false
+P056	3	Both describe modifying a list by replacing its last element, but B adds details about in-place modification and error handling	2026-07-15T05:15:58.843594+00:00	false
+P057	3	Both artefacts describe the same functionality but with different levels of detail	2026-07-15T05:15:59.939987+00:00	false
+P058	3	Both artefacts describe the same functionality but differ in wording and detail	2026-07-15T05:16:01.534704+00:00	false
+P059	3	Both describe counting frequencies in nested lists, but A is a docstring while B is an implementation	2026-07-15T05:16:03.140080+00:00	false
+P060	3	Both describe the derivative of a polynomial, but B includes additional details on handling edge cases	2026-07-15T05:16:04.287531+00:00	false

@@ -39,6 +39,14 @@ logs/*
 *.pickle
 *.pt
 
+# Replication-package exceptions: files explicitly referenced in the paper's
+# Data Availability statement. Real-initial annotator files remain blocked by
+# the local human_eval/data/.gitignore.
+!human_eval/data/annotator_A[123]_ratings.tsv
+!human_eval/data/annotator_A[123]_uniform_ratings.tsv
+!human_eval/data/annotator_E[12]_ratings.tsv
+!human_eval/data/frontier_judge_*.tsv
+
 # --- OS junk ---
 .DS_Store
 Thumbs.db

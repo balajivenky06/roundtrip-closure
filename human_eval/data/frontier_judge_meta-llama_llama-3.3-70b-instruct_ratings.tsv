@@ -1,0 +1,61 @@
+pair_id	rating	justification	ts_iso	is_revision
+P001	4	Both code snippets have identical logic and implementation to find the longest string in a list	2026-07-15T05:17:57.115780+00:00	false
+P002	4	Both functions have identical logic and implementation details, producing the same output for every valid input	2026-07-15T05:17:58.773790+00:00	false
+P003	3	Both docstrings describe the same task of splitting a string into words	2026-07-15T05:17:59.759197+00:00	false
+P004	4	Both functions calculate the maximum volume of a cuboid given a fixed sum of its sides, producing the same output for every valid input	2026-07-15T05:18:01.354798+00:00	false
+P005	1	Artefact B raises a TypeError for non-string inputs, while Artefact A does not	2026-07-15T05:18:02.660711+00:00	false
+P006	3	Both functions remove all digits from a list of strings, but use different implementation methods	2026-07-15T05:18:03.905588+00:00	false
+P007	3	Both functions check if a number is in an arithmetic sequence, but with different implementation details and input validation	2026-07-15T05:18:06.018465+00:00	false
+P008	3	Both docstrings describe a function that checks if a string is binary, but with slightly different wording	2026-07-15T05:18:07.195120+00:00	false
+P009	4	Both docstrings describe the same function behaviour with identical conditions and return values	2026-07-15T05:18:09.306350+00:00	false
+P010	3	Both functions filter out strings with odd lengths and sort the remaining strings by length and then alphabetically, but with different implementation details	2026-07-15T05:18:11.353200+00:00	false
+P011	3	Both functions check if all elements in a tuple have the same data type, but implement the logic slightly differently	2026-07-15T05:18:13.390762+00:00	false
+P012	1	The docstrings describe different problems, one about sequence checking and the other about pattern distribution comparison	2026-07-15T05:18:14.487555+00:00	false
+P013	4	Both functions produce the same output for every valid input, with the only difference being the implementation details	2026-07-15T05:18:24.037463+00:00	false
+P014	3	Both functions check if a string represents an integer with optional leading +/- sign, but implement the logic differently	2026-07-15T05:18:25.819733+00:00	false
+P015	3	Artefacts A and B describe the same problem with slightly different wording	2026-07-15T05:18:27.331008+00:00	false
+P016	3	Both functions check if a given matrix is a magic square, but they implement the check differently	2026-07-15T05:18:30.623301+00:00	false
+P017	3	Both docstrings describe the same functionality of extracting the decimal part from a positive floating point number	2026-07-15T05:18:32.474057+00:00	false
+P018	1	Artefact A mentions tuples records, while Artefact B refers to input lists	2026-07-15T05:18:33.624274+00:00	false
+P019	3	Both docstrings describe the same function behaviour, but with slightly different wording and examples	2026-07-15T05:18:35.608929+00:00	false
+P020	3	Both docstrings describe the same functionality, but with slightly different wording	2026-07-15T05:18:36.634570+00:00	false
+P021	3	Both docstrings describe the same functionality of validating a string of parentheses, but with slightly different wording	2026-07-15T05:18:38.221331+00:00	false
+P022	3	Both docstrings describe finding the maximum sum of a contiguous subarray in a repeated array, with the difference being the mention of Kadane's algorithm in the reconstructed version	2026-07-15T05:18:39.603011+00:00	false
+P023	3	Both docstrings describe finding element frequencies in a nested iterable, but with slightly different wording	2026-07-15T05:18:45.845573+00:00	false
+P024	3	Both functions produce the same output, but use different methods to flatten the list of lists	2026-07-15T05:18:47.715761+00:00	false
+P025	3	Both functions calculate the sum of the same series, but with different implementation approaches	2026-07-15T05:18:49.535115+00:00	false
+P026	4	Both functions produce identical output by sorting integers and strings separately and then combining them	2026-07-15T05:18:50.660213+00:00	false
+P027	1	Artefact A refers to adding elements to a tuple, while Artefact B talks about adding a constant value to tuples within a list	2026-07-15T05:18:52.404937+00:00	false
+P028	3	Both docstrings describe the same functionality, but with slightly different wording	2026-07-15T05:18:55.801907+00:00	false
+P029	1	Artefact B incorrectly describes the increment pattern as always increasing by 2, whereas Artefact A specifies the increment as the next odd or even number based on the input number's parity	2026-07-15T05:18:57.851676+00:00	false
+P030	4	The code in both artefacts is identical, including docstrings and implementation	2026-07-15T05:18:59.281892+00:00	false
+P031	3	Both functions generate the same sorted list of odd numbers in the Collatz sequence, despite differences in implementation	2026-07-15T05:19:04.731810+00:00	false
+P032	4	The docstrings describe the same function with identical example outputs	2026-07-15T05:19:06.795376+00:00	false
+P033	4	Both functions calculate the sum of the same arithmetic series with the same termination condition	2026-07-15T05:19:07.765581+00:00	false
+P034	3	Artefacts A and B have the same observable behaviour but differ in implementation and input validation	2026-07-15T05:19:09.320073+00:00	false
+P035	4	Both functions produce the same output for every valid input, with identical sorting and indexing logic	2026-07-15T05:19:10.839427+00:00	false
+P036	4	Both functions return True if all elements in the input tuple are distinct and False otherwise	2026-07-15T05:19:21.303764+00:00	false
+P037	2	Artefact B excludes the number itself, while Artefact A does not specify this exclusion	2026-07-15T05:19:22.561493+00:00	false
+P038	3	Artefacts A and B have the same observable behaviour but differ in implementation and error handling	2026-07-15T05:19:24.360696+00:00	false
+P039	3	Both docstrings describe the same task with slightly different wording and structure	2026-07-15T05:19:26.411242+00:00	false
+P040	1	Artefacts A and B describe different data structures, a tuple and a list of tuples, respectively	2026-07-15T05:19:28.504037+00:00	false
+P041	0	Artefact A counts '1's in a string, while Artefact B checks for odd numbers in binary rotations of a string	2026-07-15T05:19:34.706530+00:00	false
+P042	1	Artefact A asks for the most significant set bit, while Artefact B describes a function that returns the largest power of two less than or equal to a given number	2026-07-15T05:19:35.832528+00:00	false
+P043	1	The two docstrings describe different problems, one being a sequence check and the other a mapping verification	2026-07-15T05:19:37.374640+00:00	false
+P044	3	Artefacts A and B describe the same task with minor differences in detail and handling of edge cases	2026-07-15T05:19:38.812349+00:00	false
+P045	3	Artefacts A and B describe the same sequence generation process, but with different wording and focus	2026-07-15T05:19:40.539479+00:00	false
+P046	1	Artefact A checks for specific sets of characters, while Artefact B checks for the presence of any characters other than '0' and '1'	2026-07-15T05:19:48.008638+00:00	false
+P047	3	Both docstrings describe the same task of counting sentences starting with "I" with identical delimiters	2026-07-15T05:19:52.826641+00:00	false
+P048	1	Artefact A returns "Yes" or "No" as strings, while Artefact B returns a boolean value	2026-07-15T05:19:54.149687+00:00	false
+P049	3	Artefacts A and B describe the same function behaviour, but with slightly different wording and indexing assumptions	2026-07-15T05:19:56.439220+00:00	false
+P050	1	Artefact B only checks for round parentheses, while Artefact A checks for round, square, and curly parentheses	2026-07-15T05:19:58.905608+00:00	false
+P051	1	Artefact B describes a more complex decoding process with tuple outputs, unlike Artefact A's simple decoding description	2026-07-15T05:20:00.544882+00:00	false
+P052	3	Both docstrings describe finding the top k frequent elements, but with slightly different wording and input description	2026-07-15T05:20:03.284065+00:00	false
+P053	3	Both docstrings describe the same polynomial derivative calculation, but with slightly different wording and detail	2026-07-15T05:20:05.435463+00:00	false
+P054	3	Both codes generate grids of hexagons, but with different implementation details and calculations for hexagon dimensions and spacing	2026-07-15T05:20:07.670147+00:00	false
+P055	1	Artefact A asks for a calculation function, while Artefact B describes a validation function	2026-07-15T05:20:10.300351+00:00	false
+P056	3	Artefacts A and B describe the same task with slightly different levels of detail and specificity	2026-07-15T05:20:11.968302+00:00	false
+P057	3	Artefact B is a concise version of Artefact A, conveying the same problem statement	2026-07-15T05:20:16.587845+00:00	false
+P058	3	Artefacts A and B describe the same functionality with slightly different wording and examples	2026-07-15T05:20:17.719280+00:00	false
+P059	3	Both describe finding the frequency of elements in a list of lists, but with slightly different wording	2026-07-15T05:20:18.997251+00:00	false
+P060	3	Both docstrings describe the same polynomial derivative calculation, but with slightly different wording and detail	2026-07-15T05:20:20.575190+00:00	false

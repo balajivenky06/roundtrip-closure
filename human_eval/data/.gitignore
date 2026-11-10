@@ -5,3 +5,11 @@ annotator_*_ratings.tsv
 annotator_*_events.jsonl
 agreement_report.json
 agreement_report.tex
+
+# Exceptions: anonymised per-annotator rating files (A1/A2/A3 = author team,
+# E1/E2 = external) and frontier-judge replay outputs are released under the
+# replication package. Real-initial files (annotator_BV_*, GS_*, AM_*, DR_*,
+# RR_*) remain blocked by the pattern above.
+!annotator_A[123]_ratings.tsv
+!annotator_A[123]_uniform_ratings.tsv
+!annotator_E[12]_ratings.tsv
