@@ -1,0 +1,2009 @@
+2026-06-19 13:11:30,114 [INFO] === Running cell H5 [hetero] on core ===
+2026-06-19 13:11:30,115 [INFO]   Hypothesis: Cheap drafter at spec: can a 3 B model produce a workable docstring that downstream stronger models can use?
+2026-06-19 13:11:30,116 [INFO]   L_spec = llama3.2:3b
+2026-06-19 13:11:30,117 [INFO]   L_test = qwen3-coder:30b
+2026-06-19 13:11:30,117 [INFO]   L_code = qwen3-coder:30b
+2026-06-19 13:11:30,118 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-19 13:11:30,118 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-19 13:11:30,118 [INFO]   log     -> /content/roundtrip-closure/logs/cell_H5_core.log
+2026-06-19 13:11:30,132 [INFO]   found 3641 previously-completed (cell, sample, path) tuples
+2026-06-19 13:11:30,137 [INFO]   loaded 75 samples from core
+2026-06-19 13:11:30,137 [INFO] [H5 s=0 p1] START humaneval/HumanEval/2
+2026-06-19 13:11:30,460 [INFO] [H5 s=0 p1] step1 L_spec=llama3.2 -> D'=82chars cache=HIT +0.32s
+2026-06-19 13:16:16,485 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:16:16,485 [INFO] Ollama client supports think=False — thinking-mode disabled for reasoning models.
+2026-06-19 13:16:16,511 [INFO] [H5 s=0 p1] step2 L_test=qwen3-coder -> T'=1347chars cache=miss +286.05s
+2026-06-19 13:16:16,778 [INFO] NumExpr defaulting to 8 threads.
+2026-06-19 13:16:23,376 [INFO] [H5 s=0 p1] step3 test_filter -> 2/6 tests kept (399/1347 chars) +6.87s
+2026-06-19 13:16:26,621 [INFO] [H5 s=0 p1] step4 mutation -> kill_rate=1.000 (2/2 mutants) +3.24s
+2026-06-19 13:16:26,890 [INFO] [H5 s=0 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.27s
+2026-06-19 13:16:26,890 [INFO] [H5 s=0 p1] DONE elapsed=296.75s kill_rate=1.000 calls=3 hits=2
+2026-06-19 13:16:28,526 [INFO]   written=1 skipped(resume)=0 errors=0 cache_hit_rate=66.67% (hits=2, misses=1)
+2026-06-19 13:16:28,526 [INFO] [H5 s=0 p2] START humaneval/HumanEval/2
+2026-06-19 13:16:28,710 [INFO] [H5 s=0 p2] step1 L_test=qwen3-coder -> T'=790chars cache=HIT +0.18s
+2026-06-19 13:16:28,968 [INFO] [H5 s=0 p2] step2 L_code=qwen3-coder -> C'=354chars cache=HIT +0.26s
+2026-06-19 13:16:29,212 [INFO] [H5 s=0 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-19 13:16:29,432 [INFO] [H5 s=0 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.22s
+2026-06-19 13:16:29,432 [INFO] [H5 s=0 p2] DONE elapsed=0.91s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:16:30,997 [INFO]   written=2 skipped(resume)=0 errors=0 cache_hit_rate=83.33% (hits=5, misses=1)
+2026-06-19 13:16:30,997 [INFO] [H5 s=0 p3] START humaneval/HumanEval/2
+2026-06-19 13:16:31,338 [INFO] [H5 s=0 p3] step1 L_test=qwen3-coder -> T'=1653chars cache=HIT +0.34s
+2026-06-19 13:16:40,426 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:16:40,436 [INFO] [H5 s=0 p3] step2 L_spec=llama3.2 -> D'=332chars cache=miss +9.10s
+2026-06-19 13:16:56,042 [INFO] Loading BERTScore scorer (roberta-large) — first call only…
+2026-06-19 13:16:56,176 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,176 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-06-19 13:16:56,218 [INFO] HTTP Request: GET https://huggingface.co/roberta-large/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,261 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,316 [INFO] HTTP Request: GET https://huggingface.co/roberta-large/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,358 [INFO] HTTP Request: GET https://huggingface.co/api/models/roberta-large/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-06-19 13:16:56,396 [INFO] HTTP Request: GET https://huggingface.co/api/models/FacebookAI/roberta-large/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-06-19 13:16:56,454 [INFO] HTTP Request: GET https://huggingface.co/api/models/roberta-large/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-06-19 13:16:56,500 [INFO] HTTP Request: GET https://huggingface.co/api/models/FacebookAI/roberta-large/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,542 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/vocab.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,589 [INFO] HTTP Request: GET https://huggingface.co/roberta-large/resolve/main/vocab.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,668 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/merges.txt "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,716 [INFO] HTTP Request: GET https://huggingface.co/roberta-large/resolve/main/merges.txt "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,769 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/tokenizer.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,820 [INFO] HTTP Request: GET https://huggingface.co/roberta-large/resolve/main/tokenizer.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:56,898 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/added_tokens.json "HTTP/1.1 404 Not Found"
+2026-06-19 13:16:56,939 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/special_tokens_map.json "HTTP/1.1 404 Not Found"
+2026-06-19 13:16:56,982 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/chat_template.jinja "HTTP/1.1 404 Not Found"
+2026-06-19 13:16:57,274 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:57,321 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-06-19 13:16:58,283 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-06-19 13:16:58,347 [INFO] HTTP Request: HEAD https://huggingface.co/roberta-large/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+2026-06-19 13:16:58,438 [INFO] HTTP Request: GET https://huggingface.co/api/models/FacebookAI/roberta-large/xet-read-token/722cf37b1afa9454edce342e7895e588b6ff1d59 "HTTP/1.1 200 OK"
+2026-06-19 13:17:04,317 [INFO] [H5 s=0 p3] step3 BERTScore -> F1=0.057 cache=miss +23.88s
+2026-06-19 13:17:41,985 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:17:41,997 [INFO] [H5 s=0 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +37.68s
+2026-06-19 13:17:41,997 [INFO] [H5 s=0 p3] DONE elapsed=71.00s bertscore=0.057 valid=True calls=3 hits=1
+2026-06-19 13:17:43,638 [INFO]   written=3 skipped(resume)=0 errors=0 cache_hit_rate=60.00% (hits=6, misses=4)
+2026-06-19 13:17:43,638 [INFO] [H5 s=1 p1] START humaneval/HumanEval/23
+2026-06-19 13:17:43,949 [INFO] [H5 s=1 p1] step1 L_spec=llama3.2 -> D'=50chars cache=HIT +0.31s
+2026-06-19 13:19:10,263 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:19:10,315 [INFO] [H5 s=1 p1] step2 L_test=qwen3-coder -> T'=955chars cache=miss +86.37s
+2026-06-19 13:19:16,878 [INFO] [H5 s=1 p1] step3 test_filter -> 6/6 tests kept (962/955 chars) +6.56s
+2026-06-19 13:19:19,004 [INFO] [H5 s=1 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.12s
+2026-06-19 13:19:19,322 [INFO] [H5 s=1 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.32s
+2026-06-19 13:19:19,322 [INFO] [H5 s=1 p1] DONE elapsed=95.68s kill_rate=1.000 calls=3 hits=2
+2026-06-19 13:19:20,949 [INFO]   written=4 skipped(resume)=0 errors=0 cache_hit_rate=61.54% (hits=8, misses=5)
+2026-06-19 13:19:20,950 [INFO] [H5 s=1 p2] START humaneval/HumanEval/23
+2026-06-19 13:19:21,124 [INFO] [H5 s=1 p2] step1 L_test=qwen3-coder -> T'=574chars cache=HIT +0.17s
+2026-06-19 13:19:21,308 [INFO] [H5 s=1 p2] step2 L_code=qwen3-coder -> C'=54chars cache=HIT +0.18s
+2026-06-19 13:19:21,574 [INFO] [H5 s=1 p2] step3 ref_tests -> pass_rate=1.000 +0.27s
+2026-06-19 13:19:21,867 [INFO] [H5 s=1 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.29s
+2026-06-19 13:19:21,867 [INFO] [H5 s=1 p2] DONE elapsed=0.92s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:19:23,671 [INFO]   written=5 skipped(resume)=0 errors=0 cache_hit_rate=68.75% (hits=11, misses=5)
+2026-06-19 13:19:23,671 [INFO] [H5 s=1 p3] START humaneval/HumanEval/23
+2026-06-19 13:19:23,889 [INFO] [H5 s=1 p3] step1 L_test=qwen3-coder -> T'=1551chars cache=HIT +0.22s
+2026-06-19 13:19:31,850 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:19:31,862 [INFO] [H5 s=1 p3] step2 L_spec=llama3.2 -> D'=37chars cache=miss +7.97s
+2026-06-19 13:19:32,065 [INFO] [H5 s=1 p3] step3 BERTScore -> F1=0.175 cache=HIT +0.20s
+2026-06-19 13:19:32,335 [INFO] [H5 s=1 p3] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.27s
+2026-06-19 13:19:32,335 [INFO] [H5 s=1 p3] DONE elapsed=8.66s bertscore=0.175 valid=True calls=3 hits=3
+2026-06-19 13:19:33,992 [INFO]   written=6 skipped(resume)=0 errors=0 cache_hit_rate=70.00% (hits=14, misses=6)
+2026-06-19 13:19:33,992 [INFO] [H5 s=2 p1] START humaneval/HumanEval/162
+2026-06-19 13:19:34,342 [INFO] [H5 s=2 p1] step1 L_spec=llama3.2 -> D'=96chars cache=HIT +0.35s
+2026-06-19 13:21:01,736 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:21:01,757 [INFO] [H5 s=2 p1] step2 L_test=qwen3-coder -> T'=1510chars cache=miss +87.41s
+2026-06-19 13:21:08,687 [INFO] [H5 s=2 p1] step3 test_filter -> 6/7 tests kept (1297/1510 chars) +6.93s
+2026-06-19 13:21:10,836 [INFO] [H5 s=2 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.15s
+2026-06-19 13:21:11,115 [INFO] [H5 s=2 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.28s
+2026-06-19 13:21:11,115 [INFO] [H5 s=2 p1] DONE elapsed=97.12s kill_rate=1.000 calls=3 hits=2
+2026-06-19 13:21:12,861 [INFO]   written=7 skipped(resume)=0 errors=0 cache_hit_rate=69.57% (hits=16, misses=7)
+2026-06-19 13:21:12,861 [INFO] [H5 s=2 p2] START humaneval/HumanEval/162
+2026-06-19 13:21:13,110 [INFO] [H5 s=2 p2] step1 L_test=qwen3-coder -> T'=1358chars cache=HIT +0.25s
+2026-06-19 13:21:13,389 [INFO] [H5 s=2 p2] step2 L_code=qwen3-coder -> C'=152chars cache=HIT +0.28s
+2026-06-19 13:21:13,584 [INFO] [H5 s=2 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-19 13:21:13,824 [INFO] [H5 s=2 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.24s
+2026-06-19 13:21:13,825 [INFO] [H5 s=2 p2] DONE elapsed=0.96s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:21:15,547 [INFO]   written=8 skipped(resume)=0 errors=0 cache_hit_rate=73.08% (hits=19, misses=7)
+2026-06-19 13:21:15,547 [INFO] [H5 s=2 p3] START humaneval/HumanEval/162
+2026-06-19 13:21:15,827 [INFO] [H5 s=2 p3] step1 L_test=qwen3-coder -> T'=2110chars cache=HIT +0.28s
+2026-06-19 13:21:24,092 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:21:24,109 [INFO] [H5 s=2 p3] step2 L_spec=llama3.2 -> D'=128chars cache=miss +8.28s
+2026-06-19 13:21:24,233 [INFO] [H5 s=2 p3] step3 BERTScore -> F1=-0.055 cache=miss +0.12s
+2026-06-19 13:22:28,514 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:22:28,532 [INFO] [H5 s=2 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +64.30s
+2026-06-19 13:22:28,532 [INFO] [H5 s=2 p3] DONE elapsed=72.98s bertscore=-0.055 valid=True calls=3 hits=1
+2026-06-19 13:22:30,493 [INFO]   written=9 skipped(resume)=0 errors=0 cache_hit_rate=66.67% (hits=20, misses=10)
+2026-06-19 13:22:30,493 [INFO] [H5 s=3 p1] START mbpp/363
+2026-06-19 13:22:30,774 [INFO] [H5 s=3 p1] step1 L_spec=llama3.2 -> D'=76chars cache=HIT +0.28s
+2026-06-19 13:23:40,766 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:23:40,784 [INFO] [H5 s=3 p1] step2 L_test=qwen3-coder -> T'=915chars cache=miss +70.01s
+2026-06-19 13:23:48,624 [INFO] [H5 s=3 p1] step3 test_filter -> 1/7 tests kept (123/915 chars) +7.84s
+2026-06-19 13:23:50,721 [INFO] [H5 s=3 p1] step4 mutation -> kill_rate=0.500 (1/2 mutants) +2.10s
+2026-06-19 13:23:50,926 [INFO] [H5 s=3 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 13:23:50,926 [INFO] [H5 s=3 p1] DONE elapsed=80.43s kill_rate=0.500 calls=3 hits=2
+2026-06-19 13:23:52,823 [INFO]   written=10 skipped(resume)=0 errors=0 cache_hit_rate=66.67% (hits=22, misses=11)
+2026-06-19 13:23:52,823 [INFO] [H5 s=3 p2] START mbpp/363
+2026-06-19 13:23:53,018 [INFO] [H5 s=3 p2] step1 L_test=qwen3-coder -> T'=1128chars cache=HIT +0.19s
+2026-06-19 13:23:53,233 [INFO] [H5 s=3 p2] step2 L_code=qwen3-coder -> C'=348chars cache=HIT +0.22s
+2026-06-19 13:23:53,515 [INFO] [H5 s=3 p2] step3 ref_tests -> pass_rate=0.000 +0.28s
+2026-06-19 13:23:53,699 [INFO] [H5 s=3 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.18s
+2026-06-19 13:23:53,700 [INFO] [H5 s=3 p2] DONE elapsed=0.88s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:23:55,513 [INFO]   written=11 skipped(resume)=0 errors=0 cache_hit_rate=69.44% (hits=25, misses=11)
+2026-06-19 13:23:55,513 [INFO] [H5 s=3 p3] START mbpp/363
+2026-06-19 13:23:55,718 [INFO] [H5 s=3 p3] step1 L_test=qwen3-coder -> T'=1745chars cache=HIT +0.20s
+2026-06-19 13:24:07,337 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:24:07,354 [INFO] [H5 s=3 p3] step2 L_spec=llama3.2 -> D'=211chars cache=miss +11.64s
+2026-06-19 13:24:07,479 [INFO] [H5 s=3 p3] step3 BERTScore -> F1=0.069 cache=miss +0.12s
+2026-06-19 13:25:11,097 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:25:11,112 [INFO] [H5 s=3 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +63.63s
+2026-06-19 13:25:11,113 [INFO] [H5 s=3 p3] DONE elapsed=75.60s bertscore=0.069 valid=True calls=3 hits=1
+2026-06-19 13:25:12,920 [INFO]   written=12 skipped(resume)=0 errors=0 cache_hit_rate=65.00% (hits=26, misses=14)
+2026-06-19 13:25:12,920 [INFO] [H5 s=4 p1] START mbpp/302
+2026-06-19 13:25:13,164 [INFO] [H5 s=4 p1] step1 L_spec=llama3.2 -> D'=160chars cache=HIT +0.24s
+2026-06-19 13:26:19,745 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:26:19,766 [INFO] [H5 s=4 p1] step2 L_test=qwen3-coder -> T'=723chars cache=miss +66.60s
+2026-06-19 13:26:20,884 [INFO] [H5 s=4 p1] step3 test_filter -> 0/1 tests kept (0/723 chars) +1.12s
+2026-06-19 13:26:22,433 [INFO]   written=13 skipped(resume)=0 errors=0 cache_hit_rate=64.29% (hits=27, misses=15)
+2026-06-19 13:26:22,433 [INFO] [H5 s=4 p2] START mbpp/302
+2026-06-19 13:26:22,667 [INFO] [H5 s=4 p2] step1 L_test=qwen3-coder -> T'=1143chars cache=HIT +0.23s
+2026-06-19 13:26:22,894 [INFO] [H5 s=4 p2] step2 L_code=qwen3-coder -> C'=310chars cache=HIT +0.23s
+2026-06-19 13:26:23,240 [INFO] [H5 s=4 p2] step3 ref_tests -> pass_rate=1.000 +0.35s
+2026-06-19 13:26:23,473 [INFO] [H5 s=4 p2] step4 judge=deepseek-r1 -> rating=2 cache=HIT +0.23s
+2026-06-19 13:26:23,474 [INFO] [H5 s=4 p2] DONE elapsed=1.04s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:26:25,221 [INFO]   written=14 skipped(resume)=0 errors=0 cache_hit_rate=66.67% (hits=30, misses=15)
+2026-06-19 13:26:25,221 [INFO] [H5 s=4 p3] START mbpp/302
+2026-06-19 13:26:25,466 [INFO] [H5 s=4 p3] step1 L_test=qwen3-coder -> T'=1181chars cache=HIT +0.24s
+2026-06-19 13:26:37,253 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:26:37,267 [INFO] [H5 s=4 p3] step2 L_spec=llama3.2 -> D'=313chars cache=miss +11.80s
+2026-06-19 13:26:37,390 [INFO] [H5 s=4 p3] step3 BERTScore -> F1=0.289 cache=miss +0.12s
+2026-06-19 13:27:32,557 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:27:32,570 [INFO] [H5 s=4 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +55.18s
+2026-06-19 13:27:32,571 [INFO] [H5 s=4 p3] DONE elapsed=67.35s bertscore=0.289 valid=True calls=3 hits=1
+2026-06-19 13:27:34,141 [INFO]   written=15 skipped(resume)=0 errors=0 cache_hit_rate=63.27% (hits=31, misses=18)
+2026-06-19 13:27:34,142 [INFO] [H5 s=5 p1] START mbpp/284
+2026-06-19 13:27:34,345 [INFO] [H5 s=5 p1] step1 L_spec=llama3.2 -> D'=70chars cache=HIT +0.20s
+2026-06-19 13:28:43,262 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:28:43,287 [INFO] [H5 s=5 p1] step2 L_test=qwen3-coder -> T'=1345chars cache=miss +68.94s
+2026-06-19 13:28:49,159 [INFO] [H5 s=5 p1] step3 test_filter -> 6/6 tests kept (1352/1345 chars) +5.87s
+2026-06-19 13:28:52,424 [INFO] [H5 s=5 p1] step4 mutation -> kill_rate=1.000 (2/2 mutants) +3.27s
+2026-06-19 13:28:52,751 [INFO] [H5 s=5 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.33s
+2026-06-19 13:28:52,752 [INFO] [H5 s=5 p1] DONE elapsed=78.61s kill_rate=1.000 calls=3 hits=2
+2026-06-19 13:28:54,520 [INFO]   written=16 skipped(resume)=0 errors=0 cache_hit_rate=63.46% (hits=33, misses=19)
+2026-06-19 13:28:54,520 [INFO] [H5 s=5 p2] START mbpp/284
+2026-06-19 13:28:54,802 [INFO] [H5 s=5 p2] step1 L_test=qwen3-coder -> T'=1395chars cache=HIT +0.28s
+2026-06-19 13:28:55,020 [INFO] [H5 s=5 p2] step2 L_code=qwen3-coder -> C'=408chars cache=HIT +0.22s
+2026-06-19 13:28:55,287 [INFO] [H5 s=5 p2] step3 ref_tests -> pass_rate=1.000 +0.27s
+2026-06-19 13:28:55,553 [INFO] [H5 s=5 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.27s
+2026-06-19 13:28:55,553 [INFO] [H5 s=5 p2] DONE elapsed=1.03s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:28:57,336 [INFO]   written=17 skipped(resume)=0 errors=0 cache_hit_rate=65.45% (hits=36, misses=19)
+2026-06-19 13:28:57,337 [INFO] [H5 s=5 p3] START mbpp/284
+2026-06-19 13:28:57,573 [INFO] [H5 s=5 p3] step1 L_test=qwen3-coder -> T'=1433chars cache=HIT +0.24s
+2026-06-19 13:29:08,543 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:29:08,557 [INFO] [H5 s=5 p3] step2 L_spec=llama3.2 -> D'=94chars cache=miss +10.98s
+2026-06-19 13:29:08,595 [INFO] [H5 s=5 p3] step3 BERTScore -> F1=0.413 cache=miss +0.04s
+2026-06-19 13:29:56,340 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:29:56,354 [INFO] [H5 s=5 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +47.76s
+2026-06-19 13:29:56,354 [INFO] [H5 s=5 p3] DONE elapsed=59.02s bertscore=0.413 valid=True calls=3 hits=1
+2026-06-19 13:29:57,925 [INFO]   written=18 skipped(resume)=0 errors=0 cache_hit_rate=62.71% (hits=37, misses=22)
+2026-06-19 13:29:57,925 [INFO] [H5 s=6 p1] START mbpp/315
+2026-06-19 13:29:58,121 [INFO] [H5 s=6 p1] step1 L_spec=llama3.2 -> D'=130chars cache=HIT +0.20s
+2026-06-19 13:31:11,686 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:31:11,703 [INFO] [H5 s=6 p1] step2 L_test=qwen3-coder -> T'=1507chars cache=miss +73.58s
+2026-06-19 13:31:18,409 [INFO] [H5 s=6 p1] step3 test_filter -> 2/6 tests kept (556/1507 chars) +6.71s
+2026-06-19 13:31:35,731 [INFO] [H5 s=6 p1] step4 mutation -> kill_rate=0.333 (5/15 mutants) +17.32s
+2026-06-19 13:31:35,946 [INFO] [H5 s=6 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-19 13:31:35,946 [INFO] [H5 s=6 p1] DONE elapsed=98.02s kill_rate=0.333 calls=3 hits=2
+2026-06-19 13:31:37,830 [INFO]   written=19 skipped(resume)=0 errors=0 cache_hit_rate=62.90% (hits=39, misses=23)
+2026-06-19 13:31:37,831 [INFO] [H5 s=6 p2] START mbpp/315
+2026-06-19 13:31:38,066 [INFO] [H5 s=6 p2] step1 L_test=qwen3-coder -> T'=1946chars cache=HIT +0.24s
+2026-06-19 13:31:38,380 [INFO] [H5 s=6 p2] step2 L_code=qwen3-coder -> C'=266chars cache=HIT +0.31s
+2026-06-19 13:31:38,606 [INFO] [H5 s=6 p2] step3 ref_tests -> pass_rate=0.000 +0.23s
+2026-06-19 13:31:38,872 [INFO] [H5 s=6 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.27s
+2026-06-19 13:31:38,872 [INFO] [H5 s=6 p2] DONE elapsed=1.04s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:31:40,792 [INFO]   written=20 skipped(resume)=0 errors=0 cache_hit_rate=64.62% (hits=42, misses=23)
+2026-06-19 13:31:40,793 [INFO] [H5 s=6 p3] START mbpp/315
+2026-06-19 13:31:41,006 [INFO] [H5 s=6 p3] step1 L_test=qwen3-coder -> T'=2127chars cache=HIT +0.21s
+2026-06-19 13:31:52,234 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:31:52,247 [INFO] [H5 s=6 p3] step2 L_spec=llama3.2 -> D'=87chars cache=miss +11.24s
+2026-06-19 13:31:52,281 [INFO] [H5 s=6 p3] step3 BERTScore -> F1=0.376 cache=miss +0.03s
+2026-06-19 13:32:41,787 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:32:41,811 [INFO] [H5 s=6 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +49.53s
+2026-06-19 13:32:41,811 [INFO] [H5 s=6 p3] DONE elapsed=61.02s bertscore=0.376 valid=True calls=3 hits=1
+2026-06-19 13:32:43,578 [INFO]   written=21 skipped(resume)=0 errors=0 cache_hit_rate=62.32% (hits=43, misses=26)
+2026-06-19 13:32:43,578 [INFO] [H5 s=7 p1] START mbpp/454
+2026-06-19 13:32:43,965 [INFO] [H5 s=7 p1] step1 L_spec=llama3.2 -> D'=112chars cache=HIT +0.39s
+2026-06-19 13:33:53,593 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:33:53,607 [INFO] [H5 s=7 p1] step2 L_test=qwen3-coder -> T'=1254chars cache=miss +69.64s
+2026-06-19 13:33:54,742 [INFO] [H5 s=7 p1] step3 test_filter -> 0/1 tests kept (0/1254 chars) +1.13s
+2026-06-19 13:33:56,479 [INFO]   written=22 skipped(resume)=0 errors=0 cache_hit_rate=61.97% (hits=44, misses=27)
+2026-06-19 13:33:56,479 [INFO] [H5 s=7 p2] START mbpp/454
+2026-06-19 13:33:56,682 [INFO] [H5 s=7 p2] step1 L_test=qwen3-coder -> T'=1174chars cache=HIT +0.20s
+2026-06-19 13:33:57,273 [INFO] [H5 s=7 p2] step2 L_code=qwen3-coder -> C'=322chars cache=HIT +0.59s
+2026-06-19 13:33:57,518 [INFO] [H5 s=7 p2] step3 ref_tests -> pass_rate=0.000 +0.25s
+2026-06-19 13:33:57,741 [INFO] [H5 s=7 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-19 13:33:57,741 [INFO] [H5 s=7 p2] DONE elapsed=1.26s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:33:59,308 [INFO]   written=23 skipped(resume)=0 errors=0 cache_hit_rate=63.51% (hits=47, misses=27)
+2026-06-19 13:33:59,308 [INFO] [H5 s=7 p3] START mbpp/454
+2026-06-19 13:33:59,566 [INFO] [H5 s=7 p3] step1 L_test=qwen3-coder -> T'=1743chars cache=HIT +0.26s
+2026-06-19 13:34:10,617 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:34:10,638 [INFO] [H5 s=7 p3] step2 L_spec=llama3.2 -> D'=88chars cache=miss +11.07s
+2026-06-19 13:34:10,671 [INFO] [H5 s=7 p3] step3 BERTScore -> F1=0.492 cache=miss +0.03s
+2026-06-19 13:35:06,645 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:35:06,658 [INFO] [H5 s=7 p3] step4 judge=deepseek-r1 -> rating=2 cache=miss +55.99s
+2026-06-19 13:35:06,658 [INFO] [H5 s=7 p3] DONE elapsed=67.35s bertscore=0.492 valid=True calls=3 hits=1
+2026-06-19 13:35:08,566 [INFO]   written=24 skipped(resume)=0 errors=0 cache_hit_rate=61.54% (hits=48, misses=30)
+2026-06-19 13:35:08,567 [INFO] [H5 s=8 p1] START mbpp/374
+2026-06-19 13:35:08,786 [INFO] [H5 s=8 p1] step1 L_spec=llama3.2 -> D'=98chars cache=HIT +0.22s
+2026-06-19 13:36:11,600 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:36:11,631 [INFO] [H5 s=8 p1] step2 L_test=qwen3-coder -> T'=1290chars cache=miss +62.84s
+2026-06-19 13:36:16,615 [INFO] [H5 s=8 p1] step3 test_filter -> 6/6 tests kept (1297/1290 chars) +4.98s
+2026-06-19 13:36:31,870 [INFO] [H5 s=8 p1] step4 mutation -> kill_rate=0.923 (12/13 mutants) +15.25s
+2026-06-19 13:36:32,207 [INFO] [H5 s=8 p1] step5 judge=deepseek-r1 -> rating=1 cache=HIT +0.34s
+2026-06-19 13:36:32,208 [INFO] [H5 s=8 p1] DONE elapsed=83.64s kill_rate=0.923 calls=3 hits=2
+2026-06-19 13:36:33,800 [INFO]   written=25 skipped(resume)=0 errors=0 cache_hit_rate=61.73% (hits=50, misses=31)
+2026-06-19 13:36:33,801 [INFO] [H5 s=8 p2] START mbpp/374
+2026-06-19 13:36:34,033 [INFO] [H5 s=8 p2] step1 L_test=qwen3-coder -> T'=2356chars cache=HIT +0.23s
+2026-06-19 13:36:34,225 [INFO] [H5 s=8 p2] step2 L_code=qwen3-coder -> C'=286chars cache=HIT +0.19s
+2026-06-19 13:36:34,459 [INFO] [H5 s=8 p2] step3 ref_tests -> pass_rate=0.000 +0.23s
+2026-06-19 13:36:34,754 [INFO] [H5 s=8 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.29s
+2026-06-19 13:36:34,754 [INFO] [H5 s=8 p2] DONE elapsed=0.95s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:36:36,617 [INFO]   written=26 skipped(resume)=0 errors=0 cache_hit_rate=63.10% (hits=53, misses=31)
+2026-06-19 13:36:36,617 [INFO] [H5 s=8 p3] START mbpp/374
+2026-06-19 13:36:36,826 [INFO] [H5 s=8 p3] step1 L_test=qwen3-coder -> T'=1383chars cache=HIT +0.21s
+2026-06-19 13:36:45,820 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:36:45,854 [INFO] [H5 s=8 p3] step2 L_spec=llama3.2 -> D'=94chars cache=miss +9.03s
+2026-06-19 13:36:45,888 [INFO] [H5 s=8 p3] step3 BERTScore -> F1=0.337 cache=miss +0.03s
+2026-06-19 13:37:48,469 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:37:48,490 [INFO] [H5 s=8 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +62.60s
+2026-06-19 13:37:48,490 [INFO] [H5 s=8 p3] DONE elapsed=71.87s bertscore=0.337 valid=True calls=3 hits=1
+2026-06-19 13:37:50,153 [INFO]   written=27 skipped(resume)=0 errors=0 cache_hit_rate=61.36% (hits=54, misses=34)
+2026-06-19 13:37:50,153 [INFO] [H5 s=9 p1] START mbpp/300
+2026-06-19 13:37:50,607 [INFO] [H5 s=9 p1] step1 L_spec=llama3.2 -> D'=76chars cache=HIT +0.45s
+2026-06-19 13:39:13,069 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:39:13,088 [INFO] [H5 s=9 p1] step2 L_test=qwen3-coder -> T'=1369chars cache=miss +82.48s
+2026-06-19 13:39:18,958 [INFO] [H5 s=9 p1] step3 test_filter -> 4/5 tests kept (1123/1369 chars) +5.87s
+2026-06-19 13:39:32,940 [INFO] [H5 s=9 p1] step4 mutation -> kill_rate=0.917 (11/12 mutants) +13.98s
+2026-06-19 13:39:33,353 [INFO] [H5 s=9 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.41s
+2026-06-19 13:39:33,353 [INFO] [H5 s=9 p1] DONE elapsed=103.20s kill_rate=0.917 calls=3 hits=2
+2026-06-19 13:39:35,111 [INFO]   written=28 skipped(resume)=0 errors=0 cache_hit_rate=61.54% (hits=56, misses=35)
+2026-06-19 13:39:35,111 [INFO] [H5 s=9 p2] START mbpp/300
+2026-06-19 13:39:35,308 [INFO] [H5 s=9 p2] step1 L_test=qwen3-coder -> T'=1246chars cache=HIT +0.20s
+2026-06-19 13:39:35,595 [INFO] [H5 s=9 p2] step2 L_code=qwen3-coder -> C'=1742chars cache=HIT +0.29s
+2026-06-19 13:39:35,822 [INFO] [H5 s=9 p2] step3 ref_tests -> pass_rate=1.000 +0.23s
+2026-06-19 13:39:36,071 [INFO] [H5 s=9 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.25s
+2026-06-19 13:39:36,072 [INFO] [H5 s=9 p2] DONE elapsed=0.96s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:39:37,697 [INFO]   written=29 skipped(resume)=0 errors=0 cache_hit_rate=62.77% (hits=59, misses=35)
+2026-06-19 13:39:37,697 [INFO] [H5 s=9 p3] START mbpp/300
+2026-06-19 13:39:37,931 [INFO] [H5 s=9 p3] step1 L_test=qwen3-coder -> T'=1988chars cache=HIT +0.23s
+2026-06-19 13:39:47,298 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:39:47,315 [INFO] [H5 s=9 p3] step2 L_spec=llama3.2 -> D'=94chars cache=miss +9.38s
+2026-06-19 13:39:47,430 [INFO] [H5 s=9 p3] step3 BERTScore -> F1=0.154 cache=miss +0.11s
+2026-06-19 13:40:48,843 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:40:48,859 [INFO] [H5 s=9 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +61.43s
+2026-06-19 13:40:48,860 [INFO] [H5 s=9 p3] DONE elapsed=71.16s bertscore=0.154 valid=True calls=3 hits=1
+2026-06-19 13:40:50,777 [INFO]   written=30 skipped(resume)=0 errors=0 cache_hit_rate=61.22% (hits=60, misses=38)
+2026-06-19 13:40:50,778 [INFO] [H5 s=10 p1] START mbpp/247
+2026-06-19 13:40:51,090 [INFO] [H5 s=10 p1] step1 L_spec=llama3.2 -> D'=169chars cache=HIT +0.31s
+2026-06-19 13:42:00,623 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:42:00,645 [INFO] [H5 s=10 p1] step2 L_test=qwen3-coder -> T'=764chars cache=miss +69.55s
+2026-06-19 13:42:05,045 [INFO] [H5 s=10 p1] step3 test_filter -> 0/4 tests kept (0/764 chars) +4.40s
+2026-06-19 13:42:06,670 [INFO]   written=31 skipped(resume)=0 errors=0 cache_hit_rate=61.00% (hits=61, misses=39)
+2026-06-19 13:42:06,670 [INFO] [H5 s=10 p2] START mbpp/247
+2026-06-19 13:42:06,898 [INFO] [H5 s=10 p2] step1 L_test=qwen3-coder -> T'=1069chars cache=HIT +0.23s
+2026-06-19 13:42:07,119 [INFO] [H5 s=10 p2] step2 L_code=qwen3-coder -> C'=916chars cache=HIT +0.22s
+2026-06-19 13:42:07,399 [INFO] [H5 s=10 p2] step3 ref_tests -> pass_rate=1.000 +0.28s
+2026-06-19 13:42:07,640 [INFO] [H5 s=10 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.24s
+2026-06-19 13:42:07,641 [INFO] [H5 s=10 p2] DONE elapsed=0.97s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:42:09,487 [INFO]   written=32 skipped(resume)=0 errors=0 cache_hit_rate=62.14% (hits=64, misses=39)
+2026-06-19 13:42:09,487 [INFO] [H5 s=10 p3] START mbpp/247
+2026-06-19 13:42:09,759 [INFO] [H5 s=10 p3] step1 L_test=qwen3-coder -> T'=1032chars cache=HIT +0.27s
+2026-06-19 13:42:20,637 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:42:20,664 [INFO] [H5 s=10 p3] step2 L_spec=llama3.2 -> D'=281chars cache=miss +10.90s
+2026-06-19 13:42:20,698 [INFO] [H5 s=10 p3] step3 BERTScore -> F1=0.522 cache=miss +0.03s
+2026-06-19 13:43:06,013 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:43:06,026 [INFO] [H5 s=10 p3] step4 judge=deepseek-r1 -> rating=0 cache=miss +45.33s
+2026-06-19 13:43:06,027 [INFO] [H5 s=10 p3] DONE elapsed=56.54s bertscore=0.522 valid=True calls=3 hits=1
+2026-06-19 13:43:07,726 [INFO]   written=33 skipped(resume)=0 errors=0 cache_hit_rate=60.75% (hits=65, misses=42)
+2026-06-19 13:43:07,726 [INFO] [H5 s=11 p1] START mbpp/351
+2026-06-19 13:43:08,062 [INFO] [H5 s=11 p1] step1 L_spec=llama3.2 -> D'=106chars cache=HIT +0.34s
+2026-06-19 13:44:27,151 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:44:27,170 [INFO] [H5 s=11 p1] step2 L_test=qwen3-coder -> T'=1464chars cache=miss +79.11s
+2026-06-19 13:44:33,441 [INFO] [H5 s=11 p1] step3 test_filter -> 7/8 tests kept (1275/1464 chars) +6.27s
+2026-06-19 13:44:45,375 [INFO] [H5 s=11 p1] step4 mutation -> kill_rate=0.800 (8/10 mutants) +11.93s
+2026-06-19 13:44:45,654 [INFO] [H5 s=11 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.28s
+2026-06-19 13:44:45,654 [INFO] [H5 s=11 p1] DONE elapsed=97.93s kill_rate=0.800 calls=3 hits=2
+2026-06-19 13:44:47,534 [INFO]   written=34 skipped(resume)=0 errors=0 cache_hit_rate=60.91% (hits=67, misses=43)
+2026-06-19 13:44:47,534 [INFO] [H5 s=11 p2] START mbpp/351
+2026-06-19 13:44:47,825 [INFO] [H5 s=11 p2] step1 L_test=qwen3-coder -> T'=2011chars cache=HIT +0.29s
+2026-06-19 13:44:48,009 [INFO] [H5 s=11 p2] step2 L_code=qwen3-coder -> C'=800chars cache=HIT +0.18s
+2026-06-19 13:44:48,187 [INFO] [H5 s=11 p2] step3 ref_tests -> pass_rate=1.000 +0.18s
+2026-06-19 13:44:48,370 [INFO] [H5 s=11 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-19 13:44:48,371 [INFO] [H5 s=11 p2] DONE elapsed=0.84s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:44:49,942 [INFO]   written=35 skipped(resume)=0 errors=0 cache_hit_rate=61.95% (hits=70, misses=43)
+2026-06-19 13:44:49,943 [INFO] [H5 s=11 p3] START mbpp/351
+2026-06-19 13:44:50,172 [INFO] [H5 s=11 p3] step1 L_test=qwen3-coder -> T'=1920chars cache=HIT +0.23s
+2026-06-19 13:45:00,612 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:45:00,627 [INFO] [H5 s=11 p3] step2 L_spec=llama3.2 -> D'=314chars cache=miss +10.46s
+2026-06-19 13:45:00,675 [INFO] [H5 s=11 p3] step3 BERTScore -> F1=0.266 cache=miss +0.05s
+2026-06-19 13:45:39,105 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:45:39,120 [INFO] [H5 s=11 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +38.44s
+2026-06-19 13:45:39,120 [INFO] [H5 s=11 p3] DONE elapsed=49.18s bertscore=0.266 valid=True calls=3 hits=1
+2026-06-19 13:45:40,855 [INFO]   written=36 skipped(resume)=0 errors=0 cache_hit_rate=60.68% (hits=71, misses=46)
+2026-06-19 13:45:40,856 [INFO] [H5 s=12 p1] START mbpp/318
+2026-06-19 13:45:41,092 [INFO] [H5 s=12 p1] step1 L_spec=llama3.2 -> D'=122chars cache=HIT +0.24s
+2026-06-19 13:46:48,197 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:46:48,218 [INFO] [H5 s=12 p1] step2 L_test=qwen3-coder -> T'=775chars cache=miss +67.13s
+2026-06-19 13:46:54,658 [INFO] [H5 s=12 p1] step3 test_filter -> 2/6 tests kept (279/775 chars) +6.44s
+2026-06-19 13:47:06,503 [INFO] [H5 s=12 p1] step4 mutation -> kill_rate=0.200 (2/10 mutants) +11.85s
+2026-06-19 13:47:06,905 [INFO] [H5 s=12 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.40s
+2026-06-19 13:47:06,906 [INFO] [H5 s=12 p1] DONE elapsed=86.05s kill_rate=0.200 calls=3 hits=2
+2026-06-19 13:47:08,648 [INFO]   written=37 skipped(resume)=0 errors=0 cache_hit_rate=60.83% (hits=73, misses=47)
+2026-06-19 13:47:08,648 [INFO] [H5 s=12 p2] START mbpp/318
+2026-06-19 13:47:08,874 [INFO] [H5 s=12 p2] step1 L_test=qwen3-coder -> T'=1557chars cache=HIT +0.23s
+2026-06-19 13:47:09,106 [INFO] [H5 s=12 p2] step2 L_code=qwen3-coder -> C'=989chars cache=HIT +0.23s
+2026-06-19 13:47:09,306 [INFO] [H5 s=12 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-19 13:47:09,655 [INFO] [H5 s=12 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.35s
+2026-06-19 13:47:09,655 [INFO] [H5 s=12 p2] DONE elapsed=1.01s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:47:11,500 [INFO]   written=38 skipped(resume)=0 errors=0 cache_hit_rate=61.79% (hits=76, misses=47)
+2026-06-19 13:47:11,501 [INFO] [H5 s=12 p3] START mbpp/318
+2026-06-19 13:47:11,769 [INFO] [H5 s=12 p3] step1 L_test=qwen3-coder -> T'=1431chars cache=HIT +0.27s
+2026-06-19 13:47:20,682 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:47:20,699 [INFO] [H5 s=12 p3] step2 L_spec=llama3.2 -> D'=196chars cache=miss +8.93s
+2026-06-19 13:47:20,737 [INFO] [H5 s=12 p3] step3 BERTScore -> F1=0.365 cache=miss +0.04s
+2026-06-19 13:48:26,536 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:48:26,552 [INFO] [H5 s=12 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +65.81s
+2026-06-19 13:48:26,552 [INFO] [H5 s=12 p3] DONE elapsed=75.05s bertscore=0.365 valid=True calls=3 hits=1
+2026-06-19 13:48:28,324 [INFO]   written=39 skipped(resume)=0 errors=0 cache_hit_rate=60.63% (hits=77, misses=50)
+2026-06-19 13:48:28,325 [INFO] [H5 s=13 p1] START mbpp/98
+2026-06-19 13:48:28,754 [INFO] [H5 s=13 p1] step1 L_spec=llama3.2 -> D'=122chars cache=HIT +0.43s
+2026-06-19 13:49:33,302 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:49:33,321 [INFO] [H5 s=13 p1] step2 L_test=qwen3-coder -> T'=1241chars cache=miss +64.57s
+2026-06-19 13:49:41,880 [INFO] [H5 s=13 p1] step3 test_filter -> 6/8 tests kept (913/1241 chars) +8.56s
+2026-06-19 13:49:46,268 [INFO] [H5 s=13 p1] step4 mutation -> kill_rate=1.000 (3/3 mutants) +4.39s
+2026-06-19 13:49:46,660 [INFO] [H5 s=13 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.39s
+2026-06-19 13:49:46,660 [INFO] [H5 s=13 p1] DONE elapsed=78.34s kill_rate=1.000 calls=3 hits=2
+2026-06-19 13:49:48,500 [INFO]   written=40 skipped(resume)=0 errors=0 cache_hit_rate=60.77% (hits=79, misses=51)
+2026-06-19 13:49:48,500 [INFO] [H5 s=13 p2] START mbpp/98
+2026-06-19 13:49:48,797 [INFO] [H5 s=13 p2] step1 L_test=qwen3-coder -> T'=1239chars cache=HIT +0.30s
+2026-06-19 13:49:48,980 [INFO] [H5 s=13 p2] step2 L_code=qwen3-coder -> C'=223chars cache=HIT +0.18s
+2026-06-19 13:49:49,383 [INFO] [H5 s=13 p2] step3 ref_tests -> pass_rate=1.000 +0.40s
+2026-06-19 13:49:49,579 [INFO] [H5 s=13 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 13:49:49,580 [INFO] [H5 s=13 p2] DONE elapsed=1.08s pass_rate=1.000 calls=3 hits=3
+2026-06-19 13:49:51,138 [INFO]   written=41 skipped(resume)=0 errors=0 cache_hit_rate=61.65% (hits=82, misses=51)
+2026-06-19 13:49:51,139 [INFO] [H5 s=13 p3] START mbpp/98
+2026-06-19 13:49:51,398 [INFO] [H5 s=13 p3] step1 L_test=qwen3-coder -> T'=1188chars cache=HIT +0.26s
+2026-06-19 13:50:00,406 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:50:00,423 [INFO] [H5 s=13 p3] step2 L_spec=llama3.2 -> D'=265chars cache=miss +9.02s
+2026-06-19 13:50:00,540 [INFO] [H5 s=13 p3] step3 BERTScore -> F1=0.404 cache=miss +0.12s
+2026-06-19 13:50:45,855 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:50:45,870 [INFO] [H5 s=13 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +45.33s
+2026-06-19 13:50:45,870 [INFO] [H5 s=13 p3] DONE elapsed=54.73s bertscore=0.404 valid=True calls=3 hits=1
+2026-06-19 13:50:47,664 [INFO]   written=42 skipped(resume)=0 errors=0 cache_hit_rate=60.58% (hits=83, misses=54)
+2026-06-19 13:50:47,665 [INFO] [H5 s=14 p1] START mbpp/295
+2026-06-19 13:50:48,018 [INFO] [H5 s=14 p1] step1 L_spec=llama3.2 -> D'=62chars cache=HIT +0.35s
+2026-06-19 13:51:50,206 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:51:50,226 [INFO] [H5 s=14 p1] step2 L_test=qwen3-coder -> T'=978chars cache=miss +62.21s
+2026-06-19 13:51:54,471 [INFO] [H5 s=14 p1] step3 test_filter -> 0/4 tests kept (0/978 chars) +4.24s
+2026-06-19 13:51:56,239 [INFO]   written=43 skipped(resume)=0 errors=0 cache_hit_rate=60.43% (hits=84, misses=55)
+2026-06-19 13:51:56,239 [INFO] [H5 s=14 p2] START mbpp/295
+2026-06-19 13:51:56,536 [INFO] [H5 s=14 p2] step1 L_test=qwen3-coder -> T'=1144chars cache=HIT +0.30s
+2026-06-19 13:51:56,816 [INFO] [H5 s=14 p2] step2 L_code=qwen3-coder -> C'=411chars cache=HIT +0.28s
+2026-06-19 13:51:57,146 [INFO] [H5 s=14 p2] step3 ref_tests -> pass_rate=0.000 +0.33s
+2026-06-19 13:51:57,395 [INFO] [H5 s=14 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.25s
+2026-06-19 13:51:57,395 [INFO] [H5 s=14 p2] DONE elapsed=1.16s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:51:59,087 [INFO]   written=44 skipped(resume)=0 errors=0 cache_hit_rate=61.27% (hits=87, misses=55)
+2026-06-19 13:51:59,088 [INFO] [H5 s=14 p3] START mbpp/295
+2026-06-19 13:51:59,469 [INFO] [H5 s=14 p3] step1 L_test=qwen3-coder -> T'=840chars cache=HIT +0.38s
+2026-06-19 13:52:07,316 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:52:07,331 [INFO] [H5 s=14 p3] step2 L_spec=llama3.2 -> D'=50chars cache=miss +7.86s
+2026-06-19 13:52:07,378 [INFO] [H5 s=14 p3] step3 BERTScore -> F1=0.748 cache=miss +0.05s
+2026-06-19 13:52:47,616 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:52:47,629 [INFO] [H5 s=14 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +40.25s
+2026-06-19 13:52:47,629 [INFO] [H5 s=14 p3] DONE elapsed=48.54s bertscore=0.748 valid=True calls=3 hits=1
+2026-06-19 13:52:49,400 [INFO]   written=45 skipped(resume)=0 errors=0 cache_hit_rate=60.27% (hits=88, misses=58)
+2026-06-19 13:52:49,400 [INFO] [H5 s=15 p1] START mbpp/34
+2026-06-19 13:52:49,625 [INFO] [H5 s=15 p1] step1 L_spec=llama3.2 -> D'=127chars cache=HIT +0.22s
+2026-06-19 13:54:00,003 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:54:00,019 [INFO] [H5 s=15 p1] step2 L_test=qwen3-coder -> T'=1344chars cache=miss +70.39s
+2026-06-19 13:54:07,799 [INFO] [H5 s=15 p1] step3 test_filter -> 2/7 tests kept (307/1344 chars) +7.78s
+2026-06-19 13:54:34,002 [INFO] [H5 s=15 p1] step4 mutation -> kill_rate=0.333 (5/15 mutants) +26.20s
+2026-06-19 13:54:34,221 [INFO] [H5 s=15 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-19 13:54:34,222 [INFO] [H5 s=15 p1] DONE elapsed=104.82s kill_rate=0.333 calls=3 hits=2
+2026-06-19 13:54:36,034 [INFO]   written=46 skipped(resume)=0 errors=0 cache_hit_rate=60.40% (hits=90, misses=59)
+2026-06-19 13:54:36,035 [INFO] [H5 s=15 p2] START mbpp/34
+2026-06-19 13:54:36,289 [INFO] [H5 s=15 p2] step1 L_test=qwen3-coder -> T'=1193chars cache=HIT +0.25s
+2026-06-19 13:54:36,455 [INFO] [H5 s=15 p2] step2 L_code=qwen3-coder -> C'=261chars cache=HIT +0.17s
+2026-06-19 13:54:36,663 [INFO] [H5 s=15 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-19 13:54:36,862 [INFO] [H5 s=15 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 13:54:36,862 [INFO] [H5 s=15 p2] DONE elapsed=0.83s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:54:38,516 [INFO]   written=47 skipped(resume)=0 errors=0 cache_hit_rate=61.18% (hits=93, misses=59)
+2026-06-19 13:54:38,516 [INFO] [H5 s=15 p3] START mbpp/34
+2026-06-19 13:54:38,727 [INFO] [H5 s=15 p3] step1 L_test=qwen3-coder -> T'=1591chars cache=HIT +0.21s
+2026-06-19 13:54:47,086 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:54:47,101 [INFO] [H5 s=15 p3] step2 L_spec=llama3.2 -> D'=137chars cache=miss +8.37s
+2026-06-19 13:54:47,138 [INFO] [H5 s=15 p3] step3 BERTScore -> F1=0.443 cache=miss +0.04s
+2026-06-19 13:55:33,295 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:55:33,308 [INFO] [H5 s=15 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +46.17s
+2026-06-19 13:55:33,309 [INFO] [H5 s=15 p3] DONE elapsed=54.79s bertscore=0.443 valid=True calls=3 hits=1
+2026-06-19 13:55:35,023 [INFO]   written=48 skipped(resume)=0 errors=0 cache_hit_rate=60.26% (hits=94, misses=62)
+2026-06-19 13:55:35,023 [INFO] [H5 s=16 p1] START mbpp/198
+2026-06-19 13:55:35,315 [INFO] [H5 s=16 p1] step1 L_spec=llama3.2 -> D'=191chars cache=HIT +0.29s
+2026-06-19 13:56:42,567 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:56:42,601 [INFO] [H5 s=16 p1] step2 L_test=qwen3-coder -> T'=1715chars cache=miss +67.29s
+2026-06-19 13:56:51,148 [INFO] [H5 s=16 p1] step3 test_filter -> 3/8 tests kept (462/1715 chars) +8.55s
+2026-06-19 13:57:08,180 [INFO] [H5 s=16 p1] step4 mutation -> kill_rate=0.267 (4/15 mutants) +17.03s
+2026-06-19 13:57:08,357 [INFO] [H5 s=16 p1] step5 judge=deepseek-r1 -> rating=0 cache=HIT +0.18s
+2026-06-19 13:57:08,357 [INFO] [H5 s=16 p1] DONE elapsed=93.33s kill_rate=0.267 calls=3 hits=2
+2026-06-19 13:57:09,949 [INFO]   written=49 skipped(resume)=0 errors=0 cache_hit_rate=60.38% (hits=96, misses=63)
+2026-06-19 13:57:09,949 [INFO] [H5 s=16 p2] START mbpp/198
+2026-06-19 13:57:10,155 [INFO] [H5 s=16 p2] step1 L_test=qwen3-coder -> T'=2701chars cache=HIT +0.21s
+2026-06-19 13:57:10,415 [INFO] [H5 s=16 p2] step2 L_code=qwen3-coder -> C'=3433chars cache=HIT +0.26s
+2026-06-19 13:57:10,622 [INFO] [H5 s=16 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-19 13:57:10,857 [INFO] [H5 s=16 p2] step4 judge=deepseek-r1 -> rating=2 cache=HIT +0.23s
+2026-06-19 13:57:10,857 [INFO] [H5 s=16 p2] DONE elapsed=0.91s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:57:12,709 [INFO]   written=50 skipped(resume)=0 errors=0 cache_hit_rate=61.11% (hits=99, misses=63)
+2026-06-19 13:57:12,709 [INFO] [H5 s=16 p3] START mbpp/198
+2026-06-19 13:57:12,910 [INFO] [H5 s=16 p3] step1 L_test=qwen3-coder -> T'=1687chars cache=HIT +0.20s
+2026-06-19 13:57:21,468 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:57:21,479 [INFO] [H5 s=16 p3] step2 L_spec=llama3.2 -> D'=236chars cache=miss +8.57s
+2026-06-19 13:57:21,518 [INFO] [H5 s=16 p3] step3 BERTScore -> F1=0.134 cache=miss +0.04s
+2026-06-19 13:58:13,294 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:58:13,308 [INFO] [H5 s=16 p3] step4 judge=deepseek-r1 -> rating=0 cache=miss +51.79s
+2026-06-19 13:58:13,309 [INFO] [H5 s=16 p3] DONE elapsed=60.60s bertscore=0.134 valid=True calls=3 hits=1
+2026-06-19 13:58:15,049 [INFO]   written=51 skipped(resume)=0 errors=0 cache_hit_rate=60.24% (hits=100, misses=66)
+2026-06-19 13:58:15,050 [INFO] [H5 s=17 p1] START mbpp/310
+2026-06-19 13:58:15,239 [INFO] [H5 s=17 p1] step1 L_spec=llama3.2 -> D'=61chars cache=HIT +0.19s
+2026-06-19 13:59:18,043 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:59:18,061 [INFO] [H5 s=17 p1] step2 L_test=qwen3-coder -> T'=1180chars cache=miss +62.82s
+2026-06-19 13:59:24,541 [INFO] [H5 s=17 p1] step3 test_filter -> 6/6 tests kept (1187/1180 chars) +6.48s
+2026-06-19 13:59:26,687 [INFO] [H5 s=17 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.15s
+2026-06-19 13:59:27,114 [INFO] [H5 s=17 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.43s
+2026-06-19 13:59:27,114 [INFO] [H5 s=17 p1] DONE elapsed=72.06s kill_rate=1.000 calls=3 hits=2
+2026-06-19 13:59:28,719 [INFO]   written=52 skipped(resume)=0 errors=0 cache_hit_rate=60.36% (hits=102, misses=67)
+2026-06-19 13:59:28,719 [INFO] [H5 s=17 p2] START mbpp/310
+2026-06-19 13:59:29,034 [INFO] [H5 s=17 p2] step1 L_test=qwen3-coder -> T'=1043chars cache=HIT +0.31s
+2026-06-19 13:59:29,338 [INFO] [H5 s=17 p2] step2 L_code=qwen3-coder -> C'=49chars cache=HIT +0.30s
+2026-06-19 13:59:29,573 [INFO] [H5 s=17 p2] step3 ref_tests -> pass_rate=0.000 +0.23s
+2026-06-19 13:59:29,857 [INFO] [H5 s=17 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.28s
+2026-06-19 13:59:29,857 [INFO] [H5 s=17 p2] DONE elapsed=1.14s pass_rate=0.000 calls=3 hits=3
+2026-06-19 13:59:31,438 [INFO]   written=53 skipped(resume)=0 errors=0 cache_hit_rate=61.05% (hits=105, misses=67)
+2026-06-19 13:59:31,438 [INFO] [H5 s=17 p3] START mbpp/310
+2026-06-19 13:59:31,675 [INFO] [H5 s=17 p3] step1 L_test=qwen3-coder -> T'=1488chars cache=HIT +0.24s
+2026-06-19 13:59:40,130 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 13:59:40,141 [INFO] [H5 s=17 p3] step2 L_spec=llama3.2 -> D'=73chars cache=miss +8.47s
+2026-06-19 13:59:40,173 [INFO] [H5 s=17 p3] step3 BERTScore -> F1=-0.031 cache=miss +0.03s
+2026-06-19 14:00:26,177 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:00:26,193 [INFO] [H5 s=17 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +46.02s
+2026-06-19 14:00:26,193 [INFO] [H5 s=17 p3] DONE elapsed=54.75s bertscore=-0.031 valid=True calls=3 hits=1
+2026-06-19 14:00:27,860 [INFO]   written=54 skipped(resume)=0 errors=0 cache_hit_rate=60.23% (hits=106, misses=70)
+2026-06-19 14:00:27,860 [INFO] [H5 s=18 p1] START mbpp/87
+2026-06-19 14:00:28,263 [INFO] [H5 s=18 p1] step1 L_spec=llama3.2 -> D'=242chars cache=HIT +0.40s
+2026-06-19 14:01:48,520 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:01:48,538 [INFO] [H5 s=18 p1] step2 L_test=qwen3-coder -> T'=2973chars cache=miss +80.27s
+2026-06-19 14:01:56,212 [INFO] [H5 s=18 p1] step3 test_filter -> 4/7 tests kept (1261/2973 chars) +7.67s
+2026-06-19 14:01:58,349 [INFO] [H5 s=18 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.14s
+2026-06-19 14:02:51,389 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:02:51,405 [INFO] [H5 s=18 p1] step5 judge=deepseek-r1 -> rating=3 cache=miss +53.06s
+2026-06-19 14:02:51,406 [INFO] [H5 s=18 p1] DONE elapsed=143.55s kill_rate=1.000 calls=3 hits=1
+2026-06-19 14:02:53,209 [INFO]   written=55 skipped(resume)=0 errors=0 cache_hit_rate=59.78% (hits=107, misses=72)
+2026-06-19 14:02:53,209 [INFO] [H5 s=18 p2] START mbpp/87
+2026-06-19 14:02:53,486 [INFO] [H5 s=18 p2] step1 L_test=qwen3-coder -> T'=1972chars cache=HIT +0.28s
+2026-06-19 14:02:53,715 [INFO] [H5 s=18 p2] step2 L_code=qwen3-coder -> C'=567chars cache=HIT +0.23s
+2026-06-19 14:02:53,976 [INFO] [H5 s=18 p2] step3 ref_tests -> pass_rate=0.000 +0.26s
+2026-06-19 14:02:54,242 [INFO] [H5 s=18 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.27s
+2026-06-19 14:02:54,242 [INFO] [H5 s=18 p2] DONE elapsed=1.03s pass_rate=0.000 calls=3 hits=3
+2026-06-19 14:02:55,773 [INFO]   written=56 skipped(resume)=0 errors=0 cache_hit_rate=60.44% (hits=110, misses=72)
+2026-06-19 14:02:55,773 [INFO] [H5 s=18 p3] START mbpp/87
+2026-06-19 14:02:56,053 [INFO] [H5 s=18 p3] step1 L_test=qwen3-coder -> T'=3191chars cache=HIT +0.28s
+2026-06-19 14:03:04,170 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:03:04,189 [INFO] [H5 s=18 p3] step2 L_spec=llama3.2 -> D'=109chars cache=miss +8.14s
+2026-06-19 14:03:04,222 [INFO] [H5 s=18 p3] step3 BERTScore -> F1=0.445 cache=miss +0.03s
+2026-06-19 14:03:57,237 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:03:57,251 [INFO] [H5 s=18 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +53.03s
+2026-06-19 14:03:57,252 [INFO] [H5 s=18 p3] DONE elapsed=61.48s bertscore=0.445 valid=True calls=3 hits=1
+2026-06-19 14:03:58,898 [INFO]   written=57 skipped(resume)=0 errors=0 cache_hit_rate=59.68% (hits=111, misses=75)
+2026-06-19 14:03:58,899 [INFO] [H5 s=19 p1] START mbpp/58
+2026-06-19 14:03:59,133 [INFO] [H5 s=19 p1] step1 L_spec=llama3.2 -> D'=127chars cache=HIT +0.23s
+2026-06-19 14:05:00,083 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:05:00,172 [INFO] [H5 s=19 p1] step2 L_test=qwen3-coder -> T'=1599chars cache=miss +61.04s
+2026-06-19 14:05:05,671 [INFO] [H5 s=19 p1] step3 test_filter -> 4/5 tests kept (1330/1599 chars) +5.50s
+2026-06-19 14:05:09,999 [INFO] [H5 s=19 p1] step4 mutation -> kill_rate=0.667 (2/3 mutants) +4.33s
+2026-06-19 14:05:10,254 [INFO] [H5 s=19 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.25s
+2026-06-19 14:05:10,254 [INFO] [H5 s=19 p1] DONE elapsed=71.36s kill_rate=0.667 calls=3 hits=2
+2026-06-19 14:05:11,851 [INFO]   written=58 skipped(resume)=0 errors=0 cache_hit_rate=59.79% (hits=113, misses=76)
+2026-06-19 14:05:11,851 [INFO] [H5 s=19 p2] START mbpp/58
+2026-06-19 14:05:12,069 [INFO] [H5 s=19 p2] step1 L_test=qwen3-coder -> T'=1185chars cache=HIT +0.22s
+2026-06-19 14:05:12,395 [INFO] [H5 s=19 p2] step2 L_code=qwen3-coder -> C'=537chars cache=HIT +0.33s
+2026-06-19 14:05:12,637 [INFO] [H5 s=19 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-19 14:05:12,841 [INFO] [H5 s=19 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 14:05:12,842 [INFO] [H5 s=19 p2] DONE elapsed=0.99s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:05:14,544 [INFO]   written=59 skipped(resume)=0 errors=0 cache_hit_rate=60.42% (hits=116, misses=76)
+2026-06-19 14:05:14,544 [INFO] [H5 s=19 p3] START mbpp/58
+2026-06-19 14:05:14,792 [INFO] [H5 s=19 p3] step1 L_test=qwen3-coder -> T'=2225chars cache=HIT +0.25s
+2026-06-19 14:05:23,187 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:05:23,199 [INFO] [H5 s=19 p3] step2 L_spec=llama3.2 -> D'=120chars cache=miss +8.41s
+2026-06-19 14:05:23,250 [INFO] [H5 s=19 p3] step3 BERTScore -> F1=0.467 cache=miss +0.05s
+2026-06-19 14:06:00,667 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:06:00,680 [INFO] [H5 s=19 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +37.43s
+2026-06-19 14:06:00,680 [INFO] [H5 s=19 p3] DONE elapsed=46.14s bertscore=0.467 valid=True calls=3 hits=1
+2026-06-19 14:06:02,485 [INFO]   written=60 skipped(resume)=0 errors=0 cache_hit_rate=59.69% (hits=117, misses=79)
+2026-06-19 14:06:02,485 [INFO] [H5 s=20 p1] START mbpp/27
+2026-06-19 14:06:02,724 [INFO] [H5 s=20 p1] step1 L_spec=llama3.2 -> D'=130chars cache=HIT +0.24s
+2026-06-19 14:07:00,555 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:07:00,577 [INFO] [H5 s=20 p1] step2 L_test=qwen3-coder -> T'=1514chars cache=miss +57.85s
+2026-06-19 14:07:09,621 [INFO] [H5 s=20 p1] step3 test_filter -> 8/8 tests kept (1523/1514 chars) +9.04s
+2026-06-19 14:07:11,809 [INFO] [H5 s=20 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.19s
+2026-06-19 14:07:57,836 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:07:57,864 [INFO] [H5 s=20 p1] step5 judge=deepseek-r1 -> rating=4 cache=miss +46.05s
+2026-06-19 14:07:57,864 [INFO] [H5 s=20 p1] DONE elapsed=115.38s kill_rate=1.000 calls=3 hits=1
+2026-06-19 14:07:59,537 [INFO]   written=61 skipped(resume)=0 errors=0 cache_hit_rate=59.30% (hits=118, misses=81)
+2026-06-19 14:07:59,538 [INFO] [H5 s=20 p2] START mbpp/27
+2026-06-19 14:07:59,754 [INFO] [H5 s=20 p2] step1 L_test=qwen3-coder -> T'=1383chars cache=HIT +0.22s
+2026-06-19 14:08:00,038 [INFO] [H5 s=20 p2] step2 L_code=qwen3-coder -> C'=439chars cache=HIT +0.28s
+2026-06-19 14:08:00,302 [INFO] [H5 s=20 p2] step3 ref_tests -> pass_rate=1.000 +0.26s
+2026-06-19 14:08:00,530 [INFO] [H5 s=20 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.23s
+2026-06-19 14:08:00,530 [INFO] [H5 s=20 p2] DONE elapsed=0.99s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:08:02,239 [INFO]   written=62 skipped(resume)=0 errors=0 cache_hit_rate=59.90% (hits=121, misses=81)
+2026-06-19 14:08:02,239 [INFO] [H5 s=20 p3] START mbpp/27
+2026-06-19 14:08:02,580 [INFO] [H5 s=20 p3] step1 L_test=qwen3-coder -> T'=1324chars cache=HIT +0.34s
+2026-06-19 14:08:10,548 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:08:10,561 [INFO] [H5 s=20 p3] step2 L_spec=llama3.2 -> D'=76chars cache=miss +7.98s
+2026-06-19 14:08:10,593 [INFO] [H5 s=20 p3] step3 BERTScore -> F1=-0.067 cache=miss +0.03s
+2026-06-19 14:08:56,570 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:08:56,583 [INFO] [H5 s=20 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +45.99s
+2026-06-19 14:08:56,583 [INFO] [H5 s=20 p3] DONE elapsed=54.34s bertscore=-0.067 valid=True calls=3 hits=1
+2026-06-19 14:08:58,365 [INFO]   written=63 skipped(resume)=0 errors=0 cache_hit_rate=59.22% (hits=122, misses=84)
+2026-06-19 14:08:58,366 [INFO] [H5 s=21 p1] START mbpp/473
+2026-06-19 14:08:58,641 [INFO] [H5 s=21 p1] step1 L_spec=llama3.2 -> D'=202chars cache=HIT +0.28s
+2026-06-19 14:10:01,516 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:10:01,532 [INFO] [H5 s=21 p1] step2 L_test=qwen3-coder -> T'=1625chars cache=miss +62.89s
+2026-06-19 14:10:11,258 [INFO] [H5 s=21 p1] step3 test_filter -> 0/9 tests kept (0/1625 chars) +9.73s
+2026-06-19 14:10:12,869 [INFO]   written=64 skipped(resume)=0 errors=0 cache_hit_rate=59.13% (hits=123, misses=85)
+2026-06-19 14:10:12,869 [INFO] [H5 s=21 p2] START mbpp/473
+2026-06-19 14:10:13,076 [INFO] [H5 s=21 p2] step1 L_test=qwen3-coder -> T'=1822chars cache=HIT +0.21s
+2026-06-19 14:10:13,313 [INFO] [H5 s=21 p2] step2 L_code=qwen3-coder -> C'=582chars cache=HIT +0.24s
+2026-06-19 14:10:13,525 [INFO] [H5 s=21 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-19 14:10:13,806 [INFO] [H5 s=21 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.28s
+2026-06-19 14:10:13,806 [INFO] [H5 s=21 p2] DONE elapsed=0.94s pass_rate=0.000 calls=3 hits=3
+2026-06-19 14:10:15,543 [INFO]   written=65 skipped(resume)=0 errors=0 cache_hit_rate=59.72% (hits=126, misses=85)
+2026-06-19 14:10:15,543 [INFO] [H5 s=21 p3] START mbpp/473
+2026-06-19 14:10:15,770 [INFO] [H5 s=21 p3] step1 L_test=qwen3-coder -> T'=2352chars cache=HIT +0.23s
+2026-06-19 14:10:24,632 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:10:24,645 [INFO] [H5 s=21 p3] step2 L_spec=llama3.2 -> D'=215chars cache=miss +8.88s
+2026-06-19 14:10:24,783 [INFO] [H5 s=21 p3] step3 BERTScore -> F1=-0.074 cache=miss +0.14s
+2026-06-19 14:11:13,624 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:11:13,639 [INFO] [H5 s=21 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +48.86s
+2026-06-19 14:11:13,639 [INFO] [H5 s=21 p3] DONE elapsed=58.10s bertscore=-0.074 valid=True calls=3 hits=1
+2026-06-19 14:11:15,185 [INFO]   written=66 skipped(resume)=0 errors=0 cache_hit_rate=59.07% (hits=127, misses=88)
+2026-06-19 14:11:15,185 [INFO] [H5 s=22 p1] START mbpp/261
+2026-06-19 14:11:15,533 [INFO] [H5 s=22 p1] step1 L_spec=llama3.2 -> D'=134chars cache=HIT +0.35s
+2026-06-19 14:12:14,873 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:12:14,890 [INFO] [H5 s=22 p1] step2 L_test=qwen3-coder -> T'=1363chars cache=miss +59.36s
+2026-06-19 14:12:23,345 [INFO] [H5 s=22 p1] step3 test_filter -> 6/8 tests kept (988/1363 chars) +8.45s
+2026-06-19 14:12:26,609 [INFO] [H5 s=22 p1] step4 mutation -> kill_rate=1.000 (2/2 mutants) +3.26s
+2026-06-19 14:12:26,796 [INFO] [H5 s=22 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.19s
+2026-06-19 14:12:26,796 [INFO] [H5 s=22 p1] DONE elapsed=71.61s kill_rate=1.000 calls=3 hits=2
+2026-06-19 14:12:28,681 [INFO]   written=67 skipped(resume)=0 errors=0 cache_hit_rate=59.17% (hits=129, misses=89)
+2026-06-19 14:12:28,681 [INFO] [H5 s=22 p2] START mbpp/261
+2026-06-19 14:12:28,910 [INFO] [H5 s=22 p2] step1 L_test=qwen3-coder -> T'=1470chars cache=HIT +0.23s
+2026-06-19 14:12:29,141 [INFO] [H5 s=22 p2] step2 L_code=qwen3-coder -> C'=547chars cache=HIT +0.23s
+2026-06-19 14:12:29,381 [INFO] [H5 s=22 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-19 14:12:29,564 [INFO] [H5 s=22 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.18s
+2026-06-19 14:12:29,565 [INFO] [H5 s=22 p2] DONE elapsed=0.88s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:12:31,160 [INFO]   written=68 skipped(resume)=0 errors=0 cache_hit_rate=59.73% (hits=132, misses=89)
+2026-06-19 14:12:31,161 [INFO] [H5 s=22 p3] START mbpp/261
+2026-06-19 14:12:31,435 [INFO] [H5 s=22 p3] step1 L_test=qwen3-coder -> T'=1513chars cache=HIT +0.27s
+2026-06-19 14:12:39,475 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:12:39,490 [INFO] [H5 s=22 p3] step2 L_spec=llama3.2 -> D'=135chars cache=miss +8.05s
+2026-06-19 14:12:39,523 [INFO] [H5 s=22 p3] step3 BERTScore -> F1=0.179 cache=miss +0.03s
+2026-06-19 14:13:18,653 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:13:18,681 [INFO] [H5 s=22 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +39.16s
+2026-06-19 14:13:18,681 [INFO] [H5 s=22 p3] DONE elapsed=47.52s bertscore=0.179 valid=True calls=3 hits=1
+2026-06-19 14:13:20,531 [INFO]   written=69 skipped(resume)=0 errors=0 cache_hit_rate=59.11% (hits=133, misses=92)
+2026-06-19 14:13:20,531 [INFO] [H5 s=23 p1] START mbpp/394
+2026-06-19 14:13:20,713 [INFO] [H5 s=23 p1] step1 L_spec=llama3.2 -> D'=203chars cache=HIT +0.18s
+2026-06-19 14:14:13,382 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:14:13,392 [INFO] [H5 s=23 p1] step2 L_test=qwen3-coder -> T'=1455chars cache=miss +52.68s
+2026-06-19 14:14:19,652 [INFO] [H5 s=23 p1] step3 test_filter -> 5/6 tests kept (1250/1455 chars) +6.26s
+2026-06-19 14:14:23,964 [INFO] [H5 s=23 p1] step4 mutation -> kill_rate=1.000 (3/3 mutants) +4.31s
+2026-06-19 14:14:24,226 [INFO] [H5 s=23 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.26s
+2026-06-19 14:14:24,226 [INFO] [H5 s=23 p1] DONE elapsed=63.69s kill_rate=1.000 calls=3 hits=2
+2026-06-19 14:14:26,087 [INFO]   written=70 skipped(resume)=0 errors=0 cache_hit_rate=59.21% (hits=135, misses=93)
+2026-06-19 14:14:26,087 [INFO] [H5 s=23 p2] START mbpp/394
+2026-06-19 14:14:26,343 [INFO] [H5 s=23 p2] step1 L_test=qwen3-coder -> T'=1431chars cache=HIT +0.26s
+2026-06-19 14:14:26,572 [INFO] [H5 s=23 p2] step2 L_code=qwen3-coder -> C'=329chars cache=HIT +0.23s
+2026-06-19 14:14:26,768 [INFO] [H5 s=23 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-19 14:14:27,068 [INFO] [H5 s=23 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.30s
+2026-06-19 14:14:27,068 [INFO] [H5 s=23 p2] DONE elapsed=0.98s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:14:28,832 [INFO]   written=71 skipped(resume)=0 errors=0 cache_hit_rate=59.74% (hits=138, misses=93)
+2026-06-19 14:14:28,832 [INFO] [H5 s=23 p3] START mbpp/394
+2026-06-19 14:14:29,195 [INFO] [H5 s=23 p3] step1 L_test=qwen3-coder -> T'=1496chars cache=HIT +0.36s
+2026-06-19 14:14:37,705 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:14:37,720 [INFO] [H5 s=23 p3] step2 L_spec=llama3.2 -> D'=286chars cache=miss +8.52s
+2026-06-19 14:14:37,758 [INFO] [H5 s=23 p3] step3 BERTScore -> F1=0.366 cache=miss +0.04s
+2026-06-19 14:15:14,004 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:15:14,015 [INFO] [H5 s=23 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +36.26s
+2026-06-19 14:15:14,015 [INFO] [H5 s=23 p3] DONE elapsed=45.18s bertscore=0.366 valid=True calls=3 hits=1
+2026-06-19 14:15:15,813 [INFO]   written=72 skipped(resume)=0 errors=0 cache_hit_rate=59.15% (hits=139, misses=96)
+2026-06-19 14:15:15,813 [INFO] [H5 s=24 p1] START mbpp/272
+2026-06-19 14:15:16,001 [INFO] [H5 s=24 p1] step1 L_spec=llama3.2 -> D'=49chars cache=HIT +0.19s
+2026-06-19 14:16:05,954 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:16:05,968 [INFO] [H5 s=24 p1] step2 L_test=qwen3-coder -> T'=1136chars cache=miss +49.97s
+2026-06-19 14:16:14,486 [INFO] [H5 s=24 p1] step3 test_filter -> 7/8 tests kept (1024/1136 chars) +8.52s
+2026-06-19 14:16:17,629 [INFO] [H5 s=24 p1] step4 mutation -> kill_rate=1.000 (2/2 mutants) +3.14s
+2026-06-19 14:16:17,808 [INFO] [H5 s=24 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-19 14:16:17,808 [INFO] [H5 s=24 p1] DONE elapsed=62.00s kill_rate=1.000 calls=3 hits=2
+2026-06-19 14:16:19,360 [INFO]   written=73 skipped(resume)=0 errors=0 cache_hit_rate=59.24% (hits=141, misses=97)
+2026-06-19 14:16:19,361 [INFO] [H5 s=24 p2] START mbpp/272
+2026-06-19 14:16:19,620 [INFO] [H5 s=24 p2] step1 L_test=qwen3-coder -> T'=1204chars cache=HIT +0.26s
+2026-06-19 14:16:19,809 [INFO] [H5 s=24 p2] step2 L_code=qwen3-coder -> C'=521chars cache=HIT +0.19s
+2026-06-19 14:16:20,085 [INFO] [H5 s=24 p2] step3 ref_tests -> pass_rate=1.000 +0.28s
+2026-06-19 14:16:20,305 [INFO] [H5 s=24 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-19 14:16:20,305 [INFO] [H5 s=24 p2] DONE elapsed=0.94s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:16:21,990 [INFO]   written=74 skipped(resume)=0 errors=0 cache_hit_rate=59.75% (hits=144, misses=97)
+2026-06-19 14:16:21,990 [INFO] [H5 s=24 p3] START mbpp/272
+2026-06-19 14:16:22,255 [INFO] [H5 s=24 p3] step1 L_test=qwen3-coder -> T'=1372chars cache=HIT +0.27s
+2026-06-19 14:16:30,447 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:16:30,460 [INFO] [H5 s=24 p3] step2 L_spec=llama3.2 -> D'=132chars cache=miss +8.20s
+2026-06-19 14:16:30,493 [INFO] [H5 s=24 p3] step3 BERTScore -> F1=0.192 cache=miss +0.03s
+2026-06-19 14:17:18,132 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:17:18,157 [INFO] [H5 s=24 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +47.66s
+2026-06-19 14:17:18,157 [INFO] [H5 s=24 p3] DONE elapsed=56.17s bertscore=0.192 valid=True calls=3 hits=1
+2026-06-19 14:17:20,031 [INFO]   written=75 skipped(resume)=0 errors=0 cache_hit_rate=59.18% (hits=145, misses=100)
+2026-06-19 14:17:20,032 [INFO] [H5 s=25 p1] START mbpp/74
+2026-06-19 14:17:20,322 [INFO] [H5 s=25 p1] step1 L_spec=llama3.2 -> D'=77chars cache=HIT +0.29s
+2026-06-19 14:18:12,900 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:18:12,912 [INFO] [H5 s=25 p1] step2 L_test=qwen3-coder -> T'=1464chars cache=miss +52.59s
+2026-06-19 14:18:19,651 [INFO] [H5 s=25 p1] step3 test_filter -> 6/7 tests kept (1284/1464 chars) +6.74s
+2026-06-19 14:18:36,907 [INFO] [H5 s=25 p1] step4 mutation -> kill_rate=0.800 (12/15 mutants) +17.26s
+2026-06-19 14:18:37,365 [INFO] [H5 s=25 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.46s
+2026-06-19 14:18:37,366 [INFO] [H5 s=25 p1] DONE elapsed=77.33s kill_rate=0.800 calls=3 hits=2
+2026-06-19 14:18:38,971 [INFO]   written=76 skipped(resume)=0 errors=0 cache_hit_rate=59.27% (hits=147, misses=101)
+2026-06-19 14:18:38,971 [INFO] [H5 s=25 p2] START mbpp/74
+2026-06-19 14:18:39,258 [INFO] [H5 s=25 p2] step1 L_test=qwen3-coder -> T'=1486chars cache=HIT +0.29s
+2026-06-19 14:18:39,449 [INFO] [H5 s=25 p2] step2 L_code=qwen3-coder -> C'=733chars cache=HIT +0.19s
+2026-06-19 14:18:39,856 [INFO] [H5 s=25 p2] step3 ref_tests -> pass_rate=0.000 +0.41s
+2026-06-19 14:18:40,113 [INFO] [H5 s=25 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.26s
+2026-06-19 14:18:40,114 [INFO] [H5 s=25 p2] DONE elapsed=1.14s pass_rate=0.000 calls=3 hits=3
+2026-06-19 14:18:41,869 [INFO]   written=77 skipped(resume)=0 errors=0 cache_hit_rate=59.76% (hits=150, misses=101)
+2026-06-19 14:18:41,869 [INFO] [H5 s=25 p3] START mbpp/74
+2026-06-19 14:18:42,343 [INFO] [H5 s=25 p3] step1 L_test=qwen3-coder -> T'=2005chars cache=HIT +0.47s
+2026-06-19 14:18:50,723 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:18:50,733 [INFO] [H5 s=25 p3] step2 L_spec=llama3.2 -> D'=184chars cache=miss +8.39s
+2026-06-19 14:18:50,773 [INFO] [H5 s=25 p3] step3 BERTScore -> F1=0.302 cache=miss +0.04s
+2026-06-19 14:19:32,654 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:19:32,668 [INFO] [H5 s=25 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +41.89s
+2026-06-19 14:19:32,668 [INFO] [H5 s=25 p3] DONE elapsed=50.80s bertscore=0.302 valid=True calls=3 hits=1
+2026-06-19 14:19:34,306 [INFO]   written=78 skipped(resume)=0 errors=0 cache_hit_rate=59.22% (hits=151, misses=104)
+2026-06-19 14:19:34,307 [INFO] [H5 s=26 p1] START humaneval/HumanEval/52
+2026-06-19 14:19:34,547 [INFO] [H5 s=26 p1] step1 L_spec=llama3.2 -> D'=168chars cache=HIT +0.24s
+2026-06-19 14:20:27,367 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:20:27,380 [INFO] [H5 s=26 p1] step2 L_test=qwen3-coder -> T'=1376chars cache=miss +52.83s
+2026-06-19 14:20:32,090 [INFO] [H5 s=26 p1] step3 test_filter -> 5/5 tests kept (1382/1376 chars) +4.71s
+2026-06-19 14:20:38,512 [INFO] [H5 s=26 p1] step4 mutation -> kill_rate=1.000 (5/5 mutants) +6.42s
+2026-06-19 14:20:38,691 [INFO] [H5 s=26 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-19 14:20:38,692 [INFO] [H5 s=26 p1] DONE elapsed=64.39s kill_rate=1.000 calls=3 hits=2
+2026-06-19 14:20:40,270 [INFO]   written=79 skipped(resume)=0 errors=0 cache_hit_rate=59.30% (hits=153, misses=105)
+2026-06-19 14:20:40,270 [INFO] [H5 s=26 p2] START humaneval/HumanEval/52
+2026-06-19 14:20:40,484 [INFO] [H5 s=26 p2] step1 L_test=qwen3-coder -> T'=878chars cache=HIT +0.21s
+2026-06-19 14:20:40,881 [INFO] [H5 s=26 p2] step2 L_code=qwen3-coder -> C'=117chars cache=HIT +0.40s
+2026-06-19 14:20:41,151 [INFO] [H5 s=26 p2] step3 ref_tests -> pass_rate=1.000 +0.27s
+2026-06-19 14:20:41,430 [INFO] [H5 s=26 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.28s
+2026-06-19 14:20:41,430 [INFO] [H5 s=26 p2] DONE elapsed=1.16s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:20:43,156 [INFO]   written=80 skipped(resume)=0 errors=0 cache_hit_rate=59.77% (hits=156, misses=105)
+2026-06-19 14:20:43,156 [INFO] [H5 s=26 p3] START humaneval/HumanEval/52
+2026-06-19 14:20:43,358 [INFO] [H5 s=26 p3] step1 L_test=qwen3-coder -> T'=1638chars cache=HIT +0.20s
+2026-06-19 14:20:51,765 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:20:51,777 [INFO] [H5 s=26 p3] step2 L_spec=llama3.2 -> D'=215chars cache=miss +8.42s
+2026-06-19 14:20:51,819 [INFO] [H5 s=26 p3] step3 BERTScore -> F1=0.022 cache=miss +0.04s
+2026-06-19 14:21:38,729 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:21:38,740 [INFO] [H5 s=26 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +46.92s
+2026-06-19 14:21:38,741 [INFO] [H5 s=26 p3] DONE elapsed=55.58s bertscore=0.022 valid=True calls=3 hits=1
+2026-06-19 14:21:40,566 [INFO]   written=81 skipped(resume)=0 errors=0 cache_hit_rate=59.25% (hits=157, misses=108)
+2026-06-19 14:21:40,566 [INFO] [H5 s=27 p1] START mbpp/382
+2026-06-19 14:21:40,813 [INFO] [H5 s=27 p1] step1 L_spec=llama3.2 -> D'=122chars cache=HIT +0.25s
+2026-06-19 14:22:39,962 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:22:39,976 [INFO] [H5 s=27 p1] step2 L_test=qwen3-coder -> T'=1712chars cache=miss +59.16s
+2026-06-19 14:22:45,562 [INFO] [H5 s=27 p1] step3 test_filter -> 0/5 tests kept (0/1712 chars) +5.59s
+2026-06-19 14:22:47,170 [INFO]   written=82 skipped(resume)=0 errors=0 cache_hit_rate=59.18% (hits=158, misses=109)
+2026-06-19 14:22:47,170 [INFO] [H5 s=27 p2] START mbpp/382
+2026-06-19 14:22:47,374 [INFO] [H5 s=27 p2] step1 L_test=qwen3-coder -> T'=1083chars cache=HIT +0.20s
+2026-06-19 14:22:47,682 [INFO] [H5 s=27 p2] step2 L_code=qwen3-coder -> C'=496chars cache=HIT +0.31s
+2026-06-19 14:22:47,946 [INFO] [H5 s=27 p2] step3 ref_tests -> pass_rate=1.000 +0.26s
+2026-06-19 14:22:48,157 [INFO] [H5 s=27 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-19 14:22:48,157 [INFO] [H5 s=27 p2] DONE elapsed=0.99s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:22:49,735 [INFO]   written=83 skipped(resume)=0 errors=0 cache_hit_rate=59.63% (hits=161, misses=109)
+2026-06-19 14:22:49,735 [INFO] [H5 s=27 p3] START mbpp/382
+2026-06-19 14:22:49,927 [INFO] [H5 s=27 p3] step1 L_test=qwen3-coder -> T'=1298chars cache=HIT +0.19s
+2026-06-19 14:22:58,450 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:22:58,462 [INFO] [H5 s=27 p3] step2 L_spec=llama3.2 -> D'=143chars cache=miss +8.53s
+2026-06-19 14:22:58,499 [INFO] [H5 s=27 p3] step3 BERTScore -> F1=0.351 cache=miss +0.04s
+2026-06-19 14:23:46,064 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:23:46,078 [INFO] [H5 s=27 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +47.58s
+2026-06-19 14:23:46,078 [INFO] [H5 s=27 p3] DONE elapsed=56.34s bertscore=0.351 valid=True calls=3 hits=1
+2026-06-19 14:23:48,014 [INFO]   written=84 skipped(resume)=0 errors=0 cache_hit_rate=59.12% (hits=162, misses=112)
+2026-06-19 14:23:48,014 [INFO] [H5 s=28 p1] START humaneval/HumanEval/12
+2026-06-19 14:23:48,213 [INFO] [H5 s=28 p1] step1 L_spec=llama3.2 -> D'=156chars cache=HIT +0.20s
+2026-06-19 14:24:37,823 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:24:37,837 [INFO] [H5 s=28 p1] step2 L_test=qwen3-coder -> T'=1375chars cache=miss +49.62s
+2026-06-19 14:24:45,483 [INFO] [H5 s=28 p1] step3 test_filter -> 7/7 tests kept (1383/1375 chars) +7.65s
+2026-06-19 14:24:49,905 [INFO] [H5 s=28 p1] step4 mutation -> kill_rate=0.667 (2/3 mutants) +4.42s
+2026-06-19 14:24:50,125 [INFO] [H5 s=28 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.22s
+2026-06-19 14:24:50,125 [INFO] [H5 s=28 p1] DONE elapsed=62.11s kill_rate=0.667 calls=3 hits=2
+2026-06-19 14:24:51,910 [INFO]   written=85 skipped(resume)=0 errors=0 cache_hit_rate=59.21% (hits=164, misses=113)
+2026-06-19 14:24:51,911 [INFO] [H5 s=28 p2] START humaneval/HumanEval/12
+2026-06-19 14:24:52,126 [INFO] [H5 s=28 p2] step1 L_test=qwen3-coder -> T'=1125chars cache=HIT +0.22s
+2026-06-19 14:24:52,563 [INFO] [H5 s=28 p2] step2 L_code=qwen3-coder -> C'=266chars cache=HIT +0.44s
+2026-06-19 14:24:52,763 [INFO] [H5 s=28 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-19 14:24:53,006 [INFO] [H5 s=28 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.24s
+2026-06-19 14:24:53,007 [INFO] [H5 s=28 p2] DONE elapsed=1.10s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:24:54,868 [INFO]   written=86 skipped(resume)=0 errors=0 cache_hit_rate=59.64% (hits=167, misses=113)
+2026-06-19 14:24:54,868 [INFO] [H5 s=28 p3] START humaneval/HumanEval/12
+2026-06-19 14:24:55,056 [INFO] [H5 s=28 p3] step1 L_test=qwen3-coder -> T'=1515chars cache=HIT +0.19s
+2026-06-19 14:25:03,542 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:25:03,555 [INFO] [H5 s=28 p3] step2 L_spec=llama3.2 -> D'=173chars cache=miss +8.50s
+2026-06-19 14:25:03,601 [INFO] [H5 s=28 p3] step3 BERTScore -> F1=0.160 cache=miss +0.05s
+2026-06-19 14:26:01,730 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:26:01,741 [INFO] [H5 s=28 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +58.14s
+2026-06-19 14:26:01,741 [INFO] [H5 s=28 p3] DONE elapsed=66.87s bertscore=0.160 valid=True calls=3 hits=1
+2026-06-19 14:26:03,342 [INFO]   written=87 skipped(resume)=0 errors=0 cache_hit_rate=59.15% (hits=168, misses=116)
+2026-06-19 14:26:03,342 [INFO] [H5 s=29 p1] START mbpp/100
+2026-06-19 14:26:03,582 [INFO] [H5 s=29 p1] step1 L_spec=llama3.2 -> D'=62chars cache=HIT +0.24s
+2026-06-19 14:26:55,103 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:26:55,129 [INFO] [H5 s=29 p1] step2 L_test=qwen3-coder -> T'=1124chars cache=miss +51.55s
+2026-06-19 14:26:59,436 [INFO] [H5 s=29 p1] step3 test_filter -> 4/4 tests kept (1129/1124 chars) +4.31s
+2026-06-19 14:27:15,035 [INFO] [H5 s=29 p1] step4 mutation -> kill_rate=0.800 (4/5 mutants) +15.60s
+2026-06-19 14:27:15,586 [INFO] [H5 s=29 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.55s
+2026-06-19 14:27:15,586 [INFO] [H5 s=29 p1] DONE elapsed=72.24s kill_rate=0.800 calls=3 hits=2
+2026-06-19 14:27:17,392 [INFO]   written=88 skipped(resume)=0 errors=0 cache_hit_rate=59.23% (hits=170, misses=117)
+2026-06-19 14:27:17,393 [INFO] [H5 s=29 p2] START mbpp/100
+2026-06-19 14:27:17,735 [INFO] [H5 s=29 p2] step1 L_test=qwen3-coder -> T'=1160chars cache=HIT +0.34s
+2026-06-19 14:27:17,943 [INFO] [H5 s=29 p2] step2 L_code=qwen3-coder -> C'=511chars cache=HIT +0.21s
+2026-06-19 14:27:18,144 [INFO] [H5 s=29 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-19 14:27:18,395 [INFO] [H5 s=29 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.25s
+2026-06-19 14:27:18,396 [INFO] [H5 s=29 p2] DONE elapsed=1.00s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:27:20,075 [INFO]   written=89 skipped(resume)=0 errors=0 cache_hit_rate=59.66% (hits=173, misses=117)
+2026-06-19 14:27:20,076 [INFO] [H5 s=29 p3] START mbpp/100
+2026-06-19 14:27:20,320 [INFO] [H5 s=29 p3] step1 L_test=qwen3-coder -> T'=1918chars cache=HIT +0.24s
+2026-06-19 14:27:28,590 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:27:28,602 [INFO] [H5 s=29 p3] step2 L_spec=llama3.2 -> D'=153chars cache=miss +8.28s
+2026-06-19 14:27:28,658 [INFO] [H5 s=29 p3] step3 BERTScore -> F1=0.426 cache=miss +0.06s
+2026-06-19 14:28:18,022 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:28:18,033 [INFO] [H5 s=29 p3] step4 judge=deepseek-r1 -> rating=2 cache=miss +49.37s
+2026-06-19 14:28:18,033 [INFO] [H5 s=29 p3] DONE elapsed=57.96s bertscore=0.426 valid=True calls=3 hits=1
+2026-06-19 14:28:19,973 [INFO]   written=90 skipped(resume)=0 errors=0 cache_hit_rate=59.18% (hits=174, misses=120)
+2026-06-19 14:28:19,973 [INFO] [H5 s=30 p1] START humaneval/HumanEval/149
+2026-06-19 14:28:20,193 [INFO] [H5 s=30 p1] step1 L_spec=llama3.2 -> D'=134chars cache=HIT +0.22s
+2026-06-19 14:29:21,382 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:29:21,397 [INFO] [H5 s=30 p1] step2 L_test=qwen3-coder -> T'=2263chars cache=miss +61.20s
+2026-06-19 14:29:32,432 [INFO] [H5 s=30 p1] step3 test_filter -> 9/10 tests kept (1939/2263 chars) +11.03s
+2026-06-19 14:29:39,008 [INFO] [H5 s=30 p1] step4 mutation -> kill_rate=1.000 (5/5 mutants) +6.58s
+2026-06-19 14:29:39,298 [INFO] [H5 s=30 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.29s
+2026-06-19 14:29:39,298 [INFO] [H5 s=30 p1] DONE elapsed=79.33s kill_rate=1.000 calls=3 hits=2
+2026-06-19 14:29:41,069 [INFO]   written=91 skipped(resume)=0 errors=0 cache_hit_rate=59.26% (hits=176, misses=121)
+2026-06-19 14:29:41,069 [INFO] [H5 s=30 p2] START humaneval/HumanEval/149
+2026-06-19 14:29:41,282 [INFO] [H5 s=30 p2] step1 L_test=qwen3-coder -> T'=1043chars cache=HIT +0.21s
+2026-06-19 14:29:41,521 [INFO] [H5 s=30 p2] step2 L_code=qwen3-coder -> C'=280chars cache=HIT +0.24s
+2026-06-19 14:29:41,920 [INFO] [H5 s=30 p2] step3 ref_tests -> pass_rate=1.000 +0.40s
+2026-06-19 14:29:42,153 [INFO] [H5 s=30 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.23s
+2026-06-19 14:29:42,153 [INFO] [H5 s=30 p2] DONE elapsed=1.08s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:29:43,750 [INFO]   written=92 skipped(resume)=0 errors=0 cache_hit_rate=59.67% (hits=179, misses=121)
+2026-06-19 14:29:43,751 [INFO] [H5 s=30 p3] START humaneval/HumanEval/149
+2026-06-19 14:29:44,248 [INFO] [H5 s=30 p3] step1 L_test=qwen3-coder -> T'=1949chars cache=HIT +0.50s
+2026-06-19 14:29:52,823 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:29:52,851 [INFO] [H5 s=30 p3] step2 L_spec=llama3.2 -> D'=94chars cache=miss +8.60s
+2026-06-19 14:29:52,938 [INFO] [H5 s=30 p3] step3 BERTScore -> F1=-0.191 cache=miss +0.09s
+2026-06-19 14:30:40,559 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:30:40,572 [INFO] [H5 s=30 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +47.63s
+2026-06-19 14:30:40,572 [INFO] [H5 s=30 p3] DONE elapsed=56.82s bertscore=-0.191 valid=True calls=3 hits=1
+2026-06-19 14:30:42,180 [INFO]   written=93 skipped(resume)=0 errors=0 cache_hit_rate=59.21% (hits=180, misses=124)
+2026-06-19 14:30:42,180 [INFO] [H5 s=31 p1] START humaneval/HumanEval/106
+2026-06-19 14:30:42,474 [INFO] [H5 s=31 p1] step1 L_spec=llama3.2 -> D'=320chars cache=HIT +0.29s
+2026-06-19 14:31:37,191 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:31:37,206 [INFO] [H5 s=31 p1] step2 L_test=qwen3-coder -> T'=1096chars cache=miss +54.73s
+2026-06-19 14:31:42,643 [INFO] [H5 s=31 p1] step3 test_filter -> 1/5 tests kept (131/1096 chars) +5.44s
+2026-06-19 14:31:59,039 [INFO] [H5 s=31 p1] step4 mutation -> kill_rate=0.533 (8/15 mutants) +16.40s
+2026-06-19 14:31:59,371 [INFO] [H5 s=31 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.33s
+2026-06-19 14:31:59,372 [INFO] [H5 s=31 p1] DONE elapsed=77.19s kill_rate=0.533 calls=3 hits=2
+2026-06-19 14:32:01,039 [INFO]   written=94 skipped(resume)=0 errors=0 cache_hit_rate=59.28% (hits=182, misses=125)
+2026-06-19 14:32:01,039 [INFO] [H5 s=31 p2] START humaneval/HumanEval/106
+2026-06-19 14:32:01,292 [INFO] [H5 s=31 p2] step1 L_test=qwen3-coder -> T'=1007chars cache=HIT +0.25s
+2026-06-19 14:32:01,502 [INFO] [H5 s=31 p2] step2 L_code=qwen3-coder -> C'=469chars cache=HIT +0.21s
+2026-06-19 14:32:01,852 [INFO] [H5 s=31 p2] step3 ref_tests -> pass_rate=1.000 +0.35s
+2026-06-19 14:32:02,033 [INFO] [H5 s=31 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-19 14:32:02,034 [INFO] [H5 s=31 p2] DONE elapsed=0.99s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:32:04,016 [INFO]   written=95 skipped(resume)=0 errors=0 cache_hit_rate=59.68% (hits=185, misses=125)
+2026-06-19 14:32:04,017 [INFO] [H5 s=31 p3] START humaneval/HumanEval/106
+2026-06-19 14:32:04,257 [INFO] [H5 s=31 p3] step1 L_test=qwen3-coder -> T'=1077chars cache=HIT +0.24s
+2026-06-19 14:32:13,028 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:32:13,040 [INFO] [H5 s=31 p3] step2 L_spec=llama3.2 -> D'=235chars cache=miss +8.78s
+2026-06-19 14:32:13,092 [INFO] [H5 s=31 p3] step3 BERTScore -> F1=0.075 cache=miss +0.05s
+2026-06-19 14:33:10,522 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:33:10,534 [INFO] [H5 s=31 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +57.44s
+2026-06-19 14:33:10,534 [INFO] [H5 s=31 p3] DONE elapsed=66.52s bertscore=0.075 valid=True calls=3 hits=1
+2026-06-19 14:33:12,169 [INFO]   written=96 skipped(resume)=0 errors=0 cache_hit_rate=59.24% (hits=186, misses=128)
+2026-06-19 14:33:12,169 [INFO] [H5 s=32 p1] START mbpp/222
+2026-06-19 14:33:12,383 [INFO] [H5 s=32 p1] step1 L_spec=llama3.2 -> D'=82chars cache=HIT +0.21s
+2026-06-19 14:34:05,501 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:34:05,526 [INFO] [H5 s=32 p1] step2 L_test=qwen3-coder -> T'=1299chars cache=miss +53.14s
+2026-06-19 14:34:12,015 [INFO] [H5 s=32 p1] step3 test_filter -> 6/6 tests kept (1306/1299 chars) +6.49s
+2026-06-19 14:34:17,591 [INFO] [H5 s=32 p1] step4 mutation -> kill_rate=1.000 (4/4 mutants) +5.58s
+2026-06-19 14:35:04,650 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:35:04,662 [INFO] [H5 s=32 p1] step5 judge=deepseek-r1 -> rating=4 cache=miss +47.07s
+2026-06-19 14:35:04,663 [INFO] [H5 s=32 p1] DONE elapsed=112.49s kill_rate=1.000 calls=3 hits=1
+2026-06-19 14:35:06,511 [INFO]   written=97 skipped(resume)=0 errors=0 cache_hit_rate=58.99% (hits=187, misses=130)
+2026-06-19 14:35:06,511 [INFO] [H5 s=32 p2] START mbpp/222
+2026-06-19 14:35:06,817 [INFO] [H5 s=32 p2] step1 L_test=qwen3-coder -> T'=1277chars cache=HIT +0.31s
+2026-06-19 14:35:07,030 [INFO] [H5 s=32 p2] step2 L_code=qwen3-coder -> C'=644chars cache=HIT +0.21s
+2026-06-19 14:35:07,269 [INFO] [H5 s=32 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-19 14:35:07,500 [INFO] [H5 s=32 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.23s
+2026-06-19 14:35:07,500 [INFO] [H5 s=32 p2] DONE elapsed=0.99s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:35:09,184 [INFO]   written=98 skipped(resume)=0 errors=0 cache_hit_rate=59.38% (hits=190, misses=130)
+2026-06-19 14:35:09,185 [INFO] [H5 s=32 p3] START mbpp/222
+2026-06-19 14:35:09,392 [INFO] [H5 s=32 p3] step1 L_test=qwen3-coder -> T'=1599chars cache=HIT +0.21s
+2026-06-19 14:35:17,486 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:35:17,499 [INFO] [H5 s=32 p3] step2 L_spec=llama3.2 -> D'=160chars cache=miss +8.11s
+2026-06-19 14:35:17,532 [INFO] [H5 s=32 p3] step3 BERTScore -> F1=0.531 cache=miss +0.03s
+2026-06-19 14:35:55,626 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:35:55,637 [INFO] [H5 s=32 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +38.10s
+2026-06-19 14:35:55,637 [INFO] [H5 s=32 p3] DONE elapsed=46.45s bertscore=0.531 valid=True calls=3 hits=1
+2026-06-19 14:35:57,477 [INFO]   written=99 skipped(resume)=0 errors=0 cache_hit_rate=58.95% (hits=191, misses=133)
+2026-06-19 14:35:57,478 [INFO] [H5 s=33 p1] START mbpp/162
+2026-06-19 14:35:57,759 [INFO] [H5 s=33 p1] step1 L_spec=llama3.2 -> D'=149chars cache=HIT +0.28s
+2026-06-19 14:36:48,826 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:36:48,846 [INFO] [H5 s=33 p1] step2 L_test=qwen3-coder -> T'=1081chars cache=miss +51.09s
+2026-06-19 14:36:53,209 [INFO] [H5 s=33 p1] step3 test_filter -> 0/4 tests kept (0/1081 chars) +4.36s
+2026-06-19 14:36:54,878 [INFO]   written=100 skipped(resume)=0 errors=0 cache_hit_rate=58.90% (hits=192, misses=134)
+2026-06-19 14:36:54,879 [INFO] [H5 s=33 p2] START mbpp/162
+2026-06-19 14:36:55,208 [INFO] [H5 s=33 p2] step1 L_test=qwen3-coder -> T'=877chars cache=HIT +0.33s
+2026-06-19 14:36:55,367 [INFO] [H5 s=33 p2] step2 L_code=qwen3-coder -> C'=434chars cache=HIT +0.16s
+2026-06-19 14:36:55,575 [INFO] [H5 s=33 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-19 14:36:55,784 [INFO] [H5 s=33 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-19 14:36:55,784 [INFO] [H5 s=33 p2] DONE elapsed=0.91s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:36:57,521 [INFO]   written=101 skipped(resume)=0 errors=0 cache_hit_rate=59.27% (hits=195, misses=134)
+2026-06-19 14:36:57,521 [INFO] [H5 s=33 p3] START mbpp/162
+2026-06-19 14:36:57,727 [INFO] [H5 s=33 p3] step1 L_test=qwen3-coder -> T'=865chars cache=HIT +0.21s
+2026-06-19 14:37:06,518 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:37:06,531 [INFO] [H5 s=33 p3] step2 L_spec=llama3.2 -> D'=289chars cache=miss +8.80s
+2026-06-19 14:37:06,569 [INFO] [H5 s=33 p3] step3 BERTScore -> F1=0.070 cache=miss +0.04s
+2026-06-19 14:37:53,372 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:37:53,383 [INFO] [H5 s=33 p3] step4 judge=deepseek-r1 -> rating=0 cache=miss +46.81s
+2026-06-19 14:37:53,384 [INFO] [H5 s=33 p3] DONE elapsed=55.86s bertscore=0.070 valid=True calls=3 hits=1
+2026-06-19 14:37:55,139 [INFO]   written=102 skipped(resume)=0 errors=0 cache_hit_rate=58.86% (hits=196, misses=137)
+2026-06-19 14:37:55,140 [INFO] [H5 s=34 p1] START mbpp/19
+2026-06-19 14:37:55,414 [INFO] [H5 s=34 p1] step1 L_spec=llama3.2 -> D'=80chars cache=HIT +0.27s
+2026-06-19 14:38:41,903 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:38:41,913 [INFO] [H5 s=34 p1] step2 L_test=qwen3-coder -> T'=798chars cache=miss +46.50s
+2026-06-19 14:38:42,988 [INFO] [H5 s=34 p1] step3 test_filter -> 0/1 tests kept (0/798 chars) +1.07s
+2026-06-19 14:38:44,737 [INFO]   written=103 skipped(resume)=0 errors=0 cache_hit_rate=58.81% (hits=197, misses=138)
+2026-06-19 14:38:44,738 [INFO] [H5 s=34 p2] START mbpp/19
+2026-06-19 14:38:45,034 [INFO] [H5 s=34 p2] step1 L_test=qwen3-coder -> T'=877chars cache=HIT +0.30s
+2026-06-19 14:38:45,271 [INFO] [H5 s=34 p2] step2 L_code=qwen3-coder -> C'=406chars cache=HIT +0.24s
+2026-06-19 14:38:45,654 [INFO] [H5 s=34 p2] step3 ref_tests -> pass_rate=0.000 +0.38s
+2026-06-19 14:38:45,865 [INFO] [H5 s=34 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-19 14:38:45,865 [INFO] [H5 s=34 p2] DONE elapsed=1.13s pass_rate=0.000 calls=3 hits=3
+2026-06-19 14:38:47,657 [INFO]   written=104 skipped(resume)=0 errors=0 cache_hit_rate=59.17% (hits=200, misses=138)
+2026-06-19 14:38:47,657 [INFO] [H5 s=34 p3] START mbpp/19
+2026-06-19 14:38:47,918 [INFO] [H5 s=34 p3] step1 L_test=qwen3-coder -> T'=1212chars cache=HIT +0.26s
+2026-06-19 14:38:55,795 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:38:55,807 [INFO] [H5 s=34 p3] step2 L_spec=llama3.2 -> D'=61chars cache=miss +7.89s
+2026-06-19 14:38:55,836 [INFO] [H5 s=34 p3] step3 BERTScore -> F1=-0.184 cache=miss +0.03s
+2026-06-19 14:39:38,753 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:39:38,765 [INFO] [H5 s=34 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +42.93s
+2026-06-19 14:39:38,765 [INFO] [H5 s=34 p3] DONE elapsed=51.11s bertscore=-0.184 valid=True calls=3 hits=1
+2026-06-19 14:39:40,624 [INFO]   written=105 skipped(resume)=0 errors=0 cache_hit_rate=58.77% (hits=201, misses=141)
+2026-06-19 14:39:40,624 [INFO] [H5 s=35 p1] START mbpp/126
+2026-06-19 14:39:40,917 [INFO] [H5 s=35 p1] step1 L_spec=llama3.2 -> D'=63chars cache=HIT +0.29s
+2026-06-19 14:40:36,085 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:40:36,098 [INFO] [H5 s=35 p1] step2 L_test=qwen3-coder -> T'=1289chars cache=miss +55.18s
+2026-06-19 14:40:39,447 [INFO] [H5 s=35 p1] step3 test_filter -> 1/3 tests kept (421/1289 chars) +3.35s
+2026-06-19 14:40:49,534 [INFO] [H5 s=35 p1] step4 mutation -> kill_rate=1.000 (9/9 mutants) +10.09s
+2026-06-19 14:40:49,766 [INFO] [H5 s=35 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.23s
+2026-06-19 14:40:49,766 [INFO] [H5 s=35 p1] DONE elapsed=69.14s kill_rate=1.000 calls=3 hits=2
+2026-06-19 14:40:51,498 [INFO]   written=106 skipped(resume)=0 errors=0 cache_hit_rate=58.84% (hits=203, misses=142)
+2026-06-19 14:40:51,498 [INFO] [H5 s=35 p2] START mbpp/126
+2026-06-19 14:40:51,831 [INFO] [H5 s=35 p2] step1 L_test=qwen3-coder -> T'=1009chars cache=HIT +0.33s
+2026-06-19 14:40:52,010 [INFO] [H5 s=35 p2] step2 L_code=qwen3-coder -> C'=317chars cache=HIT +0.18s
+2026-06-19 14:40:52,294 [INFO] [H5 s=35 p2] step3 ref_tests -> pass_rate=1.000 +0.28s
+2026-06-19 14:40:52,514 [INFO] [H5 s=35 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-19 14:40:52,514 [INFO] [H5 s=35 p2] DONE elapsed=1.02s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:40:54,185 [INFO]   written=107 skipped(resume)=0 errors=0 cache_hit_rate=59.20% (hits=206, misses=142)
+2026-06-19 14:40:54,186 [INFO] [H5 s=35 p3] START mbpp/126
+2026-06-19 14:40:54,508 [INFO] [H5 s=35 p3] step1 L_test=qwen3-coder -> T'=1674chars cache=HIT +0.32s
+2026-06-19 14:41:03,299 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:41:03,326 [INFO] [H5 s=35 p3] step2 L_spec=llama3.2 -> D'=201chars cache=miss +8.82s
+2026-06-19 14:41:03,358 [INFO] [H5 s=35 p3] step3 BERTScore -> F1=0.404 cache=miss +0.03s
+2026-06-19 14:41:48,593 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:41:48,606 [INFO] [H5 s=35 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +45.25s
+2026-06-19 14:41:48,607 [INFO] [H5 s=35 p3] DONE elapsed=54.42s bertscore=0.404 valid=True calls=3 hits=1
+2026-06-19 14:41:50,239 [INFO]   written=108 skipped(resume)=0 errors=0 cache_hit_rate=58.81% (hits=207, misses=145)
+2026-06-19 14:41:50,240 [INFO] [H5 s=36 p1] START mbpp/270
+2026-06-19 14:41:50,502 [INFO] [H5 s=36 p1] step1 L_spec=llama3.2 -> D'=70chars cache=HIT +0.26s
+2026-06-19 14:43:12,495 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:43:12,511 [INFO] [H5 s=36 p1] step2 L_test=qwen3-coder -> T'=2958chars cache=miss +82.01s
+2026-06-19 14:43:15,793 [INFO] [H5 s=36 p1] step3 test_filter -> 1/3 tests kept (538/2958 chars) +3.28s
+2026-06-19 14:43:25,824 [INFO] [H5 s=36 p1] step4 mutation -> kill_rate=0.111 (1/9 mutants) +10.03s
+2026-06-19 14:45:20,929 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:45:20,946 [INFO] [H5 s=36 p1] step5 judge=deepseek-r1 -> rating=1 cache=miss +115.12s
+2026-06-19 14:45:20,947 [INFO] [H5 s=36 p1] DONE elapsed=210.71s kill_rate=0.111 calls=3 hits=1
+2026-06-19 14:45:22,710 [INFO]   written=109 skipped(resume)=0 errors=0 cache_hit_rate=58.59% (hits=208, misses=147)
+2026-06-19 14:45:22,711 [INFO] [H5 s=36 p2] START mbpp/270
+2026-06-19 14:45:22,995 [INFO] [H5 s=36 p2] step1 L_test=qwen3-coder -> T'=1315chars cache=HIT +0.28s
+2026-06-19 14:45:23,255 [INFO] [H5 s=36 p2] step2 L_code=qwen3-coder -> C'=513chars cache=HIT +0.26s
+2026-06-19 14:45:23,551 [INFO] [H5 s=36 p2] step3 ref_tests -> pass_rate=1.000 +0.30s
+2026-06-19 14:45:23,750 [INFO] [H5 s=36 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 14:45:23,750 [INFO] [H5 s=36 p2] DONE elapsed=1.04s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:45:25,501 [INFO]   written=110 skipped(resume)=0 errors=0 cache_hit_rate=58.94% (hits=211, misses=147)
+2026-06-19 14:45:25,501 [INFO] [H5 s=36 p3] START mbpp/270
+2026-06-19 14:45:25,720 [INFO] [H5 s=36 p3] step1 L_test=qwen3-coder -> T'=1919chars cache=HIT +0.22s
+2026-06-19 14:45:33,755 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:45:33,769 [INFO] [H5 s=36 p3] step2 L_spec=llama3.2 -> D'=72chars cache=miss +8.05s
+2026-06-19 14:45:33,800 [INFO] [H5 s=36 p3] step3 BERTScore -> F1=0.372 cache=miss +0.03s
+2026-06-19 14:47:00,618 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:47:00,629 [INFO] [H5 s=36 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +86.83s
+2026-06-19 14:47:00,630 [INFO] [H5 s=36 p3] DONE elapsed=95.13s bertscore=0.372 valid=True calls=3 hits=1
+2026-06-19 14:47:02,622 [INFO]   written=111 skipped(resume)=0 errors=0 cache_hit_rate=58.56% (hits=212, misses=150)
+2026-06-19 14:47:02,623 [INFO] [H5 s=37 p1] START mbpp/113
+2026-06-19 14:47:03,204 [INFO] [H5 s=37 p1] step1 L_spec=llama3.2 -> D'=102chars cache=HIT +0.58s
+2026-06-19 14:47:57,312 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:47:57,326 [INFO] [H5 s=37 p1] step2 L_test=qwen3-coder -> T'=1429chars cache=miss +54.12s
+2026-06-19 14:48:02,802 [INFO] [H5 s=37 p1] step3 test_filter -> 2/5 tests kept (403/1429 chars) +5.48s
+2026-06-19 14:48:16,005 [INFO] [H5 s=37 p1] step4 mutation -> kill_rate=0.636 (7/11 mutants) +13.20s
+2026-06-19 14:48:16,274 [INFO] [H5 s=37 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.27s
+2026-06-19 14:48:16,274 [INFO] [H5 s=37 p1] DONE elapsed=73.65s kill_rate=0.636 calls=3 hits=2
+2026-06-19 14:48:17,871 [INFO]   written=112 skipped(resume)=0 errors=0 cache_hit_rate=58.63% (hits=214, misses=151)
+2026-06-19 14:48:17,871 [INFO] [H5 s=37 p2] START mbpp/113
+2026-06-19 14:48:18,077 [INFO] [H5 s=37 p2] step1 L_test=qwen3-coder -> T'=1361chars cache=HIT +0.21s
+2026-06-19 14:48:18,290 [INFO] [H5 s=37 p2] step2 L_code=qwen3-coder -> C'=898chars cache=HIT +0.21s
+2026-06-19 14:48:18,538 [INFO] [H5 s=37 p2] step3 ref_tests -> pass_rate=1.000 +0.25s
+2026-06-19 14:48:18,748 [INFO] [H5 s=37 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-19 14:48:18,749 [INFO] [H5 s=37 p2] DONE elapsed=0.88s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:48:20,610 [INFO]   written=113 skipped(resume)=0 errors=0 cache_hit_rate=58.97% (hits=217, misses=151)
+2026-06-19 14:48:20,610 [INFO] [H5 s=37 p3] START mbpp/113
+2026-06-19 14:48:21,017 [INFO] [H5 s=37 p3] step1 L_test=qwen3-coder -> T'=1802chars cache=HIT +0.41s
+2026-06-19 14:48:29,753 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:48:29,765 [INFO] [H5 s=37 p3] step2 L_spec=llama3.2 -> D'=238chars cache=miss +8.75s
+2026-06-19 14:48:29,802 [INFO] [H5 s=37 p3] step3 BERTScore -> F1=0.407 cache=miss +0.04s
+2026-06-19 14:49:09,674 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:49:09,683 [INFO] [H5 s=37 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +39.88s
+2026-06-19 14:49:09,683 [INFO] [H5 s=37 p3] DONE elapsed=49.07s bertscore=0.407 valid=True calls=3 hits=1
+2026-06-19 14:49:11,399 [INFO]   written=114 skipped(resume)=0 errors=0 cache_hit_rate=58.60% (hits=218, misses=154)
+2026-06-19 14:49:11,399 [INFO] [H5 s=38 p1] START mbpp/129
+2026-06-19 14:49:11,627 [INFO] [H5 s=38 p1] step1 L_spec=llama3.2 -> D'=217chars cache=HIT +0.23s
+2026-06-19 14:50:07,128 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:50:07,140 [INFO] [H5 s=38 p1] step2 L_test=qwen3-coder -> T'=1369chars cache=miss +55.51s
+2026-06-19 14:50:08,248 [INFO] [H5 s=38 p1] step3 test_filter -> 0/1 tests kept (0/1369 chars) +1.11s
+2026-06-19 14:50:10,047 [INFO]   written=115 skipped(resume)=0 errors=0 cache_hit_rate=58.56% (hits=219, misses=155)
+2026-06-19 14:50:10,048 [INFO] [H5 s=38 p2] START mbpp/129
+2026-06-19 14:50:10,249 [INFO] [H5 s=38 p2] step1 L_test=qwen3-coder -> T'=1733chars cache=HIT +0.20s
+2026-06-19 14:50:10,482 [INFO] [H5 s=38 p2] step2 L_code=qwen3-coder -> C'=1045chars cache=HIT +0.23s
+2026-06-19 14:50:10,779 [INFO] [H5 s=38 p2] step3 ref_tests -> pass_rate=1.000 +0.30s
+2026-06-19 14:50:11,063 [INFO] [H5 s=38 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.28s
+2026-06-19 14:50:11,064 [INFO] [H5 s=38 p2] DONE elapsed=1.02s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:50:12,808 [INFO]   written=116 skipped(resume)=0 errors=0 cache_hit_rate=58.89% (hits=222, misses=155)
+2026-06-19 14:50:12,808 [INFO] [H5 s=38 p3] START mbpp/129
+2026-06-19 14:50:12,988 [INFO] [H5 s=38 p3] step1 L_test=qwen3-coder -> T'=1684chars cache=HIT +0.18s
+2026-06-19 14:50:22,875 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:50:22,890 [INFO] [H5 s=38 p3] step2 L_spec=llama3.2 -> D'=401chars cache=miss +9.90s
+2026-06-19 14:50:22,935 [INFO] [H5 s=38 p3] step3 BERTScore -> F1=0.163 cache=miss +0.04s
+2026-06-19 14:51:16,060 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:51:16,073 [INFO] [H5 s=38 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +53.14s
+2026-06-19 14:51:16,073 [INFO] [H5 s=38 p3] DONE elapsed=63.26s bertscore=0.163 valid=True calls=3 hits=1
+2026-06-19 14:51:17,873 [INFO]   written=117 skipped(resume)=0 errors=0 cache_hit_rate=58.53% (hits=223, misses=158)
+2026-06-19 14:51:17,873 [INFO] [H5 s=39 p1] START humaneval/HumanEval/70
+2026-06-19 14:51:18,058 [INFO] [H5 s=39 p1] step1 L_spec=llama3.2 -> D'=137chars cache=HIT +0.18s
+2026-06-19 14:52:13,651 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:52:13,661 [INFO] [H5 s=39 p1] step2 L_test=qwen3-coder -> T'=1192chars cache=miss +55.60s
+2026-06-19 14:52:16,944 [INFO] [H5 s=39 p1] step3 test_filter -> 3/3 tests kept (1196/1192 chars) +3.28s
+2026-06-19 14:52:21,405 [INFO] [H5 s=39 p1] step4 mutation -> kill_rate=1.000 (3/3 mutants) +4.46s
+2026-06-19 14:52:21,602 [INFO] [H5 s=39 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 14:52:21,602 [INFO] [H5 s=39 p1] DONE elapsed=63.73s kill_rate=1.000 calls=3 hits=2
+2026-06-19 14:52:23,372 [INFO]   written=118 skipped(resume)=0 errors=0 cache_hit_rate=58.59% (hits=225, misses=159)
+2026-06-19 14:52:23,372 [INFO] [H5 s=39 p2] START humaneval/HumanEval/70
+2026-06-19 14:52:23,559 [INFO] [H5 s=39 p2] step1 L_test=qwen3-coder -> T'=799chars cache=HIT +0.19s
+2026-06-19 14:52:23,782 [INFO] [H5 s=39 p2] step2 L_code=qwen3-coder -> C'=426chars cache=HIT +0.22s
+2026-06-19 14:52:24,090 [INFO] [H5 s=39 p2] step3 ref_tests -> pass_rate=1.000 +0.31s
+2026-06-19 14:52:24,498 [INFO] [H5 s=39 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.41s
+2026-06-19 14:52:24,498 [INFO] [H5 s=39 p2] DONE elapsed=1.13s pass_rate=1.000 calls=3 hits=3
+2026-06-19 14:52:26,188 [INFO]   written=119 skipped(resume)=0 errors=0 cache_hit_rate=58.91% (hits=228, misses=159)
+2026-06-19 14:52:26,189 [INFO] [H5 s=39 p3] START humaneval/HumanEval/70
+2026-06-19 14:52:26,405 [INFO] [H5 s=39 p3] step1 L_test=qwen3-coder -> T'=1610chars cache=HIT +0.22s
+2026-06-19 14:52:35,507 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:52:35,518 [INFO] [H5 s=39 p3] step2 L_spec=llama3.2 -> D'=299chars cache=miss +9.11s
+2026-06-19 14:52:35,571 [INFO] [H5 s=39 p3] step3 BERTScore -> F1=-0.076 cache=miss +0.05s
+2026-06-19 14:53:39,006 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:53:39,019 [INFO] [H5 s=39 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +63.45s
+2026-06-19 14:53:39,019 [INFO] [H5 s=39 p3] DONE elapsed=72.83s bertscore=-0.076 valid=True calls=3 hits=1
+2026-06-19 14:53:40,606 [INFO]   written=120 skipped(resume)=0 errors=0 cache_hit_rate=58.57% (hits=229, misses=162)
+2026-06-19 14:53:40,606 [INFO] [H5 s=40 p1] START mbpp/493
+2026-06-19 14:53:40,849 [INFO] [H5 s=40 p1] step1 L_spec=llama3.2 -> D'=91chars cache=HIT +0.24s
+2026-06-19 14:54:43,438 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:54:43,450 [INFO] [H5 s=40 p1] step2 L_test=qwen3-coder -> T'=2132chars cache=miss +62.60s
+2026-06-19 14:54:57,921 [INFO] [H5 s=40 p1] step3 test_filter -> 4/5 tests kept (1620/2132 chars) +14.47s
+2026-06-19 14:55:25,672 [INFO] [H5 s=40 p1] step4 mutation -> kill_rate=0.067 (1/15 mutants) +27.75s
+2026-06-19 14:55:25,860 [INFO] [H5 s=40 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.19s
+2026-06-19 14:55:25,860 [INFO] [H5 s=40 p1] DONE elapsed=105.25s kill_rate=0.067 calls=3 hits=2
+2026-06-19 14:55:27,508 [INFO]   written=121 skipped(resume)=0 errors=0 cache_hit_rate=58.63% (hits=231, misses=163)
+2026-06-19 14:55:27,508 [INFO] [H5 s=40 p2] START mbpp/493
+2026-06-19 14:55:27,756 [INFO] [H5 s=40 p2] step1 L_test=qwen3-coder -> T'=3044chars cache=HIT +0.25s
+2026-06-19 14:55:28,120 [INFO] [H5 s=40 p2] step2 L_code=qwen3-coder -> C'=1388chars cache=HIT +0.36s
+2026-06-19 14:55:28,323 [INFO] [H5 s=40 p2] step3 ref_tests -> pass_rate=0.000 +0.20s
+2026-06-19 14:55:28,525 [INFO] [H5 s=40 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 14:55:28,525 [INFO] [H5 s=40 p2] DONE elapsed=1.02s pass_rate=0.000 calls=3 hits=3
+2026-06-19 14:55:30,258 [INFO]   written=122 skipped(resume)=0 errors=0 cache_hit_rate=58.94% (hits=234, misses=163)
+2026-06-19 14:55:30,258 [INFO] [H5 s=40 p3] START mbpp/493
+2026-06-19 14:55:30,528 [INFO] [H5 s=40 p3] step1 L_test=qwen3-coder -> T'=2460chars cache=HIT +0.27s
+2026-06-19 14:55:38,780 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:55:38,793 [INFO] [H5 s=40 p3] step2 L_spec=llama3.2 -> D'=138chars cache=miss +8.26s
+2026-06-19 14:55:38,824 [INFO] [H5 s=40 p3] step3 BERTScore -> F1=0.349 cache=miss +0.03s
+2026-06-19 14:56:26,977 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:56:26,989 [INFO] [H5 s=40 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +48.16s
+2026-06-19 14:56:26,989 [INFO] [H5 s=40 p3] DONE elapsed=56.73s bertscore=0.349 valid=True calls=3 hits=1
+2026-06-19 14:56:28,754 [INFO]   written=123 skipped(resume)=0 errors=0 cache_hit_rate=58.60% (hits=235, misses=166)
+2026-06-19 14:56:28,754 [INFO] [H5 s=41 p1] START mbpp/94
+2026-06-19 14:56:29,219 [INFO] [H5 s=41 p1] step1 L_spec=llama3.2 -> D'=84chars cache=HIT +0.46s
+2026-06-19 14:57:21,887 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:57:21,900 [INFO] [H5 s=41 p1] step2 L_test=qwen3-coder -> T'=1311chars cache=miss +52.68s
+2026-06-19 14:57:28,425 [INFO] [H5 s=41 p1] step3 test_filter -> 0/6 tests kept (0/1311 chars) +6.53s
+2026-06-19 14:57:30,281 [INFO]   written=124 skipped(resume)=0 errors=0 cache_hit_rate=58.56% (hits=236, misses=167)
+2026-06-19 14:57:30,282 [INFO] [H5 s=41 p2] START mbpp/94
+2026-06-19 14:57:30,704 [INFO] [H5 s=41 p2] step1 L_test=qwen3-coder -> T'=1194chars cache=HIT +0.42s
+2026-06-19 14:57:30,899 [INFO] [H5 s=41 p2] step2 L_code=qwen3-coder -> C'=365chars cache=HIT +0.19s
+2026-06-19 14:57:31,107 [INFO] [H5 s=41 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-19 14:57:31,391 [INFO] [H5 s=41 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.28s
+2026-06-19 14:57:31,391 [INFO] [H5 s=41 p2] DONE elapsed=1.11s pass_rate=0.000 calls=3 hits=3
+2026-06-19 14:57:32,999 [INFO]   written=125 skipped(resume)=0 errors=0 cache_hit_rate=58.87% (hits=239, misses=167)
+2026-06-19 14:57:32,999 [INFO] [H5 s=41 p3] START mbpp/94
+2026-06-19 14:57:33,237 [INFO] [H5 s=41 p3] step1 L_test=qwen3-coder -> T'=1361chars cache=HIT +0.24s
+2026-06-19 14:57:41,877 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:57:41,889 [INFO] [H5 s=41 p3] step2 L_spec=llama3.2 -> D'=254chars cache=miss +8.65s
+2026-06-19 14:57:41,928 [INFO] [H5 s=41 p3] step3 BERTScore -> F1=0.256 cache=miss +0.04s
+2026-06-19 14:58:26,937 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:58:26,958 [INFO] [H5 s=41 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +45.03s
+2026-06-19 14:58:26,958 [INFO] [H5 s=41 p3] DONE elapsed=53.96s bertscore=0.256 valid=True calls=3 hits=1
+2026-06-19 14:58:28,638 [INFO]   written=126 skipped(resume)=0 errors=0 cache_hit_rate=58.54% (hits=240, misses=170)
+2026-06-19 14:58:28,638 [INFO] [H5 s=42 p1] START mbpp/471
+2026-06-19 14:58:28,901 [INFO] [H5 s=42 p1] step1 L_spec=llama3.2 -> D'=73chars cache=HIT +0.26s
+2026-06-19 14:59:27,062 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:59:27,074 [INFO] [H5 s=42 p1] step2 L_test=qwen3-coder -> T'=1358chars cache=miss +58.17s
+2026-06-19 14:59:34,684 [INFO] [H5 s=42 p1] step3 test_filter -> 0/7 tests kept (0/1358 chars) +7.61s
+2026-06-19 14:59:36,344 [INFO]   written=127 skipped(resume)=0 errors=0 cache_hit_rate=58.50% (hits=241, misses=171)
+2026-06-19 14:59:36,345 [INFO] [H5 s=42 p2] START mbpp/471
+2026-06-19 14:59:36,570 [INFO] [H5 s=42 p2] step1 L_test=qwen3-coder -> T'=1425chars cache=HIT +0.23s
+2026-06-19 14:59:36,772 [INFO] [H5 s=42 p2] step2 L_code=qwen3-coder -> C'=325chars cache=HIT +0.20s
+2026-06-19 14:59:36,972 [INFO] [H5 s=42 p2] step3 ref_tests -> pass_rate=0.000 +0.20s
+2026-06-19 14:59:37,301 [INFO] [H5 s=42 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.33s
+2026-06-19 14:59:37,301 [INFO] [H5 s=42 p2] DONE elapsed=0.96s pass_rate=0.000 calls=3 hits=3
+2026-06-19 14:59:39,085 [INFO]   written=128 skipped(resume)=0 errors=0 cache_hit_rate=58.80% (hits=244, misses=171)
+2026-06-19 14:59:39,086 [INFO] [H5 s=42 p3] START mbpp/471
+2026-06-19 14:59:39,271 [INFO] [H5 s=42 p3] step1 L_test=qwen3-coder -> T'=1958chars cache=HIT +0.19s
+2026-06-19 14:59:48,234 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 14:59:48,244 [INFO] [H5 s=42 p3] step2 L_spec=llama3.2 -> D'=220chars cache=miss +8.97s
+2026-06-19 14:59:48,281 [INFO] [H5 s=42 p3] step3 BERTScore -> F1=0.332 cache=miss +0.04s
+2026-06-19 15:00:30,297 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:00:30,311 [INFO] [H5 s=42 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +42.03s
+2026-06-19 15:00:30,311 [INFO] [H5 s=42 p3] DONE elapsed=51.23s bertscore=0.332 valid=True calls=3 hits=1
+2026-06-19 15:00:32,171 [INFO]   written=129 skipped(resume)=0 errors=0 cache_hit_rate=58.47% (hits=245, misses=174)
+2026-06-19 15:00:32,171 [INFO] [H5 s=43 p1] START humaneval/HumanEval/14
+2026-06-19 15:00:32,587 [INFO] [H5 s=43 p1] step1 L_spec=llama3.2 -> D'=75chars cache=HIT +0.42s
+2026-06-19 15:01:19,652 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:01:19,663 [INFO] [H5 s=43 p1] step2 L_test=qwen3-coder -> T'=1009chars cache=miss +47.08s
+2026-06-19 15:01:24,870 [INFO] [H5 s=43 p1] step3 test_filter -> 6/7 tests kept (848/1009 chars) +5.21s
+2026-06-19 15:01:29,312 [INFO] [H5 s=43 p1] step4 mutation -> kill_rate=1.000 (3/3 mutants) +4.44s
+2026-06-19 15:01:29,646 [INFO] [H5 s=43 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.33s
+2026-06-19 15:01:29,647 [INFO] [H5 s=43 p1] DONE elapsed=57.48s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:01:31,246 [INFO]   written=130 skipped(resume)=0 errors=0 cache_hit_rate=58.53% (hits=247, misses=175)
+2026-06-19 15:01:31,246 [INFO] [H5 s=43 p2] START humaneval/HumanEval/14
+2026-06-19 15:01:31,502 [INFO] [H5 s=43 p2] step1 L_test=qwen3-coder -> T'=677chars cache=HIT +0.26s
+2026-06-19 15:01:31,764 [INFO] [H5 s=43 p2] step2 L_code=qwen3-coder -> C'=127chars cache=HIT +0.26s
+2026-06-19 15:01:31,992 [INFO] [H5 s=43 p2] step3 ref_tests -> pass_rate=1.000 +0.23s
+2026-06-19 15:01:32,231 [INFO] [H5 s=43 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.24s
+2026-06-19 15:01:32,232 [INFO] [H5 s=43 p2] DONE elapsed=0.99s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:01:33,944 [INFO]   written=131 skipped(resume)=0 errors=0 cache_hit_rate=58.82% (hits=250, misses=175)
+2026-06-19 15:01:33,945 [INFO] [H5 s=43 p3] START humaneval/HumanEval/14
+2026-06-19 15:01:34,181 [INFO] [H5 s=43 p3] step1 L_test=qwen3-coder -> T'=1027chars cache=HIT +0.24s
+2026-06-19 15:01:42,367 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:01:42,378 [INFO] [H5 s=43 p3] step2 L_spec=llama3.2 -> D'=92chars cache=miss +8.20s
+2026-06-19 15:01:42,418 [INFO] [H5 s=43 p3] step3 BERTScore -> F1=0.070 cache=miss +0.04s
+2026-06-19 15:02:25,916 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:02:25,932 [INFO] [H5 s=43 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +43.51s
+2026-06-19 15:02:25,932 [INFO] [H5 s=43 p3] DONE elapsed=51.99s bertscore=0.070 valid=True calls=3 hits=1
+2026-06-19 15:02:27,630 [INFO]   written=132 skipped(resume)=0 errors=0 cache_hit_rate=58.51% (hits=251, misses=178)
+2026-06-19 15:02:27,630 [INFO] [H5 s=44 p1] START mbpp/40
+2026-06-19 15:02:27,892 [INFO] [H5 s=44 p1] step1 L_spec=llama3.2 -> D'=193chars cache=HIT +0.26s
+2026-06-19 15:03:21,646 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:03:21,662 [INFO] [H5 s=44 p1] step2 L_test=qwen3-coder -> T'=1321chars cache=miss +53.77s
+2026-06-19 15:03:29,441 [INFO] [H5 s=44 p1] step3 test_filter -> 2/7 tests kept (393/1321 chars) +7.78s
+2026-06-19 15:03:31,708 [INFO] [H5 s=44 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.27s
+2026-06-19 15:03:31,867 [INFO] [H5 s=44 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-19 15:03:31,867 [INFO] [H5 s=44 p1] DONE elapsed=64.24s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:03:33,679 [INFO]   written=133 skipped(resume)=0 errors=0 cache_hit_rate=58.56% (hits=253, misses=179)
+2026-06-19 15:03:33,679 [INFO] [H5 s=44 p2] START mbpp/40
+2026-06-19 15:03:33,952 [INFO] [H5 s=44 p2] step1 L_test=qwen3-coder -> T'=1531chars cache=HIT +0.27s
+2026-06-19 15:03:34,159 [INFO] [H5 s=44 p2] step2 L_code=qwen3-coder -> C'=321chars cache=HIT +0.21s
+2026-06-19 15:03:34,383 [INFO] [H5 s=44 p2] step3 ref_tests -> pass_rate=1.000 +0.22s
+2026-06-19 15:03:34,776 [INFO] [H5 s=44 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.39s
+2026-06-19 15:03:34,776 [INFO] [H5 s=44 p2] DONE elapsed=1.10s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:03:36,642 [INFO]   written=134 skipped(resume)=0 errors=0 cache_hit_rate=58.85% (hits=256, misses=179)
+2026-06-19 15:03:36,642 [INFO] [H5 s=44 p3] START mbpp/40
+2026-06-19 15:03:36,864 [INFO] [H5 s=44 p3] step1 L_test=qwen3-coder -> T'=2340chars cache=HIT +0.22s
+2026-06-19 15:03:45,276 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:03:45,286 [INFO] [H5 s=44 p3] step2 L_spec=llama3.2 -> D'=144chars cache=miss +8.42s
+2026-06-19 15:03:45,324 [INFO] [H5 s=44 p3] step3 BERTScore -> F1=-0.013 cache=miss +0.04s
+2026-06-19 15:04:31,859 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:04:31,871 [INFO] [H5 s=44 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +46.55s
+2026-06-19 15:04:31,871 [INFO] [H5 s=44 p3] DONE elapsed=55.23s bertscore=-0.013 valid=True calls=3 hits=1
+2026-06-19 15:04:33,656 [INFO]   written=135 skipped(resume)=0 errors=0 cache_hit_rate=58.54% (hits=257, misses=182)
+2026-06-19 15:04:33,656 [INFO] [H5 s=45 p1] START humaneval/HumanEval/8
+2026-06-19 15:04:33,829 [INFO] [H5 s=45 p1] step1 L_spec=llama3.2 -> D'=175chars cache=HIT +0.17s
+2026-06-19 15:05:26,407 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:05:26,420 [INFO] [H5 s=45 p1] step2 L_test=qwen3-coder -> T'=1105chars cache=miss +52.59s
+2026-06-19 15:05:32,860 [INFO] [H5 s=45 p1] step3 test_filter -> 6/6 tests kept (1112/1105 chars) +6.44s
+2026-06-19 15:05:37,459 [INFO] [H5 s=45 p1] step4 mutation -> kill_rate=1.000 (3/3 mutants) +4.60s
+2026-06-19 15:05:37,835 [INFO] [H5 s=45 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.37s
+2026-06-19 15:05:37,835 [INFO] [H5 s=45 p1] DONE elapsed=64.18s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:05:39,537 [INFO]   written=136 skipped(resume)=0 errors=0 cache_hit_rate=58.60% (hits=259, misses=183)
+2026-06-19 15:05:39,537 [INFO] [H5 s=45 p2] START humaneval/HumanEval/8
+2026-06-19 15:05:39,795 [INFO] [H5 s=45 p2] step1 L_test=qwen3-coder -> T'=941chars cache=HIT +0.26s
+2026-06-19 15:05:40,001 [INFO] [H5 s=45 p2] step2 L_code=qwen3-coder -> C'=363chars cache=HIT +0.20s
+2026-06-19 15:05:40,178 [INFO] [H5 s=45 p2] step3 ref_tests -> pass_rate=1.000 +0.18s
+2026-06-19 15:05:40,339 [INFO] [H5 s=45 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-19 15:05:40,339 [INFO] [H5 s=45 p2] DONE elapsed=0.80s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:05:41,928 [INFO]   written=137 skipped(resume)=0 errors=0 cache_hit_rate=58.88% (hits=262, misses=183)
+2026-06-19 15:05:41,928 [INFO] [H5 s=45 p3] START humaneval/HumanEval/8
+2026-06-19 15:05:42,146 [INFO] [H5 s=45 p3] step1 L_test=qwen3-coder -> T'=1052chars cache=HIT +0.22s
+2026-06-19 15:05:50,360 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:05:50,389 [INFO] [H5 s=45 p3] step2 L_spec=llama3.2 -> D'=89chars cache=miss +8.24s
+2026-06-19 15:05:50,429 [INFO] [H5 s=45 p3] step3 BERTScore -> F1=-0.084 cache=miss +0.04s
+2026-06-19 15:07:02,770 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:07:02,782 [INFO] [H5 s=45 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +72.35s
+2026-06-19 15:07:02,782 [INFO] [H5 s=45 p3] DONE elapsed=80.85s bertscore=-0.084 valid=True calls=3 hits=1
+2026-06-19 15:07:04,496 [INFO]   written=138 skipped(resume)=0 errors=0 cache_hit_rate=58.57% (hits=263, misses=186)
+2026-06-19 15:07:04,496 [INFO] [H5 s=46 p1] START mbpp/160
+2026-06-19 15:07:04,794 [INFO] [H5 s=46 p1] step1 L_spec=llama3.2 -> D'=164chars cache=HIT +0.30s
+2026-06-19 15:08:12,618 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:08:12,630 [INFO] [H5 s=46 p1] step2 L_test=qwen3-coder -> T'=2151chars cache=miss +67.84s
+2026-06-19 15:08:19,101 [INFO] [H5 s=46 p1] step3 test_filter -> 1/6 tests kept (325/2151 chars) +6.47s
+2026-06-19 15:08:35,483 [INFO] [H5 s=46 p1] step4 mutation -> kill_rate=0.200 (3/15 mutants) +16.38s
+2026-06-19 15:09:31,185 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:09:31,196 [INFO] [H5 s=46 p1] step5 judge=deepseek-r1 -> rating=3 cache=miss +55.71s
+2026-06-19 15:09:31,196 [INFO] [H5 s=46 p1] DONE elapsed=146.70s kill_rate=0.200 calls=3 hits=1
+2026-06-19 15:09:32,891 [INFO]   written=139 skipped(resume)=0 errors=0 cache_hit_rate=58.41% (hits=264, misses=188)
+2026-06-19 15:09:32,892 [INFO] [H5 s=46 p2] START mbpp/160
+2026-06-19 15:09:33,108 [INFO] [H5 s=46 p2] step1 L_test=qwen3-coder -> T'=1558chars cache=HIT +0.22s
+2026-06-19 15:09:33,292 [INFO] [H5 s=46 p2] step2 L_code=qwen3-coder -> C'=839chars cache=HIT +0.18s
+2026-06-19 15:09:33,520 [INFO] [H5 s=46 p2] step3 ref_tests -> pass_rate=0.000 +0.23s
+2026-06-19 15:09:33,829 [INFO] [H5 s=46 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.31s
+2026-06-19 15:09:33,830 [INFO] [H5 s=46 p2] DONE elapsed=0.94s pass_rate=0.000 calls=3 hits=3
+2026-06-19 15:09:35,526 [INFO]   written=140 skipped(resume)=0 errors=0 cache_hit_rate=58.68% (hits=267, misses=188)
+2026-06-19 15:09:35,527 [INFO] [H5 s=46 p3] START mbpp/160
+2026-06-19 15:09:35,736 [INFO] [H5 s=46 p3] step1 L_test=qwen3-coder -> T'=1781chars cache=HIT +0.21s
+2026-06-19 15:09:44,822 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:09:44,833 [INFO] [H5 s=46 p3] step2 L_spec=llama3.2 -> D'=386chars cache=miss +9.10s
+2026-06-19 15:09:44,879 [INFO] [H5 s=46 p3] step3 BERTScore -> F1=0.152 cache=miss +0.05s
+2026-06-19 15:10:35,946 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:10:35,957 [INFO] [H5 s=46 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +51.08s
+2026-06-19 15:10:35,957 [INFO] [H5 s=46 p3] DONE elapsed=60.43s bertscore=0.152 valid=True calls=3 hits=1
+2026-06-19 15:10:37,558 [INFO]   written=141 skipped(resume)=0 errors=0 cache_hit_rate=58.39% (hits=268, misses=191)
+2026-06-19 15:10:37,558 [INFO] [H5 s=47 p1] START mbpp/387
+2026-06-19 15:10:37,862 [INFO] [H5 s=47 p1] step1 L_spec=llama3.2 -> D'=64chars cache=HIT +0.30s
+2026-06-19 15:11:33,753 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:11:33,767 [INFO] [H5 s=47 p1] step2 L_test=qwen3-coder -> T'=1389chars cache=miss +55.90s
+2026-06-19 15:11:39,306 [INFO] [H5 s=47 p1] step3 test_filter -> 0/5 tests kept (0/1389 chars) +5.54s
+2026-06-19 15:11:40,954 [INFO]   written=142 skipped(resume)=0 errors=0 cache_hit_rate=58.35% (hits=269, misses=192)
+2026-06-19 15:11:40,954 [INFO] [H5 s=47 p2] START mbpp/387
+2026-06-19 15:11:41,152 [INFO] [H5 s=47 p2] step1 L_test=qwen3-coder -> T'=901chars cache=HIT +0.20s
+2026-06-19 15:11:41,355 [INFO] [H5 s=47 p2] step2 L_code=qwen3-coder -> C'=246chars cache=HIT +0.20s
+2026-06-19 15:11:41,568 [INFO] [H5 s=47 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-19 15:11:41,825 [INFO] [H5 s=47 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.26s
+2026-06-19 15:11:41,825 [INFO] [H5 s=47 p2] DONE elapsed=0.87s pass_rate=0.000 calls=3 hits=3
+2026-06-19 15:11:43,420 [INFO]   written=143 skipped(resume)=0 errors=0 cache_hit_rate=58.62% (hits=272, misses=192)
+2026-06-19 15:11:43,421 [INFO] [H5 s=47 p3] START mbpp/387
+2026-06-19 15:11:43,630 [INFO] [H5 s=47 p3] step1 L_test=qwen3-coder -> T'=2402chars cache=HIT +0.21s
+2026-06-19 15:11:52,097 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:11:52,126 [INFO] [H5 s=47 p3] step2 L_spec=llama3.2 -> D'=225chars cache=miss +8.50s
+2026-06-19 15:11:52,160 [INFO] [H5 s=47 p3] step3 BERTScore -> F1=0.333 cache=miss +0.03s
+2026-06-19 15:12:46,866 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:12:46,878 [INFO] [H5 s=47 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +54.72s
+2026-06-19 15:12:46,879 [INFO] [H5 s=47 p3] DONE elapsed=63.46s bertscore=0.333 valid=True calls=3 hits=1
+2026-06-19 15:12:48,585 [INFO]   written=144 skipped(resume)=0 errors=0 cache_hit_rate=58.33% (hits=273, misses=195)
+2026-06-19 15:12:48,585 [INFO] [H5 s=48 p1] START mbpp/380
+2026-06-19 15:12:48,984 [INFO] [H5 s=48 p1] step1 L_spec=llama3.2 -> D'=82chars cache=HIT +0.40s
+2026-06-19 15:13:38,386 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:13:38,401 [INFO] [H5 s=48 p1] step2 L_test=qwen3-coder -> T'=1023chars cache=miss +49.42s
+2026-06-19 15:13:39,773 [INFO] [H5 s=48 p1] step3 test_filter -> 6/6 tests kept (1030/1023 chars) +1.37s
+2026-06-19 15:13:40,739 [INFO] [H5 s=48 p1] step4 mutation -> kill_rate=0.667 (2/3 mutants) +0.97s
+2026-06-19 15:13:41,089 [INFO] [H5 s=48 p1] step5 judge=deepseek-r1 -> rating=1 cache=HIT +0.35s
+2026-06-19 15:13:41,089 [INFO] [H5 s=48 p1] DONE elapsed=52.50s kill_rate=0.667 calls=3 hits=2
+2026-06-19 15:13:42,745 [INFO]   written=145 skipped(resume)=0 errors=0 cache_hit_rate=58.39% (hits=275, misses=196)
+2026-06-19 15:13:42,745 [INFO] [H5 s=48 p2] START mbpp/380
+2026-06-19 15:13:42,895 [INFO] [H5 s=48 p2] step1 L_test=qwen3-coder -> T'=1299chars cache=HIT +0.15s
+2026-06-19 15:13:43,220 [INFO] [H5 s=48 p2] step2 L_code=qwen3-coder -> C'=387chars cache=HIT +0.32s
+2026-06-19 15:13:43,383 [INFO] [H5 s=48 p2] step3 ref_tests -> pass_rate=0.000 +0.16s
+2026-06-19 15:13:43,650 [INFO] [H5 s=48 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.27s
+2026-06-19 15:13:43,650 [INFO] [H5 s=48 p2] DONE elapsed=0.90s pass_rate=0.000 calls=3 hits=3
+2026-06-19 15:13:45,423 [INFO]   written=146 skipped(resume)=0 errors=0 cache_hit_rate=58.65% (hits=278, misses=196)
+2026-06-19 15:13:45,423 [INFO] [H5 s=48 p3] START mbpp/380
+2026-06-19 15:13:45,794 [INFO] [H5 s=48 p3] step1 L_test=qwen3-coder -> T'=1432chars cache=HIT +0.37s
+2026-06-19 15:13:54,780 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:13:54,791 [INFO] [H5 s=48 p3] step2 L_spec=llama3.2 -> D'=245chars cache=miss +9.00s
+2026-06-19 15:13:54,833 [INFO] [H5 s=48 p3] step3 BERTScore -> F1=-0.101 cache=miss +0.04s
+2026-06-19 15:14:48,930 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:14:48,942 [INFO] [H5 s=48 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +54.11s
+2026-06-19 15:14:48,943 [INFO] [H5 s=48 p3] DONE elapsed=63.52s bertscore=-0.101 valid=True calls=3 hits=1
+2026-06-19 15:14:50,523 [INFO]   written=147 skipped(resume)=0 errors=0 cache_hit_rate=58.37% (hits=279, misses=199)
+2026-06-19 15:14:50,523 [INFO] [H5 s=49 p1] START mbpp/250
+2026-06-19 15:14:50,698 [INFO] [H5 s=49 p1] step1 L_spec=llama3.2 -> D'=63chars cache=HIT +0.17s
+2026-06-19 15:15:45,052 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:15:45,067 [INFO] [H5 s=49 p1] step2 L_test=qwen3-coder -> T'=1234chars cache=miss +54.37s
+2026-06-19 15:15:48,344 [INFO] [H5 s=49 p1] step3 test_filter -> 7/7 tests kept (1242/1234 chars) +3.28s
+2026-06-19 15:15:54,878 [INFO] [H5 s=49 p1] step4 mutation -> kill_rate=1.000 (5/5 mutants) +6.53s
+2026-06-19 15:15:55,080 [INFO] [H5 s=49 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.20s
+2026-06-19 15:15:55,080 [INFO] [H5 s=49 p1] DONE elapsed=64.56s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:15:56,725 [INFO]   written=148 skipped(resume)=0 errors=0 cache_hit_rate=58.42% (hits=281, misses=200)
+2026-06-19 15:15:56,725 [INFO] [H5 s=49 p2] START mbpp/250
+2026-06-19 15:15:56,944 [INFO] [H5 s=49 p2] step1 L_test=qwen3-coder -> T'=1161chars cache=HIT +0.22s
+2026-06-19 15:15:57,153 [INFO] [H5 s=49 p2] step2 L_code=qwen3-coder -> C'=326chars cache=HIT +0.21s
+2026-06-19 15:15:57,327 [INFO] [H5 s=49 p2] step3 ref_tests -> pass_rate=1.000 +0.17s
+2026-06-19 15:15:57,794 [INFO] [H5 s=49 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.47s
+2026-06-19 15:15:57,794 [INFO] [H5 s=49 p2] DONE elapsed=1.07s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:15:59,519 [INFO]   written=149 skipped(resume)=0 errors=0 cache_hit_rate=58.68% (hits=284, misses=200)
+2026-06-19 15:15:59,519 [INFO] [H5 s=49 p3] START mbpp/250
+2026-06-19 15:15:59,766 [INFO] [H5 s=49 p3] step1 L_test=qwen3-coder -> T'=1293chars cache=HIT +0.25s
+2026-06-19 15:16:07,944 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:16:07,956 [INFO] [H5 s=49 p3] step2 L_spec=llama3.2 -> D'=67chars cache=miss +8.19s
+2026-06-19 15:16:07,989 [INFO] [H5 s=49 p3] step3 BERTScore -> F1=0.452 cache=miss +0.03s
+2026-06-19 15:16:46,507 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:16:46,519 [INFO] [H5 s=49 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +38.53s
+2026-06-19 15:16:46,519 [INFO] [H5 s=49 p3] DONE elapsed=47.00s bertscore=0.452 valid=True calls=3 hits=1
+2026-06-19 15:16:48,119 [INFO]   written=150 skipped(resume)=0 errors=0 cache_hit_rate=58.40% (hits=285, misses=203)
+2026-06-19 15:16:48,119 [INFO] [H5 s=50 p1] START humaneval/HumanEval/72
+2026-06-19 15:16:48,358 [INFO] [H5 s=50 p1] step1 L_spec=llama3.2 -> D'=88chars cache=HIT +0.24s
+2026-06-19 15:17:50,785 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:17:50,797 [INFO] [H5 s=50 p1] step2 L_test=qwen3-coder -> T'=2114chars cache=miss +62.44s
+2026-06-19 15:17:59,460 [INFO] [H5 s=50 p1] step3 test_filter -> 5/8 tests kept (1141/2114 chars) +8.66s
+2026-06-19 15:18:15,816 [INFO] [H5 s=50 p1] step4 mutation -> kill_rate=0.857 (12/14 mutants) +16.36s
+2026-06-19 15:18:16,084 [INFO] [H5 s=50 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.27s
+2026-06-19 15:18:16,085 [INFO] [H5 s=50 p1] DONE elapsed=87.97s kill_rate=0.857 calls=3 hits=2
+2026-06-19 15:18:18,124 [INFO]   written=151 skipped(resume)=0 errors=0 cache_hit_rate=58.45% (hits=287, misses=204)
+2026-06-19 15:18:18,125 [INFO] [H5 s=50 p2] START humaneval/HumanEval/72
+2026-06-19 15:18:18,313 [INFO] [H5 s=50 p2] step1 L_test=qwen3-coder -> T'=812chars cache=HIT +0.19s
+2026-06-19 15:18:18,615 [INFO] [H5 s=50 p2] step2 L_code=qwen3-coder -> C'=265chars cache=HIT +0.30s
+2026-06-19 15:18:18,839 [INFO] [H5 s=50 p2] step3 ref_tests -> pass_rate=1.000 +0.22s
+2026-06-19 15:18:19,160 [INFO] [H5 s=50 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.32s
+2026-06-19 15:18:19,160 [INFO] [H5 s=50 p2] DONE elapsed=1.04s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:18:20,761 [INFO]   written=152 skipped(resume)=0 errors=0 cache_hit_rate=58.70% (hits=290, misses=204)
+2026-06-19 15:18:20,761 [INFO] [H5 s=50 p3] START humaneval/HumanEval/72
+2026-06-19 15:18:20,992 [INFO] [H5 s=50 p3] step1 L_test=qwen3-coder -> T'=1540chars cache=HIT +0.23s
+2026-06-19 15:18:29,893 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:18:29,903 [INFO] [H5 s=50 p3] step2 L_spec=llama3.2 -> D'=260chars cache=miss +8.91s
+2026-06-19 15:18:29,988 [INFO] [H5 s=50 p3] step3 BERTScore -> F1=0.023 cache=miss +0.09s
+2026-06-19 15:19:28,418 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:19:28,431 [INFO] [H5 s=50 p3] step4 judge=deepseek-r1 -> rating=2 cache=miss +58.44s
+2026-06-19 15:19:28,431 [INFO] [H5 s=50 p3] DONE elapsed=67.67s bertscore=0.023 valid=True calls=3 hits=1
+2026-06-19 15:19:30,065 [INFO]   written=153 skipped(resume)=0 errors=0 cache_hit_rate=58.43% (hits=291, misses=207)
+2026-06-19 15:19:30,065 [INFO] [H5 s=51 p1] START mbpp/286
+2026-06-19 15:19:30,265 [INFO] [H5 s=51 p1] step1 L_spec=llama3.2 -> D'=87chars cache=HIT +0.20s
+2026-06-19 15:20:28,119 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:20:28,130 [INFO] [H5 s=51 p1] step2 L_test=qwen3-coder -> T'=1414chars cache=miss +57.86s
+2026-06-19 15:20:29,203 [INFO] [H5 s=51 p1] step3 test_filter -> 0/1 tests kept (0/1414 chars) +1.07s
+2026-06-19 15:20:30,814 [INFO]   written=154 skipped(resume)=0 errors=0 cache_hit_rate=58.40% (hits=292, misses=208)
+2026-06-19 15:20:30,814 [INFO] [H5 s=51 p2] START mbpp/286
+2026-06-19 15:20:31,064 [INFO] [H5 s=51 p2] step1 L_test=qwen3-coder -> T'=1963chars cache=HIT +0.25s
+2026-06-19 15:20:31,298 [INFO] [H5 s=51 p2] step2 L_code=qwen3-coder -> C'=2568chars cache=HIT +0.23s
+2026-06-19 15:20:31,562 [INFO] [H5 s=51 p2] step3 ref_tests -> pass_rate=1.000 +0.26s
+2026-06-19 15:20:31,795 [INFO] [H5 s=51 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.23s
+2026-06-19 15:20:31,796 [INFO] [H5 s=51 p2] DONE elapsed=0.98s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:20:33,530 [INFO]   written=155 skipped(resume)=0 errors=0 cache_hit_rate=58.65% (hits=295, misses=208)
+2026-06-19 15:20:33,530 [INFO] [H5 s=51 p3] START mbpp/286
+2026-06-19 15:20:33,778 [INFO] [H5 s=51 p3] step1 L_test=qwen3-coder -> T'=1894chars cache=HIT +0.25s
+2026-06-19 15:20:42,156 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:20:42,167 [INFO] [H5 s=51 p3] step2 L_spec=llama3.2 -> D'=146chars cache=miss +8.39s
+2026-06-19 15:20:42,200 [INFO] [H5 s=51 p3] step3 BERTScore -> F1=0.353 cache=miss +0.03s
+2026-06-19 15:21:28,831 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:21:28,843 [INFO] [H5 s=51 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +46.64s
+2026-06-19 15:21:28,843 [INFO] [H5 s=51 p3] DONE elapsed=55.31s bertscore=0.353 valid=True calls=3 hits=1
+2026-06-19 15:21:30,526 [INFO]   written=156 skipped(resume)=0 errors=0 cache_hit_rate=58.38% (hits=296, misses=211)
+2026-06-19 15:21:30,527 [INFO] [H5 s=52 p1] START humaneval/HumanEval/92
+2026-06-19 15:21:30,704 [INFO] [H5 s=52 p1] step1 L_spec=llama3.2 -> D'=132chars cache=HIT +0.18s
+2026-06-19 15:22:26,900 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:22:26,911 [INFO] [H5 s=52 p1] step2 L_test=qwen3-coder -> T'=1265chars cache=miss +56.21s
+2026-06-19 15:22:31,705 [INFO] [H5 s=52 p1] step3 test_filter -> 5/6 tests kept (1031/1265 chars) +4.79s
+2026-06-19 15:22:46,124 [INFO] [H5 s=52 p1] step4 mutation -> kill_rate=0.833 (10/12 mutants) +14.42s
+2026-06-19 15:23:23,094 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:23:23,107 [INFO] [H5 s=52 p1] step5 judge=deepseek-r1 -> rating=4 cache=miss +36.98s
+2026-06-19 15:23:23,108 [INFO] [H5 s=52 p1] DONE elapsed=112.58s kill_rate=0.833 calls=3 hits=1
+2026-06-19 15:23:24,894 [INFO]   written=157 skipped(resume)=0 errors=0 cache_hit_rate=58.24% (hits=297, misses=213)
+2026-06-19 15:23:24,894 [INFO] [H5 s=52 p2] START humaneval/HumanEval/92
+2026-06-19 15:23:25,117 [INFO] [H5 s=52 p2] step1 L_test=qwen3-coder -> T'=1434chars cache=HIT +0.22s
+2026-06-19 15:23:25,328 [INFO] [H5 s=52 p2] step2 L_code=qwen3-coder -> C'=255chars cache=HIT +0.21s
+2026-06-19 15:23:25,511 [INFO] [H5 s=52 p2] step3 ref_tests -> pass_rate=1.000 +0.18s
+2026-06-19 15:23:25,712 [INFO] [H5 s=52 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.20s
+2026-06-19 15:23:25,712 [INFO] [H5 s=52 p2] DONE elapsed=0.82s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:23:27,349 [INFO]   written=158 skipped(resume)=0 errors=0 cache_hit_rate=58.48% (hits=300, misses=213)
+2026-06-19 15:23:27,350 [INFO] [H5 s=52 p3] START humaneval/HumanEval/92
+2026-06-19 15:23:27,532 [INFO] [H5 s=52 p3] step1 L_test=qwen3-coder -> T'=1488chars cache=HIT +0.18s
+2026-06-19 15:23:35,814 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:23:35,826 [INFO] [H5 s=52 p3] step2 L_spec=llama3.2 -> D'=180chars cache=miss +8.29s
+2026-06-19 15:23:35,874 [INFO] [H5 s=52 p3] step3 BERTScore -> F1=0.085 cache=miss +0.05s
+2026-06-19 15:24:32,837 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:24:32,852 [INFO] [H5 s=52 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +56.98s
+2026-06-19 15:24:32,852 [INFO] [H5 s=52 p3] DONE elapsed=65.50s bertscore=0.085 valid=True calls=3 hits=1
+2026-06-19 15:24:34,731 [INFO]   written=159 skipped(resume)=0 errors=0 cache_hit_rate=58.22% (hits=301, misses=216)
+2026-06-19 15:24:34,731 [INFO] [H5 s=53 p1] START mbpp/31
+2026-06-19 15:24:34,900 [INFO] [H5 s=53 p1] step1 L_spec=llama3.2 -> D'=164chars cache=HIT +0.17s
+2026-06-19 15:25:40,418 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:25:40,439 [INFO] [H5 s=53 p1] step2 L_test=qwen3-coder -> T'=1966chars cache=miss +65.54s
+2026-06-19 15:25:49,499 [INFO] [H5 s=53 p1] step3 test_filter -> 8/9 tests kept (1825/1966 chars) +9.06s
+2026-06-19 15:25:58,244 [INFO] [H5 s=53 p1] step4 mutation -> kill_rate=0.429 (3/7 mutants) +8.74s
+2026-06-19 15:26:49,475 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:26:49,486 [INFO] [H5 s=53 p1] step5 judge=deepseek-r1 -> rating=3 cache=miss +51.24s
+2026-06-19 15:26:49,486 [INFO] [H5 s=53 p1] DONE elapsed=134.75s kill_rate=0.429 calls=3 hits=1
+2026-06-19 15:26:51,290 [INFO]   written=160 skipped(resume)=0 errors=0 cache_hit_rate=58.08% (hits=302, misses=218)
+2026-06-19 15:26:51,290 [INFO] [H5 s=53 p2] START mbpp/31
+2026-06-19 15:26:51,659 [INFO] [H5 s=53 p2] step1 L_test=qwen3-coder -> T'=2009chars cache=HIT +0.37s
+2026-06-19 15:26:51,849 [INFO] [H5 s=53 p2] step2 L_code=qwen3-coder -> C'=510chars cache=HIT +0.19s
+2026-06-19 15:26:52,159 [INFO] [H5 s=53 p2] step3 ref_tests -> pass_rate=0.000 +0.31s
+2026-06-19 15:26:52,370 [INFO] [H5 s=53 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-19 15:26:52,370 [INFO] [H5 s=53 p2] DONE elapsed=1.08s pass_rate=0.000 calls=3 hits=3
+2026-06-19 15:26:54,007 [INFO]   written=161 skipped(resume)=0 errors=0 cache_hit_rate=58.32% (hits=305, misses=218)
+2026-06-19 15:26:54,008 [INFO] [H5 s=53 p3] START mbpp/31
+2026-06-19 15:26:54,239 [INFO] [H5 s=53 p3] step1 L_test=qwen3-coder -> T'=1274chars cache=HIT +0.23s
+2026-06-19 15:27:02,069 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:27:02,080 [INFO] [H5 s=53 p3] step2 L_spec=llama3.2 -> D'=132chars cache=miss +7.84s
+2026-06-19 15:27:02,112 [INFO] [H5 s=53 p3] step3 BERTScore -> F1=0.273 cache=miss +0.03s
+2026-06-19 15:27:58,664 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:27:58,677 [INFO] [H5 s=53 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +56.56s
+2026-06-19 15:27:58,677 [INFO] [H5 s=53 p3] DONE elapsed=64.67s bertscore=0.273 valid=True calls=3 hits=1
+2026-06-19 15:28:00,309 [INFO]   written=162 skipped(resume)=0 errors=0 cache_hit_rate=58.06% (hits=306, misses=221)
+2026-06-19 15:28:00,309 [INFO] [H5 s=54 p1] START mbpp/115
+2026-06-19 15:28:00,515 [INFO] [H5 s=54 p1] step1 L_spec=llama3.2 -> D'=92chars cache=HIT +0.21s
+2026-06-19 15:28:49,022 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:28:49,035 [INFO] [H5 s=54 p1] step2 L_test=qwen3-coder -> T'=1075chars cache=miss +48.52s
+2026-06-19 15:28:54,512 [INFO] [H5 s=54 p1] step3 test_filter -> 5/5 tests kept (1081/1075 chars) +5.48s
+2026-06-19 15:28:56,701 [INFO] [H5 s=54 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.19s
+2026-06-19 15:28:56,997 [INFO] [H5 s=54 p1] step5 judge=deepseek-r1 -> rating=1 cache=HIT +0.30s
+2026-06-19 15:28:56,998 [INFO] [H5 s=54 p1] DONE elapsed=56.69s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:28:58,631 [INFO]   written=163 skipped(resume)=0 errors=0 cache_hit_rate=58.11% (hits=308, misses=222)
+2026-06-19 15:28:58,631 [INFO] [H5 s=54 p2] START mbpp/115
+2026-06-19 15:28:58,840 [INFO] [H5 s=54 p2] step1 L_test=qwen3-coder -> T'=1209chars cache=HIT +0.21s
+2026-06-19 15:28:59,040 [INFO] [H5 s=54 p2] step2 L_code=qwen3-coder -> C'=831chars cache=HIT +0.20s
+2026-06-19 15:28:59,265 [INFO] [H5 s=54 p2] step3 ref_tests -> pass_rate=0.000 +0.23s
+2026-06-19 15:28:59,545 [INFO] [H5 s=54 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.28s
+2026-06-19 15:28:59,546 [INFO] [H5 s=54 p2] DONE elapsed=0.91s pass_rate=0.000 calls=3 hits=3
+2026-06-19 15:29:01,408 [INFO]   written=164 skipped(resume)=0 errors=0 cache_hit_rate=58.35% (hits=311, misses=222)
+2026-06-19 15:29:01,409 [INFO] [H5 s=54 p3] START mbpp/115
+2026-06-19 15:29:01,567 [INFO] [H5 s=54 p3] step1 L_test=qwen3-coder -> T'=1215chars cache=HIT +0.16s
+2026-06-19 15:29:09,802 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:29:09,814 [INFO] [H5 s=54 p3] step2 L_spec=llama3.2 -> D'=164chars cache=miss +8.25s
+2026-06-19 15:29:09,851 [INFO] [H5 s=54 p3] step3 BERTScore -> F1=0.440 cache=miss +0.04s
+2026-06-19 15:29:59,135 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:29:59,147 [INFO] [H5 s=54 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +49.30s
+2026-06-19 15:29:59,148 [INFO] [H5 s=54 p3] DONE elapsed=57.74s bertscore=0.440 valid=True calls=3 hits=1
+2026-06-19 15:30:00,817 [INFO]   written=165 skipped(resume)=0 errors=0 cache_hit_rate=58.10% (hits=312, misses=225)
+2026-06-19 15:30:00,818 [INFO] [H5 s=55 p1] START humaneval/HumanEval/116
+2026-06-19 15:30:01,071 [INFO] [H5 s=55 p1] step1 L_spec=llama3.2 -> D'=125chars cache=HIT +0.25s
+2026-06-19 15:30:57,458 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:30:57,469 [INFO] [H5 s=55 p1] step2 L_test=qwen3-coder -> T'=1256chars cache=miss +56.40s
+2026-06-19 15:31:02,764 [INFO] [H5 s=55 p1] step3 test_filter -> 7/8 tests kept (1098/1256 chars) +5.29s
+2026-06-19 15:31:06,031 [INFO] [H5 s=55 p1] step4 mutation -> kill_rate=0.500 (1/2 mutants) +3.27s
+2026-06-19 15:31:06,427 [INFO] [H5 s=55 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.40s
+2026-06-19 15:31:06,427 [INFO] [H5 s=55 p1] DONE elapsed=65.61s kill_rate=0.500 calls=3 hits=2
+2026-06-19 15:31:08,094 [INFO]   written=166 skipped(resume)=0 errors=0 cache_hit_rate=58.15% (hits=314, misses=226)
+2026-06-19 15:31:08,094 [INFO] [H5 s=55 p2] START humaneval/HumanEval/116
+2026-06-19 15:31:08,313 [INFO] [H5 s=55 p2] step1 L_test=qwen3-coder -> T'=1587chars cache=HIT +0.22s
+2026-06-19 15:31:08,509 [INFO] [H5 s=55 p2] step2 L_code=qwen3-coder -> C'=724chars cache=HIT +0.20s
+2026-06-19 15:31:08,724 [INFO] [H5 s=55 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-19 15:31:09,077 [INFO] [H5 s=55 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.35s
+2026-06-19 15:31:09,078 [INFO] [H5 s=55 p2] DONE elapsed=0.98s pass_rate=0.000 calls=3 hits=3
+2026-06-19 15:31:10,912 [INFO]   written=167 skipped(resume)=0 errors=0 cache_hit_rate=58.38% (hits=317, misses=226)
+2026-06-19 15:31:10,912 [INFO] [H5 s=55 p3] START humaneval/HumanEval/116
+2026-06-19 15:31:11,144 [INFO] [H5 s=55 p3] step1 L_test=qwen3-coder -> T'=1916chars cache=HIT +0.23s
+2026-06-19 15:31:19,528 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:31:19,539 [INFO] [H5 s=55 p3] step2 L_spec=llama3.2 -> D'=145chars cache=miss +8.39s
+2026-06-19 15:31:19,601 [INFO] [H5 s=55 p3] step3 BERTScore -> F1=-0.025 cache=miss +0.06s
+2026-06-19 15:32:03,248 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:32:03,261 [INFO] [H5 s=55 p3] step4 judge=deepseek-r1 -> rating=2 cache=miss +43.66s
+2026-06-19 15:32:03,261 [INFO] [H5 s=55 p3] DONE elapsed=52.35s bertscore=-0.025 valid=True calls=3 hits=1
+2026-06-19 15:32:05,090 [INFO]   written=168 skipped(resume)=0 errors=0 cache_hit_rate=58.14% (hits=318, misses=229)
+2026-06-19 15:32:05,090 [INFO] [H5 s=56 p1] START humaneval/HumanEval/138
+2026-06-19 15:32:05,343 [INFO] [H5 s=56 p1] step1 L_spec=llama3.2 -> D'=97chars cache=HIT +0.25s
+2026-06-19 15:33:05,451 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:33:05,462 [INFO] [H5 s=56 p1] step2 L_test=qwen3-coder -> T'=1642chars cache=miss +60.12s
+2026-06-19 15:33:10,883 [INFO] [H5 s=56 p1] step3 test_filter -> 5/5 tests kept (1648/1642 chars) +5.42s
+2026-06-19 15:33:19,654 [INFO] [H5 s=56 p1] step4 mutation -> kill_rate=1.000 (7/7 mutants) +8.77s
+2026-06-19 15:33:20,021 [INFO] [H5 s=56 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.37s
+2026-06-19 15:33:20,021 [INFO] [H5 s=56 p1] DONE elapsed=74.93s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:33:21,907 [INFO]   written=169 skipped(resume)=0 errors=0 cache_hit_rate=58.18% (hits=320, misses=230)
+2026-06-19 15:33:21,907 [INFO] [H5 s=56 p2] START humaneval/HumanEval/138
+2026-06-19 15:33:22,100 [INFO] [H5 s=56 p2] step1 L_test=qwen3-coder -> T'=813chars cache=HIT +0.19s
+2026-06-19 15:33:22,487 [INFO] [H5 s=56 p2] step2 L_code=qwen3-coder -> C'=674chars cache=HIT +0.39s
+2026-06-19 15:33:22,673 [INFO] [H5 s=56 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-19 15:33:22,935 [INFO] [H5 s=56 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.26s
+2026-06-19 15:33:22,936 [INFO] [H5 s=56 p2] DONE elapsed=1.03s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:33:24,865 [INFO]   written=170 skipped(resume)=0 errors=0 cache_hit_rate=58.41% (hits=323, misses=230)
+2026-06-19 15:33:24,865 [INFO] [H5 s=56 p3] START humaneval/HumanEval/138
+2026-06-19 15:33:25,046 [INFO] [H5 s=56 p3] step1 L_test=qwen3-coder -> T'=1327chars cache=HIT +0.18s
+2026-06-19 15:33:33,245 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:33:33,271 [INFO] [H5 s=56 p3] step2 L_spec=llama3.2 -> D'=159chars cache=miss +8.22s
+2026-06-19 15:33:33,353 [INFO] [H5 s=56 p3] step3 BERTScore -> F1=0.143 cache=miss +0.08s
+2026-06-19 15:34:47,116 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:34:47,132 [INFO] [H5 s=56 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +73.78s
+2026-06-19 15:34:47,132 [INFO] [H5 s=56 p3] DONE elapsed=82.27s bertscore=0.143 valid=True calls=3 hits=1
+2026-06-19 15:34:48,745 [INFO]   written=171 skipped(resume)=0 errors=0 cache_hit_rate=58.17% (hits=324, misses=233)
+2026-06-19 15:34:48,746 [INFO] [H5 s=57 p1] START mbpp/175
+2026-06-19 15:34:48,941 [INFO] [H5 s=57 p1] step1 L_spec=llama3.2 -> D'=119chars cache=HIT +0.20s
+2026-06-19 15:35:53,338 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:35:53,348 [INFO] [H5 s=57 p1] step2 L_test=qwen3-coder -> T'=2390chars cache=miss +64.41s
+2026-06-19 15:36:00,896 [INFO] [H5 s=57 p1] step3 test_filter -> 6/7 tests kept (2060/2390 chars) +7.55s
+2026-06-19 15:36:10,754 [INFO] [H5 s=57 p1] step4 mutation -> kill_rate=1.000 (8/8 mutants) +9.86s
+2026-06-19 15:36:10,953 [INFO] [H5 s=57 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-19 15:36:10,953 [INFO] [H5 s=57 p1] DONE elapsed=82.21s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:36:12,703 [INFO]   written=172 skipped(resume)=0 errors=0 cache_hit_rate=58.21% (hits=326, misses=234)
+2026-06-19 15:36:12,703 [INFO] [H5 s=57 p2] START mbpp/175
+2026-06-19 15:36:12,963 [INFO] [H5 s=57 p2] step1 L_test=qwen3-coder -> T'=1353chars cache=HIT +0.26s
+2026-06-19 15:36:13,145 [INFO] [H5 s=57 p2] step2 L_code=qwen3-coder -> C'=757chars cache=HIT +0.18s
+2026-06-19 15:36:13,400 [INFO] [H5 s=57 p2] step3 ref_tests -> pass_rate=1.000 +0.25s
+2026-06-19 15:36:13,853 [INFO] [H5 s=57 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.45s
+2026-06-19 15:36:13,853 [INFO] [H5 s=57 p2] DONE elapsed=1.15s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:36:15,520 [INFO]   written=173 skipped(resume)=0 errors=0 cache_hit_rate=58.44% (hits=329, misses=234)
+2026-06-19 15:36:15,520 [INFO] [H5 s=57 p3] START mbpp/175
+2026-06-19 15:36:15,817 [INFO] [H5 s=57 p3] step1 L_test=qwen3-coder -> T'=1651chars cache=HIT +0.30s
+2026-06-19 15:36:23,940 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:36:23,951 [INFO] [H5 s=57 p3] step2 L_spec=llama3.2 -> D'=158chars cache=miss +8.13s
+2026-06-19 15:36:23,999 [INFO] [H5 s=57 p3] step3 BERTScore -> F1=0.396 cache=miss +0.05s
+2026-06-19 15:37:08,870 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:37:08,880 [INFO] [H5 s=57 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +44.88s
+2026-06-19 15:37:08,880 [INFO] [H5 s=57 p3] DONE elapsed=53.36s bertscore=0.396 valid=True calls=3 hits=1
+2026-06-19 15:37:10,692 [INFO]   written=174 skipped(resume)=0 errors=0 cache_hit_rate=58.20% (hits=330, misses=237)
+2026-06-19 15:37:10,693 [INFO] [H5 s=58 p1] START humaneval/HumanEval/100
+2026-06-19 15:37:10,865 [INFO] [H5 s=58 p1] step1 L_spec=llama3.2 -> D'=207chars cache=HIT +0.17s
+2026-06-19 15:38:06,379 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:38:06,390 [INFO] [H5 s=58 p1] step2 L_test=qwen3-coder -> T'=1114chars cache=miss +55.52s
+2026-06-19 15:38:08,554 [INFO] [H5 s=58 p1] step3 test_filter -> 1/2 tests kept (794/1114 chars) +2.16s
+2026-06-19 15:38:12,906 [INFO] [H5 s=58 p1] step4 mutation -> kill_rate=1.000 (4/4 mutants) +4.35s
+2026-06-19 15:38:54,764 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:38:54,777 [INFO] [H5 s=58 p1] step5 judge=deepseek-r1 -> rating=3 cache=miss +41.87s
+2026-06-19 15:38:54,777 [INFO] [H5 s=58 p1] DONE elapsed=104.08s kill_rate=1.000 calls=3 hits=1
+2026-06-19 15:38:56,434 [INFO]   written=175 skipped(resume)=0 errors=0 cache_hit_rate=58.07% (hits=331, misses=239)
+2026-06-19 15:38:56,435 [INFO] [H5 s=58 p2] START humaneval/HumanEval/100
+2026-06-19 15:38:56,600 [INFO] [H5 s=58 p2] step1 L_test=qwen3-coder -> T'=998chars cache=HIT +0.16s
+2026-06-19 15:38:56,808 [INFO] [H5 s=58 p2] step2 L_code=qwen3-coder -> C'=342chars cache=HIT +0.21s
+2026-06-19 15:38:57,052 [INFO] [H5 s=58 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-19 15:38:57,254 [INFO] [H5 s=58 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.20s
+2026-06-19 15:38:57,254 [INFO] [H5 s=58 p2] DONE elapsed=0.82s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:38:58,936 [INFO]   written=176 skipped(resume)=0 errors=0 cache_hit_rate=58.29% (hits=334, misses=239)
+2026-06-19 15:38:58,937 [INFO] [H5 s=58 p3] START humaneval/HumanEval/100
+2026-06-19 15:38:59,148 [INFO] [H5 s=58 p3] step1 L_test=qwen3-coder -> T'=1119chars cache=HIT +0.21s
+2026-06-19 15:39:07,597 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:39:07,607 [INFO] [H5 s=58 p3] step2 L_spec=llama3.2 -> D'=278chars cache=miss +8.46s
+2026-06-19 15:39:07,654 [INFO] [H5 s=58 p3] step3 BERTScore -> F1=0.003 cache=miss +0.05s
+2026-06-19 15:40:02,609 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:40:02,631 [INFO] [H5 s=58 p3] step4 judge=deepseek-r1 -> rating=1 cache=miss +54.98s
+2026-06-19 15:40:02,631 [INFO] [H5 s=58 p3] DONE elapsed=63.69s bertscore=0.003 valid=True calls=3 hits=1
+2026-06-19 15:40:04,398 [INFO]   written=177 skipped(resume)=0 errors=0 cache_hit_rate=58.06% (hits=335, misses=242)
+2026-06-19 15:40:04,398 [INFO] [H5 s=59 p1] START humaneval/HumanEval/74
+2026-06-19 15:40:04,574 [INFO] [H5 s=59 p1] step1 L_spec=llama3.2 -> D'=139chars cache=HIT +0.18s
+2026-06-19 15:40:59,859 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:40:59,875 [INFO] [H5 s=59 p1] step2 L_test=qwen3-coder -> T'=1571chars cache=miss +55.30s
+2026-06-19 15:41:06,348 [INFO] [H5 s=59 p1] step3 test_filter -> 5/6 tests kept (1311/1571 chars) +6.47s
+2026-06-19 15:41:12,949 [INFO] [H5 s=59 p1] step4 mutation -> kill_rate=1.000 (5/5 mutants) +6.60s
+2026-06-19 15:41:13,272 [INFO] [H5 s=59 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.32s
+2026-06-19 15:41:13,272 [INFO] [H5 s=59 p1] DONE elapsed=68.87s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:41:15,007 [INFO]   written=178 skipped(resume)=0 errors=0 cache_hit_rate=58.10% (hits=337, misses=243)
+2026-06-19 15:41:15,007 [INFO] [H5 s=59 p2] START humaneval/HumanEval/74
+2026-06-19 15:41:15,192 [INFO] [H5 s=59 p2] step1 L_test=qwen3-coder -> T'=979chars cache=HIT +0.18s
+2026-06-19 15:41:15,428 [INFO] [H5 s=59 p2] step2 L_code=qwen3-coder -> C'=334chars cache=HIT +0.24s
+2026-06-19 15:41:15,662 [INFO] [H5 s=59 p2] step3 ref_tests -> pass_rate=1.000 +0.23s
+2026-06-19 15:41:15,866 [INFO] [H5 s=59 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.20s
+2026-06-19 15:41:15,867 [INFO] [H5 s=59 p2] DONE elapsed=0.86s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:41:17,538 [INFO]   written=179 skipped(resume)=0 errors=0 cache_hit_rate=58.32% (hits=340, misses=243)
+2026-06-19 15:41:17,538 [INFO] [H5 s=59 p3] START humaneval/HumanEval/74
+2026-06-19 15:41:17,780 [INFO] [H5 s=59 p3] step1 L_test=qwen3-coder -> T'=1600chars cache=HIT +0.24s
+2026-06-19 15:41:26,534 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:41:26,545 [INFO] [H5 s=59 p3] step2 L_spec=llama3.2 -> D'=230chars cache=miss +8.76s
+2026-06-19 15:41:26,625 [INFO] [H5 s=59 p3] step3 BERTScore -> F1=-0.096 cache=miss +0.08s
+2026-06-19 15:42:02,049 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:42:02,061 [INFO] [H5 s=59 p3] step4 judge=deepseek-r1 -> rating=0 cache=miss +35.44s
+2026-06-19 15:42:02,061 [INFO] [H5 s=59 p3] DONE elapsed=44.52s bertscore=-0.096 valid=True calls=3 hits=1
+2026-06-19 15:42:03,779 [INFO]   written=180 skipped(resume)=0 errors=0 cache_hit_rate=58.09% (hits=341, misses=246)
+2026-06-19 15:42:03,779 [INFO] [H5 s=60 p1] START mbpp/154
+2026-06-19 15:42:04,117 [INFO] [H5 s=60 p1] step1 L_spec=llama3.2 -> D'=78chars cache=HIT +0.34s
+2026-06-19 15:43:00,891 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:43:00,901 [INFO] [H5 s=60 p1] step2 L_test=qwen3-coder -> T'=1625chars cache=miss +56.78s
+2026-06-19 15:43:09,503 [INFO] [H5 s=60 p1] step3 test_filter -> 8/8 tests kept (1634/1625 chars) +8.60s
+2026-06-19 15:43:11,741 [INFO] [H5 s=60 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.24s
+2026-06-19 15:43:12,153 [INFO] [H5 s=60 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.41s
+2026-06-19 15:43:12,153 [INFO] [H5 s=60 p1] DONE elapsed=68.37s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:43:13,802 [INFO]   written=181 skipped(resume)=0 errors=0 cache_hit_rate=58.14% (hits=343, misses=247)
+2026-06-19 15:43:13,802 [INFO] [H5 s=60 p2] START mbpp/154
+2026-06-19 15:43:14,240 [INFO] [H5 s=60 p2] step1 L_test=qwen3-coder -> T'=2144chars cache=HIT +0.44s
+2026-06-19 15:43:14,493 [INFO] [H5 s=60 p2] step2 L_code=qwen3-coder -> C'=821chars cache=HIT +0.25s
+2026-06-19 15:43:14,709 [INFO] [H5 s=60 p2] step3 ref_tests -> pass_rate=1.000 +0.22s
+2026-06-19 15:43:14,881 [INFO] [H5 s=60 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.17s
+2026-06-19 15:43:14,881 [INFO] [H5 s=60 p2] DONE elapsed=1.08s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:43:16,656 [INFO]   written=182 skipped(resume)=0 errors=0 cache_hit_rate=58.35% (hits=346, misses=247)
+2026-06-19 15:43:16,656 [INFO] [H5 s=60 p3] START mbpp/154
+2026-06-19 15:43:16,876 [INFO] [H5 s=60 p3] step1 L_test=qwen3-coder -> T'=1606chars cache=HIT +0.22s
+2026-06-19 15:43:25,205 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:43:25,215 [INFO] [H5 s=60 p3] step2 L_spec=llama3.2 -> D'=97chars cache=miss +8.34s
+2026-06-19 15:43:25,245 [INFO] [H5 s=60 p3] step3 BERTScore -> F1=0.476 cache=miss +0.03s
+2026-06-19 15:44:18,926 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:44:18,937 [INFO] [H5 s=60 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +53.69s
+2026-06-19 15:44:18,937 [INFO] [H5 s=60 p3] DONE elapsed=62.28s bertscore=0.476 valid=True calls=3 hits=1
+2026-06-19 15:44:20,635 [INFO]   written=183 skipped(resume)=0 errors=0 cache_hit_rate=58.12% (hits=347, misses=250)
+2026-06-19 15:44:20,635 [INFO] [H5 s=61 p1] START humaneval/HumanEval/62
+2026-06-19 15:44:21,075 [INFO] [H5 s=61 p1] step1 L_spec=llama3.2 -> D'=151chars cache=HIT +0.44s
+2026-06-19 15:45:09,169 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:45:09,192 [INFO] [H5 s=61 p1] step2 L_test=qwen3-coder -> T'=833chars cache=miss +48.12s
+2026-06-19 15:45:13,481 [INFO] [H5 s=61 p1] step3 test_filter -> 2/4 tests kept (260/833 chars) +4.29s
+2026-06-19 15:45:17,847 [INFO] [H5 s=61 p1] step4 mutation -> kill_rate=0.333 (1/3 mutants) +4.37s
+2026-06-19 15:45:18,120 [INFO] [H5 s=61 p1] step5 judge=deepseek-r1 -> rating=1 cache=HIT +0.27s
+2026-06-19 15:45:18,120 [INFO] [H5 s=61 p1] DONE elapsed=57.48s kill_rate=0.333 calls=3 hits=2
+2026-06-19 15:45:19,843 [INFO]   written=184 skipped(resume)=0 errors=0 cache_hit_rate=58.17% (hits=349, misses=251)
+2026-06-19 15:45:19,843 [INFO] [H5 s=61 p2] START humaneval/HumanEval/62
+2026-06-19 15:45:20,042 [INFO] [H5 s=61 p2] step1 L_test=qwen3-coder -> T'=602chars cache=HIT +0.20s
+2026-06-19 15:45:20,473 [INFO] [H5 s=61 p2] step2 L_code=qwen3-coder -> C'=173chars cache=HIT +0.43s
+2026-06-19 15:45:20,778 [INFO] [H5 s=61 p2] step3 ref_tests -> pass_rate=1.000 +0.30s
+2026-06-19 15:45:20,957 [INFO] [H5 s=61 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.18s
+2026-06-19 15:45:20,957 [INFO] [H5 s=61 p2] DONE elapsed=1.11s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:45:22,941 [INFO]   written=185 skipped(resume)=0 errors=0 cache_hit_rate=58.37% (hits=352, misses=251)
+2026-06-19 15:45:22,941 [INFO] [H5 s=61 p3] START humaneval/HumanEval/62
+2026-06-19 15:45:23,173 [INFO] [H5 s=61 p3] step1 L_test=qwen3-coder -> T'=1544chars cache=HIT +0.23s
+2026-06-19 15:45:31,747 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:45:31,759 [INFO] [H5 s=61 p3] step2 L_spec=llama3.2 -> D'=198chars cache=miss +8.58s
+2026-06-19 15:45:31,804 [INFO] [H5 s=61 p3] step3 BERTScore -> F1=-0.012 cache=miss +0.04s
+2026-06-19 15:46:10,142 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:46:10,154 [INFO] [H5 s=61 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +38.35s
+2026-06-19 15:46:10,154 [INFO] [H5 s=61 p3] DONE elapsed=47.21s bertscore=-0.012 valid=True calls=3 hits=1
+2026-06-19 15:46:11,869 [INFO]   written=186 skipped(resume)=0 errors=0 cache_hit_rate=58.15% (hits=353, misses=254)
+2026-06-19 15:46:11,869 [INFO] [H5 s=62 p1] START humaneval/HumanEval/118
+2026-06-19 15:46:12,078 [INFO] [H5 s=62 p1] step1 L_spec=llama3.2 -> D'=76chars cache=HIT +0.21s
+2026-06-19 15:47:03,225 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:47:03,239 [INFO] [H5 s=62 p1] step2 L_test=qwen3-coder -> T'=1283chars cache=miss +51.16s
+2026-06-19 15:47:08,692 [INFO] [H5 s=62 p1] step3 test_filter -> 4/5 tests kept (1056/1283 chars) +5.45s
+2026-06-19 15:47:24,010 [INFO] [H5 s=62 p1] step4 mutation -> kill_rate=0.846 (11/13 mutants) +15.32s
+2026-06-19 15:48:28,022 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:48:28,044 [INFO] [H5 s=62 p1] step5 judge=deepseek-r1 -> rating=2 cache=miss +64.03s
+2026-06-19 15:48:28,044 [INFO] [H5 s=62 p1] DONE elapsed=136.17s kill_rate=0.846 calls=3 hits=1
+2026-06-19 15:48:29,684 [INFO]   written=187 skipped(resume)=0 errors=0 cache_hit_rate=58.03% (hits=354, misses=256)
+2026-06-19 15:48:29,685 [INFO] [H5 s=62 p2] START humaneval/HumanEval/118
+2026-06-19 15:48:29,913 [INFO] [H5 s=62 p2] step1 L_test=qwen3-coder -> T'=1279chars cache=HIT +0.23s
+2026-06-19 15:48:30,105 [INFO] [H5 s=62 p2] step2 L_code=qwen3-coder -> C'=570chars cache=HIT +0.19s
+2026-06-19 15:48:30,310 [INFO] [H5 s=62 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-19 15:48:30,487 [INFO] [H5 s=62 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.18s
+2026-06-19 15:48:30,488 [INFO] [H5 s=62 p2] DONE elapsed=0.80s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:48:32,348 [INFO]   written=188 skipped(resume)=0 errors=0 cache_hit_rate=58.24% (hits=357, misses=256)
+2026-06-19 15:48:32,348 [INFO] [H5 s=62 p3] START humaneval/HumanEval/118
+2026-06-19 15:48:32,609 [INFO] [H5 s=62 p3] step1 L_test=qwen3-coder -> T'=1712chars cache=HIT +0.26s
+2026-06-19 15:48:40,837 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:48:40,848 [INFO] [H5 s=62 p3] step2 L_spec=llama3.2 -> D'=189chars cache=miss +8.24s
+2026-06-19 15:48:40,901 [INFO] [H5 s=62 p3] step3 BERTScore -> F1=0.059 cache=miss +0.05s
+2026-06-19 15:49:20,991 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:49:21,003 [INFO] [H5 s=62 p3] step4 judge=deepseek-r1 -> rating=2 cache=miss +40.10s
+2026-06-19 15:49:21,003 [INFO] [H5 s=62 p3] DONE elapsed=48.66s bertscore=0.059 valid=True calls=3 hits=1
+2026-06-19 15:49:22,713 [INFO]   written=189 skipped(resume)=0 errors=0 cache_hit_rate=58.02% (hits=358, misses=259)
+2026-06-19 15:49:22,714 [INFO] [H5 s=63 p1] START mbpp/155
+2026-06-19 15:49:22,998 [INFO] [H5 s=63 p1] step1 L_spec=llama3.2 -> D'=81chars cache=HIT +0.28s
+2026-06-19 15:50:12,082 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:50:12,092 [INFO] [H5 s=63 p1] step2 L_test=qwen3-coder -> T'=1047chars cache=miss +49.09s
+2026-06-19 15:50:13,163 [INFO] [H5 s=63 p1] step3 test_filter -> 0/1 tests kept (0/1047 chars) +1.07s
+2026-06-19 15:50:14,955 [INFO]   written=190 skipped(resume)=0 errors=0 cache_hit_rate=58.00% (hits=359, misses=260)
+2026-06-19 15:50:14,955 [INFO] [H5 s=63 p2] START mbpp/155
+2026-06-19 15:50:15,178 [INFO] [H5 s=63 p2] step1 L_test=qwen3-coder -> T'=1512chars cache=HIT +0.22s
+2026-06-19 15:50:15,382 [INFO] [H5 s=63 p2] step2 L_code=qwen3-coder -> C'=846chars cache=HIT +0.20s
+2026-06-19 15:50:15,556 [INFO] [H5 s=63 p2] step3 ref_tests -> pass_rate=0.000 +0.17s
+2026-06-19 15:50:15,788 [INFO] [H5 s=63 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.23s
+2026-06-19 15:50:15,789 [INFO] [H5 s=63 p2] DONE elapsed=0.83s pass_rate=0.000 calls=3 hits=3
+2026-06-19 15:50:17,450 [INFO]   written=191 skipped(resume)=0 errors=0 cache_hit_rate=58.20% (hits=362, misses=260)
+2026-06-19 15:50:17,450 [INFO] [H5 s=63 p3] START mbpp/155
+2026-06-19 15:50:17,715 [INFO] [H5 s=63 p3] step1 L_test=qwen3-coder -> T'=1760chars cache=HIT +0.27s
+2026-06-19 15:50:26,605 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:50:26,618 [INFO] [H5 s=63 p3] step2 L_spec=llama3.2 -> D'=210chars cache=miss +8.90s
+2026-06-19 15:50:26,668 [INFO] [H5 s=63 p3] step3 BERTScore -> F1=0.486 cache=miss +0.05s
+2026-06-19 15:51:22,010 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:51:22,022 [INFO] [H5 s=63 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +55.35s
+2026-06-19 15:51:22,022 [INFO] [H5 s=63 p3] DONE elapsed=64.57s bertscore=0.486 valid=True calls=3 hits=1
+2026-06-19 15:51:23,768 [INFO]   written=192 skipped(resume)=0 errors=0 cache_hit_rate=57.99% (hits=363, misses=263)
+2026-06-19 15:51:23,768 [INFO] [H5 s=64 p1] START humaneval/HumanEval/101
+2026-06-19 15:51:24,196 [INFO] [H5 s=64 p1] step1 L_spec=llama3.2 -> D'=89chars cache=HIT +0.43s
+2026-06-19 15:52:16,931 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:52:16,943 [INFO] [H5 s=64 p1] step2 L_test=qwen3-coder -> T'=1422chars cache=miss +52.75s
+2026-06-19 15:52:22,373 [INFO] [H5 s=64 p1] step3 test_filter -> 5/5 tests kept (1428/1422 chars) +5.43s
+2026-06-19 15:52:26,688 [INFO] [H5 s=64 p1] step4 mutation -> kill_rate=1.000 (3/3 mutants) +4.32s
+2026-06-19 15:52:27,018 [INFO] [H5 s=64 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.33s
+2026-06-19 15:52:27,018 [INFO] [H5 s=64 p1] DONE elapsed=63.25s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:52:28,666 [INFO]   written=193 skipped(resume)=0 errors=0 cache_hit_rate=58.03% (hits=365, misses=264)
+2026-06-19 15:52:28,666 [INFO] [H5 s=64 p2] START humaneval/HumanEval/101
+2026-06-19 15:52:28,671 [INFO] [H5 s=64 p2] step1 L_test=qwen3-coder -> T'=1059chars cache=HIT +0.00s
+2026-06-19 15:52:28,880 [INFO] [H5 s=64 p2] step2 L_code=qwen3-coder -> C'=418chars cache=HIT +0.21s
+2026-06-19 15:52:29,191 [INFO] [H5 s=64 p2] step3 ref_tests -> pass_rate=1.000 +0.31s
+2026-06-19 15:52:29,409 [INFO] [H5 s=64 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-19 15:52:29,409 [INFO] [H5 s=64 p2] DONE elapsed=0.74s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:52:31,192 [INFO]   written=194 skipped(resume)=0 errors=0 cache_hit_rate=58.23% (hits=368, misses=264)
+2026-06-19 15:52:31,192 [INFO] [H5 s=64 p3] START humaneval/HumanEval/101
+2026-06-19 15:52:31,197 [INFO] [H5 s=64 p3] step1 L_test=qwen3-coder -> T'=1531chars cache=HIT +0.00s
+2026-06-19 15:52:39,362 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:52:39,372 [INFO] [H5 s=64 p3] step2 L_spec=llama3.2 -> D'=142chars cache=miss +8.17s
+2026-06-19 15:52:39,420 [INFO] [H5 s=64 p3] step3 BERTScore -> F1=0.015 cache=miss +0.05s
+2026-06-19 15:53:17,383 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:53:17,394 [INFO] [H5 s=64 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +37.97s
+2026-06-19 15:53:17,394 [INFO] [H5 s=64 p3] DONE elapsed=46.20s bertscore=0.015 valid=True calls=3 hits=1
+2026-06-19 15:53:19,043 [INFO]   written=195 skipped(resume)=0 errors=0 cache_hit_rate=58.02% (hits=369, misses=267)
+2026-06-19 15:53:19,043 [INFO] [H5 s=65 p1] START humaneval/HumanEval/33
+2026-06-19 15:53:19,461 [INFO] [H5 s=65 p1] step1 L_spec=llama3.2 -> D'=108chars cache=HIT +0.42s
+2026-06-19 15:54:21,407 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:54:21,418 [INFO] [H5 s=65 p1] step2 L_test=qwen3-coder -> T'=1270chars cache=miss +61.96s
+2026-06-19 15:54:26,670 [INFO] [H5 s=65 p1] step3 test_filter -> 2/5 tests kept (426/1270 chars) +5.25s
+2026-06-19 15:54:30,978 [INFO] [H5 s=65 p1] step4 mutation -> kill_rate=1.000 (3/3 mutants) +4.31s
+2026-06-19 15:54:31,280 [INFO] [H5 s=65 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.30s
+2026-06-19 15:54:31,280 [INFO] [H5 s=65 p1] DONE elapsed=72.24s kill_rate=1.000 calls=3 hits=2
+2026-06-19 15:54:33,024 [INFO]   written=196 skipped(resume)=0 errors=0 cache_hit_rate=58.06% (hits=371, misses=268)
+2026-06-19 15:54:33,024 [INFO] [H5 s=65 p2] START humaneval/HumanEval/33
+2026-06-19 15:54:33,029 [INFO] [H5 s=65 p2] step1 L_test=qwen3-coder -> T'=1213chars cache=HIT +0.00s
+2026-06-19 15:54:33,343 [INFO] [H5 s=65 p2] step2 L_code=qwen3-coder -> C'=568chars cache=HIT +0.31s
+2026-06-19 15:54:33,552 [INFO] [H5 s=65 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-19 15:54:33,730 [INFO] [H5 s=65 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.18s
+2026-06-19 15:54:33,731 [INFO] [H5 s=65 p2] DONE elapsed=0.71s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:54:35,408 [INFO]   written=197 skipped(resume)=0 errors=0 cache_hit_rate=58.26% (hits=374, misses=268)
+2026-06-19 15:54:35,408 [INFO] [H5 s=65 p3] START humaneval/HumanEval/33
+2026-06-19 15:54:35,412 [INFO] [H5 s=65 p3] step1 L_test=qwen3-coder -> T'=2379chars cache=HIT +0.00s
+2026-06-19 15:54:44,075 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:54:44,087 [INFO] [H5 s=65 p3] step2 L_spec=llama3.2 -> D'=198chars cache=miss +8.67s
+2026-06-19 15:54:44,138 [INFO] [H5 s=65 p3] step3 BERTScore -> F1=-0.090 cache=miss +0.05s
+2026-06-19 15:57:42,209 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:57:42,210 [WARNING] Response had empty content but 8395 chars of `message.thinking` — likely max_tokens budget exhausted during reasoning. Bump max_tokens for this stage.
+2026-06-19 15:57:42,210 [WARNING] Could not parse judge response — first 120 chars: ''
+2026-06-19 15:57:42,210 [INFO] [H5 s=65 p3] step4 judge=deepseek-r1 -> rating=-1 cache=miss +178.07s
+2026-06-19 15:57:42,211 [INFO] [H5 s=65 p3] DONE elapsed=186.80s bertscore=-0.090 valid=True calls=3 hits=1
+2026-06-19 15:57:44,042 [INFO]   written=198 skipped(resume)=0 errors=0 cache_hit_rate=58.05% (hits=375, misses=271)
+2026-06-19 15:57:44,042 [INFO] [H5 s=66 p1] START humaneval/HumanEval/69
+2026-06-19 15:57:44,253 [INFO] [H5 s=66 p1] step1 L_spec=llama3.2 -> D'=177chars cache=HIT +0.21s
+2026-06-19 15:58:55,164 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:58:55,176 [INFO] [H5 s=66 p1] step2 L_test=qwen3-coder -> T'=2283chars cache=miss +70.92s
+2026-06-19 15:59:05,594 [INFO] [H5 s=66 p1] step3 test_filter -> 7/9 tests kept (1971/2283 chars) +10.42s
+2026-06-19 15:59:17,647 [INFO] [H5 s=66 p1] step4 mutation -> kill_rate=0.889 (8/9 mutants) +12.05s
+2026-06-19 15:59:18,002 [INFO] [H5 s=66 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.35s
+2026-06-19 15:59:18,002 [INFO] [H5 s=66 p1] DONE elapsed=93.96s kill_rate=0.889 calls=3 hits=2
+2026-06-19 15:59:19,890 [INFO]   written=199 skipped(resume)=0 errors=0 cache_hit_rate=58.09% (hits=377, misses=272)
+2026-06-19 15:59:19,890 [INFO] [H5 s=66 p2] START humaneval/HumanEval/69
+2026-06-19 15:59:19,896 [INFO] [H5 s=66 p2] step1 L_test=qwen3-coder -> T'=1907chars cache=HIT +0.01s
+2026-06-19 15:59:20,187 [INFO] [H5 s=66 p2] step2 L_code=qwen3-coder -> C'=345chars cache=HIT +0.29s
+2026-06-19 15:59:20,372 [INFO] [H5 s=66 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-19 15:59:20,607 [INFO] [H5 s=66 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.23s
+2026-06-19 15:59:20,607 [INFO] [H5 s=66 p2] DONE elapsed=0.72s pass_rate=1.000 calls=3 hits=3
+2026-06-19 15:59:22,583 [INFO]   written=200 skipped(resume)=0 errors=0 cache_hit_rate=58.28% (hits=380, misses=272)
+2026-06-19 15:59:22,583 [INFO] [H5 s=66 p3] START humaneval/HumanEval/69
+2026-06-19 15:59:22,588 [INFO] [H5 s=66 p3] step1 L_test=qwen3-coder -> T'=1355chars cache=HIT +0.01s
+2026-06-19 15:59:31,515 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 15:59:31,526 [INFO] [H5 s=66 p3] step2 L_spec=llama3.2 -> D'=146chars cache=miss +8.94s
+2026-06-19 15:59:31,588 [INFO] [H5 s=66 p3] step3 BERTScore -> F1=0.083 cache=miss +0.06s
+2026-06-19 16:00:35,325 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:00:35,338 [INFO] [H5 s=66 p3] step4 judge=deepseek-r1 -> rating=0 cache=miss +63.75s
+2026-06-19 16:00:35,338 [INFO] [H5 s=66 p3] DONE elapsed=72.76s bertscore=0.083 valid=True calls=3 hits=1
+2026-06-19 16:00:37,471 [INFO]   written=201 skipped(resume)=0 errors=0 cache_hit_rate=58.08% (hits=381, misses=275)
+2026-06-19 16:00:37,471 [INFO] [H5 s=67 p1] START mbpp/375
+2026-06-19 16:00:37,786 [INFO] [H5 s=67 p1] step1 L_spec=llama3.2 -> D'=215chars cache=HIT +0.31s
+2026-06-19 16:01:34,673 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:01:34,684 [INFO] [H5 s=67 p1] step2 L_test=qwen3-coder -> T'=1138chars cache=miss +56.90s
+2026-06-19 16:01:40,513 [INFO] [H5 s=67 p1] step3 test_filter -> 2/5 tests kept (328/1138 chars) +5.83s
+2026-06-19 16:01:49,642 [INFO] [H5 s=67 p1] step4 mutation -> kill_rate=1.000 (7/7 mutants) +9.13s
+2026-06-19 16:01:49,896 [INFO] [H5 s=67 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.25s
+2026-06-19 16:01:49,896 [INFO] [H5 s=67 p1] DONE elapsed=72.43s kill_rate=1.000 calls=3 hits=2
+2026-06-19 16:01:51,793 [INFO]   written=202 skipped(resume)=0 errors=0 cache_hit_rate=58.12% (hits=383, misses=276)
+2026-06-19 16:01:51,794 [INFO] [H5 s=67 p2] START mbpp/375
+2026-06-19 16:01:51,800 [INFO] [H5 s=67 p2] step1 L_test=qwen3-coder -> T'=1186chars cache=HIT +0.01s
+2026-06-19 16:01:52,047 [INFO] [H5 s=67 p2] step2 L_code=qwen3-coder -> C'=1046chars cache=HIT +0.25s
+2026-06-19 16:01:52,328 [INFO] [H5 s=67 p2] step3 ref_tests -> pass_rate=0.000 +0.28s
+2026-06-19 16:01:52,684 [INFO] [H5 s=67 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.36s
+2026-06-19 16:01:52,684 [INFO] [H5 s=67 p2] DONE elapsed=0.89s pass_rate=0.000 calls=3 hits=3
+2026-06-19 16:01:54,687 [INFO]   written=203 skipped(resume)=0 errors=0 cache_hit_rate=58.31% (hits=386, misses=276)
+2026-06-19 16:01:54,687 [INFO] [H5 s=67 p3] START mbpp/375
+2026-06-19 16:01:54,691 [INFO] [H5 s=67 p3] step1 L_test=qwen3-coder -> T'=1496chars cache=HIT +0.00s
+2026-06-19 16:02:03,597 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:02:03,608 [INFO] [H5 s=67 p3] step2 L_spec=llama3.2 -> D'=193chars cache=miss +8.92s
+2026-06-19 16:02:03,645 [INFO] [H5 s=67 p3] step3 BERTScore -> F1=0.512 cache=miss +0.04s
+2026-06-19 16:02:37,446 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:02:37,458 [INFO] [H5 s=67 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +33.81s
+2026-06-19 16:02:37,458 [INFO] [H5 s=67 p3] DONE elapsed=42.77s bertscore=0.512 valid=True calls=3 hits=1
+2026-06-19 16:02:39,307 [INFO]   written=204 skipped(resume)=0 errors=0 cache_hit_rate=58.11% (hits=387, misses=279)
+2026-06-19 16:02:39,307 [INFO] [H5 s=68 p1] START mbpp/103
+2026-06-19 16:02:39,595 [INFO] [H5 s=68 p1] step1 L_spec=llama3.2 -> D'=240chars cache=HIT +0.29s
+2026-06-19 16:03:47,821 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:03:47,831 [INFO] [H5 s=68 p1] step2 L_test=qwen3-coder -> T'=1796chars cache=miss +68.24s
+2026-06-19 16:03:53,433 [INFO] [H5 s=68 p1] step3 test_filter -> 3/5 tests kept (1076/1796 chars) +5.60s
+2026-06-19 16:04:11,081 [INFO] [H5 s=68 p1] step4 mutation -> kill_rate=1.000 (15/15 mutants) +17.65s
+2026-06-19 16:04:11,391 [INFO] [H5 s=68 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.31s
+2026-06-19 16:04:11,391 [INFO] [H5 s=68 p1] DONE elapsed=92.08s kill_rate=1.000 calls=3 hits=2
+2026-06-19 16:04:13,060 [INFO]   written=205 skipped(resume)=0 errors=0 cache_hit_rate=58.15% (hits=389, misses=280)
+2026-06-19 16:04:13,061 [INFO] [H5 s=68 p2] START mbpp/103
+2026-06-19 16:04:13,104 [INFO] [H5 s=68 p2] step1 L_test=qwen3-coder -> T'=1620chars cache=HIT +0.04s
+2026-06-19 16:04:13,393 [INFO] [H5 s=68 p2] step2 L_code=qwen3-coder -> C'=983chars cache=HIT +0.29s
+2026-06-19 16:04:13,605 [INFO] [H5 s=68 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-19 16:04:13,822 [INFO] [H5 s=68 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-19 16:04:13,823 [INFO] [H5 s=68 p2] DONE elapsed=0.76s pass_rate=1.000 calls=3 hits=3
+2026-06-19 16:04:15,502 [INFO]   written=206 skipped(resume)=0 errors=0 cache_hit_rate=58.33% (hits=392, misses=280)
+2026-06-19 16:04:15,502 [INFO] [H5 s=68 p3] START mbpp/103
+2026-06-19 16:04:15,506 [INFO] [H5 s=68 p3] step1 L_test=qwen3-coder -> T'=1351chars cache=HIT +0.00s
+2026-06-19 16:04:24,385 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:04:24,413 [INFO] [H5 s=68 p3] step2 L_spec=llama3.2 -> D'=206chars cache=miss +8.91s
+2026-06-19 16:04:24,446 [INFO] [H5 s=68 p3] step3 BERTScore -> F1=0.372 cache=miss +0.03s
+2026-06-19 16:05:15,244 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:05:15,255 [INFO] [H5 s=68 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +50.81s
+2026-06-19 16:05:15,256 [INFO] [H5 s=68 p3] DONE elapsed=59.75s bertscore=0.372 valid=True calls=3 hits=1
+2026-06-19 16:05:16,934 [INFO]   written=207 skipped(resume)=0 errors=0 cache_hit_rate=58.14% (hits=393, misses=283)
+2026-06-19 16:05:16,934 [INFO] [H5 s=69 p1] START mbpp/150
+2026-06-19 16:05:17,303 [INFO] [H5 s=69 p1] step1 L_spec=llama3.2 -> D'=121chars cache=HIT +0.37s
+2026-06-19 16:07:13,661 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:07:13,674 [INFO] [H5 s=69 p1] step2 L_test=qwen3-coder -> T'=5296chars cache=miss +116.37s
+2026-06-19 16:07:26,952 [INFO] [H5 s=69 p1] step3 test_filter -> 2/12 tests kept (503/5296 chars) +13.28s
+2026-06-19 16:07:44,562 [INFO] [H5 s=69 p1] step4 mutation -> kill_rate=0.733 (11/15 mutants) +17.61s
+2026-06-19 16:07:44,780 [INFO] [H5 s=69 p1] step5 judge=deepseek-r1 -> rating=0 cache=HIT +0.22s
+2026-06-19 16:07:44,780 [INFO] [H5 s=69 p1] DONE elapsed=147.85s kill_rate=0.733 calls=3 hits=2
+2026-06-19 16:07:46,732 [INFO]   written=208 skipped(resume)=0 errors=0 cache_hit_rate=58.17% (hits=395, misses=284)
+2026-06-19 16:07:46,732 [INFO] [H5 s=69 p2] START mbpp/150
+2026-06-19 16:07:46,744 [INFO] [H5 s=69 p2] step1 L_test=qwen3-coder -> T'=2222chars cache=HIT +0.01s
+2026-06-19 16:07:46,972 [INFO] [H5 s=69 p2] step2 L_code=qwen3-coder -> C'=1237chars cache=HIT +0.23s
+2026-06-19 16:07:47,162 [INFO] [H5 s=69 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-19 16:07:47,519 [INFO] [H5 s=69 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.36s
+2026-06-19 16:07:47,519 [INFO] [H5 s=69 p2] DONE elapsed=0.79s pass_rate=1.000 calls=3 hits=3
+2026-06-19 16:07:49,486 [INFO]   written=209 skipped(resume)=0 errors=0 cache_hit_rate=58.36% (hits=398, misses=284)
+2026-06-19 16:07:49,487 [INFO] [H5 s=69 p3] START mbpp/150
+2026-06-19 16:07:49,493 [INFO] [H5 s=69 p3] step1 L_test=qwen3-coder -> T'=1829chars cache=HIT +0.01s
+2026-06-19 16:07:57,951 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:07:57,962 [INFO] [H5 s=69 p3] step2 L_spec=llama3.2 -> D'=135chars cache=miss +8.47s
+2026-06-19 16:07:57,999 [INFO] [H5 s=69 p3] step3 BERTScore -> F1=-0.118 cache=miss +0.04s
+2026-06-19 16:08:46,212 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:08:46,225 [INFO] [H5 s=69 p3] step4 judge=deepseek-r1 -> rating=0 cache=miss +48.23s
+2026-06-19 16:08:46,225 [INFO] [H5 s=69 p3] DONE elapsed=56.74s bertscore=-0.118 valid=True calls=3 hits=1
+2026-06-19 16:08:47,884 [INFO]   written=210 skipped(resume)=0 errors=0 cache_hit_rate=58.16% (hits=399, misses=287)
+2026-06-19 16:08:47,885 [INFO] [H5 s=70 p1] START mbpp/418
+2026-06-19 16:08:48,121 [INFO] [H5 s=70 p1] step1 L_spec=llama3.2 -> D'=96chars cache=HIT +0.24s
+2026-06-19 16:09:36,481 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:09:36,506 [INFO] [H5 s=70 p1] step2 L_test=qwen3-coder -> T'=832chars cache=miss +48.39s
+2026-06-19 16:09:40,803 [INFO] [H5 s=70 p1] step3 test_filter -> 4/4 tests kept (837/832 chars) +4.30s
+2026-06-19 16:09:43,000 [INFO] [H5 s=70 p1] step4 mutation -> kill_rate=1.000 (1/1 mutants) +2.20s
+2026-06-19 16:09:43,432 [INFO] [H5 s=70 p1] step5 judge=deepseek-r1 -> rating=0 cache=HIT +0.43s
+2026-06-19 16:09:43,432 [INFO] [H5 s=70 p1] DONE elapsed=55.55s kill_rate=1.000 calls=3 hits=2
+2026-06-19 16:09:45,413 [INFO]   written=211 skipped(resume)=0 errors=0 cache_hit_rate=58.20% (hits=401, misses=288)
+2026-06-19 16:09:45,413 [INFO] [H5 s=70 p2] START mbpp/418
+2026-06-19 16:09:45,420 [INFO] [H5 s=70 p2] step1 L_test=qwen3-coder -> T'=1196chars cache=HIT +0.01s
+2026-06-19 16:09:45,659 [INFO] [H5 s=70 p2] step2 L_code=qwen3-coder -> C'=706chars cache=HIT +0.24s
+2026-06-19 16:09:45,901 [INFO] [H5 s=70 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-19 16:09:46,086 [INFO] [H5 s=70 p2] step4 judge=deepseek-r1 -> rating=0 cache=HIT +0.18s
+2026-06-19 16:09:46,086 [INFO] [H5 s=70 p2] DONE elapsed=0.67s pass_rate=1.000 calls=3 hits=3
+2026-06-19 16:09:48,023 [INFO]   written=212 skipped(resume)=0 errors=0 cache_hit_rate=58.38% (hits=404, misses=288)
+2026-06-19 16:09:48,023 [INFO] [H5 s=70 p3] START mbpp/418
+2026-06-19 16:09:48,028 [INFO] [H5 s=70 p3] step1 L_test=qwen3-coder -> T'=1184chars cache=HIT +0.01s
+2026-06-19 16:09:56,128 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:09:56,144 [INFO] [H5 s=70 p3] step2 L_spec=llama3.2 -> D'=44chars cache=miss +8.12s
+2026-06-19 16:09:56,455 [INFO] [H5 s=70 p3] step3 BERTScore -> F1=0.439 cache=HIT +0.31s
+2026-06-19 16:09:56,668 [INFO] [H5 s=70 p3] step4 judge=deepseek-r1 -> rating=0 cache=HIT +0.21s
+2026-06-19 16:09:56,668 [INFO] [H5 s=70 p3] DONE elapsed=8.65s bertscore=0.439 valid=True calls=3 hits=3
+2026-06-19 16:09:58,586 [INFO]   written=213 skipped(resume)=0 errors=0 cache_hit_rate=58.48% (hits=407, misses=289)
+2026-06-19 16:09:58,586 [INFO] [H5 s=71 p1] START mbpp/349
+2026-06-19 16:09:58,818 [INFO] [H5 s=71 p1] step1 L_spec=llama3.2 -> D'=54chars cache=HIT +0.23s
+2026-06-19 16:10:47,507 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:10:47,523 [INFO] [H5 s=71 p1] step2 L_test=qwen3-coder -> T'=950chars cache=miss +48.71s
+2026-06-19 16:10:52,008 [INFO] [H5 s=71 p1] step3 test_filter -> 0/4 tests kept (0/950 chars) +4.48s
+2026-06-19 16:10:53,726 [INFO]   written=214 skipped(resume)=0 errors=0 cache_hit_rate=58.45% (hits=408, misses=290)
+2026-06-19 16:10:53,726 [INFO] [H5 s=71 p2] START mbpp/349
+2026-06-19 16:10:53,732 [INFO] [H5 s=71 p2] step1 L_test=qwen3-coder -> T'=1379chars cache=HIT +0.01s
+2026-06-19 16:10:54,003 [INFO] [H5 s=71 p2] step2 L_code=qwen3-coder -> C'=580chars cache=HIT +0.27s
+2026-06-19 16:10:54,180 [INFO] [H5 s=71 p2] step3 ref_tests -> pass_rate=0.000 +0.18s
+2026-06-19 16:10:54,363 [INFO] [H5 s=71 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-19 16:10:54,363 [INFO] [H5 s=71 p2] DONE elapsed=0.64s pass_rate=0.000 calls=3 hits=3
+2026-06-19 16:10:56,005 [INFO]   written=215 skipped(resume)=0 errors=0 cache_hit_rate=58.63% (hits=411, misses=290)
+2026-06-19 16:10:56,005 [INFO] [H5 s=71 p3] START mbpp/349
+2026-06-19 16:10:56,011 [INFO] [H5 s=71 p3] step1 L_test=qwen3-coder -> T'=1166chars cache=HIT +0.01s
+2026-06-19 16:11:04,576 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:11:04,589 [INFO] [H5 s=71 p3] step2 L_spec=llama3.2 -> D'=141chars cache=miss +8.58s
+2026-06-19 16:11:04,625 [INFO] [H5 s=71 p3] step3 BERTScore -> F1=0.376 cache=miss +0.04s
+2026-06-19 16:11:37,898 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:11:37,910 [INFO] [H5 s=71 p3] step4 judge=deepseek-r1 -> rating=4 cache=miss +33.28s
+2026-06-19 16:11:37,910 [INFO] [H5 s=71 p3] DONE elapsed=41.91s bertscore=0.376 valid=True calls=3 hits=1
+2026-06-19 16:11:39,558 [INFO]   written=216 skipped(resume)=0 errors=0 cache_hit_rate=58.44% (hits=412, misses=293)
+2026-06-19 16:11:39,558 [INFO] [H5 s=72 p1] START mbpp/274
+2026-06-19 16:11:39,853 [INFO] [H5 s=72 p1] step1 L_spec=llama3.2 -> D'=201chars cache=HIT +0.29s
+2026-06-19 16:12:39,960 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:12:39,971 [INFO] [H5 s=72 p1] step2 L_test=qwen3-coder -> T'=1409chars cache=miss +60.12s
+2026-06-19 16:12:43,219 [INFO] [H5 s=72 p1] step3 test_filter -> 1/3 tests kept (175/1409 chars) +3.25s
+2026-06-19 16:12:47,598 [INFO] [H5 s=72 p1] step4 mutation -> kill_rate=1.000 (4/4 mutants) +4.38s
+2026-06-19 16:12:47,781 [INFO] [H5 s=72 p1] step5 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-19 16:12:47,781 [INFO] [H5 s=72 p1] DONE elapsed=68.22s kill_rate=1.000 calls=3 hits=2
+2026-06-19 16:12:49,758 [INFO]   written=217 skipped(resume)=0 errors=0 cache_hit_rate=58.47% (hits=414, misses=294)
+2026-06-19 16:12:49,759 [INFO] [H5 s=72 p2] START mbpp/274
+2026-06-19 16:12:49,764 [INFO] [H5 s=72 p2] step1 L_test=qwen3-coder -> T'=1410chars cache=HIT +0.00s
+2026-06-19 16:12:49,951 [INFO] [H5 s=72 p2] step2 L_code=qwen3-coder -> C'=538chars cache=HIT +0.19s
+2026-06-19 16:12:50,143 [INFO] [H5 s=72 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-19 16:12:50,358 [INFO] [H5 s=72 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-19 16:12:50,358 [INFO] [H5 s=72 p2] DONE elapsed=0.60s pass_rate=1.000 calls=3 hits=3
+2026-06-19 16:12:52,403 [INFO]   written=218 skipped(resume)=0 errors=0 cache_hit_rate=58.65% (hits=417, misses=294)
+2026-06-19 16:12:52,403 [INFO] [H5 s=72 p3] START mbpp/274
+2026-06-19 16:12:52,410 [INFO] [H5 s=72 p3] step1 L_test=qwen3-coder -> T'=2293chars cache=HIT +0.01s
+2026-06-19 16:13:01,469 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:13:01,480 [INFO] [H5 s=72 p3] step2 L_spec=llama3.2 -> D'=254chars cache=miss +9.07s
+2026-06-19 16:13:01,520 [INFO] [H5 s=72 p3] step3 BERTScore -> F1=0.295 cache=miss +0.04s
+2026-06-19 16:13:58,629 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:13:58,641 [INFO] [H5 s=72 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +57.12s
+2026-06-19 16:13:58,641 [INFO] [H5 s=72 p3] DONE elapsed=66.24s bertscore=0.295 valid=True calls=3 hits=1
+2026-06-19 16:14:00,505 [INFO]   written=219 skipped(resume)=0 errors=0 cache_hit_rate=58.46% (hits=418, misses=297)
+2026-06-19 16:14:00,506 [INFO] [H5 s=73 p1] START mbpp/419
+2026-06-19 16:14:00,721 [INFO] [H5 s=73 p1] step1 L_spec=llama3.2 -> D'=217chars cache=HIT +0.21s
+2026-06-19 16:15:15,533 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:15:15,548 [INFO] [H5 s=73 p1] step2 L_test=qwen3-coder -> T'=2093chars cache=miss +74.83s
+2026-06-19 16:15:23,369 [INFO] [H5 s=73 p1] step3 test_filter -> 4/8 tests kept (1006/2093 chars) +7.82s
+2026-06-19 16:15:26,766 [INFO] [H5 s=73 p1] step4 mutation -> kill_rate=1.000 (2/2 mutants) +3.40s
+2026-06-19 16:15:26,990 [INFO] [H5 s=73 p1] step5 judge=deepseek-r1 -> rating=4 cache=HIT +0.22s
+2026-06-19 16:15:26,990 [INFO] [H5 s=73 p1] DONE elapsed=86.48s kill_rate=1.000 calls=3 hits=2
+2026-06-19 16:15:28,903 [INFO]   written=220 skipped(resume)=0 errors=0 cache_hit_rate=58.50% (hits=420, misses=298)
+2026-06-19 16:15:28,903 [INFO] [H5 s=73 p2] START mbpp/419
+2026-06-19 16:15:28,908 [INFO] [H5 s=73 p2] step1 L_test=qwen3-coder -> T'=1284chars cache=HIT +0.00s
+2026-06-19 16:15:29,127 [INFO] [H5 s=73 p2] step2 L_code=qwen3-coder -> C'=361chars cache=HIT +0.22s
+2026-06-19 16:15:29,341 [INFO] [H5 s=73 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-19 16:15:29,543 [INFO] [H5 s=73 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.20s
+2026-06-19 16:15:29,543 [INFO] [H5 s=73 p2] DONE elapsed=0.64s pass_rate=0.000 calls=3 hits=3
+2026-06-19 16:15:31,214 [INFO]   written=221 skipped(resume)=0 errors=0 cache_hit_rate=58.67% (hits=423, misses=298)
+2026-06-19 16:15:31,214 [INFO] [H5 s=73 p3] START mbpp/419
+2026-06-19 16:15:31,220 [INFO] [H5 s=73 p3] step1 L_test=qwen3-coder -> T'=1749chars cache=HIT +0.01s
+2026-06-19 16:15:39,633 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:15:39,644 [INFO] [H5 s=73 p3] step2 L_spec=llama3.2 -> D'=175chars cache=miss +8.42s
+2026-06-19 16:15:39,706 [INFO] [H5 s=73 p3] step3 BERTScore -> F1=0.529 cache=miss +0.06s
+2026-06-19 16:16:18,010 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:16:18,022 [INFO] [H5 s=73 p3] step4 judge=deepseek-r1 -> rating=3 cache=miss +38.32s
+2026-06-19 16:16:18,022 [INFO] [H5 s=73 p3] DONE elapsed=46.81s bertscore=0.529 valid=True calls=3 hits=1
+2026-06-19 16:16:20,087 [INFO]   written=222 skipped(resume)=0 errors=0 cache_hit_rate=58.48% (hits=424, misses=301)
+2026-06-19 16:16:20,087 [INFO] [H5 s=74 p1] START humaneval/HumanEval/123
+2026-06-19 16:16:20,497 [INFO] [H5 s=74 p1] step1 L_spec=llama3.2 -> D'=189chars cache=HIT +0.41s
+2026-06-19 16:17:11,045 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:17:11,058 [INFO] [H5 s=74 p1] step2 L_test=qwen3-coder -> T'=1103chars cache=miss +50.56s
+2026-06-19 16:17:13,318 [INFO] [H5 s=74 p1] step3 test_filter -> 0/2 tests kept (0/1103 chars) +2.26s
+2026-06-19 16:17:15,041 [INFO]   written=223 skipped(resume)=0 errors=0 cache_hit_rate=58.46% (hits=425, misses=302)
+2026-06-19 16:17:15,041 [INFO] [H5 s=74 p2] START humaneval/HumanEval/123
+2026-06-19 16:17:15,046 [INFO] [H5 s=74 p2] step1 L_test=qwen3-coder -> T'=948chars cache=HIT +0.00s
+2026-06-19 16:17:15,230 [INFO] [H5 s=74 p2] step2 L_code=qwen3-coder -> C'=471chars cache=HIT +0.18s
+2026-06-19 16:17:15,447 [INFO] [H5 s=74 p2] step3 ref_tests -> pass_rate=1.000 +0.22s
+2026-06-19 16:17:15,695 [INFO] [H5 s=74 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.25s
+2026-06-19 16:17:15,695 [INFO] [H5 s=74 p2] DONE elapsed=0.65s pass_rate=1.000 calls=3 hits=3
+2026-06-19 16:17:17,350 [INFO]   written=224 skipped(resume)=0 errors=0 cache_hit_rate=58.63% (hits=428, misses=302)
+2026-06-19 16:17:17,350 [INFO] [H5 s=74 p3] START humaneval/HumanEval/123
+2026-06-19 16:17:17,354 [INFO] [H5 s=74 p3] step1 L_test=qwen3-coder -> T'=1686chars cache=HIT +0.00s
+2026-06-19 16:17:26,557 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:17:26,568 [INFO] [H5 s=74 p3] step2 L_spec=llama3.2 -> D'=281chars cache=miss +9.21s
+2026-06-19 16:17:26,651 [INFO] [H5 s=74 p3] step3 BERTScore -> F1=0.082 cache=miss +0.08s
+2026-06-19 16:18:25,279 [INFO] HTTP Request: POST http://localhost:11434/api/chat "HTTP/1.1 200 OK"
+2026-06-19 16:18:25,291 [INFO] [H5 s=74 p3] step4 judge=deepseek-r1 -> rating=0 cache=miss +58.64s
+2026-06-19 16:18:25,291 [INFO] [H5 s=74 p3] DONE elapsed=67.94s bertscore=0.082 valid=True calls=3 hits=1
+2026-06-19 16:18:27,062 [INFO]   written=225 skipped(resume)=0 errors=0 cache_hit_rate=58.45% (hits=429, misses=305)
+2026-06-19 16:18:28,962 [INFO] 
+=== Cell H5 complete ===
+  samples_seen          = 75
+  results_written       = 225
+  results_skipped_resume = 0
+  errors                 = 0
+  elapsed                = 11216.9 s
+  cache_hits             = 429
+  cache_misses           = 305
+  cache_hit_rate         = 58.45%
+  cache_size             = 7.939 MB (11132 entries)
+2026-06-20 02:19:56,716 [INFO] === Running cell H5 [hetero] on core ===
+2026-06-20 02:19:56,920 [INFO]   Hypothesis: Cheap drafter at spec: can a 3 B model produce a workable docstring that downstream stronger models can use?
+2026-06-20 02:19:56,921 [INFO]   L_spec = llama3.2:3b
+2026-06-20 02:19:56,922 [INFO]   L_test = qwen3-coder:30b
+2026-06-20 02:19:56,923 [INFO]   L_code = qwen3-coder:30b
+2026-06-20 02:19:56,923 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-20 02:19:56,923 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-20 02:19:56,923 [INFO]   log     -> /content/roundtrip-closure/logs/cell_H5_core.log
+2026-06-20 02:19:56,938 [INFO]   found 3939 previously-completed (cell, sample, path) tuples
+2026-06-20 02:19:56,942 [INFO]   loaded 75 samples from core
+2026-06-20 02:19:58,993 [INFO] 
+=== Cell H5 complete ===
+  samples_seen          = 75
+  results_written       = 0
+  results_skipped_resume = 225
+  errors                 = 0
+  elapsed                = 0.0 s
+  cache_hits             = 0
+  cache_misses           = 0
+  cache_hit_rate         = 0.00%
+  cache_size             = 8.057 MB (11276 entries)
+2026-06-20 02:27:08,691 [INFO] === Running cell H5 [hetero] on core ===
+2026-06-20 02:27:08,836 [INFO]   Hypothesis: Cheap drafter at spec: can a 3 B model produce a workable docstring that downstream stronger models can use?
+2026-06-20 02:27:08,838 [INFO]   L_spec = llama3.2:3b
+2026-06-20 02:27:08,839 [INFO]   L_test = qwen3-coder:30b
+2026-06-20 02:27:08,839 [INFO]   L_code = qwen3-coder:30b
+2026-06-20 02:27:08,839 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-20 02:27:08,840 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-20 02:27:08,840 [INFO]   log     -> /content/roundtrip-closure/logs/cell_H5_core.log
+2026-06-20 02:27:08,858 [INFO]   found 3940 previously-completed (cell, sample, path) tuples
+2026-06-20 02:27:08,867 [INFO]   loaded 75 samples from core
+2026-06-20 02:27:11,025 [INFO] 
+=== Cell H5 complete ===
+  samples_seen          = 75
+  results_written       = 0
+  results_skipped_resume = 225
+  errors                 = 0
+  elapsed                = 0.0 s
+  cache_hits             = 0
+  cache_misses           = 0
+  cache_hit_rate         = 0.00%
+  cache_size             = 8.057 MB (11278 entries)
+2026-06-20 04:53:08,400 [INFO] === Running cell H5 [hetero] on core ===
+2026-06-20 04:53:08,564 [INFO]   Hypothesis: Cheap drafter at spec: can a 3 B model produce a workable docstring that downstream stronger models can use?
+2026-06-20 04:53:08,565 [INFO]   L_spec = llama3.2:3b
+2026-06-20 04:53:08,566 [INFO]   L_test = qwen3-coder:30b
+2026-06-20 04:53:08,566 [INFO]   L_code = qwen3-coder:30b
+2026-06-20 04:53:08,567 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-20 04:53:08,567 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-20 04:53:08,568 [INFO]   log     -> /content/roundtrip-closure/logs/cell_H5_core.log
+2026-06-20 04:53:08,581 [INFO]   found 3952 previously-completed (cell, sample, path) tuples
+2026-06-20 04:53:08,585 [INFO]   loaded 75 samples from core
+2026-06-20 04:53:10,345 [INFO] 
+=== Cell H5 complete ===
+  samples_seen          = 75
+  results_written       = 0
+  results_skipped_resume = 225
+  errors                 = 0
+  elapsed                = 0.0 s
+  cache_hits             = 0
+  cache_misses           = 0
+  cache_hit_rate         = 0.00%
+  cache_size             = 8.085 MB (11301 entries)
+2026-06-20 09:20:09,884 [INFO] === Running cell H5 [hetero] on core ===
+2026-06-20 09:20:10,071 [INFO]   Hypothesis: Cheap drafter at spec: can a 3 B model produce a workable docstring that downstream stronger models can use?
+2026-06-20 09:20:10,073 [INFO]   L_spec = llama3.2:3b
+2026-06-20 09:20:10,074 [INFO]   L_test = qwen3-coder:30b
+2026-06-20 09:20:10,074 [INFO]   L_code = qwen3-coder:30b
+2026-06-20 09:20:10,074 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-20 09:20:10,075 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-20 09:20:10,075 [INFO]   log     -> /content/roundtrip-closure/logs/cell_H5_core.log
+2026-06-20 09:20:10,094 [INFO]   found 3992 previously-completed (cell, sample, path) tuples
+2026-06-20 09:20:10,099 [INFO]   loaded 75 samples from core
+2026-06-20 09:20:12,033 [INFO] 
+=== Cell H5 complete ===
+  samples_seen          = 75
+  results_written       = 0
+  results_skipped_resume = 225
+  errors                 = 0
+  elapsed                = 0.0 s
+  cache_hits             = 0
+  cache_misses           = 0
+  cache_hit_rate         = 0.00%
+  cache_size             = 8.182 MB (11384 entries)
+2026-06-20 10:41:47,057 [INFO] === Running cell H5 [hetero] on core ===
+2026-06-20 10:41:47,238 [INFO]   Hypothesis: Cheap drafter at spec: can a 3 B model produce a workable docstring that downstream stronger models can use?
+2026-06-20 10:41:47,240 [INFO]   L_spec = llama3.2:3b
+2026-06-20 10:41:47,242 [INFO]   L_test = qwen3-coder:30b
+2026-06-20 10:41:47,242 [INFO]   L_code = qwen3-coder:30b
+2026-06-20 10:41:47,242 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-20 10:41:47,242 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-20 10:41:47,243 [INFO]   log     -> /content/roundtrip-closure/logs/cell_H5_core.log
+2026-06-20 10:41:47,259 [INFO]   found 3994 previously-completed (cell, sample, path) tuples
+2026-06-20 10:41:47,264 [INFO]   loaded 75 samples from core
+2026-06-20 10:41:49,324 [INFO] 
+=== Cell H5 complete ===
+  samples_seen          = 75
+  results_written       = 0
+  results_skipped_resume = 225
+  errors                 = 0
+  elapsed                = 0.0 s
+  cache_hits             = 0
+  cache_misses           = 0
+  cache_hit_rate         = 0.00%
+  cache_size             = 8.183 MB (11386 entries)
+2026-06-21 02:24:54,916 [INFO] === Running cell H5 [hetero] on core ===
+2026-06-21 02:24:55,272 [INFO]   Hypothesis: Cheap drafter at spec: can a 3 B model produce a workable docstring that downstream stronger models can use?
+2026-06-21 02:24:55,274 [INFO]   L_spec = llama3.2:3b
+2026-06-21 02:24:55,276 [INFO]   L_test = qwen3-coder:30b
+2026-06-21 02:24:55,276 [INFO]   L_code = qwen3-coder:30b
+2026-06-21 02:24:55,276 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-21 02:24:55,276 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-21 02:24:55,277 [INFO]   log     -> /content/roundtrip-closure/logs/cell_H5_core.log
+2026-06-21 02:24:55,294 [INFO]   found 4687 previously-completed (cell, sample, path) tuples
+2026-06-21 02:24:55,298 [INFO]   loaded 75 samples from core
+2026-06-21 02:24:57,188 [INFO] 
+=== Cell H5 complete ===
+  samples_seen          = 75
+  results_written       = 0
+  results_skipped_resume = 225
+  errors                 = 0
+  elapsed                = 0.0 s
+  cache_hits             = 0
+  cache_misses           = 0
+  cache_hit_rate         = 0.00%
+  cache_size             = 8.716 MB (12304 entries)

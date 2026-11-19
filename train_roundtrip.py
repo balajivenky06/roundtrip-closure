@@ -205,6 +205,9 @@ def load_dataset(dataset_name: str, n: int) -> list[dict]:
         "core": "core_sample_150.jsonl",
         "livecodebench": "livecodebench_25.jsonl",
         "humaneval_mutated": "humaneval_mutated_50.jsonl",
+        # R2.7: the 25 untransformed HumanEval sources of the first 25
+        # HEM items, same sample_idx order (built 2026-11-17).
+        "humaneval_original": "humaneval_original_25.jsonl",
     }
     if dataset_name not in filename_map:
         raise ValueError(

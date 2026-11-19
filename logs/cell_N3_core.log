@@ -1,0 +1,931 @@
+2026-06-21 02:16:42,795 [INFO] === Running cell N3 [null] on core ===
+2026-06-21 02:16:42,797 [INFO]   Hypothesis: Test-stage ablation: quantifies how much L_test contributes.
+2026-06-21 02:16:42,797 [INFO]   L_spec = qwen3-coder:30b
+2026-06-21 02:16:42,798 [INFO]   L_test = SKIP
+2026-06-21 02:16:42,799 [INFO]   L_code = qwen3-coder:30b
+2026-06-21 02:16:42,799 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-21 02:16:42,799 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-21 02:16:42,799 [INFO]   log     -> /content/roundtrip-closure/logs/cell_N3_core.log
+2026-06-21 02:16:42,818 [INFO]   found 4540 previously-completed (cell, sample, path) tuples
+2026-06-21 02:16:42,824 [INFO]   loaded 75 samples from core
+2026-06-21 02:16:42,824 [INFO] [N3 s=0 p1] START humaneval/HumanEval/2
+2026-06-21 02:16:43,046 [INFO] [N3 s=0 p1] step1 L_spec=qwen3-coder -> D'=239chars cache=HIT +0.22s
+2026-06-21 02:16:43,046 [INFO] [N3 s=0 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:45,054 [INFO]   written=1 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=1, misses=0)
+2026-06-21 02:16:45,054 [INFO] [N3 s=0 p2] START humaneval/HumanEval/2
+2026-06-21 02:16:45,054 [INFO] [N3 s=0 p2] step1 L_test=SKIP
+2026-06-21 02:16:45,054 [INFO] [N3 s=0 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:16:46,895 [INFO]   written=2 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=1, misses=0)
+2026-06-21 02:16:46,896 [INFO] [N3 s=0 p3] START humaneval/HumanEval/2
+2026-06-21 02:16:46,896 [INFO] [N3 s=0 p3] step1 L_test=SKIP
+2026-06-21 02:16:46,896 [INFO] [N3 s=0 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:48,764 [INFO]   written=3 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=1, misses=0)
+2026-06-21 02:16:48,764 [INFO] [N3 s=1 p1] START humaneval/HumanEval/23
+2026-06-21 02:16:48,961 [INFO] [N3 s=1 p1] step1 L_spec=qwen3-coder -> D'=66chars cache=HIT +0.20s
+2026-06-21 02:16:48,961 [INFO] [N3 s=1 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:50,838 [INFO]   written=4 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=2, misses=0)
+2026-06-21 02:16:50,839 [INFO] [N3 s=1 p2] START humaneval/HumanEval/23
+2026-06-21 02:16:50,839 [INFO] [N3 s=1 p2] step1 L_test=SKIP
+2026-06-21 02:16:50,839 [INFO] [N3 s=1 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:16:52,831 [INFO]   written=5 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=2, misses=0)
+2026-06-21 02:16:52,831 [INFO] [N3 s=1 p3] START humaneval/HumanEval/23
+2026-06-21 02:16:52,832 [INFO] [N3 s=1 p3] step1 L_test=SKIP
+2026-06-21 02:16:52,832 [INFO] [N3 s=1 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:54,923 [INFO]   written=6 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=2, misses=0)
+2026-06-21 02:16:54,923 [INFO] [N3 s=2 p1] START humaneval/HumanEval/162
+2026-06-21 02:16:55,253 [INFO] [N3 s=2 p1] step1 L_spec=qwen3-coder -> D'=184chars cache=HIT +0.33s
+2026-06-21 02:16:55,253 [INFO] [N3 s=2 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:57,287 [INFO]   written=7 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=3, misses=0)
+2026-06-21 02:16:57,288 [INFO] [N3 s=2 p2] START humaneval/HumanEval/162
+2026-06-21 02:16:57,288 [INFO] [N3 s=2 p2] step1 L_test=SKIP
+2026-06-21 02:16:57,288 [INFO] [N3 s=2 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:16:59,346 [INFO]   written=8 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=3, misses=0)
+2026-06-21 02:16:59,347 [INFO] [N3 s=2 p3] START humaneval/HumanEval/162
+2026-06-21 02:16:59,347 [INFO] [N3 s=2 p3] step1 L_test=SKIP
+2026-06-21 02:16:59,347 [INFO] [N3 s=2 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:01,309 [INFO]   written=9 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=3, misses=0)
+2026-06-21 02:17:01,309 [INFO] [N3 s=3 p1] START mbpp/363
+2026-06-21 02:17:01,571 [INFO] [N3 s=3 p1] step1 L_spec=qwen3-coder -> D'=245chars cache=HIT +0.26s
+2026-06-21 02:17:01,571 [INFO] [N3 s=3 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:03,539 [INFO]   written=10 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 02:17:03,539 [INFO] [N3 s=3 p2] START mbpp/363
+2026-06-21 02:17:03,539 [INFO] [N3 s=3 p2] step1 L_test=SKIP
+2026-06-21 02:17:03,539 [INFO] [N3 s=3 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:05,432 [INFO]   written=11 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 02:17:05,432 [INFO] [N3 s=3 p3] START mbpp/363
+2026-06-21 02:17:05,432 [INFO] [N3 s=3 p3] step1 L_test=SKIP
+2026-06-21 02:17:05,433 [INFO] [N3 s=3 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:07,560 [INFO]   written=12 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 02:17:07,560 [INFO] [N3 s=4 p1] START mbpp/302
+2026-06-21 02:17:07,725 [INFO] [N3 s=4 p1] step1 L_spec=qwen3-coder -> D'=246chars cache=HIT +0.16s
+2026-06-21 02:17:07,725 [INFO] [N3 s=4 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:09,722 [INFO]   written=13 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=5, misses=0)
+2026-06-21 02:17:09,722 [INFO] [N3 s=4 p2] START mbpp/302
+2026-06-21 02:17:09,722 [INFO] [N3 s=4 p2] step1 L_test=SKIP
+2026-06-21 02:17:09,722 [INFO] [N3 s=4 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:11,735 [INFO]   written=14 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=5, misses=0)
+2026-06-21 02:17:11,736 [INFO] [N3 s=4 p3] START mbpp/302
+2026-06-21 02:17:11,736 [INFO] [N3 s=4 p3] step1 L_test=SKIP
+2026-06-21 02:17:11,736 [INFO] [N3 s=4 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:13,545 [INFO]   written=15 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=5, misses=0)
+2026-06-21 02:17:13,545 [INFO] [N3 s=5 p1] START mbpp/284
+2026-06-21 02:17:13,907 [INFO] [N3 s=5 p1] step1 L_spec=qwen3-coder -> D'=112chars cache=HIT +0.36s
+2026-06-21 02:17:13,907 [INFO] [N3 s=5 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:15,841 [INFO]   written=16 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=6, misses=0)
+2026-06-21 02:17:15,841 [INFO] [N3 s=5 p2] START mbpp/284
+2026-06-21 02:17:15,841 [INFO] [N3 s=5 p2] step1 L_test=SKIP
+2026-06-21 02:17:15,841 [INFO] [N3 s=5 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:17,773 [INFO]   written=17 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=6, misses=0)
+2026-06-21 02:17:17,774 [INFO] [N3 s=5 p3] START mbpp/284
+2026-06-21 02:17:17,774 [INFO] [N3 s=5 p3] step1 L_test=SKIP
+2026-06-21 02:17:17,774 [INFO] [N3 s=5 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:19,644 [INFO]   written=18 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=6, misses=0)
+2026-06-21 02:17:19,644 [INFO] [N3 s=6 p1] START mbpp/315
+2026-06-21 02:17:19,855 [INFO] [N3 s=6 p1] step1 L_spec=qwen3-coder -> D'=165chars cache=HIT +0.21s
+2026-06-21 02:17:19,855 [INFO] [N3 s=6 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:21,859 [INFO]   written=19 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=7, misses=0)
+2026-06-21 02:17:21,859 [INFO] [N3 s=6 p2] START mbpp/315
+2026-06-21 02:17:21,859 [INFO] [N3 s=6 p2] step1 L_test=SKIP
+2026-06-21 02:17:21,859 [INFO] [N3 s=6 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:23,751 [INFO]   written=20 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=7, misses=0)
+2026-06-21 02:17:23,751 [INFO] [N3 s=6 p3] START mbpp/315
+2026-06-21 02:17:23,752 [INFO] [N3 s=6 p3] step1 L_test=SKIP
+2026-06-21 02:17:23,752 [INFO] [N3 s=6 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:25,770 [INFO]   written=21 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=7, misses=0)
+2026-06-21 02:17:25,770 [INFO] [N3 s=7 p1] START mbpp/454
+2026-06-21 02:17:25,970 [INFO] [N3 s=7 p1] step1 L_spec=qwen3-coder -> D'=291chars cache=HIT +0.20s
+2026-06-21 02:17:25,970 [INFO] [N3 s=7 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:27,872 [INFO]   written=22 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 02:17:27,872 [INFO] [N3 s=7 p2] START mbpp/454
+2026-06-21 02:17:27,872 [INFO] [N3 s=7 p2] step1 L_test=SKIP
+2026-06-21 02:17:27,873 [INFO] [N3 s=7 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:29,840 [INFO]   written=23 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 02:17:29,840 [INFO] [N3 s=7 p3] START mbpp/454
+2026-06-21 02:17:29,841 [INFO] [N3 s=7 p3] step1 L_test=SKIP
+2026-06-21 02:17:29,841 [INFO] [N3 s=7 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:31,719 [INFO]   written=24 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 02:17:31,720 [INFO] [N3 s=8 p1] START mbpp/374
+2026-06-21 02:17:31,865 [INFO] [N3 s=8 p1] step1 L_spec=qwen3-coder -> D'=393chars cache=HIT +0.14s
+2026-06-21 02:17:31,865 [INFO] [N3 s=8 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:34,080 [INFO]   written=25 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=9, misses=0)
+2026-06-21 02:17:34,080 [INFO] [N3 s=8 p2] START mbpp/374
+2026-06-21 02:17:34,081 [INFO] [N3 s=8 p2] step1 L_test=SKIP
+2026-06-21 02:17:34,081 [INFO] [N3 s=8 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:36,049 [INFO]   written=26 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=9, misses=0)
+2026-06-21 02:17:36,049 [INFO] [N3 s=8 p3] START mbpp/374
+2026-06-21 02:17:36,049 [INFO] [N3 s=8 p3] step1 L_test=SKIP
+2026-06-21 02:17:36,050 [INFO] [N3 s=8 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:38,024 [INFO]   written=27 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=9, misses=0)
+2026-06-21 02:17:38,025 [INFO] [N3 s=9 p1] START mbpp/300
+2026-06-21 02:17:38,183 [INFO] [N3 s=9 p1] step1 L_spec=qwen3-coder -> D'=169chars cache=HIT +0.16s
+2026-06-21 02:17:38,183 [INFO] [N3 s=9 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:40,093 [INFO]   written=28 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=10, misses=0)
+2026-06-21 02:17:40,094 [INFO] [N3 s=9 p2] START mbpp/300
+2026-06-21 02:17:40,094 [INFO] [N3 s=9 p2] step1 L_test=SKIP
+2026-06-21 02:17:40,094 [INFO] [N3 s=9 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:42,089 [INFO]   written=29 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=10, misses=0)
+2026-06-21 02:17:42,089 [INFO] [N3 s=9 p3] START mbpp/300
+2026-06-21 02:17:42,089 [INFO] [N3 s=9 p3] step1 L_test=SKIP
+2026-06-21 02:17:42,089 [INFO] [N3 s=9 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:43,931 [INFO]   written=30 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=10, misses=0)
+2026-06-21 02:17:43,931 [INFO] [N3 s=10 p1] START mbpp/247
+2026-06-21 02:17:44,089 [INFO] [N3 s=10 p1] step1 L_spec=qwen3-coder -> D'=314chars cache=HIT +0.16s
+2026-06-21 02:17:44,089 [INFO] [N3 s=10 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:46,337 [INFO]   written=31 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=11, misses=0)
+2026-06-21 02:17:46,338 [INFO] [N3 s=10 p2] START mbpp/247
+2026-06-21 02:17:46,338 [INFO] [N3 s=10 p2] step1 L_test=SKIP
+2026-06-21 02:17:46,338 [INFO] [N3 s=10 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:48,485 [INFO]   written=32 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=11, misses=0)
+2026-06-21 02:17:48,485 [INFO] [N3 s=10 p3] START mbpp/247
+2026-06-21 02:17:48,485 [INFO] [N3 s=10 p3] step1 L_test=SKIP
+2026-06-21 02:17:48,485 [INFO] [N3 s=10 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:50,383 [INFO]   written=33 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=11, misses=0)
+2026-06-21 02:17:50,384 [INFO] [N3 s=11 p1] START mbpp/351
+2026-06-21 02:17:50,674 [INFO] [N3 s=11 p1] step1 L_spec=qwen3-coder -> D'=269chars cache=HIT +0.29s
+2026-06-21 02:17:50,674 [INFO] [N3 s=11 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:52,510 [INFO]   written=34 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 02:17:52,510 [INFO] [N3 s=11 p2] START mbpp/351
+2026-06-21 02:17:52,510 [INFO] [N3 s=11 p2] step1 L_test=SKIP
+2026-06-21 02:17:52,510 [INFO] [N3 s=11 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:17:54,653 [INFO]   written=35 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 02:17:54,653 [INFO] [N3 s=11 p3] START mbpp/351
+2026-06-21 02:17:54,653 [INFO] [N3 s=11 p3] step1 L_test=SKIP
+2026-06-21 02:17:54,654 [INFO] [N3 s=11 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:17:56,802 [INFO]   written=36 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 02:17:56,802 [INFO] [N3 s=12 p1] START mbpp/318
+2026-06-21 02:17:56,977 [INFO] [N3 s=12 p1] step1 L_spec=qwen3-coder -> D'=413chars cache=HIT +0.17s
+2026-06-21 02:17:56,977 [INFO] [N3 s=12 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:17:59,051 [INFO]   written=37 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=13, misses=0)
+2026-06-21 02:17:59,051 [INFO] [N3 s=12 p2] START mbpp/318
+2026-06-21 02:17:59,051 [INFO] [N3 s=12 p2] step1 L_test=SKIP
+2026-06-21 02:17:59,051 [INFO] [N3 s=12 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:00,954 [INFO]   written=38 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=13, misses=0)
+2026-06-21 02:18:00,954 [INFO] [N3 s=12 p3] START mbpp/318
+2026-06-21 02:18:00,954 [INFO] [N3 s=12 p3] step1 L_test=SKIP
+2026-06-21 02:18:00,954 [INFO] [N3 s=12 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:02,812 [INFO]   written=39 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=13, misses=0)
+2026-06-21 02:18:02,812 [INFO] [N3 s=13 p1] START mbpp/98
+2026-06-21 02:18:03,004 [INFO] [N3 s=13 p1] step1 L_spec=qwen3-coder -> D'=123chars cache=HIT +0.19s
+2026-06-21 02:18:03,004 [INFO] [N3 s=13 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:05,018 [INFO]   written=40 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=14, misses=0)
+2026-06-21 02:18:05,019 [INFO] [N3 s=13 p2] START mbpp/98
+2026-06-21 02:18:05,019 [INFO] [N3 s=13 p2] step1 L_test=SKIP
+2026-06-21 02:18:05,019 [INFO] [N3 s=13 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:06,836 [INFO]   written=41 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=14, misses=0)
+2026-06-21 02:18:06,836 [INFO] [N3 s=13 p3] START mbpp/98
+2026-06-21 02:18:06,836 [INFO] [N3 s=13 p3] step1 L_test=SKIP
+2026-06-21 02:18:06,836 [INFO] [N3 s=13 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:08,696 [INFO]   written=42 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=14, misses=0)
+2026-06-21 02:18:08,696 [INFO] [N3 s=14 p1] START mbpp/295
+2026-06-21 02:18:08,880 [INFO] [N3 s=14 p1] step1 L_spec=qwen3-coder -> D'=294chars cache=HIT +0.18s
+2026-06-21 02:18:08,880 [INFO] [N3 s=14 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:10,834 [INFO]   written=43 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=15, misses=0)
+2026-06-21 02:18:10,834 [INFO] [N3 s=14 p2] START mbpp/295
+2026-06-21 02:18:10,834 [INFO] [N3 s=14 p2] step1 L_test=SKIP
+2026-06-21 02:18:10,835 [INFO] [N3 s=14 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:12,937 [INFO]   written=44 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=15, misses=0)
+2026-06-21 02:18:12,938 [INFO] [N3 s=14 p3] START mbpp/295
+2026-06-21 02:18:12,938 [INFO] [N3 s=14 p3] step1 L_test=SKIP
+2026-06-21 02:18:12,938 [INFO] [N3 s=14 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:14,868 [INFO]   written=45 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=15, misses=0)
+2026-06-21 02:18:14,868 [INFO] [N3 s=15 p1] START mbpp/34
+2026-06-21 02:18:15,043 [INFO] [N3 s=15 p1] step1 L_spec=qwen3-coder -> D'=253chars cache=HIT +0.17s
+2026-06-21 02:18:15,043 [INFO] [N3 s=15 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:16,904 [INFO]   written=46 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 02:18:16,905 [INFO] [N3 s=15 p2] START mbpp/34
+2026-06-21 02:18:16,905 [INFO] [N3 s=15 p2] step1 L_test=SKIP
+2026-06-21 02:18:16,905 [INFO] [N3 s=15 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:18,774 [INFO]   written=47 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 02:18:18,774 [INFO] [N3 s=15 p3] START mbpp/34
+2026-06-21 02:18:18,774 [INFO] [N3 s=15 p3] step1 L_test=SKIP
+2026-06-21 02:18:18,774 [INFO] [N3 s=15 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:20,570 [INFO]   written=48 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 02:18:20,570 [INFO] [N3 s=16 p1] START mbpp/198
+2026-06-21 02:18:20,722 [INFO] [N3 s=16 p1] step1 L_spec=qwen3-coder -> D'=240chars cache=HIT +0.15s
+2026-06-21 02:18:20,722 [INFO] [N3 s=16 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:22,986 [INFO]   written=49 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=17, misses=0)
+2026-06-21 02:18:22,986 [INFO] [N3 s=16 p2] START mbpp/198
+2026-06-21 02:18:22,986 [INFO] [N3 s=16 p2] step1 L_test=SKIP
+2026-06-21 02:18:22,986 [INFO] [N3 s=16 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:25,080 [INFO]   written=50 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=17, misses=0)
+2026-06-21 02:18:25,080 [INFO] [N3 s=16 p3] START mbpp/198
+2026-06-21 02:18:25,080 [INFO] [N3 s=16 p3] step1 L_test=SKIP
+2026-06-21 02:18:25,080 [INFO] [N3 s=16 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:27,182 [INFO]   written=51 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=17, misses=0)
+2026-06-21 02:18:27,182 [INFO] [N3 s=17 p1] START mbpp/310
+2026-06-21 02:18:27,398 [INFO] [N3 s=17 p1] step1 L_spec=qwen3-coder -> D'=294chars cache=HIT +0.22s
+2026-06-21 02:18:27,399 [INFO] [N3 s=17 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:29,309 [INFO]   written=52 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=18, misses=0)
+2026-06-21 02:18:29,309 [INFO] [N3 s=17 p2] START mbpp/310
+2026-06-21 02:18:29,309 [INFO] [N3 s=17 p2] step1 L_test=SKIP
+2026-06-21 02:18:29,309 [INFO] [N3 s=17 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:31,286 [INFO]   written=53 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=18, misses=0)
+2026-06-21 02:18:31,287 [INFO] [N3 s=17 p3] START mbpp/310
+2026-06-21 02:18:31,287 [INFO] [N3 s=17 p3] step1 L_test=SKIP
+2026-06-21 02:18:31,287 [INFO] [N3 s=17 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:33,241 [INFO]   written=54 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=18, misses=0)
+2026-06-21 02:18:33,241 [INFO] [N3 s=18 p1] START mbpp/87
+2026-06-21 02:18:33,490 [INFO] [N3 s=18 p1] step1 L_spec=qwen3-coder -> D'=298chars cache=HIT +0.25s
+2026-06-21 02:18:33,490 [INFO] [N3 s=18 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:35,368 [INFO]   written=55 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=19, misses=0)
+2026-06-21 02:18:35,368 [INFO] [N3 s=18 p2] START mbpp/87
+2026-06-21 02:18:35,369 [INFO] [N3 s=18 p2] step1 L_test=SKIP
+2026-06-21 02:18:35,369 [INFO] [N3 s=18 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:37,516 [INFO]   written=56 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=19, misses=0)
+2026-06-21 02:18:37,516 [INFO] [N3 s=18 p3] START mbpp/87
+2026-06-21 02:18:37,516 [INFO] [N3 s=18 p3] step1 L_test=SKIP
+2026-06-21 02:18:37,517 [INFO] [N3 s=18 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:39,646 [INFO]   written=57 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=19, misses=0)
+2026-06-21 02:18:39,646 [INFO] [N3 s=19 p1] START mbpp/58
+2026-06-21 02:18:39,851 [INFO] [N3 s=19 p1] step1 L_spec=qwen3-coder -> D'=196chars cache=HIT +0.20s
+2026-06-21 02:18:39,851 [INFO] [N3 s=19 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:41,881 [INFO]   written=58 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 02:18:41,881 [INFO] [N3 s=19 p2] START mbpp/58
+2026-06-21 02:18:41,881 [INFO] [N3 s=19 p2] step1 L_test=SKIP
+2026-06-21 02:18:41,881 [INFO] [N3 s=19 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:43,752 [INFO]   written=59 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 02:18:43,752 [INFO] [N3 s=19 p3] START mbpp/58
+2026-06-21 02:18:43,752 [INFO] [N3 s=19 p3] step1 L_test=SKIP
+2026-06-21 02:18:43,752 [INFO] [N3 s=19 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:45,646 [INFO]   written=60 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 02:18:45,646 [INFO] [N3 s=20 p1] START mbpp/27
+2026-06-21 02:18:45,844 [INFO] [N3 s=20 p1] step1 L_spec=qwen3-coder -> D'=292chars cache=HIT +0.20s
+2026-06-21 02:18:45,844 [INFO] [N3 s=20 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:47,889 [INFO]   written=61 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=21, misses=0)
+2026-06-21 02:18:47,889 [INFO] [N3 s=20 p2] START mbpp/27
+2026-06-21 02:18:47,889 [INFO] [N3 s=20 p2] step1 L_test=SKIP
+2026-06-21 02:18:47,889 [INFO] [N3 s=20 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:49,910 [INFO]   written=62 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=21, misses=0)
+2026-06-21 02:18:49,911 [INFO] [N3 s=20 p3] START mbpp/27
+2026-06-21 02:18:49,911 [INFO] [N3 s=20 p3] step1 L_test=SKIP
+2026-06-21 02:18:49,911 [INFO] [N3 s=20 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:52,294 [INFO]   written=63 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=21, misses=0)
+2026-06-21 02:18:52,294 [INFO] [N3 s=21 p1] START mbpp/473
+2026-06-21 02:18:52,463 [INFO] [N3 s=21 p1] step1 L_spec=qwen3-coder -> D'=304chars cache=HIT +0.17s
+2026-06-21 02:18:52,463 [INFO] [N3 s=21 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:18:54,374 [INFO]   written=64 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=22, misses=0)
+2026-06-21 02:18:54,374 [INFO] [N3 s=21 p2] START mbpp/473
+2026-06-21 02:18:54,374 [INFO] [N3 s=21 p2] step1 L_test=SKIP
+2026-06-21 02:18:54,374 [INFO] [N3 s=21 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:18:56,232 [INFO]   written=65 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=22, misses=0)
+2026-06-21 02:18:56,232 [INFO] [N3 s=21 p3] START mbpp/473
+2026-06-21 02:18:56,232 [INFO] [N3 s=21 p3] step1 L_test=SKIP
+2026-06-21 02:18:56,232 [INFO] [N3 s=21 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:18:58,197 [INFO]   written=66 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=22, misses=0)
+2026-06-21 02:18:58,197 [INFO] [N3 s=22 p1] START mbpp/261
+2026-06-21 02:18:58,459 [INFO] [N3 s=22 p1] step1 L_spec=qwen3-coder -> D'=276chars cache=HIT +0.26s
+2026-06-21 02:18:58,459 [INFO] [N3 s=22 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:00,323 [INFO]   written=67 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=23, misses=0)
+2026-06-21 02:19:00,324 [INFO] [N3 s=22 p2] START mbpp/261
+2026-06-21 02:19:00,324 [INFO] [N3 s=22 p2] step1 L_test=SKIP
+2026-06-21 02:19:00,324 [INFO] [N3 s=22 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:02,368 [INFO]   written=68 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=23, misses=0)
+2026-06-21 02:19:02,369 [INFO] [N3 s=22 p3] START mbpp/261
+2026-06-21 02:19:02,369 [INFO] [N3 s=22 p3] step1 L_test=SKIP
+2026-06-21 02:19:02,369 [INFO] [N3 s=22 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:04,496 [INFO]   written=69 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=23, misses=0)
+2026-06-21 02:19:04,496 [INFO] [N3 s=23 p1] START mbpp/394
+2026-06-21 02:19:04,682 [INFO] [N3 s=23 p1] step1 L_spec=qwen3-coder -> D'=261chars cache=HIT +0.19s
+2026-06-21 02:19:04,682 [INFO] [N3 s=23 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:06,684 [INFO]   written=70 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 02:19:06,684 [INFO] [N3 s=23 p2] START mbpp/394
+2026-06-21 02:19:06,684 [INFO] [N3 s=23 p2] step1 L_test=SKIP
+2026-06-21 02:19:06,684 [INFO] [N3 s=23 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:08,598 [INFO]   written=71 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 02:19:08,598 [INFO] [N3 s=23 p3] START mbpp/394
+2026-06-21 02:19:08,598 [INFO] [N3 s=23 p3] step1 L_test=SKIP
+2026-06-21 02:19:08,598 [INFO] [N3 s=23 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:10,523 [INFO]   written=72 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 02:19:10,524 [INFO] [N3 s=24 p1] START mbpp/272
+2026-06-21 02:19:10,745 [INFO] [N3 s=24 p1] step1 L_spec=qwen3-coder -> D'=249chars cache=HIT +0.22s
+2026-06-21 02:19:10,745 [INFO] [N3 s=24 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:12,869 [INFO]   written=73 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=25, misses=0)
+2026-06-21 02:19:12,870 [INFO] [N3 s=24 p2] START mbpp/272
+2026-06-21 02:19:12,870 [INFO] [N3 s=24 p2] step1 L_test=SKIP
+2026-06-21 02:19:12,870 [INFO] [N3 s=24 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:14,847 [INFO]   written=74 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=25, misses=0)
+2026-06-21 02:19:14,847 [INFO] [N3 s=24 p3] START mbpp/272
+2026-06-21 02:19:14,847 [INFO] [N3 s=24 p3] step1 L_test=SKIP
+2026-06-21 02:19:14,847 [INFO] [N3 s=24 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:17,078 [INFO]   written=75 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=25, misses=0)
+2026-06-21 02:19:17,078 [INFO] [N3 s=25 p1] START mbpp/74
+2026-06-21 02:19:17,349 [INFO] [N3 s=25 p1] step1 L_spec=qwen3-coder -> D'=344chars cache=HIT +0.27s
+2026-06-21 02:19:17,349 [INFO] [N3 s=25 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:19,353 [INFO]   written=76 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=26, misses=0)
+2026-06-21 02:19:19,354 [INFO] [N3 s=25 p2] START mbpp/74
+2026-06-21 02:19:19,354 [INFO] [N3 s=25 p2] step1 L_test=SKIP
+2026-06-21 02:19:19,354 [INFO] [N3 s=25 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:21,160 [INFO]   written=77 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=26, misses=0)
+2026-06-21 02:19:21,160 [INFO] [N3 s=25 p3] START mbpp/74
+2026-06-21 02:19:21,160 [INFO] [N3 s=25 p3] step1 L_test=SKIP
+2026-06-21 02:19:21,160 [INFO] [N3 s=25 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:23,185 [INFO]   written=78 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=26, misses=0)
+2026-06-21 02:19:23,185 [INFO] [N3 s=26 p1] START humaneval/HumanEval/52
+2026-06-21 02:19:23,409 [INFO] [N3 s=26 p1] step1 L_spec=qwen3-coder -> D'=63chars cache=HIT +0.22s
+2026-06-21 02:19:23,409 [INFO] [N3 s=26 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:25,261 [INFO]   written=79 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=27, misses=0)
+2026-06-21 02:19:25,261 [INFO] [N3 s=26 p2] START humaneval/HumanEval/52
+2026-06-21 02:19:25,261 [INFO] [N3 s=26 p2] step1 L_test=SKIP
+2026-06-21 02:19:25,261 [INFO] [N3 s=26 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:27,128 [INFO]   written=80 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=27, misses=0)
+2026-06-21 02:19:27,128 [INFO] [N3 s=26 p3] START humaneval/HumanEval/52
+2026-06-21 02:19:27,129 [INFO] [N3 s=26 p3] step1 L_test=SKIP
+2026-06-21 02:19:27,129 [INFO] [N3 s=26 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:29,246 [INFO]   written=81 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=27, misses=0)
+2026-06-21 02:19:29,246 [INFO] [N3 s=27 p1] START mbpp/382
+2026-06-21 02:19:29,522 [INFO] [N3 s=27 p1] step1 L_spec=qwen3-coder -> D'=184chars cache=HIT +0.28s
+2026-06-21 02:19:29,522 [INFO] [N3 s=27 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:31,588 [INFO]   written=82 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=28, misses=0)
+2026-06-21 02:19:31,589 [INFO] [N3 s=27 p2] START mbpp/382
+2026-06-21 02:19:31,589 [INFO] [N3 s=27 p2] step1 L_test=SKIP
+2026-06-21 02:19:31,589 [INFO] [N3 s=27 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:33,713 [INFO]   written=83 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=28, misses=0)
+2026-06-21 02:19:33,713 [INFO] [N3 s=27 p3] START mbpp/382
+2026-06-21 02:19:33,713 [INFO] [N3 s=27 p3] step1 L_test=SKIP
+2026-06-21 02:19:33,714 [INFO] [N3 s=27 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:35,624 [INFO]   written=84 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=28, misses=0)
+2026-06-21 02:19:35,625 [INFO] [N3 s=28 p1] START humaneval/HumanEval/12
+2026-06-21 02:19:35,820 [INFO] [N3 s=28 p1] step1 L_spec=qwen3-coder -> D'=137chars cache=HIT +0.19s
+2026-06-21 02:19:35,820 [INFO] [N3 s=28 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:37,781 [INFO]   written=85 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=29, misses=0)
+2026-06-21 02:19:37,782 [INFO] [N3 s=28 p2] START humaneval/HumanEval/12
+2026-06-21 02:19:37,782 [INFO] [N3 s=28 p2] step1 L_test=SKIP
+2026-06-21 02:19:37,782 [INFO] [N3 s=28 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:40,200 [INFO]   written=86 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=29, misses=0)
+2026-06-21 02:19:40,200 [INFO] [N3 s=28 p3] START humaneval/HumanEval/12
+2026-06-21 02:19:40,200 [INFO] [N3 s=28 p3] step1 L_test=SKIP
+2026-06-21 02:19:40,200 [INFO] [N3 s=28 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:42,233 [INFO]   written=87 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=29, misses=0)
+2026-06-21 02:19:42,234 [INFO] [N3 s=29 p1] START mbpp/100
+2026-06-21 02:19:42,433 [INFO] [N3 s=29 p1] step1 L_spec=qwen3-coder -> D'=159chars cache=HIT +0.20s
+2026-06-21 02:19:42,434 [INFO] [N3 s=29 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:44,558 [INFO]   written=88 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=30, misses=0)
+2026-06-21 02:19:44,559 [INFO] [N3 s=29 p2] START mbpp/100
+2026-06-21 02:19:44,559 [INFO] [N3 s=29 p2] step1 L_test=SKIP
+2026-06-21 02:19:44,559 [INFO] [N3 s=29 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:46,548 [INFO]   written=89 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=30, misses=0)
+2026-06-21 02:19:46,548 [INFO] [N3 s=29 p3] START mbpp/100
+2026-06-21 02:19:46,548 [INFO] [N3 s=29 p3] step1 L_test=SKIP
+2026-06-21 02:19:46,549 [INFO] [N3 s=29 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:48,400 [INFO]   written=90 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=30, misses=0)
+2026-06-21 02:19:48,400 [INFO] [N3 s=30 p1] START humaneval/HumanEval/149
+2026-06-21 02:19:48,602 [INFO] [N3 s=30 p1] step1 L_spec=qwen3-coder -> D'=190chars cache=HIT +0.20s
+2026-06-21 02:19:48,602 [INFO] [N3 s=30 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:50,485 [INFO]   written=91 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=31, misses=0)
+2026-06-21 02:19:50,485 [INFO] [N3 s=30 p2] START humaneval/HumanEval/149
+2026-06-21 02:19:50,485 [INFO] [N3 s=30 p2] step1 L_test=SKIP
+2026-06-21 02:19:50,486 [INFO] [N3 s=30 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:52,317 [INFO]   written=92 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=31, misses=0)
+2026-06-21 02:19:52,318 [INFO] [N3 s=30 p3] START humaneval/HumanEval/149
+2026-06-21 02:19:52,318 [INFO] [N3 s=30 p3] step1 L_test=SKIP
+2026-06-21 02:19:52,318 [INFO] [N3 s=30 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:19:54,202 [INFO]   written=93 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=31, misses=0)
+2026-06-21 02:19:54,203 [INFO] [N3 s=31 p1] START humaneval/HumanEval/106
+2026-06-21 02:19:54,459 [INFO] [N3 s=31 p1] step1 L_spec=qwen3-coder -> D'=348chars cache=HIT +0.26s
+2026-06-21 02:19:54,459 [INFO] [N3 s=31 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:19:56,556 [INFO]   written=94 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=32, misses=0)
+2026-06-21 02:19:56,556 [INFO] [N3 s=31 p2] START humaneval/HumanEval/106
+2026-06-21 02:19:56,556 [INFO] [N3 s=31 p2] step1 L_test=SKIP
+2026-06-21 02:19:56,556 [INFO] [N3 s=31 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:19:58,409 [INFO]   written=95 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=32, misses=0)
+2026-06-21 02:19:58,409 [INFO] [N3 s=31 p3] START humaneval/HumanEval/106
+2026-06-21 02:19:58,409 [INFO] [N3 s=31 p3] step1 L_test=SKIP
+2026-06-21 02:19:58,410 [INFO] [N3 s=31 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:00,285 [INFO]   written=96 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=32, misses=0)
+2026-06-21 02:20:00,286 [INFO] [N3 s=32 p1] START mbpp/222
+2026-06-21 02:20:00,485 [INFO] [N3 s=32 p1] step1 L_spec=qwen3-coder -> D'=234chars cache=HIT +0.20s
+2026-06-21 02:20:00,486 [INFO] [N3 s=32 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:02,444 [INFO]   written=97 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=33, misses=0)
+2026-06-21 02:20:02,444 [INFO] [N3 s=32 p2] START mbpp/222
+2026-06-21 02:20:02,444 [INFO] [N3 s=32 p2] step1 L_test=SKIP
+2026-06-21 02:20:02,444 [INFO] [N3 s=32 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:04,337 [INFO]   written=98 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=33, misses=0)
+2026-06-21 02:20:04,338 [INFO] [N3 s=32 p3] START mbpp/222
+2026-06-21 02:20:04,338 [INFO] [N3 s=32 p3] step1 L_test=SKIP
+2026-06-21 02:20:04,338 [INFO] [N3 s=32 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:06,183 [INFO]   written=99 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=33, misses=0)
+2026-06-21 02:20:06,183 [INFO] [N3 s=33 p1] START mbpp/162
+2026-06-21 02:20:06,370 [INFO] [N3 s=33 p1] step1 L_spec=qwen3-coder -> D'=197chars cache=HIT +0.19s
+2026-06-21 02:20:06,371 [INFO] [N3 s=33 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:08,464 [INFO]   written=100 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=34, misses=0)
+2026-06-21 02:20:08,464 [INFO] [N3 s=33 p2] START mbpp/162
+2026-06-21 02:20:08,464 [INFO] [N3 s=33 p2] step1 L_test=SKIP
+2026-06-21 02:20:08,464 [INFO] [N3 s=33 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:10,442 [INFO]   written=101 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=34, misses=0)
+2026-06-21 02:20:10,442 [INFO] [N3 s=33 p3] START mbpp/162
+2026-06-21 02:20:10,442 [INFO] [N3 s=33 p3] step1 L_test=SKIP
+2026-06-21 02:20:10,443 [INFO] [N3 s=33 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:12,304 [INFO]   written=102 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=34, misses=0)
+2026-06-21 02:20:12,304 [INFO] [N3 s=34 p1] START mbpp/19
+2026-06-21 02:20:12,495 [INFO] [N3 s=34 p1] step1 L_spec=qwen3-coder -> D'=309chars cache=HIT +0.19s
+2026-06-21 02:20:12,495 [INFO] [N3 s=34 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:14,482 [INFO]   written=103 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=35, misses=0)
+2026-06-21 02:20:14,482 [INFO] [N3 s=34 p2] START mbpp/19
+2026-06-21 02:20:14,482 [INFO] [N3 s=34 p2] step1 L_test=SKIP
+2026-06-21 02:20:14,482 [INFO] [N3 s=34 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:16,305 [INFO]   written=104 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=35, misses=0)
+2026-06-21 02:20:16,305 [INFO] [N3 s=34 p3] START mbpp/19
+2026-06-21 02:20:16,305 [INFO] [N3 s=34 p3] step1 L_test=SKIP
+2026-06-21 02:20:16,305 [INFO] [N3 s=34 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:18,157 [INFO]   written=105 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=35, misses=0)
+2026-06-21 02:20:18,158 [INFO] [N3 s=35 p1] START mbpp/126
+2026-06-21 02:20:18,354 [INFO] [N3 s=35 p1] step1 L_spec=qwen3-coder -> D'=310chars cache=HIT +0.20s
+2026-06-21 02:20:18,354 [INFO] [N3 s=35 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:20,399 [INFO]   written=106 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=36, misses=0)
+2026-06-21 02:20:20,400 [INFO] [N3 s=35 p2] START mbpp/126
+2026-06-21 02:20:20,400 [INFO] [N3 s=35 p2] step1 L_test=SKIP
+2026-06-21 02:20:20,400 [INFO] [N3 s=35 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:22,403 [INFO]   written=107 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=36, misses=0)
+2026-06-21 02:20:22,403 [INFO] [N3 s=35 p3] START mbpp/126
+2026-06-21 02:20:22,403 [INFO] [N3 s=35 p3] step1 L_test=SKIP
+2026-06-21 02:20:22,403 [INFO] [N3 s=35 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:24,257 [INFO]   written=108 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=36, misses=0)
+2026-06-21 02:20:24,257 [INFO] [N3 s=36 p1] START mbpp/270
+2026-06-21 02:20:24,493 [INFO] [N3 s=36 p1] step1 L_spec=qwen3-coder -> D'=329chars cache=HIT +0.24s
+2026-06-21 02:20:24,494 [INFO] [N3 s=36 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:26,549 [INFO]   written=109 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=37, misses=0)
+2026-06-21 02:20:26,549 [INFO] [N3 s=36 p2] START mbpp/270
+2026-06-21 02:20:26,549 [INFO] [N3 s=36 p2] step1 L_test=SKIP
+2026-06-21 02:20:26,550 [INFO] [N3 s=36 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:28,438 [INFO]   written=110 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=37, misses=0)
+2026-06-21 02:20:28,438 [INFO] [N3 s=36 p3] START mbpp/270
+2026-06-21 02:20:28,438 [INFO] [N3 s=36 p3] step1 L_test=SKIP
+2026-06-21 02:20:28,438 [INFO] [N3 s=36 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:30,298 [INFO]   written=111 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=37, misses=0)
+2026-06-21 02:20:30,298 [INFO] [N3 s=37 p1] START mbpp/113
+2026-06-21 02:20:30,586 [INFO] [N3 s=37 p1] step1 L_spec=qwen3-coder -> D'=266chars cache=HIT +0.29s
+2026-06-21 02:20:30,586 [INFO] [N3 s=37 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:32,574 [INFO]   written=112 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=38, misses=0)
+2026-06-21 02:20:32,574 [INFO] [N3 s=37 p2] START mbpp/113
+2026-06-21 02:20:32,574 [INFO] [N3 s=37 p2] step1 L_test=SKIP
+2026-06-21 02:20:32,574 [INFO] [N3 s=37 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:34,769 [INFO]   written=113 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=38, misses=0)
+2026-06-21 02:20:34,770 [INFO] [N3 s=37 p3] START mbpp/113
+2026-06-21 02:20:34,770 [INFO] [N3 s=37 p3] step1 L_test=SKIP
+2026-06-21 02:20:34,770 [INFO] [N3 s=37 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:36,762 [INFO]   written=114 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=38, misses=0)
+2026-06-21 02:20:36,762 [INFO] [N3 s=38 p1] START mbpp/129
+2026-06-21 02:20:36,942 [INFO] [N3 s=38 p1] step1 L_spec=qwen3-coder -> D'=259chars cache=HIT +0.18s
+2026-06-21 02:20:36,943 [INFO] [N3 s=38 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:38,798 [INFO]   written=115 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=39, misses=0)
+2026-06-21 02:20:38,798 [INFO] [N3 s=38 p2] START mbpp/129
+2026-06-21 02:20:38,798 [INFO] [N3 s=38 p2] step1 L_test=SKIP
+2026-06-21 02:20:38,798 [INFO] [N3 s=38 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:40,938 [INFO]   written=116 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=39, misses=0)
+2026-06-21 02:20:40,938 [INFO] [N3 s=38 p3] START mbpp/129
+2026-06-21 02:20:40,938 [INFO] [N3 s=38 p3] step1 L_test=SKIP
+2026-06-21 02:20:40,939 [INFO] [N3 s=38 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:42,783 [INFO]   written=117 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=39, misses=0)
+2026-06-21 02:20:42,783 [INFO] [N3 s=39 p1] START humaneval/HumanEval/70
+2026-06-21 02:20:42,944 [INFO] [N3 s=39 p1] step1 L_spec=qwen3-coder -> D'=155chars cache=HIT +0.16s
+2026-06-21 02:20:42,944 [INFO] [N3 s=39 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:44,855 [INFO]   written=118 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=40, misses=0)
+2026-06-21 02:20:44,855 [INFO] [N3 s=39 p2] START humaneval/HumanEval/70
+2026-06-21 02:20:44,855 [INFO] [N3 s=39 p2] step1 L_test=SKIP
+2026-06-21 02:20:44,856 [INFO] [N3 s=39 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:47,000 [INFO]   written=119 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=40, misses=0)
+2026-06-21 02:20:47,001 [INFO] [N3 s=39 p3] START humaneval/HumanEval/70
+2026-06-21 02:20:47,001 [INFO] [N3 s=39 p3] step1 L_test=SKIP
+2026-06-21 02:20:47,001 [INFO] [N3 s=39 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:49,121 [INFO]   written=120 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=40, misses=0)
+2026-06-21 02:20:49,122 [INFO] [N3 s=40 p1] START mbpp/493
+2026-06-21 02:20:49,282 [INFO] [N3 s=40 p1] step1 L_spec=qwen3-coder -> D'=182chars cache=HIT +0.16s
+2026-06-21 02:20:49,282 [INFO] [N3 s=40 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:51,228 [INFO]   written=121 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=41, misses=0)
+2026-06-21 02:20:51,229 [INFO] [N3 s=40 p2] START mbpp/493
+2026-06-21 02:20:51,229 [INFO] [N3 s=40 p2] step1 L_test=SKIP
+2026-06-21 02:20:51,229 [INFO] [N3 s=40 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:53,117 [INFO]   written=122 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=41, misses=0)
+2026-06-21 02:20:53,118 [INFO] [N3 s=40 p3] START mbpp/493
+2026-06-21 02:20:53,118 [INFO] [N3 s=40 p3] step1 L_test=SKIP
+2026-06-21 02:20:53,118 [INFO] [N3 s=40 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:20:54,926 [INFO]   written=123 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=41, misses=0)
+2026-06-21 02:20:54,926 [INFO] [N3 s=41 p1] START mbpp/94
+2026-06-21 02:20:55,116 [INFO] [N3 s=41 p1] step1 L_spec=qwen3-coder -> D'=229chars cache=HIT +0.19s
+2026-06-21 02:20:55,116 [INFO] [N3 s=41 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:20:56,933 [INFO]   written=124 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=42, misses=0)
+2026-06-21 02:20:56,933 [INFO] [N3 s=41 p2] START mbpp/94
+2026-06-21 02:20:56,934 [INFO] [N3 s=41 p2] step1 L_test=SKIP
+2026-06-21 02:20:56,934 [INFO] [N3 s=41 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:20:58,964 [INFO]   written=125 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=42, misses=0)
+2026-06-21 02:20:58,964 [INFO] [N3 s=41 p3] START mbpp/94
+2026-06-21 02:20:58,964 [INFO] [N3 s=41 p3] step1 L_test=SKIP
+2026-06-21 02:20:58,964 [INFO] [N3 s=41 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:01,102 [INFO]   written=126 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=42, misses=0)
+2026-06-21 02:21:01,103 [INFO] [N3 s=42 p1] START mbpp/471
+2026-06-21 02:21:01,310 [INFO] [N3 s=42 p1] step1 L_spec=qwen3-coder -> D'=293chars cache=HIT +0.21s
+2026-06-21 02:21:01,310 [INFO] [N3 s=42 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:21:03,362 [INFO]   written=127 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=43, misses=0)
+2026-06-21 02:21:03,362 [INFO] [N3 s=42 p2] START mbpp/471
+2026-06-21 02:21:03,362 [INFO] [N3 s=42 p2] step1 L_test=SKIP
+2026-06-21 02:21:03,362 [INFO] [N3 s=42 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:21:05,250 [INFO]   written=128 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=43, misses=0)
+2026-06-21 02:21:05,250 [INFO] [N3 s=42 p3] START mbpp/471
+2026-06-21 02:21:05,250 [INFO] [N3 s=42 p3] step1 L_test=SKIP
+2026-06-21 02:21:05,251 [INFO] [N3 s=42 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:07,384 [INFO]   written=129 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=43, misses=0)
+2026-06-21 02:21:07,385 [INFO] [N3 s=43 p1] START humaneval/HumanEval/14
+2026-06-21 02:21:07,558 [INFO] [N3 s=43 p1] step1 L_spec=qwen3-coder -> D'=115chars cache=HIT +0.17s
+2026-06-21 02:21:07,559 [INFO] [N3 s=43 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:21:09,505 [INFO]   written=130 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=44, misses=0)
+2026-06-21 02:21:09,505 [INFO] [N3 s=43 p2] START humaneval/HumanEval/14
+2026-06-21 02:21:09,505 [INFO] [N3 s=43 p2] step1 L_test=SKIP
+2026-06-21 02:21:09,505 [INFO] [N3 s=43 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:21:11,430 [INFO]   written=131 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=44, misses=0)
+2026-06-21 02:21:11,430 [INFO] [N3 s=43 p3] START humaneval/HumanEval/14
+2026-06-21 02:21:11,430 [INFO] [N3 s=43 p3] step1 L_test=SKIP
+2026-06-21 02:21:11,431 [INFO] [N3 s=43 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:13,402 [INFO]   written=132 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=44, misses=0)
+2026-06-21 02:21:13,402 [INFO] [N3 s=44 p1] START mbpp/40
+2026-06-21 02:21:13,581 [INFO] [N3 s=44 p1] step1 L_spec=qwen3-coder -> D'=295chars cache=HIT +0.18s
+2026-06-21 02:21:13,581 [INFO] [N3 s=44 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:21:15,433 [INFO]   written=133 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=45, misses=0)
+2026-06-21 02:21:15,434 [INFO] [N3 s=44 p2] START mbpp/40
+2026-06-21 02:21:15,434 [INFO] [N3 s=44 p2] step1 L_test=SKIP
+2026-06-21 02:21:15,434 [INFO] [N3 s=44 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:21:17,351 [INFO]   written=134 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=45, misses=0)
+2026-06-21 02:21:17,352 [INFO] [N3 s=44 p3] START mbpp/40
+2026-06-21 02:21:17,352 [INFO] [N3 s=44 p3] step1 L_test=SKIP
+2026-06-21 02:21:17,352 [INFO] [N3 s=44 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:19,275 [INFO]   written=135 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=45, misses=0)
+2026-06-21 02:21:19,275 [INFO] [N3 s=45 p1] START humaneval/HumanEval/8
+2026-06-21 02:21:19,544 [INFO] [N3 s=45 p1] step1 L_spec=qwen3-coder -> D'=219chars cache=HIT +0.27s
+2026-06-21 02:21:19,544 [INFO] [N3 s=45 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:21:21,544 [INFO]   written=136 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=46, misses=0)
+2026-06-21 02:21:21,544 [INFO] [N3 s=45 p2] START humaneval/HumanEval/8
+2026-06-21 02:21:21,544 [INFO] [N3 s=45 p2] step1 L_test=SKIP
+2026-06-21 02:21:21,544 [INFO] [N3 s=45 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:21:23,405 [INFO]   written=137 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=46, misses=0)
+2026-06-21 02:21:23,405 [INFO] [N3 s=45 p3] START humaneval/HumanEval/8
+2026-06-21 02:21:23,405 [INFO] [N3 s=45 p3] step1 L_test=SKIP
+2026-06-21 02:21:23,405 [INFO] [N3 s=45 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:25,478 [INFO]   written=138 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=46, misses=0)
+2026-06-21 02:21:25,478 [INFO] [N3 s=46 p1] START mbpp/160
+2026-06-21 02:21:25,687 [INFO] [N3 s=46 p1] step1 L_spec=qwen3-coder -> D'=162chars cache=HIT +0.21s
+2026-06-21 02:21:25,687 [INFO] [N3 s=46 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:21:27,747 [INFO]   written=139 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=47, misses=0)
+2026-06-21 02:21:27,747 [INFO] [N3 s=46 p2] START mbpp/160
+2026-06-21 02:21:27,748 [INFO] [N3 s=46 p2] step1 L_test=SKIP
+2026-06-21 02:21:27,748 [INFO] [N3 s=46 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:21:29,670 [INFO]   written=140 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=47, misses=0)
+2026-06-21 02:21:29,671 [INFO] [N3 s=46 p3] START mbpp/160
+2026-06-21 02:21:29,671 [INFO] [N3 s=46 p3] step1 L_test=SKIP
+2026-06-21 02:21:29,671 [INFO] [N3 s=46 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:31,564 [INFO]   written=141 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=47, misses=0)
+2026-06-21 02:21:31,565 [INFO] [N3 s=47 p1] START mbpp/387
+2026-06-21 02:21:31,780 [INFO] [N3 s=47 p1] step1 L_spec=qwen3-coder -> D'=177chars cache=HIT +0.21s
+2026-06-21 02:21:31,780 [INFO] [N3 s=47 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:21:33,845 [INFO]   written=142 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=48, misses=0)
+2026-06-21 02:21:33,846 [INFO] [N3 s=47 p2] START mbpp/387
+2026-06-21 02:21:33,846 [INFO] [N3 s=47 p2] step1 L_test=SKIP
+2026-06-21 02:21:33,846 [INFO] [N3 s=47 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:21:35,960 [INFO]   written=143 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=48, misses=0)
+2026-06-21 02:21:35,960 [INFO] [N3 s=47 p3] START mbpp/387
+2026-06-21 02:21:35,960 [INFO] [N3 s=47 p3] step1 L_test=SKIP
+2026-06-21 02:21:35,960 [INFO] [N3 s=47 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:38,288 [INFO]   written=144 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=48, misses=0)
+2026-06-21 02:21:38,288 [INFO] [N3 s=48 p1] START mbpp/380
+2026-06-21 02:21:38,532 [INFO] [N3 s=48 p1] step1 L_spec=qwen3-coder -> D'=143chars cache=HIT +0.24s
+2026-06-21 02:21:38,532 [INFO] [N3 s=48 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:21:40,581 [INFO]   written=145 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=49, misses=0)
+2026-06-21 02:21:40,581 [INFO] [N3 s=48 p2] START mbpp/380
+2026-06-21 02:21:40,581 [INFO] [N3 s=48 p2] step1 L_test=SKIP
+2026-06-21 02:21:40,581 [INFO] [N3 s=48 p2] step2 L_code=SKIP (no tests)
+2026-06-21 02:21:42,560 [INFO]   written=146 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=49, misses=0)
+2026-06-21 02:21:42,560 [INFO] [N3 s=48 p3] START mbpp/380
+2026-06-21 02:21:42,560 [INFO] [N3 s=48 p3] step1 L_test=SKIP
+2026-06-21 02:21:42,560 [INFO] [N3 s=48 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:21:43,911 [WARNING] Interrupted by user. State preserved in TSV + cache; re-run to resume.
+2026-06-21 03:02:53,887 [INFO] === Running cell N3 [null] on core ===
+2026-06-21 03:02:54,105 [INFO]   Hypothesis: Test-stage ablation: quantifies how much L_test contributes.
+2026-06-21 03:02:54,109 [INFO]   L_spec = qwen3-coder:30b
+2026-06-21 03:02:54,110 [INFO]   L_test = SKIP
+2026-06-21 03:02:54,110 [INFO]   L_code = qwen3-coder:30b
+2026-06-21 03:02:54,110 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-21 03:02:54,110 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-21 03:02:54,111 [INFO]   log     -> /content/roundtrip-closure/logs/cell_N3_core.log
+2026-06-21 03:02:54,127 [INFO]   found 4687 previously-completed (cell, sample, path) tuples
+2026-06-21 03:02:54,132 [INFO]   loaded 75 samples from core
+2026-06-21 03:02:54,132 [INFO] [N3 s=49 p1] START mbpp/250
+2026-06-21 03:02:54,352 [INFO] [N3 s=49 p1] step1 L_spec=qwen3-coder -> D'=91chars cache=HIT +0.22s
+2026-06-21 03:02:54,352 [INFO] [N3 s=49 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:02:56,285 [INFO]   written=1 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=1, misses=0)
+2026-06-21 03:02:56,286 [INFO] [N3 s=49 p2] START mbpp/250
+2026-06-21 03:02:56,286 [INFO] [N3 s=49 p2] step1 L_test=SKIP
+2026-06-21 03:02:56,286 [INFO] [N3 s=49 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:02:58,551 [INFO]   written=2 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=1, misses=0)
+2026-06-21 03:02:58,551 [INFO] [N3 s=49 p3] START mbpp/250
+2026-06-21 03:02:58,552 [INFO] [N3 s=49 p3] step1 L_test=SKIP
+2026-06-21 03:02:58,552 [INFO] [N3 s=49 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:00,709 [INFO]   written=3 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=1, misses=0)
+2026-06-21 03:03:00,709 [INFO] [N3 s=50 p1] START humaneval/HumanEval/72
+2026-06-21 03:03:00,912 [INFO] [N3 s=50 p1] step1 L_spec=qwen3-coder -> D'=168chars cache=HIT +0.20s
+2026-06-21 03:03:00,912 [INFO] [N3 s=50 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:02,874 [INFO]   written=4 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=2, misses=0)
+2026-06-21 03:03:02,874 [INFO] [N3 s=50 p2] START humaneval/HumanEval/72
+2026-06-21 03:03:02,874 [INFO] [N3 s=50 p2] step1 L_test=SKIP
+2026-06-21 03:03:02,874 [INFO] [N3 s=50 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:04,745 [INFO]   written=5 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=2, misses=0)
+2026-06-21 03:03:04,745 [INFO] [N3 s=50 p3] START humaneval/HumanEval/72
+2026-06-21 03:03:04,745 [INFO] [N3 s=50 p3] step1 L_test=SKIP
+2026-06-21 03:03:04,745 [INFO] [N3 s=50 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:06,632 [INFO]   written=6 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=2, misses=0)
+2026-06-21 03:03:06,633 [INFO] [N3 s=51 p1] START mbpp/286
+2026-06-21 03:03:06,802 [INFO] [N3 s=51 p1] step1 L_spec=qwen3-coder -> D'=163chars cache=HIT +0.17s
+2026-06-21 03:03:06,802 [INFO] [N3 s=51 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:08,748 [INFO]   written=7 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=3, misses=0)
+2026-06-21 03:03:08,748 [INFO] [N3 s=51 p2] START mbpp/286
+2026-06-21 03:03:08,748 [INFO] [N3 s=51 p2] step1 L_test=SKIP
+2026-06-21 03:03:08,748 [INFO] [N3 s=51 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:10,851 [INFO]   written=8 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=3, misses=0)
+2026-06-21 03:03:10,851 [INFO] [N3 s=51 p3] START mbpp/286
+2026-06-21 03:03:10,851 [INFO] [N3 s=51 p3] step1 L_test=SKIP
+2026-06-21 03:03:10,851 [INFO] [N3 s=51 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:12,936 [INFO]   written=9 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=3, misses=0)
+2026-06-21 03:03:12,936 [INFO] [N3 s=52 p1] START humaneval/HumanEval/92
+2026-06-21 03:03:13,103 [INFO] [N3 s=52 p1] step1 L_spec=qwen3-coder -> D'=133chars cache=HIT +0.17s
+2026-06-21 03:03:13,104 [INFO] [N3 s=52 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:15,000 [INFO]   written=10 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 03:03:15,001 [INFO] [N3 s=52 p2] START humaneval/HumanEval/92
+2026-06-21 03:03:15,001 [INFO] [N3 s=52 p2] step1 L_test=SKIP
+2026-06-21 03:03:15,001 [INFO] [N3 s=52 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:16,834 [INFO]   written=11 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 03:03:16,834 [INFO] [N3 s=52 p3] START humaneval/HumanEval/92
+2026-06-21 03:03:16,834 [INFO] [N3 s=52 p3] step1 L_test=SKIP
+2026-06-21 03:03:16,834 [INFO] [N3 s=52 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:18,760 [INFO]   written=12 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 03:03:18,760 [INFO] [N3 s=53 p1] START mbpp/31
+2026-06-21 03:03:18,970 [INFO] [N3 s=53 p1] step1 L_spec=qwen3-coder -> D'=282chars cache=HIT +0.21s
+2026-06-21 03:03:18,970 [INFO] [N3 s=53 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:21,138 [INFO]   written=13 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=5, misses=0)
+2026-06-21 03:03:21,138 [INFO] [N3 s=53 p2] START mbpp/31
+2026-06-21 03:03:21,138 [INFO] [N3 s=53 p2] step1 L_test=SKIP
+2026-06-21 03:03:21,138 [INFO] [N3 s=53 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:23,140 [INFO]   written=14 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=5, misses=0)
+2026-06-21 03:03:23,140 [INFO] [N3 s=53 p3] START mbpp/31
+2026-06-21 03:03:23,140 [INFO] [N3 s=53 p3] step1 L_test=SKIP
+2026-06-21 03:03:23,140 [INFO] [N3 s=53 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:25,311 [INFO]   written=15 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=5, misses=0)
+2026-06-21 03:03:25,311 [INFO] [N3 s=54 p1] START mbpp/115
+2026-06-21 03:03:25,550 [INFO] [N3 s=54 p1] step1 L_spec=qwen3-coder -> D'=312chars cache=HIT +0.24s
+2026-06-21 03:03:25,550 [INFO] [N3 s=54 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:27,498 [INFO]   written=16 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=6, misses=0)
+2026-06-21 03:03:27,498 [INFO] [N3 s=54 p2] START mbpp/115
+2026-06-21 03:03:27,498 [INFO] [N3 s=54 p2] step1 L_test=SKIP
+2026-06-21 03:03:27,498 [INFO] [N3 s=54 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:29,449 [INFO]   written=17 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=6, misses=0)
+2026-06-21 03:03:29,449 [INFO] [N3 s=54 p3] START mbpp/115
+2026-06-21 03:03:29,450 [INFO] [N3 s=54 p3] step1 L_test=SKIP
+2026-06-21 03:03:29,450 [INFO] [N3 s=54 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:31,348 [INFO]   written=18 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=6, misses=0)
+2026-06-21 03:03:31,348 [INFO] [N3 s=55 p1] START humaneval/HumanEval/116
+2026-06-21 03:03:31,546 [INFO] [N3 s=55 p1] step1 L_spec=qwen3-coder -> D'=128chars cache=HIT +0.20s
+2026-06-21 03:03:31,546 [INFO] [N3 s=55 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:33,447 [INFO]   written=19 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=7, misses=0)
+2026-06-21 03:03:33,447 [INFO] [N3 s=55 p2] START humaneval/HumanEval/116
+2026-06-21 03:03:33,447 [INFO] [N3 s=55 p2] step1 L_test=SKIP
+2026-06-21 03:03:33,447 [INFO] [N3 s=55 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:35,470 [INFO]   written=20 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=7, misses=0)
+2026-06-21 03:03:35,471 [INFO] [N3 s=55 p3] START humaneval/HumanEval/116
+2026-06-21 03:03:35,471 [INFO] [N3 s=55 p3] step1 L_test=SKIP
+2026-06-21 03:03:35,471 [INFO] [N3 s=55 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:37,593 [INFO]   written=21 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=7, misses=0)
+2026-06-21 03:03:37,593 [INFO] [N3 s=56 p1] START humaneval/HumanEval/138
+2026-06-21 03:03:37,952 [INFO] [N3 s=56 p1] step1 L_spec=qwen3-coder -> D'=351chars cache=HIT +0.36s
+2026-06-21 03:03:37,952 [INFO] [N3 s=56 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:39,869 [INFO]   written=22 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 03:03:39,870 [INFO] [N3 s=56 p2] START humaneval/HumanEval/138
+2026-06-21 03:03:39,870 [INFO] [N3 s=56 p2] step1 L_test=SKIP
+2026-06-21 03:03:39,870 [INFO] [N3 s=56 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:41,844 [INFO]   written=23 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 03:03:41,844 [INFO] [N3 s=56 p3] START humaneval/HumanEval/138
+2026-06-21 03:03:41,845 [INFO] [N3 s=56 p3] step1 L_test=SKIP
+2026-06-21 03:03:41,845 [INFO] [N3 s=56 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:43,801 [INFO]   written=24 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 03:03:43,801 [INFO] [N3 s=57 p1] START mbpp/175
+2026-06-21 03:03:43,979 [INFO] [N3 s=57 p1] step1 L_spec=qwen3-coder -> D'=235chars cache=HIT +0.18s
+2026-06-21 03:03:43,979 [INFO] [N3 s=57 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:45,890 [INFO]   written=25 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=9, misses=0)
+2026-06-21 03:03:45,890 [INFO] [N3 s=57 p2] START mbpp/175
+2026-06-21 03:03:45,891 [INFO] [N3 s=57 p2] step1 L_test=SKIP
+2026-06-21 03:03:45,891 [INFO] [N3 s=57 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:48,130 [INFO]   written=26 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=9, misses=0)
+2026-06-21 03:03:48,130 [INFO] [N3 s=57 p3] START mbpp/175
+2026-06-21 03:03:48,131 [INFO] [N3 s=57 p3] step1 L_test=SKIP
+2026-06-21 03:03:48,131 [INFO] [N3 s=57 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:50,310 [INFO]   written=27 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=9, misses=0)
+2026-06-21 03:03:50,311 [INFO] [N3 s=58 p1] START humaneval/HumanEval/100
+2026-06-21 03:03:50,508 [INFO] [N3 s=58 p1] step1 L_spec=qwen3-coder -> D'=333chars cache=HIT +0.20s
+2026-06-21 03:03:50,508 [INFO] [N3 s=58 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:52,556 [INFO]   written=28 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=10, misses=0)
+2026-06-21 03:03:52,557 [INFO] [N3 s=58 p2] START humaneval/HumanEval/100
+2026-06-21 03:03:52,557 [INFO] [N3 s=58 p2] step1 L_test=SKIP
+2026-06-21 03:03:52,557 [INFO] [N3 s=58 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:03:54,499 [INFO]   written=29 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=10, misses=0)
+2026-06-21 03:03:54,499 [INFO] [N3 s=58 p3] START humaneval/HumanEval/100
+2026-06-21 03:03:54,500 [INFO] [N3 s=58 p3] step1 L_test=SKIP
+2026-06-21 03:03:54,500 [INFO] [N3 s=58 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:03:56,587 [INFO]   written=30 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=10, misses=0)
+2026-06-21 03:03:56,588 [INFO] [N3 s=59 p1] START humaneval/HumanEval/74
+2026-06-21 03:03:56,846 [INFO] [N3 s=59 p1] step1 L_spec=qwen3-coder -> D'=100chars cache=HIT +0.26s
+2026-06-21 03:03:56,847 [INFO] [N3 s=59 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:03:58,761 [INFO]   written=31 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=11, misses=0)
+2026-06-21 03:03:58,761 [INFO] [N3 s=59 p2] START humaneval/HumanEval/74
+2026-06-21 03:03:58,761 [INFO] [N3 s=59 p2] step1 L_test=SKIP
+2026-06-21 03:03:58,761 [INFO] [N3 s=59 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:01,010 [INFO]   written=32 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=11, misses=0)
+2026-06-21 03:04:01,010 [INFO] [N3 s=59 p3] START humaneval/HumanEval/74
+2026-06-21 03:04:01,010 [INFO] [N3 s=59 p3] step1 L_test=SKIP
+2026-06-21 03:04:01,011 [INFO] [N3 s=59 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:03,246 [INFO]   written=33 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=11, misses=0)
+2026-06-21 03:04:03,246 [INFO] [N3 s=60 p1] START mbpp/154
+2026-06-21 03:04:03,440 [INFO] [N3 s=60 p1] step1 L_spec=qwen3-coder -> D'=257chars cache=HIT +0.19s
+2026-06-21 03:04:03,440 [INFO] [N3 s=60 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:05,308 [INFO]   written=34 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 03:04:05,308 [INFO] [N3 s=60 p2] START mbpp/154
+2026-06-21 03:04:05,309 [INFO] [N3 s=60 p2] step1 L_test=SKIP
+2026-06-21 03:04:05,309 [INFO] [N3 s=60 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:07,314 [INFO]   written=35 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 03:04:07,315 [INFO] [N3 s=60 p3] START mbpp/154
+2026-06-21 03:04:07,315 [INFO] [N3 s=60 p3] step1 L_test=SKIP
+2026-06-21 03:04:07,315 [INFO] [N3 s=60 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:09,194 [INFO]   written=36 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 03:04:09,194 [INFO] [N3 s=61 p1] START humaneval/HumanEval/62
+2026-06-21 03:04:09,385 [INFO] [N3 s=61 p1] step1 L_spec=qwen3-coder -> D'=284chars cache=HIT +0.19s
+2026-06-21 03:04:09,385 [INFO] [N3 s=61 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:11,362 [INFO]   written=37 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=13, misses=0)
+2026-06-21 03:04:11,363 [INFO] [N3 s=61 p2] START humaneval/HumanEval/62
+2026-06-21 03:04:11,363 [INFO] [N3 s=61 p2] step1 L_test=SKIP
+2026-06-21 03:04:11,363 [INFO] [N3 s=61 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:13,299 [INFO]   written=38 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=13, misses=0)
+2026-06-21 03:04:13,299 [INFO] [N3 s=61 p3] START humaneval/HumanEval/62
+2026-06-21 03:04:13,299 [INFO] [N3 s=61 p3] step1 L_test=SKIP
+2026-06-21 03:04:13,300 [INFO] [N3 s=61 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:15,497 [INFO]   written=39 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=13, misses=0)
+2026-06-21 03:04:15,497 [INFO] [N3 s=62 p1] START humaneval/HumanEval/118
+2026-06-21 03:04:15,716 [INFO] [N3 s=62 p1] step1 L_spec=qwen3-coder -> D'=305chars cache=HIT +0.22s
+2026-06-21 03:04:15,716 [INFO] [N3 s=62 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:17,758 [INFO]   written=40 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=14, misses=0)
+2026-06-21 03:04:17,758 [INFO] [N3 s=62 p2] START humaneval/HumanEval/118
+2026-06-21 03:04:17,758 [INFO] [N3 s=62 p2] step1 L_test=SKIP
+2026-06-21 03:04:17,758 [INFO] [N3 s=62 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:19,829 [INFO]   written=41 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=14, misses=0)
+2026-06-21 03:04:19,830 [INFO] [N3 s=62 p3] START humaneval/HumanEval/118
+2026-06-21 03:04:19,830 [INFO] [N3 s=62 p3] step1 L_test=SKIP
+2026-06-21 03:04:19,830 [INFO] [N3 s=62 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:21,682 [INFO]   written=42 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=14, misses=0)
+2026-06-21 03:04:21,683 [INFO] [N3 s=63 p1] START mbpp/155
+2026-06-21 03:04:22,057 [INFO] [N3 s=63 p1] step1 L_spec=qwen3-coder -> D'=284chars cache=HIT +0.37s
+2026-06-21 03:04:22,057 [INFO] [N3 s=63 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:23,938 [INFO]   written=43 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=15, misses=0)
+2026-06-21 03:04:23,938 [INFO] [N3 s=63 p2] START mbpp/155
+2026-06-21 03:04:23,938 [INFO] [N3 s=63 p2] step1 L_test=SKIP
+2026-06-21 03:04:23,939 [INFO] [N3 s=63 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:25,813 [INFO]   written=44 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=15, misses=0)
+2026-06-21 03:04:25,813 [INFO] [N3 s=63 p3] START mbpp/155
+2026-06-21 03:04:25,814 [INFO] [N3 s=63 p3] step1 L_test=SKIP
+2026-06-21 03:04:25,814 [INFO] [N3 s=63 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:27,906 [INFO]   written=45 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=15, misses=0)
+2026-06-21 03:04:27,907 [INFO] [N3 s=64 p1] START humaneval/HumanEval/101
+2026-06-21 03:04:28,111 [INFO] [N3 s=64 p1] step1 L_spec=qwen3-coder -> D'=140chars cache=HIT +0.20s
+2026-06-21 03:04:28,111 [INFO] [N3 s=64 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:30,097 [INFO]   written=46 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 03:04:30,098 [INFO] [N3 s=64 p2] START humaneval/HumanEval/101
+2026-06-21 03:04:30,098 [INFO] [N3 s=64 p2] step1 L_test=SKIP
+2026-06-21 03:04:30,098 [INFO] [N3 s=64 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:31,998 [INFO]   written=47 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 03:04:31,999 [INFO] [N3 s=64 p3] START humaneval/HumanEval/101
+2026-06-21 03:04:31,999 [INFO] [N3 s=64 p3] step1 L_test=SKIP
+2026-06-21 03:04:31,999 [INFO] [N3 s=64 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:33,988 [INFO]   written=48 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 03:04:33,989 [INFO] [N3 s=65 p1] START humaneval/HumanEval/33
+2026-06-21 03:04:34,242 [INFO] [N3 s=65 p1] step1 L_spec=qwen3-coder -> D'=381chars cache=HIT +0.25s
+2026-06-21 03:04:34,242 [INFO] [N3 s=65 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:36,210 [INFO]   written=49 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=17, misses=0)
+2026-06-21 03:04:36,210 [INFO] [N3 s=65 p2] START humaneval/HumanEval/33
+2026-06-21 03:04:36,210 [INFO] [N3 s=65 p2] step1 L_test=SKIP
+2026-06-21 03:04:36,211 [INFO] [N3 s=65 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:38,316 [INFO]   written=50 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=17, misses=0)
+2026-06-21 03:04:38,316 [INFO] [N3 s=65 p3] START humaneval/HumanEval/33
+2026-06-21 03:04:38,316 [INFO] [N3 s=65 p3] step1 L_test=SKIP
+2026-06-21 03:04:38,317 [INFO] [N3 s=65 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:40,362 [INFO]   written=51 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=17, misses=0)
+2026-06-21 03:04:40,362 [INFO] [N3 s=66 p1] START humaneval/HumanEval/69
+2026-06-21 03:04:40,571 [INFO] [N3 s=66 p1] step1 L_spec=qwen3-coder -> D'=153chars cache=HIT +0.21s
+2026-06-21 03:04:40,571 [INFO] [N3 s=66 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:42,648 [INFO]   written=52 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=18, misses=0)
+2026-06-21 03:04:42,648 [INFO] [N3 s=66 p2] START humaneval/HumanEval/69
+2026-06-21 03:04:42,648 [INFO] [N3 s=66 p2] step1 L_test=SKIP
+2026-06-21 03:04:42,649 [INFO] [N3 s=66 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:44,593 [INFO]   written=53 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=18, misses=0)
+2026-06-21 03:04:44,593 [INFO] [N3 s=66 p3] START humaneval/HumanEval/69
+2026-06-21 03:04:44,594 [INFO] [N3 s=66 p3] step1 L_test=SKIP
+2026-06-21 03:04:44,594 [INFO] [N3 s=66 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:46,551 [INFO]   written=54 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=18, misses=0)
+2026-06-21 03:04:46,552 [INFO] [N3 s=67 p1] START mbpp/375
+2026-06-21 03:04:46,717 [INFO] [N3 s=67 p1] step1 L_spec=qwen3-coder -> D'=241chars cache=HIT +0.17s
+2026-06-21 03:04:46,717 [INFO] [N3 s=67 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:48,639 [INFO]   written=55 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=19, misses=0)
+2026-06-21 03:04:48,640 [INFO] [N3 s=67 p2] START mbpp/375
+2026-06-21 03:04:48,640 [INFO] [N3 s=67 p2] step1 L_test=SKIP
+2026-06-21 03:04:48,640 [INFO] [N3 s=67 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:50,496 [INFO]   written=56 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=19, misses=0)
+2026-06-21 03:04:50,496 [INFO] [N3 s=67 p3] START mbpp/375
+2026-06-21 03:04:50,496 [INFO] [N3 s=67 p3] step1 L_test=SKIP
+2026-06-21 03:04:50,496 [INFO] [N3 s=67 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:52,564 [INFO]   written=57 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=19, misses=0)
+2026-06-21 03:04:52,564 [INFO] [N3 s=68 p1] START mbpp/103
+2026-06-21 03:04:52,818 [INFO] [N3 s=68 p1] step1 L_spec=qwen3-coder -> D'=350chars cache=HIT +0.25s
+2026-06-21 03:04:52,818 [INFO] [N3 s=68 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:04:54,897 [INFO]   written=58 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 03:04:54,897 [INFO] [N3 s=68 p2] START mbpp/103
+2026-06-21 03:04:54,897 [INFO] [N3 s=68 p2] step1 L_test=SKIP
+2026-06-21 03:04:54,897 [INFO] [N3 s=68 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:04:56,753 [INFO]   written=59 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 03:04:56,754 [INFO] [N3 s=68 p3] START mbpp/103
+2026-06-21 03:04:56,754 [INFO] [N3 s=68 p3] step1 L_test=SKIP
+2026-06-21 03:04:56,754 [INFO] [N3 s=68 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:04:58,625 [INFO]   written=60 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 03:04:58,625 [INFO] [N3 s=69 p1] START mbpp/150
+2026-06-21 03:04:58,820 [INFO] [N3 s=69 p1] step1 L_spec=qwen3-coder -> D'=289chars cache=HIT +0.19s
+2026-06-21 03:04:58,820 [INFO] [N3 s=69 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:05:00,843 [INFO]   written=61 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=21, misses=0)
+2026-06-21 03:05:00,843 [INFO] [N3 s=69 p2] START mbpp/150
+2026-06-21 03:05:00,843 [INFO] [N3 s=69 p2] step1 L_test=SKIP
+2026-06-21 03:05:00,843 [INFO] [N3 s=69 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:05:03,096 [INFO]   written=62 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=21, misses=0)
+2026-06-21 03:05:03,096 [INFO] [N3 s=69 p3] START mbpp/150
+2026-06-21 03:05:03,096 [INFO] [N3 s=69 p3] step1 L_test=SKIP
+2026-06-21 03:05:03,096 [INFO] [N3 s=69 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:05:04,971 [INFO]   written=63 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=21, misses=0)
+2026-06-21 03:05:04,971 [INFO] [N3 s=70 p1] START mbpp/418
+2026-06-21 03:05:05,192 [INFO] [N3 s=70 p1] step1 L_spec=qwen3-coder -> D'=234chars cache=HIT +0.22s
+2026-06-21 03:05:05,192 [INFO] [N3 s=70 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:05:07,354 [INFO]   written=64 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=22, misses=0)
+2026-06-21 03:05:07,354 [INFO] [N3 s=70 p2] START mbpp/418
+2026-06-21 03:05:07,355 [INFO] [N3 s=70 p2] step1 L_test=SKIP
+2026-06-21 03:05:07,355 [INFO] [N3 s=70 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:05:09,196 [INFO]   written=65 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=22, misses=0)
+2026-06-21 03:05:09,196 [INFO] [N3 s=70 p3] START mbpp/418
+2026-06-21 03:05:09,196 [INFO] [N3 s=70 p3] step1 L_test=SKIP
+2026-06-21 03:05:09,196 [INFO] [N3 s=70 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:05:11,082 [INFO]   written=66 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=22, misses=0)
+2026-06-21 03:05:11,082 [INFO] [N3 s=71 p1] START mbpp/349
+2026-06-21 03:05:11,247 [INFO] [N3 s=71 p1] step1 L_spec=qwen3-coder -> D'=213chars cache=HIT +0.16s
+2026-06-21 03:05:11,247 [INFO] [N3 s=71 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:05:13,072 [INFO]   written=67 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=23, misses=0)
+2026-06-21 03:05:13,072 [INFO] [N3 s=71 p2] START mbpp/349
+2026-06-21 03:05:13,072 [INFO] [N3 s=71 p2] step1 L_test=SKIP
+2026-06-21 03:05:13,072 [INFO] [N3 s=71 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:05:14,955 [INFO]   written=68 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=23, misses=0)
+2026-06-21 03:05:14,955 [INFO] [N3 s=71 p3] START mbpp/349
+2026-06-21 03:05:14,955 [INFO] [N3 s=71 p3] step1 L_test=SKIP
+2026-06-21 03:05:14,955 [INFO] [N3 s=71 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:05:16,811 [INFO]   written=69 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=23, misses=0)
+2026-06-21 03:05:16,812 [INFO] [N3 s=72 p1] START mbpp/274
+2026-06-21 03:05:17,020 [INFO] [N3 s=72 p1] step1 L_spec=qwen3-coder -> D'=237chars cache=HIT +0.21s
+2026-06-21 03:05:17,020 [INFO] [N3 s=72 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:05:19,105 [INFO]   written=70 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 03:05:19,105 [INFO] [N3 s=72 p2] START mbpp/274
+2026-06-21 03:05:19,105 [INFO] [N3 s=72 p2] step1 L_test=SKIP
+2026-06-21 03:05:19,105 [INFO] [N3 s=72 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:05:21,278 [INFO]   written=71 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 03:05:21,279 [INFO] [N3 s=72 p3] START mbpp/274
+2026-06-21 03:05:21,279 [INFO] [N3 s=72 p3] step1 L_test=SKIP
+2026-06-21 03:05:21,279 [INFO] [N3 s=72 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:05:23,090 [INFO]   written=72 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 03:05:23,091 [INFO] [N3 s=73 p1] START mbpp/419
+2026-06-21 03:05:23,339 [INFO] [N3 s=73 p1] step1 L_spec=qwen3-coder -> D'=154chars cache=HIT +0.25s
+2026-06-21 03:05:23,340 [INFO] [N3 s=73 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:05:25,218 [INFO]   written=73 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=25, misses=0)
+2026-06-21 03:05:25,218 [INFO] [N3 s=73 p2] START mbpp/419
+2026-06-21 03:05:25,218 [INFO] [N3 s=73 p2] step1 L_test=SKIP
+2026-06-21 03:05:25,218 [INFO] [N3 s=73 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:05:27,135 [INFO]   written=74 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=25, misses=0)
+2026-06-21 03:05:27,135 [INFO] [N3 s=73 p3] START mbpp/419
+2026-06-21 03:05:27,135 [INFO] [N3 s=73 p3] step1 L_test=SKIP
+2026-06-21 03:05:27,135 [INFO] [N3 s=73 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:05:28,960 [INFO]   written=75 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=25, misses=0)
+2026-06-21 03:05:28,961 [INFO] [N3 s=74 p1] START humaneval/HumanEval/123
+2026-06-21 03:05:29,150 [INFO] [N3 s=74 p1] step1 L_spec=qwen3-coder -> D'=175chars cache=HIT +0.19s
+2026-06-21 03:05:29,150 [INFO] [N3 s=74 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 03:05:31,090 [INFO]   written=76 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=26, misses=0)
+2026-06-21 03:05:31,091 [INFO] [N3 s=74 p2] START humaneval/HumanEval/123
+2026-06-21 03:05:31,091 [INFO] [N3 s=74 p2] step1 L_test=SKIP
+2026-06-21 03:05:31,091 [INFO] [N3 s=74 p2] step2 L_code=SKIP (no tests)
+2026-06-21 03:05:33,299 [INFO]   written=77 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=26, misses=0)
+2026-06-21 03:05:33,300 [INFO] [N3 s=74 p3] START humaneval/HumanEval/123
+2026-06-21 03:05:33,300 [INFO] [N3 s=74 p3] step1 L_test=SKIP
+2026-06-21 03:05:33,300 [INFO] [N3 s=74 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 03:05:35,208 [INFO]   written=78 skipped(resume)=147 errors=0 cache_hit_rate=100.00% (hits=26, misses=0)
+2026-06-21 03:05:37,189 [INFO] 
+=== Cell N3 complete ===
+  samples_seen          = 75
+  results_written       = 78
+  results_skipped_resume = 147
+  errors                 = 0
+  elapsed                = 161.1 s
+  cache_hits             = 26
+  cache_misses           = 0
+  cache_hit_rate         = 100.00%
+  cache_size             = 8.716 MB (12305 entries)

@@ -1,46 +1,35 @@
-% Table — within-benchmark complexity-stratified robustness (R1 Comment 4
-% strengthening). Splits the 150 core samples into function-length
-% quartiles (Q1: 2-5 lines, Q2: 6-8, Q3: 9-13, Q4: 14-50) and reports
-% per-quartile strict-AND valid-closure fraction V for H1 (hetero champion)
-% and M3 (strongest mono baseline). The H1-vs-M3 Delta is reported at the
-% bottom of each path block.
-%
-% Rebuilt 2026-11-01 from results/results_roundtrip.tsv and
-% results/complexity_stratified_analysis.json
 \begin{table}[!htbp]
   \centering
-  \caption{Within-benchmark complexity-stratified robustness check
-    (R1 Comment~4 strengthening). The 150-sample core is split into
-    function-length quartiles by line count of the reference solution
-    (Q1 $\leq 5$~lines, Q2 $= 6$--$8$, Q3 $= 9$--$13$, Q4 $= 14$--$50$;
-    median $= 8$). Each cell reports the strict-AND valid-closure
-    fraction $V_{a, p}$ (Eq.~\ref{eq:valid_closure_frac}, $\tau = 0,
-    \rho = 3$) on the subset of samples in each quartile.
-    $\Delta_{\text{H1}-\text{M3}}$ at the bottom of each path block
-    is the H1-vs-M3 difference at that quartile --- the paper's RQ1
-    claim that H1 matches or exceeds the strongest mono baseline.
-    H1 maintains the headline advantage on Path~1 at every quartile
-    ($+8$ to $+18$~pp); Paths~2 and~3 reach $V = 1.000$ for both cells
-    at every quartile.}
+  \caption{Within-benchmark complexity-stratified check. Samples are
+    split into function-length quartiles by non-blank line count of the
+    reference solution (Q1 $\leq 5$~lines, Q2 $= 6$--$8$, Q3 $= 9$--$13$,
+    Q4 $= 14$--$50$; cuts from the 150-sample core). Each entry is the
+    strict-AND valid-closure fraction $V_{a, p}$
+    (Eq.~\ref{eq:valid_closure_frac}, $\tau = 0$, $\rho = 3$) on the 89
+    samples shared by H1 and M3 ($n = 26$, $23$, $19$, $21$ per quartile;
+    H1 has $n = 18$ in Q3 on Path~3). $\Delta_{\text{H1}-\text{M3}}$ is
+    the within-quartile difference. Closure does not decline
+    systematically with function length, and there is no consistent
+    H1-vs-M3 ordering across quartiles.}
   \label{tab:complexity_stratified}
   \begin{tabular}{llrrrrr}
     \toprule
-    Cell & Path & \multicolumn{4}{c}{Strict-AND $V$ by complexity quartile} & \\
+    Cell & Path & \multicolumn{4}{c}{Strict-AND $V$ by length quartile} & \\
     \cmidrule(lr){3-6}
          &      & Q1 & Q2 & Q3 & Q4 & $\Delta(Q4-Q1)$ \\
     \midrule
-    H1 & 1 & $0.962$ & $0.957$ & $0.842$ & $0.857$ & $-0.104$ \\
-    H1 & 2 & $1.000$ & $1.000$ & $1.000$ & $1.000$ & $0.000$ \\
-    H1 & 3 & $1.000$ & $1.000$ & $1.000$ & $1.000$ & $0.000$ \\
+    H1 & 1 & $0.654$ & $0.826$ & $0.684$ & $0.714$ & $+0.060$ \\
+    H1 & 2 & $0.500$ & $0.652$ & $0.632$ & $0.810$ & $+0.310$ \\
+    H1 & 3 & $0.769$ & $0.565$ & $0.833$ & $0.381$ & $-0.388$ \\
     \midrule
-    M3 & 1 & $0.804$ & $0.778$ & $0.758$ & $0.771$ & $-0.033$ \\
-    M3 & 2 & $1.000$ & $1.000$ & $1.000$ & $1.000$ & $0.000$ \\
-    M3 & 3 & $1.000$ & $1.000$ & $1.000$ & $1.000$ & $0.000$ \\
+    M3 & 1 & $0.654$ & $0.565$ & $0.684$ & $0.762$ & $+0.108$ \\
+    M3 & 2 & $0.577$ & $0.565$ & $0.579$ & $0.762$ & $+0.185$ \\
+    M3 & 3 & $0.692$ & $0.609$ & $0.737$ & $0.714$ & $+0.022$ \\
     \midrule
-    \multicolumn{7}{@{}l}{\textit{H1-vs-M3 gap at each quartile (RQ1 robustness check):}} \\
-    $\Delta_{\text{H1}-\text{M3}}$ & 1 & $+0.157$ & $+0.179$ & $+0.085$ & $+0.086$ & --- \\
-    $\Delta_{\text{H1}-\text{M3}}$ & 2 & $0.000$ & $0.000$ & $0.000$ & $0.000$ & --- \\
-    $\Delta_{\text{H1}-\text{M3}}$ & 3 & $0.000$ & $0.000$ & $0.000$ & $0.000$ & --- \\
+    \multicolumn{7}{@{}l}{\textit{H1-vs-M3 difference at each quartile:}} \\
+    $\Delta_{\text{H1}-\text{M3}}$ & 1 & $0.000$ & $+0.261$ & $0.000$ & $-0.048$ & --- \\
+    $\Delta_{\text{H1}-\text{M3}}$ & 2 & $-0.077$ & $+0.087$ & $+0.053$ & $+0.048$ & --- \\
+    $\Delta_{\text{H1}-\text{M3}}$ & 3 & $+0.077$ & $-0.044$ & $+0.096$ & $-0.333$ & --- \\
     \bottomrule
   \end{tabular}
 \end{table}

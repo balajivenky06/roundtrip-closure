@@ -1,0 +1,114 @@
+[
+ {
+  "cell": "M2",
+  "tsv": "results/results_roundtrip.tsv",
+  "rows_all_dropped": 66,
+  "rows_recovered": 38,
+  "tests": 59,
+  "tests_passing_now": 0,
+  "per_test": {
+   "assertion": 36,
+   "runtime_other": 9,
+   "type_error": 7,
+   "syntax": 1,
+   "other": 6
+  },
+  "per_row_majority": {
+   "assertion": 26,
+   "runtime_other": 5,
+   "type_error": 5,
+   "syntax": 1,
+   "other": 1
+  }
+ },
+ {
+  "cell": "H2",
+  "tsv": "results/results_roundtrip.tsv",
+  "rows_all_dropped": 34,
+  "rows_recovered": 33,
+  "tests": 41,
+  "tests_passing_now": 0,
+  "per_test": {
+   "assertion": 28,
+   "type_error": 2,
+   "timeout": 1,
+   "runtime_other": 7,
+   "syntax": 2,
+   "other": 1
+  },
+  "per_row_majority": {
+   "assertion": 27,
+   "runtime_other": 3,
+   "syntax": 2,
+   "type_error": 1
+  }
+ },
+ {
+  "cell": "H10",
+  "tsv": "results_rerun/results_h10_rerun.tsv",
+  "rows_all_dropped": 38,
+  "rows_recovered": 38,
+  "tests": 58,
+  "tests_passing_now": 2,
+  "per_test": {
+   "assertion": 33,
+   "runtime_other": 8,
+   "type_error": 6,
+   "other": 8,
+   "syntax": 1
+  },
+  "per_row_majority": {
+   "assertion": 28,
+   "runtime_other": 5,
+   "type_error": 3,
+   "other": 1,
+   "syntax": 1
+  }
+ },
+ {
+  "cell": "M3",
+  "tsv": "results/results_roundtrip.tsv",
+  "rows_all_dropped": 33,
+  "rows_recovered": 26,
+  "tests": 251,
+  "tests_passing_now": 2,
+  "per_test": {
+   "syntax": 139,
+   "assertion": 27,
+   "other": 44,
+   "type_error": 15,
+   "runtime_other": 21,
+   "import_error": 3
+  },
+  "per_row_majority": {
+   "syntax": 7,
+   "other": 13,
+   "type_error": 1,
+   "runtime_other": 1,
+   "import_error": 3,
+   "assertion": 1
+  }
+ },
+ {
+  "cell": "M4",
+  "tsv": "results/results_roundtrip.tsv",
+  "rows_all_dropped": 9,
+  "rows_recovered": 9,
+  "tests": 50,
+  "tests_passing_now": 1,
+  "per_test": {
+   "import_error": 5,
+   "other": 3,
+   "type_error": 1,
+   "name_error": 16,
+   "assertion": 22,
+   "runtime_other": 2
+  },
+  "per_row_majority": {
+   "import_error": 1,
+   "other": 1,
+   "name_error": 3,
+   "assertion": 4
+  }
+ }
+]

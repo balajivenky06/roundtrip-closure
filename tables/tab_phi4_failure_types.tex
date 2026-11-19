@@ -1,0 +1,20 @@
+\begin{table*}[!htbp]
+\centering
+\footnotesize
+\caption{Why the generated tests fail. For Path~1 rows in which every generated test failed on the reference code, the test suite was recovered from the LLM cache and each test function was re-executed against the original function. Entries give the share of failing tests in each category; ``assertion majority'' counts suites whose most common failure is an assertion error. phi-4 is the test generator in M2, H2 and the clean H10 re-run; M3 (qwen3.6) and M4 (gemma-4) are controls. ``Suites'' is recovered/all-dropped; incomplete recovery reflects cache-key changes during the sweep. Five tests that passed on re-execution (two in H10, two in M3, one in M4) are excluded. ``Other'' covers failures that match none of the categories.}
+\label{tab:phi4_failure_types}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llrrrrrrrrrr@{}}
+\toprule
+Cell & $L_{\textsf{test}}$ & Suites & Failing & Assertion & Runtime & Type & Syntax & Timeout & Import/ & Other & Assertion \\
+ & & & tests & & & & & & name & & majority \\
+\midrule
+    M2 & phi-4 & 38/66 & 59 & 61\% & 15\% & 12\% & 2\% & 0\% & 0\% & 10\% & 26/38 \\
+    H2 & phi-4 & 33/34 & 41 & 68\% & 17\% & 5\% & 5\% & 2\% & 0\% & 2\% & 27/33 \\
+    H10 (re-run) & phi-4 & 38/38 & 56 & 59\% & 14\% & 11\% & 2\% & 0\% & 0\% & 14\% & 28/38 \\
+\midrule
+    M3 & qwen3.6 & 26/33 & 249 & 11\% & 8\% & 6\% & 56\% & 0\% & 1\% & 18\% & 1/26 \\
+    M4 & gemma-4 & 9/9 & 49 & 45\% & 4\% & 2\% & 0\% & 0\% & 43\% & 6\% & 4/9 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

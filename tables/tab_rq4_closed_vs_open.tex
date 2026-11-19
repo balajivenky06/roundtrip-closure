@@ -11,39 +11,39 @@
 \begin{table*}[!htbp]
   \centering
   \scriptsize
-  \caption{RQ4 closed-weight ceiling comparison per cell $\times$ path, extended to four model families (Microsoft, OpenAI, Google, Anthropic). Closed-weight cells use Claude Sonnet 5 (\emph{M5\_closed} / \emph{H2\_closed} / \emph{H8\_closed}), GPT-5.4 Mini (\emph{M7\_gpt}), or Gemini 2.5 Pro (\emph{M9\_gemini} / \emph{H9\_gemini}) via OpenRouter; open-weight baselines are the paper's primary-sweep cells. All closed-weight cells at $n = 60$ samples per path; open-weight cells at $n = 150$ (mono) or $n = 75$ (hetero). Each closed-weight entry reports both $V_{\text{canon}} = n_{\text{valid}} / N_{\text{total}}$ and $V' = n_{\text{valid}} / n_{\text{metric-ok}}$. The gap between $V$ and $V'$ on Path 1 for M5\_closed / H8\_closed ($V = 5\%$ but $V' = 100\%$) and M9\_gemini / M7\_gpt ($V = 28$--$33\%$ but $V' = 83$--$85\%$) exposes the frontier-model-at-test-stage pathology --- most samples trigger \textsf{all\_dropped} in the test-filter, so the metric is not computable. H2\_closed and H9\_gemini (frontier at SPEC only; open-weight at TEST) are the \emph{negative controls} and do not exhibit the pathology (Path 1 all\_dropped: $32\%$ H2\_closed, $13\%$ H9\_gemini). See Section~\ref{sec:results_rq4_closed_ceiling} for interpretation.}
+  \caption{Closed-weight ceiling comparison (RQ5) per cell $\times$ path. Open-weight baselines are reported on the canonical $V$ scale (M4: $116/150$, $87/150$, $109/150$; H1: $64/89$, $57/89$, $56/88$), so $\Delta V$ compares like with like; closed- and open-weight cells were not run on identical sample sets. M5\_closed and H8\_closed share their Path~1 and Path~3 generations. Path~2 does not invoke $L_{\textsf{spec}}$, so the Path~2 rows of H2\_closed and H9\_gemini contain no closed-weight model. Closed-weight cells use Claude Sonnet 5 (\emph{M5\_closed} / \emph{H2\_closed} / \emph{H8\_closed}), GPT-5.4 Mini (\emph{M7\_gpt}), or Gemini 2.5 Pro (\emph{M9\_gemini} / \emph{H9\_gemini}) via OpenRouter; open-weight baselines are the paper's primary-sweep cells. All closed-weight cells at $n = 60$ samples per path; open-weight cells at $n = 150$ (mono) or $n = 75$ (hetero). Each closed-weight entry reports both $V_{\text{canon}} = n_{\text{valid}} / N_{\text{total}}$ and $V' = n_{\text{valid}} / n_{\text{metric-ok}}$. The gap between $V$ and $V'$ on Path 1 for M5\_closed / H8\_closed ($V = 5\%$ but $V' = 100\%$) and M9\_gemini / M7\_gpt ($V = 28$--$33\%$ but $V' = 83$--$85\%$) exposes the frontier-model-at-test-stage pathology --- most samples trigger \textsf{all\_dropped} in the test-filter, so the metric is not computable. H2\_closed and H9\_gemini (frontier at SPEC only; open-weight at TEST) are the \emph{negative controls} and do not exhibit the pathology (Path 1 all\_dropped: $32\%$ H2\_closed, $13\%$ H9\_gemini). See Section~\ref{sec:results_rq4_closed_ceiling} for interpretation.}
   \label{tab:rq4_closed_vs_open}
-  \begin{tabular}{llcrrrrrr}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}llcrrrrrp{3.0cm}@{}}
     \toprule
     Closed & vs.\ open & Path & \multicolumn{2}{c}{Closed-weight} & \multicolumn{1}{c}{all\_drop} & Open & $\Delta V$ & Note \\
     \cmidrule(lr){4-5}
     cell & baseline & & $V_{\text{canon}}$ & $V'$ & (Path 1) & $V_{\text{canon}}$ & (canon) & \\
     \midrule
-    M5\_closed & M4 (qwen-coder)   & 1 & $\phantom{0}5.0\%$  & $100.0\%$ & $95.0\%$ & $82.9\%$ & $-77.9$~pp & Sonnet-5-at-test pathology \\
-    M5\_closed & M4 (qwen-coder)   & 2 & $70.0\%$            & $70.0\%$  &    ---   & $60.8\%$ & $+9.2$~pp  & \\
-    M5\_closed & M4 (qwen-coder)   & 3 & $73.3\%$            & $74.6\%$  &    ---   & $73.2\%$ & $+0.1$~pp  & \\
+    M5\_closed & M4 (gemma-4)      & 1 & $\phantom{0}5.0\%$  & $100.0\%$ & $95.0\%$ & $77.3\%$ & $-72.3$~pp & Sonnet-5-at-test pathology \\
+    M5\_closed & M4 (gemma-4)      & 2 & $70.0\%$            & $70.0\%$  &    ---   & $58.0\%$ & $+12.0$~pp & \\
+    M5\_closed & M4 (gemma-4)      & 3 & $73.3\%$            & $74.6\%$  &    ---   & $72.7\%$ & $+0.6$~pp  & \\
     \midrule
-    M7\_gpt    & M4 (qwen-coder)   & 1 & $28.3\%$            & $85.0\%$  & $66.7\%$ & $82.9\%$ & $-54.6$~pp & GPT-5.4-mini-at-test pathology \\
-    M7\_gpt    & M4 (qwen-coder)   & 2 & $56.7\%$            & $56.7\%$  &    ---   & $60.8\%$ & $-4.2$~pp  & below qwen-coder \\
-    M7\_gpt    & M4 (qwen-coder)   & 3 & $73.3\%$            & $73.3\%$  &    ---   & $73.2\%$ & $+0.1$~pp  & \\
+    M7\_gpt    & M4 (gemma-4)      & 1 & $28.3\%$            & $85.0\%$  & $66.7\%$ & $77.3\%$ & $-49.0$~pp & GPT-5.4-mini-at-test pathology \\
+    M7\_gpt    & M4 (gemma-4)      & 2 & $56.7\%$            & $56.7\%$  &    ---   & $58.0\%$ & $-1.3$~pp  & \\
+    M7\_gpt    & M4 (gemma-4)      & 3 & $73.3\%$            & $73.3\%$  &    ---   & $72.7\%$ & $+0.6$~pp  & \\
     \midrule
-    M9\_gemini & M4 (qwen-coder)   & 1 & $33.3\%$            & $83.3\%$  & $56.7\%$ & $82.9\%$ & $-49.6$~pp & Gemini-at-test pathology (intermediate) \\
-    M9\_gemini & M4 (qwen-coder)   & 2 & $58.3\%$            & $70.0\%$  &    ---   & $60.8\%$ & $-2.5$~pp  & \\
-    M9\_gemini & M4 (qwen-coder)   & 3 & $75.0\%$            & $77.6\%$  &    ---   & $73.2\%$ & $+1.8$~pp  & \\
+    M9\_gemini & M4 (gemma-4)      & 1 & $33.3\%$            & $83.3\%$  & $60.0\%$ & $77.3\%$ & $-44.0$~pp & Gemini-at-test pathology \\
+    M9\_gemini & M4 (gemma-4)      & 2 & $58.3\%$            & $70.0\%$  &    ---   & $58.0\%$ & $+0.3$~pp  & \\
+    M9\_gemini & M4 (gemma-4)      & 3 & $75.0\%$            & $77.6\%$  &    ---   & $72.7\%$ & $+2.3$~pp  & \\
     \midrule
-    H2\_closed & H1 (phi-4+qwen-coder) & 1 & $60.0\%$        & $87.8\%$  & $31.7\%$ & $79.0\%$ & $-19.0$~pp & Sonnet-5-at-SPEC only; qwen3.6 at test (negative control) \\
-    H2\_closed & H1 (phi-4+qwen-coder) & 2 & $60.0\%$        & $60.0\%$  &    ---   & $64.0\%$ & $-4.0$~pp  & \\
+    H2\_closed & H1 (phi-4+qwen-coder) & 1 & $60.0\%$        & $87.8\%$  & $31.7\%$ & $71.9\%$ & $-11.9$~pp & Negative control: Sonnet-5 spec, qwen3.6 test \\
+    H2\_closed & H1 (phi-4+qwen-coder) & 2 & $60.0\%$        & $60.0\%$  &    ---   & $64.0\%$ & $-4.0$~pp  & no closed-weight model on this path \\
     H2\_closed & H1 (phi-4+qwen-coder) & 3 & $75.0\%$        & $75.0\%$  &    ---   & $63.6\%$ & $+11.4$~pp & \\
     \midrule
-    H9\_gemini & H1 (phi-4+qwen-coder) & 1 & $76.7\%$        & $88.5\%$  & $13.3\%$ & $79.0\%$ & $-2.3$~pp  & Gemini-at-SPEC only; qwen3.6 at test (negative control, strongest) \\
-    H9\_gemini & H1 (phi-4+qwen-coder) & 2 & $60.0\%$        & $60.0\%$  &    ---   & $64.0\%$ & $-4.0$~pp  & \\
+    H9\_gemini & H1 (phi-4+qwen-coder) & 1 & $76.7\%$        & $88.5\%$  & $13.3\%$ & $71.9\%$ & $+4.8$~pp  & Negative control: Gemini spec, qwen3.6 test \\
+    H9\_gemini & H1 (phi-4+qwen-coder) & 2 & $60.0\%$        & $60.0\%$  &    ---   & $64.0\%$ & $-4.0$~pp  & no closed-weight model on this path \\
     H9\_gemini & H1 (phi-4+qwen-coder) & 3 & $78.3\%$        & $79.7\%$  &    ---   & $63.6\%$ & $+14.7$~pp & \\
     \midrule
-    H8\_closed & H1 (phi-4+qwen-coder) & 1 & $\phantom{0}5.0\%$ & $100.0\%$ & $95.0\%$ & $79.0\%$ & $-74.0$~pp & Sonnet-5 at BOTH spec+test \\
+    H8\_closed & H1 (phi-4+qwen-coder) & 1 & $\phantom{0}5.0\%$ & $100.0\%$ & $95.0\%$ & $71.9\%$ & $-66.9$~pp & Sonnet-5 at BOTH spec+test \\
     H8\_closed & H1 (phi-4+qwen-coder) & 2 & $70.0\%$        & $70.0\%$  &    ---   & $64.0\%$ & $+6.0$~pp  & \\
     H8\_closed & H1 (phi-4+qwen-coder) & 3 & $73.3\%$        & $74.6\%$  &    ---   & $63.6\%$ & $+9.7$~pp  & \\
     \bottomrule
-  \end{tabular}
+  \end{tabular*}
 
   \vspace{3pt}
   \raggedright\footnotesize

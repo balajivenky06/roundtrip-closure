@@ -1,7 +1,7 @@
 \begin{table*}[!htbp]
 \centering
 \small
-\caption{Paired bootstrap 95\% confidence intervals on the per-operator H1-vs-mono kill-rate \emph{difference} (R2 Comment 4). Each row reports $\Delta = \mathrm{kill\_rate}(H1) - \mathrm{kill\_rate}(\mathrm{mono})$ averaged over the shared set of samples where both cells have an observation on the operator. The bootstrap resamples $n_{\text{shared}}$ samples with replacement $B = 10{,}000$ times (seed 42), respecting the clustering of mutants within a sample. Positive CIs excluding zero establish H1 dominance over that mono baseline on that operator in a paired sense, which is stronger than the marginal Clopper-Pearson intervals of Table~\ref{tab:per_operator_kill_rate}. $^\dagger$ marks the best-mono comparator (highest mean kill-rate on the operator); $\mathbf{bold}$ marks CIs that exclude zero from below (H1 statistically dominant).}
+\caption{Paired bootstrap 95\% confidence intervals on the per-operator H1-vs-mono kill-rate \emph{difference}. Each row reports $\Delta = \mathrm{kill\_rate}(H1) - \mathrm{kill\_rate}(\mathrm{mono})$ averaged over the shared set of samples where both cells have an observation on the operator. The bootstrap resamples $n_{\text{shared}}$ samples with replacement $B = 10{,}000$ times (seed 42), respecting the clustering of mutants within a sample. Positive CIs excluding zero establish H1 dominance over that mono baseline on that operator in a paired sense, which is stronger than the marginal Clopper--Pearson intervals of Table~\ref{tab:per_operator_kill_rate}. $^\dagger$ marks the best-mono comparator (highest mean kill-rate on the operator); $\mathbf{bold}$ marks CIs that exclude zero from below (H1 statistically dominant). The \texttt{negate\_bool} operator is omitted from this table because H1 has only $n = 2$ mutants on this operator (Table~\ref{tab:per_operator_kill_rate}), yielding $n_{\text{shared}} \leq 2$ against every mono baseline and making the paired bootstrap CI uninformative; the marginal Clopper--Pearson interval ($[0.16, 1.00]$, $n = 2$) is the available evidence, and Section~\ref{sec:results_per_operator} reports the finding as ``consistent with dominance'' rather than ``strict dominance''.}
 \label{tab:paired_bootstrap_h1_vs_mono}
 \begin{tabular}{@{}llrrrr@{}}
 \toprule
@@ -28,13 +28,12 @@ comparison & M4 & 12 & +0.000 & +0.000 & +0.000 \\
 comparison & M5 & 8 & +0.000 & +0.000 & +0.000 \\
 comparison & M6 & 6 & +0.000 & +0.000 & +0.000 \\
 \midrule
-\midrule
-return_none & M1 & 25 & $\mathbf{+0.220}$ & $\mathbf{+0.080}$ & $\mathbf{+0.380}$ \\
-return_none & M2 & 20 & +0.050 & +0.000 & +0.150 \\
-return_none & M3$^\dagger$ & 23 & +0.000 & +0.000 & +0.000 \\
-return_none & M4 & 26 & +0.000 & +0.000 & +0.000 \\
-return_none & M5 & 18 & +0.000 & +0.000 & +0.000 \\
-return_none & M6 & 16 & +0.000 & +0.000 & +0.000 \\
+return\_none & M1 & 25 & $\mathbf{+0.220}$ & $\mathbf{+0.080}$ & $\mathbf{+0.380}$ \\
+return\_none & M2 & 20 & +0.050 & +0.000 & +0.150 \\
+return\_none & M3$^\dagger$ & 23 & +0.000 & +0.000 & +0.000 \\
+return\_none & M4 & 26 & +0.000 & +0.000 & +0.000 \\
+return\_none & M5 & 18 & +0.000 & +0.000 & +0.000 \\
+return\_none & M6 & 16 & +0.000 & +0.000 & +0.000 \\
 \bottomrule
 \end{tabular}
 \end{table*}

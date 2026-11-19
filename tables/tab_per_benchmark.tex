@@ -1,13 +1,13 @@
 \begin{table}[!htbp]
 \centering
-\caption{Per-benchmark Type-III ANOVA on closure rate. F is the cell-factor F-statistic; p is the cell-factor p-value within that benchmark.}
+\caption{Per-benchmark Type-III ANOVA on closure rate. $n$ is the valid-row count after filtering parse failures ($J = -1$) and structural NAs. $F$ is the cell-factor F-statistic (df$_{\textsf{num}} = 18$; df$_{\textsf{den}} = 1379$ for HumanEval, $3506$ for MBPP); $p$ is the cell-factor p-value within that benchmark. Cell assignment is a highly significant predictor of closure rate on both benchmarks independently.}
 \label{tab:per_benchmark}
 \begin{tabular}{@{}lccc@{}}
 \toprule
-Benchmark & n & F (cell) & p (cell) \\
+Benchmark & $n$ & $F$ (cell) & $p$ (cell) \\
 \midrule
-humaneval & 1652 &  &  \\
-mbpp & 4238 &  &  \\
+HumanEval & $1{,}437$ & $4.92$ & $< 0.001$ \\
+MBPP      & $3{,}634$ & $8.77$ & $< 0.001$ \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,0 +1,35 @@
+\begin{table}[!htbp]
+  \centering
+  \small
+  \caption{Structure of the generated test suites on Path~1, from the sweep
+    logs. ``All-dropped'' rows are those in which no generated test passes
+    on the reference code; they are split into rows where at least one test
+    function was written and all failed, and rows with no test function or
+    an empty output. ``Single fn.'' is the share of suites written as one
+    test function. The last two columns give the all-dropped rate for
+    single-function and multi-function suites (number of suites in
+    parentheses). Cells whose logs contain partial or repeated runs (H3,
+    H8, H10) are omitted.}
+  \label{tab:test_suite_structure}
+  \begin{tabular}{@{}llrrrrr@{}}
+    \toprule
+    Cell & $L_{\textsf{test}}$ & All-dropped & Failed / empty & Single fn. & All-dropped if single & All-dropped if multi \\
+    \midrule
+    M2 & phi-4 & 66/150 & 66 / 0 & 40\% & 75\% (60) & 23\% (90) \\
+    H2 & phi-4 & 34/75 & 33 / 0 & 54\% & 68\% (40) & 18\% (34) \\
+    \midrule
+    M1 & llama3.2 & 27/150 & 27 / 0 & 1\% & 100\% (1) & 17\% (149) \\
+    M3 & qwen3.6 & 33/150 & 24 / 9 & 1\% & 100\% (1) & 18\% (126) \\
+    M4 & gemma-4 & 9/150 & 9 / 0 & 0\% & --- (0) & 6\% (150) \\
+    M5 & mistral-s. & 24/150 & 24 / 0 & 0\% & --- (0) & 16\% (150) \\
+    M6 & qwen-coder & 24/150 & 24 / 0 & 13\% & 74\% (19) & 8\% (131) \\
+    H1 & qwen-coder & 8/89 & 8 / 0 & 10\% & 78\% (9) & 1\% (80) \\
+    H4 & qwen-coder & 9/75 & 9 / 0 & 16\% & 67\% (12) & 2\% (63) \\
+    H5 & qwen-coder & 16/75 & 16 / 0 & 8\% & 100\% (6) & 14\% (69) \\
+    H6 & qwen3.6 & 13/75 & 10 / 3 & 0\% & --- (0) & 18\% (57) \\
+    H7 & qwen3.6 & 9/75 & 5 / 4 & 3\% & 50\% (2) & 7\% (56) \\
+    H9 & qwen3.6 & 14/75 & 7 / 7 & 3\% & 100\% (2) & 8\% (59) \\
+    H11 & gemma-4 & 4/75 & 4 / 0 & 0\% & --- (0) & 5\% (75) \\
+    \bottomrule
+  \end{tabular}
+\end{table}

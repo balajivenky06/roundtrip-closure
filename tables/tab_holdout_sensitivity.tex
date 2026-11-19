@@ -1,55 +1,37 @@
-% Table 12 — Transformation-robustness on HEM-25
-%
-% Rebuilt 2026-10-30 from results_rerun/results_holdout_humaneval_mutated_v2.tsv
-% (the clean fresh re-run that honours Reviewer 2 Comment 3's denominator audit).
-% Previous version used Colab-side aggregates with unexplained denominators;
-% this version reports V' (conditional on metric computable) with explicit
-% numerator/denominator per cell per path.
-%
-% V'_{a,p} = n_{valid} / n_{metric-ok}  where n_{valid} is the number of rows
-% with (metric > τ ∧ judge >= ρ) under the paper's default (τ=0, ρ=3).
-%
+% Table 16 — paired transformation check on the same 25 HumanEval functions (R2.3, R2.7)
+% Before: results_rerun/results_hem_original_25.tsv (original functions, 2026-11-17)
+% After:  results_rerun/results_holdout_humaneval_mutated_v2.tsv (HEM-25, 2026-10-29)
+% Built by analyze/paired_hem_before_after.py; checked by scripts/verify_paper_numbers.py
 \begin{table}[!htbp]
   \centering
-  \caption{Transformation-robustness on HEM-25 (R2 Comment 3 denominator fix).
-    Strict-AND valid-closure fraction $V'$ (conditional on metric computable:
-    $n_{\textsf{valid}} / n_{\textsf{metric-ok}}$) on the core sweep
-    (HumanEval + MBPP, $N = 150$ for H1 and $N = 75$ for M3) vs.\ a clean
-    fresh re-sweep of the HumanEval-Mutated (HEM-25) subset at $n = 25$ per
-    cell per path. Positive $\Delta_{\textsf{HEM}}$ on behavioural paths
-    (1--2) is consistent with transformation-robustness: function-rename
-    plus docstring-paraphrase does not degrade closure on the behavioural
-    metrics. Negative $\Delta_{\textsf{HEM}}$ on Path~3 (BERTScore) is
-    consistent with BERTScore's surface-form character --- paraphrased
-    reference docstrings fail string-level matching even for semantically
-    correct reconstructions. \emph{Correction note (R2 Comment 3).} The
-    submitted manuscript reported HEM-25 numbers with denominators that
-    could not be reproduced from the released TSV ($79.6\%$ and $32.7\%$
-    for H1 require denominators $\geq 49$, inconsistent with the stated
-    $n = 25$). We re-swept H1 and M3 on HEM-25 cleanly on 2026-10-29 and
-    report the honest numerators and denominators here. The fresh numbers
-    are directionally identical to the submitted version ($\pm 5$~pp
-    typical difference); the correction is denominator-honesty, not
-    finding-reversal. LiveCodeBench-25 was blocked at data preparation
-    by a HuggingFace \texttt{datasets} library incompatibility and is
+  \footnotesize
+  \caption{Paired transformation check on the same 25 HumanEval functions.
+    \emph{Before}: the original functions; \emph{after}: their
+    HumanEval-Mutated (HEM-25) versions (function rename, docstring
+    paraphrase, parameter permutation). Both runs use the same cells,
+    prompts, and generation settings. Entries are strict-AND closures
+    ($\tau = 0$, $\rho = 3$) out of $n$ paired functions. On Path~1,
+    $V'$ divides by the rows with a computable kill rate, and
+    ``all-dropped'' counts rows in which every generated test fails on
+    the reference code. ``Lost / gained'' counts functions that close
+    before but not after, and vice versa; $p$ is the exact two-sided
+    McNemar test on those pairs. One M3 Path~3 run on the original
+    functions ended in an execution error and is excluded, so $n = 24$
+    there. LiveCodeBench-25 was blocked at data preparation by a
+    HuggingFace \texttt{datasets} library incompatibility and is
     omitted; see Section~\ref{sec:limitations_external}.}
   \label{tab:holdout_sensitivity}
-  \begin{tabular}{llrrrr}
+  \begin{tabular}{@{}llrrrrrrr@{}}
     \toprule
-    Cell & Path & Core & HEM-25 $V'$ & $n_{\textsf{valid}} / n_{\textsf{metric-ok}}$ & $\Delta_{\textsf{HEM}}$ \\
+    Cell & Path & Before & After & $\Delta V$ & $V'$ before / after & All-dropped & Lost / gained & $p$ \\
     \midrule
-    H1 & 1 (mutation kill rate)   & $79.0\%$          & $100.0\%$        & $16/16$ & $+21.0$~pp \\
-    H1 & 2 (reference-test pass)  & $64.0\%$          & $\phantom{0}76.0\%$ & $19/25$ & $+12.0$~pp \\
-    H1 & 3 (BERTScore F1)         & $63.6\%$          & $\phantom{0}28.0\%$ & $\phantom{0}7/25$ & $\mathbf{-35.6}$~\textbf{pp} \\
+    H1 & 1 (kill rate)  & $20/25$ & $16/25$ & $-16.0$~pp & $20/21$ / $16/16$ & $4$ / $9$  & $7$ / $3$ & $0.34$ \\
+    H1 & 2 (ref.\ pass) & $20/25$ & $19/25$ & $-4.0$~pp  & ---               & ---        & $1$ / $0$ & $1.00$ \\
+    H1 & 3 (BERTScore)  & $8/25$  & $7/25$  & $-4.0$~pp  & ---               & ---        & $2$ / $1$ & $1.00$ \\
     \midrule
-    M3 & 1 (mutation kill rate)   & $85.5\%$          & $100.0\%$        & $15/15$ & $+14.5$~pp \\
-    M3 & 2 (reference-test pass)  & $61.2\%$          & $\phantom{0}88.0\%$ & $22/25$ & $+26.8$~pp \\
-    M3 & 3 (BERTScore F1)         & $70.0\%$          & $\phantom{0}48.0\%$ & $12/25$ & $\mathbf{-22.0}$~\textbf{pp} \\
+    M3 & 1 (kill rate)  & $16/25$ & $15/25$ & $-4.0$~pp  & $16/16$ / $15/15$ & $9$ / $10$ & $3$ / $2$ & $1.00$ \\
+    M3 & 2 (ref.\ pass) & $24/25$ & $22/25$ & $-8.0$~pp  & ---               & ---        & $2$ / $0$ & $0.50$ \\
+    M3 & 3 (BERTScore)  & $15/24$ & $12/24$ & $-12.5$~pp & ---               & ---        & $5$ / $2$ & $0.45$ \\
     \bottomrule
   \end{tabular}
-
-  \vspace{2pt}
-  \raggedright\footnotesize
-  \textbf{Bold} marks the Path~3 (BERTScore) HEM losses --- the surface-form fragility evidence that anchors the ``BERTScore is not a semantic-equivalence signal'' claim (Section~\ref{sec:results_contamination}).
-  Numerators $16/16$ and $15/15$ at Path~1 reflect that on the $n = 25$ samples with computable metrics, every single row cleared both the metric and judge thresholds; the 9 and 10 non-computable rows (respectively) correspond to \textsf{all\_dropped} filter failures on the HEM transformations.
 \end{table}

@@ -81,8 +81,8 @@ def test_doe_table_well_formed():
     assert len(MONO_CELLS) == 6
     assert len(HETERO_CELLS) == 11
     assert len(NULL_CELLS) == 3
-    assert len(CLOSED_WEIGHT_CELLS) == 4
-    assert len(ALL_CELLS) == 24, f"Expected 24 cells (20 primary + 4 closed-weight), got {len(ALL_CELLS)}"
+    assert len(CLOSED_WEIGHT_CELLS) == 6  # 4 planned + 2 Gemini cells added in revision
+    assert len(ALL_CELLS) == 26, f"Expected 26 cells (20 primary + 6 closed-weight), got {len(ALL_CELLS)}"
     for cell in MONO_CELLS + HETERO_CELLS + CLOSED_WEIGHT_CELLS:
         assert cell.L_spec is not None, f"{cell.cell_id}: L_spec missing"
         assert cell.L_test is not None, f"{cell.cell_id}: L_test missing"

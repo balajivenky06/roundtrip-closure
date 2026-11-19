@@ -1,0 +1,139 @@
+{
+  "cells": {
+    "M2": {
+      "paths": {
+        "1": {
+          "total": 150,
+          "buckets": {
+            "kill_rate_high": 69,
+            "filter_all_dropped": 66,
+            "kill_rate_zero": 8,
+            "kill_rate_low": 7
+          },
+          "pct": {
+            "kill_rate_high": 46.0,
+            "filter_all_dropped": 44.0,
+            "kill_rate_zero": 5.333333333333333,
+            "kill_rate_low": 4.666666666666667
+          }
+        },
+        "2": {
+          "total": 150,
+          "buckets": {
+            "kill_rate_high": 82,
+            "kill_rate_zero": 68
+          },
+          "pct": {
+            "kill_rate_high": 54.666666666666664,
+            "kill_rate_zero": 45.333333333333336
+          }
+        },
+        "3": {
+          "total": 150,
+          "buckets": {
+            "kill_rate_low": 150
+          },
+          "pct": {
+            "kill_rate_low": 100.0
+          }
+        }
+      },
+      "log_summary": {
+        "api_error_count": 0,
+        "zero_char_count": 0
+      }
+    },
+    "H2": {
+      "paths": {
+        "1": {
+          "total": 75,
+          "buckets": {
+            "kill_rate_high": 38,
+            "filter_all_dropped": 33,
+            "api_error": 1,
+            "kill_rate_zero": 2,
+            "kill_rate_low": 1
+          },
+          "pct": {
+            "kill_rate_high": 50.666666666666664,
+            "filter_all_dropped": 44.0,
+            "api_error": 1.3333333333333333,
+            "kill_rate_zero": 2.6666666666666665,
+            "kill_rate_low": 1.3333333333333333
+          }
+        },
+        "2": {
+          "total": 75,
+          "buckets": {
+            "kill_rate_high": 46,
+            "kill_rate_zero": 29
+          },
+          "pct": {
+            "kill_rate_high": 61.333333333333336,
+            "kill_rate_zero": 38.666666666666664
+          }
+        },
+        "3": {
+          "total": 75,
+          "buckets": {
+            "kill_rate_low": 75
+          },
+          "pct": {
+            "kill_rate_low": 100.0
+          }
+        }
+      },
+      "log_summary": {
+        "api_error_count": 1,
+        "zero_char_count": 1
+      }
+    },
+    "H10": {
+      "paths": {
+        "1": {
+          "total": 75,
+          "buckets": {
+            "api_error": 25,
+            "kill_rate_high": 20,
+            "kill_rate_low": 3,
+            "kill_rate_zero": 2,
+            "filter_all_dropped": 25
+          },
+          "pct": {
+            "api_error": 33.333333333333336,
+            "kill_rate_high": 26.666666666666668,
+            "kill_rate_low": 4.0,
+            "kill_rate_zero": 2.6666666666666665,
+            "filter_all_dropped": 33.333333333333336
+          }
+        },
+        "2": {
+          "total": 75,
+          "buckets": {
+            "kill_rate_high": 46,
+            "kill_rate_zero": 29
+          },
+          "pct": {
+            "kill_rate_high": 61.333333333333336,
+            "kill_rate_zero": 38.666666666666664
+          }
+        },
+        "3": {
+          "total": 75,
+          "buckets": {
+            "kill_rate_low": 71,
+            "kill_rate_high": 4
+          },
+          "pct": {
+            "kill_rate_low": 94.66666666666667,
+            "kill_rate_high": 5.333333333333333
+          }
+        }
+      },
+      "log_summary": {
+        "api_error_count": 19,
+        "zero_char_count": 25
+      }
+    }
+  }
+}

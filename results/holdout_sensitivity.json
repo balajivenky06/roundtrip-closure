@@ -1,0 +1,884 @@
+{
+  "cells": {
+    "H1": {
+      "path_1": {
+        "core": {
+          "rate": 0.7901234567901234,
+          "n": 81
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6404494382022472,
+          "n": 89
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.6363636363636364,
+          "n": 88
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H10": {
+      "path_1": {
+        "core": {
+          "rate": 0.6470588235294118,
+          "n": 34
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.56,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.6266666666666667,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H11": {
+      "path_1": {
+        "core": {
+          "rate": 0.8591549295774648,
+          "n": 71
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6133333333333333,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.6666666666666666,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H2": {
+      "path_1": {
+        "core": {
+          "rate": 0.8536585365853658,
+          "n": 41
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.5555555555555556,
+          "n": 72
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.5405405405405406,
+          "n": 74
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H3": {
+      "path_1": {
+        "core": {
+          "rate": 0.819672131147541,
+          "n": 61
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6461538461538462,
+          "n": 65
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.4915254237288136,
+          "n": 59
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H4": {
+      "path_1": {
+        "core": {
+          "rate": 0.9090909090909091,
+          "n": 66
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.40540540540540543,
+          "n": 74
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.6666666666666666,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H5": {
+      "path_1": {
+        "core": {
+          "rate": 0.847457627118644,
+          "n": 59
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6266666666666667,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.5,
+          "n": 74
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H6": {
+      "path_1": {
+        "core": {
+          "rate": 0.8548387096774194,
+          "n": 62
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.5466666666666666,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.6533333333333333,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H7": {
+      "path_1": {
+        "core": {
+          "rate": 0.8636363636363636,
+          "n": 66
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.5753424657534246,
+          "n": 73
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.7162162162162162,
+          "n": 74
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H8": {
+      "path_1": {
+        "core": {
+          "rate": 0.8412698412698413,
+          "n": 63
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.581081081081081,
+          "n": 74
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.72,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "H9": {
+      "path_1": {
+        "core": {
+          "rate": 0.8852459016393442,
+          "n": 61
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6133333333333333,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.7333333333333333,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "M1": {
+      "path_1": {
+        "core": {
+          "rate": 0.6097560975609756,
+          "n": 123
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.30612244897959184,
+          "n": 147
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.4066666666666667,
+          "n": 150
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "M2": {
+      "path_1": {
+        "core": {
+          "rate": 0.75,
+          "n": 84
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.4965034965034965,
+          "n": 143
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.54,
+          "n": 150
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "M3": {
+      "path_1": {
+        "core": {
+          "rate": 0.8547008547008547,
+          "n": 117
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6122448979591837,
+          "n": 147
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.7,
+          "n": 150
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "M4": {
+      "path_1": {
+        "core": {
+          "rate": 0.8285714285714286,
+          "n": 140
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6083916083916084,
+          "n": 143
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.7315436241610739,
+          "n": 149
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "M5": {
+      "path_1": {
+        "core": {
+          "rate": 0.7777777777777778,
+          "n": 126
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.4859154929577465,
+          "n": 142
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.5369127516778524,
+          "n": 149
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "M6": {
+      "path_1": {
+        "core": {
+          "rate": 0.8571428571428571,
+          "n": 126
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.589041095890411,
+          "n": 146
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.6711409395973155,
+          "n": 149
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "N1": {
+      "path_1": {
+        "core": {
+          "rate": 0.38333333333333336,
+          "n": 60
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.0945945945945946,
+          "n": 74
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": 0.26666666666666666,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "N2": {
+      "path_1": {
+        "core": {
+          "rate": null,
+          "n": 0
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": 0.6266666666666667,
+          "n": 75
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": null,
+          "n": 0
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    },
+    "N3": {
+      "path_1": {
+        "core": {
+          "rate": null,
+          "n": 0
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_2": {
+        "core": {
+          "rate": null,
+          "n": 0
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      },
+      "path_3": {
+        "core": {
+          "rate": null,
+          "n": 0
+        },
+        "humaneval_mut": {
+          "rate": null,
+          "n": 0
+        },
+        "livecodebench": {
+          "rate": null,
+          "n": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+\begin{table}[!htbp]
+\centering
+\small
+\caption{Mixed-effects linear-probability models of strict-AND valid closure (Eq.~\ref{eq:mixedlogit}), with a random intercept per sample and qwen3.6 as the reference model at every stage. Coefficients are changes in $\Pr[V = 1]$. Every row of every non-null cell is included, so rows whose generated tests were all dropped count as non-closures. Stage terms enter only on the paths that invoke the stage: the \emph{pooled} model codes spec terms on Paths~1 and~3 and code terms on Path~2 only; the \emph{per-path} models include only the two active stages (``---'': stage not invoked on that path). $n$ = 5{,}215 rows pooled (1{,}739, 1{,}739, 1{,}737 per path). Bold: $p < 0.05$ ($^{*}p < 0.05$, $^{**}p < 0.01$, $^{***}p < 0.001$), uncorrected for the number of stage terms.}
+\label{tab:mixed_logit}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Term & Pooled & Path 1 & Path 2 & Path 3 \\
+\midrule
+spec = gemma-4 & $+0.007$ & $-0.050$ & --- & $+0.042$ \\
+spec = llama3.2 & \textbf{$-0.096^{*}$} & $-0.064$ & --- & \textbf{$-0.152^{*}$} \\
+spec = mistral-small & $-0.007$ & \textbf{$-0.105^{*}$} & --- & \textbf{$+0.130^{**}$} \\
+spec = phi-4 & $-0.012$ & $-0.006$ & --- & $-0.010$ \\
+spec = qwen-coder & $+0.045$ & $+0.033$ & --- & $+0.021$ \\
+\midrule
+test = gemma-4 & \textbf{$+0.058^{*}$} & \textbf{$+0.135^{**}$} & $+0.001$ & $-0.017$ \\
+test = llama3.2 & \textbf{$-0.122^{**}$} & $-0.116$ & $-0.083$ & \textbf{$-0.146^{*}$} \\
+test = mistral-small & \textbf{$-0.099^{***}$} & $+0.057$ & $-0.070$ & \textbf{$-0.315^{***}$} \\
+test = phi-4 & \textbf{$-0.159^{***}$} & \textbf{$-0.261^{***}$} & \textbf{$-0.065^{*}$} & \textbf{$-0.164^{***}$} \\
+test = qwen-coder & $-0.008$ & $+0.032$ & $+0.001$ & $-0.042$ \\
+\midrule
+code = gemma-4 & $-0.078$ & --- & $-0.021$ & --- \\
+code = llama3.2 & \textbf{$-0.184^{***}$} & --- & \textbf{$-0.217^{***}$} & --- \\
+code = mistral-small & $-0.035$ & --- & $-0.061$ & --- \\
+code = phi-4 & $-0.009$ & --- & $-0.062$ & --- \\
+code = qwen-coder & $+0.028$ & --- & $-0.004$ & --- \\
+\midrule
+path = 2 & \textbf{$-0.092^{*}$} & --- & --- & --- \\
+path = 3 & \textbf{$-0.035^{*}$} & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,1168 @@
+2026-06-21 02:07:49,535 [INFO] === Running cell N2 [null] on core ===
+2026-06-21 02:07:49,536 [INFO]   Hypothesis: Spec-stage ablation: quantifies how much L_spec contributes.
+2026-06-21 02:07:49,537 [INFO]   L_spec = SKIP
+2026-06-21 02:07:49,538 [INFO]   L_test = qwen3-coder:30b
+2026-06-21 02:07:49,539 [INFO]   L_code = qwen3-coder:30b
+2026-06-21 02:07:49,539 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-21 02:07:49,541 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-21 02:07:49,542 [INFO]   log     -> /content/roundtrip-closure/logs/cell_N2_core.log
+2026-06-21 02:07:49,558 [INFO]   found 4315 previously-completed (cell, sample, path) tuples
+2026-06-21 02:07:49,564 [INFO]   loaded 75 samples from core
+2026-06-21 02:07:49,564 [INFO] [N2 s=0 p1] START humaneval/HumanEval/2
+2026-06-21 02:07:49,564 [INFO] [N2 s=0 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:07:49,564 [INFO] [N2 s=0 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:07:51,629 [INFO]   written=1 skipped(resume)=0 errors=0 cache_hit_rate=0.00% (hits=0, misses=0)
+2026-06-21 02:07:51,629 [INFO] [N2 s=0 p2] START humaneval/HumanEval/2
+2026-06-21 02:07:51,833 [INFO] [N2 s=0 p2] step1 L_test=qwen3-coder -> T'=790chars cache=HIT +0.20s
+2026-06-21 02:07:52,104 [INFO] [N2 s=0 p2] step2 L_code=qwen3-coder -> C'=354chars cache=HIT +0.27s
+2026-06-21 02:07:52,395 [INFO] NumExpr defaulting to 8 threads.
+2026-06-21 02:07:52,722 [INFO] [N2 s=0 p2] step3 ref_tests -> pass_rate=1.000 +0.62s
+2026-06-21 02:07:52,909 [INFO] [N2 s=0 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.19s
+2026-06-21 02:07:52,910 [INFO] [N2 s=0 p2] DONE elapsed=1.28s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:07:54,872 [INFO]   written=2 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=3, misses=0)
+2026-06-21 02:07:54,872 [INFO] [N2 s=0 p3] START humaneval/HumanEval/2
+2026-06-21 02:07:55,217 [INFO] [N2 s=0 p3] step1 L_test=qwen3-coder -> T'=1653chars cache=HIT +0.34s
+2026-06-21 02:07:55,217 [INFO] [N2 s=0 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:07:57,110 [INFO]   written=3 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 02:07:57,111 [INFO] [N2 s=1 p1] START humaneval/HumanEval/23
+2026-06-21 02:07:57,111 [INFO] [N2 s=1 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:07:57,111 [INFO] [N2 s=1 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:07:59,003 [INFO]   written=4 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=4, misses=0)
+2026-06-21 02:07:59,004 [INFO] [N2 s=1 p2] START humaneval/HumanEval/23
+2026-06-21 02:07:59,174 [INFO] [N2 s=1 p2] step1 L_test=qwen3-coder -> T'=574chars cache=HIT +0.17s
+2026-06-21 02:07:59,349 [INFO] [N2 s=1 p2] step2 L_code=qwen3-coder -> C'=54chars cache=HIT +0.18s
+2026-06-21 02:07:59,618 [INFO] [N2 s=1 p2] step3 ref_tests -> pass_rate=1.000 +0.27s
+2026-06-21 02:07:59,890 [INFO] [N2 s=1 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.27s
+2026-06-21 02:07:59,890 [INFO] [N2 s=1 p2] DONE elapsed=0.89s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:08:01,847 [INFO]   written=5 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=7, misses=0)
+2026-06-21 02:08:01,848 [INFO] [N2 s=1 p3] START humaneval/HumanEval/23
+2026-06-21 02:08:02,008 [INFO] [N2 s=1 p3] step1 L_test=qwen3-coder -> T'=1551chars cache=HIT +0.16s
+2026-06-21 02:08:02,008 [INFO] [N2 s=1 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:04,092 [INFO]   written=6 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 02:08:04,092 [INFO] [N2 s=2 p1] START humaneval/HumanEval/162
+2026-06-21 02:08:04,092 [INFO] [N2 s=2 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:04,093 [INFO] [N2 s=2 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:06,159 [INFO]   written=7 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=8, misses=0)
+2026-06-21 02:08:06,160 [INFO] [N2 s=2 p2] START humaneval/HumanEval/162
+2026-06-21 02:08:06,344 [INFO] [N2 s=2 p2] step1 L_test=qwen3-coder -> T'=1358chars cache=HIT +0.18s
+2026-06-21 02:08:06,553 [INFO] [N2 s=2 p2] step2 L_code=qwen3-coder -> C'=152chars cache=HIT +0.21s
+2026-06-21 02:08:06,722 [INFO] [N2 s=2 p2] step3 ref_tests -> pass_rate=1.000 +0.17s
+2026-06-21 02:08:06,886 [INFO] [N2 s=2 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:08:06,886 [INFO] [N2 s=2 p2] DONE elapsed=0.73s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:08:08,744 [INFO]   written=8 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=11, misses=0)
+2026-06-21 02:08:08,745 [INFO] [N2 s=2 p3] START humaneval/HumanEval/162
+2026-06-21 02:08:08,944 [INFO] [N2 s=2 p3] step1 L_test=qwen3-coder -> T'=2110chars cache=HIT +0.20s
+2026-06-21 02:08:08,944 [INFO] [N2 s=2 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:11,005 [INFO]   written=9 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 02:08:11,005 [INFO] [N2 s=3 p1] START mbpp/363
+2026-06-21 02:08:11,005 [INFO] [N2 s=3 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:11,005 [INFO] [N2 s=3 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:12,890 [INFO]   written=10 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=12, misses=0)
+2026-06-21 02:08:12,890 [INFO] [N2 s=3 p2] START mbpp/363
+2026-06-21 02:08:13,230 [INFO] [N2 s=3 p2] step1 L_test=qwen3-coder -> T'=1128chars cache=HIT +0.34s
+2026-06-21 02:08:13,391 [INFO] [N2 s=3 p2] step2 L_code=qwen3-coder -> C'=348chars cache=HIT +0.16s
+2026-06-21 02:08:13,596 [INFO] [N2 s=3 p2] step3 ref_tests -> pass_rate=0.000 +0.20s
+2026-06-21 02:08:13,770 [INFO] [N2 s=3 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.17s
+2026-06-21 02:08:13,771 [INFO] [N2 s=3 p2] DONE elapsed=0.88s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:08:15,798 [INFO]   written=11 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=15, misses=0)
+2026-06-21 02:08:15,798 [INFO] [N2 s=3 p3] START mbpp/363
+2026-06-21 02:08:15,976 [INFO] [N2 s=3 p3] step1 L_test=qwen3-coder -> T'=1745chars cache=HIT +0.18s
+2026-06-21 02:08:15,976 [INFO] [N2 s=3 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:18,227 [INFO]   written=12 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 02:08:18,227 [INFO] [N2 s=4 p1] START mbpp/302
+2026-06-21 02:08:18,227 [INFO] [N2 s=4 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:18,228 [INFO] [N2 s=4 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:20,129 [INFO]   written=13 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=16, misses=0)
+2026-06-21 02:08:20,129 [INFO] [N2 s=4 p2] START mbpp/302
+2026-06-21 02:08:20,313 [INFO] [N2 s=4 p2] step1 L_test=qwen3-coder -> T'=1143chars cache=HIT +0.18s
+2026-06-21 02:08:20,469 [INFO] [N2 s=4 p2] step2 L_code=qwen3-coder -> C'=310chars cache=HIT +0.16s
+2026-06-21 02:08:20,734 [INFO] [N2 s=4 p2] step3 ref_tests -> pass_rate=1.000 +0.26s
+2026-06-21 02:08:20,946 [INFO] [N2 s=4 p2] step4 judge=deepseek-r1 -> rating=2 cache=HIT +0.21s
+2026-06-21 02:08:20,946 [INFO] [N2 s=4 p2] DONE elapsed=0.82s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:08:22,760 [INFO]   written=14 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=19, misses=0)
+2026-06-21 02:08:22,760 [INFO] [N2 s=4 p3] START mbpp/302
+2026-06-21 02:08:22,952 [INFO] [N2 s=4 p3] step1 L_test=qwen3-coder -> T'=1181chars cache=HIT +0.19s
+2026-06-21 02:08:22,953 [INFO] [N2 s=4 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:24,937 [INFO]   written=15 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 02:08:24,937 [INFO] [N2 s=5 p1] START mbpp/284
+2026-06-21 02:08:24,937 [INFO] [N2 s=5 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:24,937 [INFO] [N2 s=5 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:26,794 [INFO]   written=16 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=20, misses=0)
+2026-06-21 02:08:26,794 [INFO] [N2 s=5 p2] START mbpp/284
+2026-06-21 02:08:27,066 [INFO] [N2 s=5 p2] step1 L_test=qwen3-coder -> T'=1395chars cache=HIT +0.27s
+2026-06-21 02:08:27,234 [INFO] [N2 s=5 p2] step2 L_code=qwen3-coder -> C'=408chars cache=HIT +0.17s
+2026-06-21 02:08:27,417 [INFO] [N2 s=5 p2] step3 ref_tests -> pass_rate=1.000 +0.18s
+2026-06-21 02:08:27,663 [INFO] [N2 s=5 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.25s
+2026-06-21 02:08:27,664 [INFO] [N2 s=5 p2] DONE elapsed=0.87s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:08:29,711 [INFO]   written=17 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=23, misses=0)
+2026-06-21 02:08:29,712 [INFO] [N2 s=5 p3] START mbpp/284
+2026-06-21 02:08:29,900 [INFO] [N2 s=5 p3] step1 L_test=qwen3-coder -> T'=1433chars cache=HIT +0.19s
+2026-06-21 02:08:29,900 [INFO] [N2 s=5 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:31,958 [INFO]   written=18 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 02:08:31,958 [INFO] [N2 s=6 p1] START mbpp/315
+2026-06-21 02:08:31,958 [INFO] [N2 s=6 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:31,958 [INFO] [N2 s=6 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:33,801 [INFO]   written=19 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=24, misses=0)
+2026-06-21 02:08:33,801 [INFO] [N2 s=6 p2] START mbpp/315
+2026-06-21 02:08:34,023 [INFO] [N2 s=6 p2] step1 L_test=qwen3-coder -> T'=1946chars cache=HIT +0.22s
+2026-06-21 02:08:34,223 [INFO] [N2 s=6 p2] step2 L_code=qwen3-coder -> C'=266chars cache=HIT +0.20s
+2026-06-21 02:08:34,405 [INFO] [N2 s=6 p2] step3 ref_tests -> pass_rate=0.000 +0.18s
+2026-06-21 02:08:34,680 [INFO] [N2 s=6 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.27s
+2026-06-21 02:08:34,680 [INFO] [N2 s=6 p2] DONE elapsed=0.88s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:08:36,569 [INFO]   written=20 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=27, misses=0)
+2026-06-21 02:08:36,569 [INFO] [N2 s=6 p3] START mbpp/315
+2026-06-21 02:08:36,763 [INFO] [N2 s=6 p3] step1 L_test=qwen3-coder -> T'=2127chars cache=HIT +0.19s
+2026-06-21 02:08:36,763 [INFO] [N2 s=6 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:38,591 [INFO]   written=21 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=28, misses=0)
+2026-06-21 02:08:38,591 [INFO] [N2 s=7 p1] START mbpp/454
+2026-06-21 02:08:38,592 [INFO] [N2 s=7 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:38,592 [INFO] [N2 s=7 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:40,694 [INFO]   written=22 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=28, misses=0)
+2026-06-21 02:08:40,694 [INFO] [N2 s=7 p2] START mbpp/454
+2026-06-21 02:08:40,903 [INFO] [N2 s=7 p2] step1 L_test=qwen3-coder -> T'=1174chars cache=HIT +0.21s
+2026-06-21 02:08:41,255 [INFO] [N2 s=7 p2] step2 L_code=qwen3-coder -> C'=322chars cache=HIT +0.35s
+2026-06-21 02:08:41,507 [INFO] [N2 s=7 p2] step3 ref_tests -> pass_rate=0.000 +0.25s
+2026-06-21 02:08:41,712 [INFO] [N2 s=7 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-21 02:08:41,712 [INFO] [N2 s=7 p2] DONE elapsed=1.02s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:08:43,814 [INFO]   written=23 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=31, misses=0)
+2026-06-21 02:08:43,814 [INFO] [N2 s=7 p3] START mbpp/454
+2026-06-21 02:08:43,978 [INFO] [N2 s=7 p3] step1 L_test=qwen3-coder -> T'=1743chars cache=HIT +0.16s
+2026-06-21 02:08:43,979 [INFO] [N2 s=7 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:46,019 [INFO]   written=24 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=32, misses=0)
+2026-06-21 02:08:46,019 [INFO] [N2 s=8 p1] START mbpp/374
+2026-06-21 02:08:46,019 [INFO] [N2 s=8 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:46,019 [INFO] [N2 s=8 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:48,061 [INFO]   written=25 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=32, misses=0)
+2026-06-21 02:08:48,061 [INFO] [N2 s=8 p2] START mbpp/374
+2026-06-21 02:08:48,256 [INFO] [N2 s=8 p2] step1 L_test=qwen3-coder -> T'=2356chars cache=HIT +0.19s
+2026-06-21 02:08:48,430 [INFO] [N2 s=8 p2] step2 L_code=qwen3-coder -> C'=286chars cache=HIT +0.17s
+2026-06-21 02:08:48,631 [INFO] [N2 s=8 p2] step3 ref_tests -> pass_rate=0.000 +0.20s
+2026-06-21 02:08:48,829 [INFO] [N2 s=8 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-21 02:08:48,830 [INFO] [N2 s=8 p2] DONE elapsed=0.77s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:08:50,685 [INFO]   written=26 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=35, misses=0)
+2026-06-21 02:08:50,685 [INFO] [N2 s=8 p3] START mbpp/374
+2026-06-21 02:08:50,863 [INFO] [N2 s=8 p3] step1 L_test=qwen3-coder -> T'=1383chars cache=HIT +0.18s
+2026-06-21 02:08:50,863 [INFO] [N2 s=8 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:52,713 [INFO]   written=27 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=36, misses=0)
+2026-06-21 02:08:52,713 [INFO] [N2 s=9 p1] START mbpp/300
+2026-06-21 02:08:52,713 [INFO] [N2 s=9 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:52,714 [INFO] [N2 s=9 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:08:54,790 [INFO]   written=28 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=36, misses=0)
+2026-06-21 02:08:54,790 [INFO] [N2 s=9 p2] START mbpp/300
+2026-06-21 02:08:54,968 [INFO] [N2 s=9 p2] step1 L_test=qwen3-coder -> T'=1246chars cache=HIT +0.18s
+2026-06-21 02:08:55,176 [INFO] [N2 s=9 p2] step2 L_code=qwen3-coder -> C'=1742chars cache=HIT +0.21s
+2026-06-21 02:08:55,332 [INFO] [N2 s=9 p2] step3 ref_tests -> pass_rate=1.000 +0.16s
+2026-06-21 02:08:55,569 [INFO] [N2 s=9 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.24s
+2026-06-21 02:08:55,569 [INFO] [N2 s=9 p2] DONE elapsed=0.78s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:08:57,630 [INFO]   written=29 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=39, misses=0)
+2026-06-21 02:08:57,631 [INFO] [N2 s=9 p3] START mbpp/300
+2026-06-21 02:08:57,819 [INFO] [N2 s=9 p3] step1 L_test=qwen3-coder -> T'=1988chars cache=HIT +0.19s
+2026-06-21 02:08:57,819 [INFO] [N2 s=9 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:08:59,909 [INFO]   written=30 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=40, misses=0)
+2026-06-21 02:08:59,909 [INFO] [N2 s=10 p1] START mbpp/247
+2026-06-21 02:08:59,910 [INFO] [N2 s=10 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:08:59,910 [INFO] [N2 s=10 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:01,761 [INFO]   written=31 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=40, misses=0)
+2026-06-21 02:09:01,762 [INFO] [N2 s=10 p2] START mbpp/247
+2026-06-21 02:09:01,947 [INFO] [N2 s=10 p2] step1 L_test=qwen3-coder -> T'=1069chars cache=HIT +0.19s
+2026-06-21 02:09:02,123 [INFO] [N2 s=10 p2] step2 L_code=qwen3-coder -> C'=916chars cache=HIT +0.18s
+2026-06-21 02:09:02,312 [INFO] [N2 s=10 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-21 02:09:02,515 [INFO] [N2 s=10 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.20s
+2026-06-21 02:09:02,515 [INFO] [N2 s=10 p2] DONE elapsed=0.75s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:09:04,472 [INFO]   written=32 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=43, misses=0)
+2026-06-21 02:09:04,472 [INFO] [N2 s=10 p3] START mbpp/247
+2026-06-21 02:09:04,712 [INFO] [N2 s=10 p3] step1 L_test=qwen3-coder -> T'=1032chars cache=HIT +0.24s
+2026-06-21 02:09:04,712 [INFO] [N2 s=10 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:06,664 [INFO]   written=33 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=44, misses=0)
+2026-06-21 02:09:06,664 [INFO] [N2 s=11 p1] START mbpp/351
+2026-06-21 02:09:06,664 [INFO] [N2 s=11 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:06,664 [INFO] [N2 s=11 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:08,752 [INFO]   written=34 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=44, misses=0)
+2026-06-21 02:09:08,752 [INFO] [N2 s=11 p2] START mbpp/351
+2026-06-21 02:09:08,949 [INFO] [N2 s=11 p2] step1 L_test=qwen3-coder -> T'=2011chars cache=HIT +0.20s
+2026-06-21 02:09:09,135 [INFO] [N2 s=11 p2] step2 L_code=qwen3-coder -> C'=800chars cache=HIT +0.18s
+2026-06-21 02:09:09,282 [INFO] [N2 s=11 p2] step3 ref_tests -> pass_rate=1.000 +0.15s
+2026-06-21 02:09:09,460 [INFO] [N2 s=11 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-21 02:09:09,460 [INFO] [N2 s=11 p2] DONE elapsed=0.71s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:09:11,443 [INFO]   written=35 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=47, misses=0)
+2026-06-21 02:09:11,443 [INFO] [N2 s=11 p3] START mbpp/351
+2026-06-21 02:09:11,695 [INFO] [N2 s=11 p3] step1 L_test=qwen3-coder -> T'=1920chars cache=HIT +0.25s
+2026-06-21 02:09:11,696 [INFO] [N2 s=11 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:13,587 [INFO]   written=36 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=48, misses=0)
+2026-06-21 02:09:13,587 [INFO] [N2 s=12 p1] START mbpp/318
+2026-06-21 02:09:13,588 [INFO] [N2 s=12 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:13,588 [INFO] [N2 s=12 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:15,489 [INFO]   written=37 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=48, misses=0)
+2026-06-21 02:09:15,489 [INFO] [N2 s=12 p2] START mbpp/318
+2026-06-21 02:09:15,693 [INFO] [N2 s=12 p2] step1 L_test=qwen3-coder -> T'=1557chars cache=HIT +0.20s
+2026-06-21 02:09:15,850 [INFO] [N2 s=12 p2] step2 L_code=qwen3-coder -> C'=989chars cache=HIT +0.16s
+2026-06-21 02:09:16,037 [INFO] [N2 s=12 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-21 02:09:16,369 [INFO] [N2 s=12 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.33s
+2026-06-21 02:09:16,369 [INFO] [N2 s=12 p2] DONE elapsed=0.88s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:09:18,252 [INFO]   written=38 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=51, misses=0)
+2026-06-21 02:09:18,252 [INFO] [N2 s=12 p3] START mbpp/318
+2026-06-21 02:09:18,462 [INFO] [N2 s=12 p3] step1 L_test=qwen3-coder -> T'=1431chars cache=HIT +0.21s
+2026-06-21 02:09:18,462 [INFO] [N2 s=12 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:20,428 [INFO]   written=39 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=52, misses=0)
+2026-06-21 02:09:20,428 [INFO] [N2 s=13 p1] START mbpp/98
+2026-06-21 02:09:20,428 [INFO] [N2 s=13 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:20,429 [INFO] [N2 s=13 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:22,648 [INFO]   written=40 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=52, misses=0)
+2026-06-21 02:09:22,648 [INFO] [N2 s=13 p2] START mbpp/98
+2026-06-21 02:09:22,923 [INFO] [N2 s=13 p2] step1 L_test=qwen3-coder -> T'=1239chars cache=HIT +0.27s
+2026-06-21 02:09:23,081 [INFO] [N2 s=13 p2] step2 L_code=qwen3-coder -> C'=223chars cache=HIT +0.16s
+2026-06-21 02:09:23,356 [INFO] [N2 s=13 p2] step3 ref_tests -> pass_rate=1.000 +0.27s
+2026-06-21 02:09:23,535 [INFO] [N2 s=13 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-21 02:09:23,535 [INFO] [N2 s=13 p2] DONE elapsed=0.89s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:09:25,565 [INFO]   written=41 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=55, misses=0)
+2026-06-21 02:09:25,565 [INFO] [N2 s=13 p3] START mbpp/98
+2026-06-21 02:09:25,723 [INFO] [N2 s=13 p3] step1 L_test=qwen3-coder -> T'=1188chars cache=HIT +0.16s
+2026-06-21 02:09:25,723 [INFO] [N2 s=13 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:27,836 [INFO]   written=42 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=56, misses=0)
+2026-06-21 02:09:27,836 [INFO] [N2 s=14 p1] START mbpp/295
+2026-06-21 02:09:27,836 [INFO] [N2 s=14 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:27,836 [INFO] [N2 s=14 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:29,774 [INFO]   written=43 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=56, misses=0)
+2026-06-21 02:09:29,775 [INFO] [N2 s=14 p2] START mbpp/295
+2026-06-21 02:09:30,020 [INFO] [N2 s=14 p2] step1 L_test=qwen3-coder -> T'=1144chars cache=HIT +0.25s
+2026-06-21 02:09:30,272 [INFO] [N2 s=14 p2] step2 L_code=qwen3-coder -> C'=411chars cache=HIT +0.25s
+2026-06-21 02:09:30,531 [INFO] [N2 s=14 p2] step3 ref_tests -> pass_rate=0.000 +0.26s
+2026-06-21 02:09:30,715 [INFO] [N2 s=14 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.18s
+2026-06-21 02:09:30,715 [INFO] [N2 s=14 p2] DONE elapsed=0.94s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:09:32,920 [INFO]   written=44 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=59, misses=0)
+2026-06-21 02:09:32,920 [INFO] [N2 s=14 p3] START mbpp/295
+2026-06-21 02:09:33,281 [INFO] [N2 s=14 p3] step1 L_test=qwen3-coder -> T'=840chars cache=HIT +0.36s
+2026-06-21 02:09:33,282 [INFO] [N2 s=14 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:35,417 [INFO]   written=45 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=60, misses=0)
+2026-06-21 02:09:35,417 [INFO] [N2 s=15 p1] START mbpp/34
+2026-06-21 02:09:35,417 [INFO] [N2 s=15 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:35,417 [INFO] [N2 s=15 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:37,621 [INFO]   written=46 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=60, misses=0)
+2026-06-21 02:09:37,621 [INFO] [N2 s=15 p2] START mbpp/34
+2026-06-21 02:09:37,886 [INFO] [N2 s=15 p2] step1 L_test=qwen3-coder -> T'=1193chars cache=HIT +0.26s
+2026-06-21 02:09:38,059 [INFO] [N2 s=15 p2] step2 L_code=qwen3-coder -> C'=261chars cache=HIT +0.17s
+2026-06-21 02:09:38,266 [INFO] [N2 s=15 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-21 02:09:38,415 [INFO] [N2 s=15 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.15s
+2026-06-21 02:09:38,415 [INFO] [N2 s=15 p2] DONE elapsed=0.79s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:09:40,294 [INFO]   written=47 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=63, misses=0)
+2026-06-21 02:09:40,294 [INFO] [N2 s=15 p3] START mbpp/34
+2026-06-21 02:09:40,505 [INFO] [N2 s=15 p3] step1 L_test=qwen3-coder -> T'=1591chars cache=HIT +0.21s
+2026-06-21 02:09:40,506 [INFO] [N2 s=15 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:42,469 [INFO]   written=48 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=64, misses=0)
+2026-06-21 02:09:42,469 [INFO] [N2 s=16 p1] START mbpp/198
+2026-06-21 02:09:42,469 [INFO] [N2 s=16 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:42,470 [INFO] [N2 s=16 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:44,526 [INFO]   written=49 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=64, misses=0)
+2026-06-21 02:09:44,526 [INFO] [N2 s=16 p2] START mbpp/198
+2026-06-21 02:09:44,737 [INFO] [N2 s=16 p2] step1 L_test=qwen3-coder -> T'=2701chars cache=HIT +0.21s
+2026-06-21 02:09:44,940 [INFO] [N2 s=16 p2] step2 L_code=qwen3-coder -> C'=3433chars cache=HIT +0.20s
+2026-06-21 02:09:45,134 [INFO] [N2 s=16 p2] step3 ref_tests -> pass_rate=0.000 +0.19s
+2026-06-21 02:09:45,333 [INFO] [N2 s=16 p2] step4 judge=deepseek-r1 -> rating=2 cache=HIT +0.20s
+2026-06-21 02:09:45,333 [INFO] [N2 s=16 p2] DONE elapsed=0.81s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:09:47,296 [INFO]   written=50 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=67, misses=0)
+2026-06-21 02:09:47,296 [INFO] [N2 s=16 p3] START mbpp/198
+2026-06-21 02:09:47,493 [INFO] [N2 s=16 p3] step1 L_test=qwen3-coder -> T'=1687chars cache=HIT +0.20s
+2026-06-21 02:09:47,494 [INFO] [N2 s=16 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:49,538 [INFO]   written=51 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=68, misses=0)
+2026-06-21 02:09:49,538 [INFO] [N2 s=17 p1] START mbpp/310
+2026-06-21 02:09:49,538 [INFO] [N2 s=17 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:49,538 [INFO] [N2 s=17 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:51,451 [INFO]   written=52 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=68, misses=0)
+2026-06-21 02:09:51,451 [INFO] [N2 s=17 p2] START mbpp/310
+2026-06-21 02:09:51,648 [INFO] [N2 s=17 p2] step1 L_test=qwen3-coder -> T'=1043chars cache=HIT +0.20s
+2026-06-21 02:09:51,824 [INFO] [N2 s=17 p2] step2 L_code=qwen3-coder -> C'=49chars cache=HIT +0.18s
+2026-06-21 02:09:52,073 [INFO] [N2 s=17 p2] step3 ref_tests -> pass_rate=0.000 +0.25s
+2026-06-21 02:09:52,294 [INFO] [N2 s=17 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.22s
+2026-06-21 02:09:52,294 [INFO] [N2 s=17 p2] DONE elapsed=0.84s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:09:54,290 [INFO]   written=53 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=71, misses=0)
+2026-06-21 02:09:54,290 [INFO] [N2 s=17 p3] START mbpp/310
+2026-06-21 02:09:54,513 [INFO] [N2 s=17 p3] step1 L_test=qwen3-coder -> T'=1488chars cache=HIT +0.22s
+2026-06-21 02:09:54,513 [INFO] [N2 s=17 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:09:56,388 [INFO]   written=54 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=72, misses=0)
+2026-06-21 02:09:56,389 [INFO] [N2 s=18 p1] START mbpp/87
+2026-06-21 02:09:56,389 [INFO] [N2 s=18 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:09:56,389 [INFO] [N2 s=18 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:09:58,344 [INFO]   written=55 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=72, misses=0)
+2026-06-21 02:09:58,344 [INFO] [N2 s=18 p2] START mbpp/87
+2026-06-21 02:09:58,512 [INFO] [N2 s=18 p2] step1 L_test=qwen3-coder -> T'=1972chars cache=HIT +0.17s
+2026-06-21 02:09:58,706 [INFO] [N2 s=18 p2] step2 L_code=qwen3-coder -> C'=567chars cache=HIT +0.19s
+2026-06-21 02:09:58,936 [INFO] [N2 s=18 p2] step3 ref_tests -> pass_rate=0.000 +0.23s
+2026-06-21 02:09:59,121 [INFO] [N2 s=18 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-21 02:09:59,122 [INFO] [N2 s=18 p2] DONE elapsed=0.78s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:10:01,292 [INFO]   written=56 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=75, misses=0)
+2026-06-21 02:10:01,292 [INFO] [N2 s=18 p3] START mbpp/87
+2026-06-21 02:10:01,565 [INFO] [N2 s=18 p3] step1 L_test=qwen3-coder -> T'=3191chars cache=HIT +0.27s
+2026-06-21 02:10:01,565 [INFO] [N2 s=18 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:03,597 [INFO]   written=57 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=76, misses=0)
+2026-06-21 02:10:03,598 [INFO] [N2 s=19 p1] START mbpp/58
+2026-06-21 02:10:03,598 [INFO] [N2 s=19 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:03,598 [INFO] [N2 s=19 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:05,480 [INFO]   written=58 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=76, misses=0)
+2026-06-21 02:10:05,481 [INFO] [N2 s=19 p2] START mbpp/58
+2026-06-21 02:10:05,667 [INFO] [N2 s=19 p2] step1 L_test=qwen3-coder -> T'=1185chars cache=HIT +0.19s
+2026-06-21 02:10:05,853 [INFO] [N2 s=19 p2] step2 L_code=qwen3-coder -> C'=537chars cache=HIT +0.19s
+2026-06-21 02:10:06,067 [INFO] [N2 s=19 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-21 02:10:06,282 [INFO] [N2 s=19 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-21 02:10:06,282 [INFO] [N2 s=19 p2] DONE elapsed=0.80s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:10:08,175 [INFO]   written=59 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=79, misses=0)
+2026-06-21 02:10:08,175 [INFO] [N2 s=19 p3] START mbpp/58
+2026-06-21 02:10:08,365 [INFO] [N2 s=19 p3] step1 L_test=qwen3-coder -> T'=2225chars cache=HIT +0.19s
+2026-06-21 02:10:08,365 [INFO] [N2 s=19 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:10,378 [INFO]   written=60 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=80, misses=0)
+2026-06-21 02:10:10,378 [INFO] [N2 s=20 p1] START mbpp/27
+2026-06-21 02:10:10,378 [INFO] [N2 s=20 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:10,378 [INFO] [N2 s=20 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:12,380 [INFO]   written=61 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=80, misses=0)
+2026-06-21 02:10:12,380 [INFO] [N2 s=20 p2] START mbpp/27
+2026-06-21 02:10:12,562 [INFO] [N2 s=20 p2] step1 L_test=qwen3-coder -> T'=1383chars cache=HIT +0.18s
+2026-06-21 02:10:12,775 [INFO] [N2 s=20 p2] step2 L_code=qwen3-coder -> C'=439chars cache=HIT +0.21s
+2026-06-21 02:10:12,999 [INFO] [N2 s=20 p2] step3 ref_tests -> pass_rate=1.000 +0.22s
+2026-06-21 02:10:13,156 [INFO] [N2 s=20 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:10:13,156 [INFO] [N2 s=20 p2] DONE elapsed=0.78s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:10:15,182 [INFO]   written=62 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=83, misses=0)
+2026-06-21 02:10:15,182 [INFO] [N2 s=20 p3] START mbpp/27
+2026-06-21 02:10:15,387 [INFO] [N2 s=20 p3] step1 L_test=qwen3-coder -> T'=1324chars cache=HIT +0.20s
+2026-06-21 02:10:15,387 [INFO] [N2 s=20 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:17,356 [INFO]   written=63 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=84, misses=0)
+2026-06-21 02:10:17,356 [INFO] [N2 s=21 p1] START mbpp/473
+2026-06-21 02:10:17,356 [INFO] [N2 s=21 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:17,356 [INFO] [N2 s=21 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:19,239 [INFO]   written=64 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=84, misses=0)
+2026-06-21 02:10:19,239 [INFO] [N2 s=21 p2] START mbpp/473
+2026-06-21 02:10:19,450 [INFO] [N2 s=21 p2] step1 L_test=qwen3-coder -> T'=1822chars cache=HIT +0.21s
+2026-06-21 02:10:19,612 [INFO] [N2 s=21 p2] step2 L_code=qwen3-coder -> C'=582chars cache=HIT +0.16s
+2026-06-21 02:10:19,803 [INFO] [N2 s=21 p2] step3 ref_tests -> pass_rate=0.000 +0.19s
+2026-06-21 02:10:19,983 [INFO] [N2 s=21 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.18s
+2026-06-21 02:10:19,983 [INFO] [N2 s=21 p2] DONE elapsed=0.74s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:10:21,895 [INFO]   written=65 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=87, misses=0)
+2026-06-21 02:10:21,895 [INFO] [N2 s=21 p3] START mbpp/473
+2026-06-21 02:10:22,114 [INFO] [N2 s=21 p3] step1 L_test=qwen3-coder -> T'=2352chars cache=HIT +0.22s
+2026-06-21 02:10:22,115 [INFO] [N2 s=21 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:23,954 [INFO]   written=66 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=88, misses=0)
+2026-06-21 02:10:23,954 [INFO] [N2 s=22 p1] START mbpp/261
+2026-06-21 02:10:23,954 [INFO] [N2 s=22 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:23,954 [INFO] [N2 s=22 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:26,102 [INFO]   written=67 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=88, misses=0)
+2026-06-21 02:10:26,102 [INFO] [N2 s=22 p2] START mbpp/261
+2026-06-21 02:10:26,330 [INFO] [N2 s=22 p2] step1 L_test=qwen3-coder -> T'=1470chars cache=HIT +0.23s
+2026-06-21 02:10:26,528 [INFO] [N2 s=22 p2] step2 L_code=qwen3-coder -> C'=547chars cache=HIT +0.20s
+2026-06-21 02:10:26,712 [INFO] [N2 s=22 p2] step3 ref_tests -> pass_rate=1.000 +0.18s
+2026-06-21 02:10:26,875 [INFO] [N2 s=22 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.16s
+2026-06-21 02:10:26,875 [INFO] [N2 s=22 p2] DONE elapsed=0.77s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:10:29,054 [INFO]   written=68 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=91, misses=0)
+2026-06-21 02:10:29,054 [INFO] [N2 s=22 p3] START mbpp/261
+2026-06-21 02:10:29,271 [INFO] [N2 s=22 p3] step1 L_test=qwen3-coder -> T'=1513chars cache=HIT +0.22s
+2026-06-21 02:10:29,271 [INFO] [N2 s=22 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:31,163 [INFO]   written=69 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=92, misses=0)
+2026-06-21 02:10:31,163 [INFO] [N2 s=23 p1] START mbpp/394
+2026-06-21 02:10:31,164 [INFO] [N2 s=23 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:31,164 [INFO] [N2 s=23 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:33,493 [INFO]   written=70 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=92, misses=0)
+2026-06-21 02:10:33,494 [INFO] [N2 s=23 p2] START mbpp/394
+2026-06-21 02:10:33,691 [INFO] [N2 s=23 p2] step1 L_test=qwen3-coder -> T'=1431chars cache=HIT +0.20s
+2026-06-21 02:10:33,988 [INFO] [N2 s=23 p2] step2 L_code=qwen3-coder -> C'=329chars cache=HIT +0.30s
+2026-06-21 02:10:34,179 [INFO] [N2 s=23 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-21 02:10:34,358 [INFO] [N2 s=23 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-21 02:10:34,358 [INFO] [N2 s=23 p2] DONE elapsed=0.86s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:10:36,711 [INFO]   written=71 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=95, misses=0)
+2026-06-21 02:10:36,712 [INFO] [N2 s=23 p3] START mbpp/394
+2026-06-21 02:10:37,027 [INFO] [N2 s=23 p3] step1 L_test=qwen3-coder -> T'=1496chars cache=HIT +0.32s
+2026-06-21 02:10:37,028 [INFO] [N2 s=23 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:39,076 [INFO]   written=72 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=96, misses=0)
+2026-06-21 02:10:39,076 [INFO] [N2 s=24 p1] START mbpp/272
+2026-06-21 02:10:39,076 [INFO] [N2 s=24 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:39,076 [INFO] [N2 s=24 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:41,154 [INFO]   written=73 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=96, misses=0)
+2026-06-21 02:10:41,155 [INFO] [N2 s=24 p2] START mbpp/272
+2026-06-21 02:10:41,404 [INFO] [N2 s=24 p2] step1 L_test=qwen3-coder -> T'=1204chars cache=HIT +0.25s
+2026-06-21 02:10:41,563 [INFO] [N2 s=24 p2] step2 L_code=qwen3-coder -> C'=521chars cache=HIT +0.16s
+2026-06-21 02:10:41,762 [INFO] [N2 s=24 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-21 02:10:41,949 [INFO] [N2 s=24 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.19s
+2026-06-21 02:10:41,949 [INFO] [N2 s=24 p2] DONE elapsed=0.79s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:10:43,950 [INFO]   written=74 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=99, misses=0)
+2026-06-21 02:10:43,950 [INFO] [N2 s=24 p3] START mbpp/272
+2026-06-21 02:10:44,180 [INFO] [N2 s=24 p3] step1 L_test=qwen3-coder -> T'=1372chars cache=HIT +0.23s
+2026-06-21 02:10:44,180 [INFO] [N2 s=24 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:46,040 [INFO]   written=75 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=100, misses=0)
+2026-06-21 02:10:46,040 [INFO] [N2 s=25 p1] START mbpp/74
+2026-06-21 02:10:46,040 [INFO] [N2 s=25 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:46,041 [INFO] [N2 s=25 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:48,040 [INFO]   written=76 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=100, misses=0)
+2026-06-21 02:10:48,040 [INFO] [N2 s=25 p2] START mbpp/74
+2026-06-21 02:10:48,257 [INFO] [N2 s=25 p2] step1 L_test=qwen3-coder -> T'=1486chars cache=HIT +0.22s
+2026-06-21 02:10:48,427 [INFO] [N2 s=25 p2] step2 L_code=qwen3-coder -> C'=733chars cache=HIT +0.17s
+2026-06-21 02:10:48,779 [INFO] [N2 s=25 p2] step3 ref_tests -> pass_rate=0.000 +0.35s
+2026-06-21 02:10:48,977 [INFO] [N2 s=25 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.20s
+2026-06-21 02:10:48,977 [INFO] [N2 s=25 p2] DONE elapsed=0.94s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:10:51,027 [INFO]   written=77 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=103, misses=0)
+2026-06-21 02:10:51,028 [INFO] [N2 s=25 p3] START mbpp/74
+2026-06-21 02:10:51,249 [INFO] [N2 s=25 p3] step1 L_test=qwen3-coder -> T'=2005chars cache=HIT +0.22s
+2026-06-21 02:10:51,249 [INFO] [N2 s=25 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:10:53,442 [INFO]   written=78 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=104, misses=0)
+2026-06-21 02:10:53,442 [INFO] [N2 s=26 p1] START humaneval/HumanEval/52
+2026-06-21 02:10:53,442 [INFO] [N2 s=26 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:10:53,442 [INFO] [N2 s=26 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:10:55,419 [INFO]   written=79 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=104, misses=0)
+2026-06-21 02:10:55,419 [INFO] [N2 s=26 p2] START humaneval/HumanEval/52
+2026-06-21 02:10:55,648 [INFO] [N2 s=26 p2] step1 L_test=qwen3-coder -> T'=878chars cache=HIT +0.23s
+2026-06-21 02:10:55,993 [INFO] [N2 s=26 p2] step2 L_code=qwen3-coder -> C'=117chars cache=HIT +0.34s
+2026-06-21 02:10:56,159 [INFO] [N2 s=26 p2] step3 ref_tests -> pass_rate=1.000 +0.17s
+2026-06-21 02:10:56,388 [INFO] [N2 s=26 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.23s
+2026-06-21 02:10:56,388 [INFO] [N2 s=26 p2] DONE elapsed=0.97s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:10:58,463 [INFO]   written=80 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=107, misses=0)
+2026-06-21 02:10:58,463 [INFO] [N2 s=26 p3] START humaneval/HumanEval/52
+2026-06-21 02:10:58,646 [INFO] [N2 s=26 p3] step1 L_test=qwen3-coder -> T'=1638chars cache=HIT +0.18s
+2026-06-21 02:10:58,646 [INFO] [N2 s=26 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:00,729 [INFO]   written=81 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=108, misses=0)
+2026-06-21 02:11:00,729 [INFO] [N2 s=27 p1] START mbpp/382
+2026-06-21 02:11:00,729 [INFO] [N2 s=27 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:00,729 [INFO] [N2 s=27 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:02,805 [INFO]   written=82 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=108, misses=0)
+2026-06-21 02:11:02,805 [INFO] [N2 s=27 p2] START mbpp/382
+2026-06-21 02:11:03,007 [INFO] [N2 s=27 p2] step1 L_test=qwen3-coder -> T'=1083chars cache=HIT +0.20s
+2026-06-21 02:11:03,305 [INFO] [N2 s=27 p2] step2 L_code=qwen3-coder -> C'=496chars cache=HIT +0.30s
+2026-06-21 02:11:03,544 [INFO] [N2 s=27 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-21 02:11:03,772 [INFO] [N2 s=27 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.23s
+2026-06-21 02:11:03,772 [INFO] [N2 s=27 p2] DONE elapsed=0.97s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:11:05,866 [INFO]   written=83 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=111, misses=0)
+2026-06-21 02:11:05,866 [INFO] [N2 s=27 p3] START mbpp/382
+2026-06-21 02:11:06,059 [INFO] [N2 s=27 p3] step1 L_test=qwen3-coder -> T'=1298chars cache=HIT +0.19s
+2026-06-21 02:11:06,059 [INFO] [N2 s=27 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:08,106 [INFO]   written=84 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=112, misses=0)
+2026-06-21 02:11:08,107 [INFO] [N2 s=28 p1] START humaneval/HumanEval/12
+2026-06-21 02:11:08,107 [INFO] [N2 s=28 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:08,107 [INFO] [N2 s=28 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:10,125 [INFO]   written=85 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=112, misses=0)
+2026-06-21 02:11:10,126 [INFO] [N2 s=28 p2] START humaneval/HumanEval/12
+2026-06-21 02:11:10,348 [INFO] [N2 s=28 p2] step1 L_test=qwen3-coder -> T'=1125chars cache=HIT +0.22s
+2026-06-21 02:11:10,693 [INFO] [N2 s=28 p2] step2 L_code=qwen3-coder -> C'=266chars cache=HIT +0.34s
+2026-06-21 02:11:10,886 [INFO] [N2 s=28 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-21 02:11:11,104 [INFO] [N2 s=28 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.22s
+2026-06-21 02:11:11,104 [INFO] [N2 s=28 p2] DONE elapsed=0.98s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:11:13,251 [INFO]   written=86 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=115, misses=0)
+2026-06-21 02:11:13,251 [INFO] [N2 s=28 p3] START humaneval/HumanEval/12
+2026-06-21 02:11:13,416 [INFO] [N2 s=28 p3] step1 L_test=qwen3-coder -> T'=1515chars cache=HIT +0.16s
+2026-06-21 02:11:13,416 [INFO] [N2 s=28 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:15,506 [INFO]   written=87 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=116, misses=0)
+2026-06-21 02:11:15,506 [INFO] [N2 s=29 p1] START mbpp/100
+2026-06-21 02:11:15,506 [INFO] [N2 s=29 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:15,506 [INFO] [N2 s=29 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:17,591 [INFO]   written=88 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=116, misses=0)
+2026-06-21 02:11:17,592 [INFO] [N2 s=29 p2] START mbpp/100
+2026-06-21 02:11:17,871 [INFO] [N2 s=29 p2] step1 L_test=qwen3-coder -> T'=1160chars cache=HIT +0.28s
+2026-06-21 02:11:18,093 [INFO] [N2 s=29 p2] step2 L_code=qwen3-coder -> C'=511chars cache=HIT +0.22s
+2026-06-21 02:11:18,293 [INFO] [N2 s=29 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-21 02:11:18,509 [INFO] [N2 s=29 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.22s
+2026-06-21 02:11:18,509 [INFO] [N2 s=29 p2] DONE elapsed=0.92s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:11:20,598 [INFO]   written=89 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=119, misses=0)
+2026-06-21 02:11:20,598 [INFO] [N2 s=29 p3] START mbpp/100
+2026-06-21 02:11:20,796 [INFO] [N2 s=29 p3] step1 L_test=qwen3-coder -> T'=1918chars cache=HIT +0.20s
+2026-06-21 02:11:20,796 [INFO] [N2 s=29 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:22,658 [INFO]   written=90 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=120, misses=0)
+2026-06-21 02:11:22,658 [INFO] [N2 s=30 p1] START humaneval/HumanEval/149
+2026-06-21 02:11:22,658 [INFO] [N2 s=30 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:22,658 [INFO] [N2 s=30 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:24,560 [INFO]   written=91 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=120, misses=0)
+2026-06-21 02:11:24,560 [INFO] [N2 s=30 p2] START humaneval/HumanEval/149
+2026-06-21 02:11:24,751 [INFO] [N2 s=30 p2] step1 L_test=qwen3-coder -> T'=1043chars cache=HIT +0.19s
+2026-06-21 02:11:24,990 [INFO] [N2 s=30 p2] step2 L_code=qwen3-coder -> C'=280chars cache=HIT +0.24s
+2026-06-21 02:11:25,682 [INFO] [N2 s=30 p2] step3 ref_tests -> pass_rate=1.000 +0.69s
+2026-06-21 02:11:25,889 [INFO] [N2 s=30 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.21s
+2026-06-21 02:11:25,889 [INFO] [N2 s=30 p2] DONE elapsed=1.33s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:11:27,927 [INFO]   written=92 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=123, misses=0)
+2026-06-21 02:11:27,927 [INFO] [N2 s=30 p3] START humaneval/HumanEval/149
+2026-06-21 02:11:28,198 [INFO] [N2 s=30 p3] step1 L_test=qwen3-coder -> T'=1949chars cache=HIT +0.27s
+2026-06-21 02:11:28,198 [INFO] [N2 s=30 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:30,196 [INFO]   written=93 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=124, misses=0)
+2026-06-21 02:11:30,196 [INFO] [N2 s=31 p1] START humaneval/HumanEval/106
+2026-06-21 02:11:30,196 [INFO] [N2 s=31 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:30,196 [INFO] [N2 s=31 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:32,333 [INFO]   written=94 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=124, misses=0)
+2026-06-21 02:11:32,333 [INFO] [N2 s=31 p2] START humaneval/HumanEval/106
+2026-06-21 02:11:32,539 [INFO] [N2 s=31 p2] step1 L_test=qwen3-coder -> T'=1007chars cache=HIT +0.21s
+2026-06-21 02:11:32,718 [INFO] [N2 s=31 p2] step2 L_code=qwen3-coder -> C'=469chars cache=HIT +0.18s
+2026-06-21 02:11:33,143 [INFO] [N2 s=31 p2] step3 ref_tests -> pass_rate=1.000 +0.42s
+2026-06-21 02:11:33,306 [INFO] [N2 s=31 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:11:33,307 [INFO] [N2 s=31 p2] DONE elapsed=0.97s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:11:35,531 [INFO]   written=95 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=127, misses=0)
+2026-06-21 02:11:35,531 [INFO] [N2 s=31 p3] START humaneval/HumanEval/106
+2026-06-21 02:11:35,758 [INFO] [N2 s=31 p3] step1 L_test=qwen3-coder -> T'=1077chars cache=HIT +0.23s
+2026-06-21 02:11:35,758 [INFO] [N2 s=31 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:37,598 [INFO]   written=96 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=128, misses=0)
+2026-06-21 02:11:37,599 [INFO] [N2 s=32 p1] START mbpp/222
+2026-06-21 02:11:37,599 [INFO] [N2 s=32 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:37,599 [INFO] [N2 s=32 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:39,579 [INFO]   written=97 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=128, misses=0)
+2026-06-21 02:11:39,579 [INFO] [N2 s=32 p2] START mbpp/222
+2026-06-21 02:11:39,760 [INFO] [N2 s=32 p2] step1 L_test=qwen3-coder -> T'=1277chars cache=HIT +0.18s
+2026-06-21 02:11:39,940 [INFO] [N2 s=32 p2] step2 L_code=qwen3-coder -> C'=644chars cache=HIT +0.18s
+2026-06-21 02:11:40,136 [INFO] [N2 s=32 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-21 02:11:40,306 [INFO] [N2 s=32 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.17s
+2026-06-21 02:11:40,306 [INFO] [N2 s=32 p2] DONE elapsed=0.73s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:11:42,402 [INFO]   written=98 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=131, misses=0)
+2026-06-21 02:11:42,402 [INFO] [N2 s=32 p3] START mbpp/222
+2026-06-21 02:11:42,682 [INFO] [N2 s=32 p3] step1 L_test=qwen3-coder -> T'=1599chars cache=HIT +0.28s
+2026-06-21 02:11:42,682 [INFO] [N2 s=32 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:44,944 [INFO]   written=99 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=132, misses=0)
+2026-06-21 02:11:44,944 [INFO] [N2 s=33 p1] START mbpp/162
+2026-06-21 02:11:44,944 [INFO] [N2 s=33 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:44,944 [INFO] [N2 s=33 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:46,948 [INFO]   written=100 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=132, misses=0)
+2026-06-21 02:11:46,948 [INFO] [N2 s=33 p2] START mbpp/162
+2026-06-21 02:11:47,148 [INFO] [N2 s=33 p2] step1 L_test=qwen3-coder -> T'=877chars cache=HIT +0.20s
+2026-06-21 02:11:47,311 [INFO] [N2 s=33 p2] step2 L_code=qwen3-coder -> C'=434chars cache=HIT +0.16s
+2026-06-21 02:11:47,496 [INFO] [N2 s=33 p2] step3 ref_tests -> pass_rate=1.000 +0.18s
+2026-06-21 02:11:47,651 [INFO] [N2 s=33 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:11:47,651 [INFO] [N2 s=33 p2] DONE elapsed=0.70s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:11:49,507 [INFO]   written=101 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=135, misses=0)
+2026-06-21 02:11:49,508 [INFO] [N2 s=33 p3] START mbpp/162
+2026-06-21 02:11:49,684 [INFO] [N2 s=33 p3] step1 L_test=qwen3-coder -> T'=865chars cache=HIT +0.18s
+2026-06-21 02:11:49,684 [INFO] [N2 s=33 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:51,872 [INFO]   written=102 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=136, misses=0)
+2026-06-21 02:11:51,873 [INFO] [N2 s=34 p1] START mbpp/19
+2026-06-21 02:11:51,873 [INFO] [N2 s=34 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:51,873 [INFO] [N2 s=34 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:11:54,007 [INFO]   written=103 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=136, misses=0)
+2026-06-21 02:11:54,007 [INFO] [N2 s=34 p2] START mbpp/19
+2026-06-21 02:11:54,199 [INFO] [N2 s=34 p2] step1 L_test=qwen3-coder -> T'=877chars cache=HIT +0.19s
+2026-06-21 02:11:54,367 [INFO] [N2 s=34 p2] step2 L_code=qwen3-coder -> C'=406chars cache=HIT +0.17s
+2026-06-21 02:11:54,575 [INFO] [N2 s=34 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-21 02:11:55,057 [INFO] [N2 s=34 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.48s
+2026-06-21 02:11:55,058 [INFO] [N2 s=34 p2] DONE elapsed=1.05s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:11:57,299 [INFO]   written=104 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=139, misses=0)
+2026-06-21 02:11:57,300 [INFO] [N2 s=34 p3] START mbpp/19
+2026-06-21 02:11:57,597 [INFO] [N2 s=34 p3] step1 L_test=qwen3-coder -> T'=1212chars cache=HIT +0.30s
+2026-06-21 02:11:57,598 [INFO] [N2 s=34 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:11:59,601 [INFO]   written=105 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=140, misses=0)
+2026-06-21 02:11:59,602 [INFO] [N2 s=35 p1] START mbpp/126
+2026-06-21 02:11:59,602 [INFO] [N2 s=35 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:11:59,602 [INFO] [N2 s=35 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:01,601 [INFO]   written=106 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=140, misses=0)
+2026-06-21 02:12:01,601 [INFO] [N2 s=35 p2] START mbpp/126
+2026-06-21 02:12:01,823 [INFO] [N2 s=35 p2] step1 L_test=qwen3-coder -> T'=1009chars cache=HIT +0.22s
+2026-06-21 02:12:01,953 [INFO] [N2 s=35 p2] step2 L_code=qwen3-coder -> C'=317chars cache=HIT +0.13s
+2026-06-21 02:12:02,203 [INFO] [N2 s=35 p2] step3 ref_tests -> pass_rate=1.000 +0.25s
+2026-06-21 02:12:02,417 [INFO] [N2 s=35 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.21s
+2026-06-21 02:12:02,417 [INFO] [N2 s=35 p2] DONE elapsed=0.82s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:12:04,353 [INFO]   written=107 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=143, misses=0)
+2026-06-21 02:12:04,353 [INFO] [N2 s=35 p3] START mbpp/126
+2026-06-21 02:12:04,591 [INFO] [N2 s=35 p3] step1 L_test=qwen3-coder -> T'=1674chars cache=HIT +0.24s
+2026-06-21 02:12:04,591 [INFO] [N2 s=35 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:06,452 [INFO]   written=108 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=144, misses=0)
+2026-06-21 02:12:06,452 [INFO] [N2 s=36 p1] START mbpp/270
+2026-06-21 02:12:06,452 [INFO] [N2 s=36 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:06,452 [INFO] [N2 s=36 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:08,359 [INFO]   written=109 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=144, misses=0)
+2026-06-21 02:12:08,359 [INFO] [N2 s=36 p2] START mbpp/270
+2026-06-21 02:12:08,623 [INFO] [N2 s=36 p2] step1 L_test=qwen3-coder -> T'=1315chars cache=HIT +0.26s
+2026-06-21 02:12:08,836 [INFO] [N2 s=36 p2] step2 L_code=qwen3-coder -> C'=513chars cache=HIT +0.21s
+2026-06-21 02:12:09,064 [INFO] [N2 s=36 p2] step3 ref_tests -> pass_rate=1.000 +0.23s
+2026-06-21 02:12:09,256 [INFO] [N2 s=36 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.19s
+2026-06-21 02:12:09,256 [INFO] [N2 s=36 p2] DONE elapsed=0.90s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:12:11,361 [INFO]   written=110 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=147, misses=0)
+2026-06-21 02:12:11,362 [INFO] [N2 s=36 p3] START mbpp/270
+2026-06-21 02:12:11,554 [INFO] [N2 s=36 p3] step1 L_test=qwen3-coder -> T'=1919chars cache=HIT +0.19s
+2026-06-21 02:12:11,554 [INFO] [N2 s=36 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:13,810 [INFO]   written=111 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=148, misses=0)
+2026-06-21 02:12:13,810 [INFO] [N2 s=37 p1] START mbpp/113
+2026-06-21 02:12:13,811 [INFO] [N2 s=37 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:13,811 [INFO] [N2 s=37 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:15,645 [INFO]   written=112 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=148, misses=0)
+2026-06-21 02:12:15,645 [INFO] [N2 s=37 p2] START mbpp/113
+2026-06-21 02:12:15,851 [INFO] [N2 s=37 p2] step1 L_test=qwen3-coder -> T'=1361chars cache=HIT +0.21s
+2026-06-21 02:12:16,036 [INFO] [N2 s=37 p2] step2 L_code=qwen3-coder -> C'=898chars cache=HIT +0.18s
+2026-06-21 02:12:16,242 [INFO] [N2 s=37 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-21 02:12:16,547 [INFO] [N2 s=37 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.30s
+2026-06-21 02:12:16,547 [INFO] [N2 s=37 p2] DONE elapsed=0.90s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:12:18,629 [INFO]   written=113 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=151, misses=0)
+2026-06-21 02:12:18,629 [INFO] [N2 s=37 p3] START mbpp/113
+2026-06-21 02:12:19,016 [INFO] [N2 s=37 p3] step1 L_test=qwen3-coder -> T'=1802chars cache=HIT +0.39s
+2026-06-21 02:12:19,016 [INFO] [N2 s=37 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:21,078 [INFO]   written=114 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=152, misses=0)
+2026-06-21 02:12:21,078 [INFO] [N2 s=38 p1] START mbpp/129
+2026-06-21 02:12:21,078 [INFO] [N2 s=38 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:21,078 [INFO] [N2 s=38 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:23,011 [INFO]   written=115 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=152, misses=0)
+2026-06-21 02:12:23,011 [INFO] [N2 s=38 p2] START mbpp/129
+2026-06-21 02:12:23,176 [INFO] [N2 s=38 p2] step1 L_test=qwen3-coder -> T'=1733chars cache=HIT +0.16s
+2026-06-21 02:12:23,346 [INFO] [N2 s=38 p2] step2 L_code=qwen3-coder -> C'=1045chars cache=HIT +0.17s
+2026-06-21 02:12:23,508 [INFO] [N2 s=38 p2] step3 ref_tests -> pass_rate=1.000 +0.16s
+2026-06-21 02:12:23,697 [INFO] [N2 s=38 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.19s
+2026-06-21 02:12:23,697 [INFO] [N2 s=38 p2] DONE elapsed=0.69s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:12:25,913 [INFO]   written=116 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=155, misses=0)
+2026-06-21 02:12:25,914 [INFO] [N2 s=38 p3] START mbpp/129
+2026-06-21 02:12:26,061 [INFO] [N2 s=38 p3] step1 L_test=qwen3-coder -> T'=1684chars cache=HIT +0.15s
+2026-06-21 02:12:26,062 [INFO] [N2 s=38 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:27,961 [INFO]   written=117 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=156, misses=0)
+2026-06-21 02:12:27,961 [INFO] [N2 s=39 p1] START humaneval/HumanEval/70
+2026-06-21 02:12:27,961 [INFO] [N2 s=39 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:27,961 [INFO] [N2 s=39 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:29,767 [INFO]   written=118 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=156, misses=0)
+2026-06-21 02:12:29,767 [INFO] [N2 s=39 p2] START humaneval/HumanEval/70
+2026-06-21 02:12:29,927 [INFO] [N2 s=39 p2] step1 L_test=qwen3-coder -> T'=799chars cache=HIT +0.16s
+2026-06-21 02:12:30,129 [INFO] [N2 s=39 p2] step2 L_code=qwen3-coder -> C'=426chars cache=HIT +0.20s
+2026-06-21 02:12:30,482 [INFO] [N2 s=39 p2] step3 ref_tests -> pass_rate=1.000 +0.35s
+2026-06-21 02:12:30,760 [INFO] [N2 s=39 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.28s
+2026-06-21 02:12:30,760 [INFO] [N2 s=39 p2] DONE elapsed=0.99s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:12:32,784 [INFO]   written=119 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=159, misses=0)
+2026-06-21 02:12:32,784 [INFO] [N2 s=39 p3] START humaneval/HumanEval/70
+2026-06-21 02:12:32,946 [INFO] [N2 s=39 p3] step1 L_test=qwen3-coder -> T'=1610chars cache=HIT +0.16s
+2026-06-21 02:12:32,946 [INFO] [N2 s=39 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:35,144 [INFO]   written=120 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=160, misses=0)
+2026-06-21 02:12:35,144 [INFO] [N2 s=40 p1] START mbpp/493
+2026-06-21 02:12:35,144 [INFO] [N2 s=40 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:35,144 [INFO] [N2 s=40 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:37,254 [INFO]   written=121 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=160, misses=0)
+2026-06-21 02:12:37,254 [INFO] [N2 s=40 p2] START mbpp/493
+2026-06-21 02:12:37,457 [INFO] [N2 s=40 p2] step1 L_test=qwen3-coder -> T'=3044chars cache=HIT +0.20s
+2026-06-21 02:12:37,806 [INFO] [N2 s=40 p2] step2 L_code=qwen3-coder -> C'=1388chars cache=HIT +0.35s
+2026-06-21 02:12:37,980 [INFO] [N2 s=40 p2] step3 ref_tests -> pass_rate=0.000 +0.17s
+2026-06-21 02:12:38,155 [INFO] [N2 s=40 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.17s
+2026-06-21 02:12:38,156 [INFO] [N2 s=40 p2] DONE elapsed=0.90s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:12:40,170 [INFO]   written=122 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=163, misses=0)
+2026-06-21 02:12:40,170 [INFO] [N2 s=40 p3] START mbpp/493
+2026-06-21 02:12:40,417 [INFO] [N2 s=40 p3] step1 L_test=qwen3-coder -> T'=2460chars cache=HIT +0.25s
+2026-06-21 02:12:40,417 [INFO] [N2 s=40 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:42,366 [INFO]   written=123 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=164, misses=0)
+2026-06-21 02:12:42,366 [INFO] [N2 s=41 p1] START mbpp/94
+2026-06-21 02:12:42,367 [INFO] [N2 s=41 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:42,367 [INFO] [N2 s=41 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:44,308 [INFO]   written=124 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=164, misses=0)
+2026-06-21 02:12:44,308 [INFO] [N2 s=41 p2] START mbpp/94
+2026-06-21 02:12:44,521 [INFO] [N2 s=41 p2] step1 L_test=qwen3-coder -> T'=1194chars cache=HIT +0.21s
+2026-06-21 02:12:44,703 [INFO] [N2 s=41 p2] step2 L_code=qwen3-coder -> C'=365chars cache=HIT +0.18s
+2026-06-21 02:12:44,894 [INFO] [N2 s=41 p2] step3 ref_tests -> pass_rate=0.000 +0.19s
+2026-06-21 02:12:45,159 [INFO] [N2 s=41 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.27s
+2026-06-21 02:12:45,160 [INFO] [N2 s=41 p2] DONE elapsed=0.85s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:12:47,103 [INFO]   written=125 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=167, misses=0)
+2026-06-21 02:12:47,103 [INFO] [N2 s=41 p3] START mbpp/94
+2026-06-21 02:12:47,338 [INFO] [N2 s=41 p3] step1 L_test=qwen3-coder -> T'=1361chars cache=HIT +0.23s
+2026-06-21 02:12:47,338 [INFO] [N2 s=41 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:49,361 [INFO]   written=126 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=168, misses=0)
+2026-06-21 02:12:49,361 [INFO] [N2 s=42 p1] START mbpp/471
+2026-06-21 02:12:49,361 [INFO] [N2 s=42 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:49,361 [INFO] [N2 s=42 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:51,421 [INFO]   written=127 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=168, misses=0)
+2026-06-21 02:12:51,421 [INFO] [N2 s=42 p2] START mbpp/471
+2026-06-21 02:12:51,616 [INFO] [N2 s=42 p2] step1 L_test=qwen3-coder -> T'=1425chars cache=HIT +0.19s
+2026-06-21 02:12:51,835 [INFO] [N2 s=42 p2] step2 L_code=qwen3-coder -> C'=325chars cache=HIT +0.22s
+2026-06-21 02:12:52,040 [INFO] [N2 s=42 p2] step3 ref_tests -> pass_rate=0.000 +0.20s
+2026-06-21 02:12:52,346 [INFO] [N2 s=42 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.31s
+2026-06-21 02:12:52,346 [INFO] [N2 s=42 p2] DONE elapsed=0.92s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:12:54,227 [INFO]   written=128 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=171, misses=0)
+2026-06-21 02:12:54,227 [INFO] [N2 s=42 p3] START mbpp/471
+2026-06-21 02:12:54,413 [INFO] [N2 s=42 p3] step1 L_test=qwen3-coder -> T'=1958chars cache=HIT +0.19s
+2026-06-21 02:12:54,413 [INFO] [N2 s=42 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:12:56,280 [INFO]   written=129 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=172, misses=0)
+2026-06-21 02:12:56,281 [INFO] [N2 s=43 p1] START humaneval/HumanEval/14
+2026-06-21 02:12:56,281 [INFO] [N2 s=43 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:12:56,281 [INFO] [N2 s=43 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:12:58,326 [INFO]   written=130 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=172, misses=0)
+2026-06-21 02:12:58,326 [INFO] [N2 s=43 p2] START humaneval/HumanEval/14
+2026-06-21 02:12:58,513 [INFO] [N2 s=43 p2] step1 L_test=qwen3-coder -> T'=677chars cache=HIT +0.19s
+2026-06-21 02:12:58,725 [INFO] [N2 s=43 p2] step2 L_code=qwen3-coder -> C'=127chars cache=HIT +0.21s
+2026-06-21 02:12:58,977 [INFO] [N2 s=43 p2] step3 ref_tests -> pass_rate=1.000 +0.25s
+2026-06-21 02:12:59,161 [INFO] [N2 s=43 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.18s
+2026-06-21 02:12:59,161 [INFO] [N2 s=43 p2] DONE elapsed=0.83s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:13:01,121 [INFO]   written=131 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=175, misses=0)
+2026-06-21 02:13:01,121 [INFO] [N2 s=43 p3] START humaneval/HumanEval/14
+2026-06-21 02:13:01,356 [INFO] [N2 s=43 p3] step1 L_test=qwen3-coder -> T'=1027chars cache=HIT +0.23s
+2026-06-21 02:13:01,356 [INFO] [N2 s=43 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:03,408 [INFO]   written=132 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=176, misses=0)
+2026-06-21 02:13:03,409 [INFO] [N2 s=44 p1] START mbpp/40
+2026-06-21 02:13:03,409 [INFO] [N2 s=44 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:03,409 [INFO] [N2 s=44 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:05,372 [INFO]   written=133 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=176, misses=0)
+2026-06-21 02:13:05,372 [INFO] [N2 s=44 p2] START mbpp/40
+2026-06-21 02:13:05,648 [INFO] [N2 s=44 p2] step1 L_test=qwen3-coder -> T'=1531chars cache=HIT +0.27s
+2026-06-21 02:13:05,834 [INFO] [N2 s=44 p2] step2 L_code=qwen3-coder -> C'=321chars cache=HIT +0.19s
+2026-06-21 02:13:06,047 [INFO] [N2 s=44 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-21 02:13:06,431 [INFO] [N2 s=44 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.38s
+2026-06-21 02:13:06,432 [INFO] [N2 s=44 p2] DONE elapsed=1.06s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:13:08,423 [INFO]   written=134 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=179, misses=0)
+2026-06-21 02:13:08,423 [INFO] [N2 s=44 p3] START mbpp/40
+2026-06-21 02:13:08,649 [INFO] [N2 s=44 p3] step1 L_test=qwen3-coder -> T'=2340chars cache=HIT +0.23s
+2026-06-21 02:13:08,649 [INFO] [N2 s=44 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:10,611 [INFO]   written=135 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=180, misses=0)
+2026-06-21 02:13:10,611 [INFO] [N2 s=45 p1] START humaneval/HumanEval/8
+2026-06-21 02:13:10,611 [INFO] [N2 s=45 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:10,612 [INFO] [N2 s=45 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:12,830 [INFO]   written=136 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=180, misses=0)
+2026-06-21 02:13:12,830 [INFO] [N2 s=45 p2] START humaneval/HumanEval/8
+2026-06-21 02:13:13,017 [INFO] [N2 s=45 p2] step1 L_test=qwen3-coder -> T'=941chars cache=HIT +0.19s
+2026-06-21 02:13:13,258 [INFO] [N2 s=45 p2] step2 L_code=qwen3-coder -> C'=363chars cache=HIT +0.24s
+2026-06-21 02:13:13,417 [INFO] [N2 s=45 p2] step3 ref_tests -> pass_rate=1.000 +0.16s
+2026-06-21 02:13:13,576 [INFO] [N2 s=45 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:13:13,577 [INFO] [N2 s=45 p2] DONE elapsed=0.75s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:13:15,599 [INFO]   written=137 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=183, misses=0)
+2026-06-21 02:13:15,599 [INFO] [N2 s=45 p3] START humaneval/HumanEval/8
+2026-06-21 02:13:15,771 [INFO] [N2 s=45 p3] step1 L_test=qwen3-coder -> T'=1052chars cache=HIT +0.17s
+2026-06-21 02:13:15,772 [INFO] [N2 s=45 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:17,740 [INFO]   written=138 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=184, misses=0)
+2026-06-21 02:13:17,740 [INFO] [N2 s=46 p1] START mbpp/160
+2026-06-21 02:13:17,740 [INFO] [N2 s=46 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:17,740 [INFO] [N2 s=46 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:19,602 [INFO]   written=139 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=184, misses=0)
+2026-06-21 02:13:19,602 [INFO] [N2 s=46 p2] START mbpp/160
+2026-06-21 02:13:19,875 [INFO] [N2 s=46 p2] step1 L_test=qwen3-coder -> T'=1558chars cache=HIT +0.27s
+2026-06-21 02:13:20,044 [INFO] [N2 s=46 p2] step2 L_code=qwen3-coder -> C'=839chars cache=HIT +0.17s
+2026-06-21 02:13:20,223 [INFO] [N2 s=46 p2] step3 ref_tests -> pass_rate=0.000 +0.18s
+2026-06-21 02:13:20,484 [INFO] [N2 s=46 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.26s
+2026-06-21 02:13:20,484 [INFO] [N2 s=46 p2] DONE elapsed=0.88s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:13:22,475 [INFO]   written=140 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=187, misses=0)
+2026-06-21 02:13:22,475 [INFO] [N2 s=46 p3] START mbpp/160
+2026-06-21 02:13:22,680 [INFO] [N2 s=46 p3] step1 L_test=qwen3-coder -> T'=1781chars cache=HIT +0.20s
+2026-06-21 02:13:22,680 [INFO] [N2 s=46 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:24,580 [INFO]   written=141 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=188, misses=0)
+2026-06-21 02:13:24,580 [INFO] [N2 s=47 p1] START mbpp/387
+2026-06-21 02:13:24,580 [INFO] [N2 s=47 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:24,580 [INFO] [N2 s=47 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:26,433 [INFO]   written=142 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=188, misses=0)
+2026-06-21 02:13:26,433 [INFO] [N2 s=47 p2] START mbpp/387
+2026-06-21 02:13:26,596 [INFO] [N2 s=47 p2] step1 L_test=qwen3-coder -> T'=901chars cache=HIT +0.16s
+2026-06-21 02:13:26,753 [INFO] [N2 s=47 p2] step2 L_code=qwen3-coder -> C'=246chars cache=HIT +0.16s
+2026-06-21 02:13:26,967 [INFO] [N2 s=47 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-21 02:13:27,135 [INFO] [N2 s=47 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.17s
+2026-06-21 02:13:27,136 [INFO] [N2 s=47 p2] DONE elapsed=0.70s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:13:29,278 [INFO]   written=143 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=191, misses=0)
+2026-06-21 02:13:29,278 [INFO] [N2 s=47 p3] START mbpp/387
+2026-06-21 02:13:29,495 [INFO] [N2 s=47 p3] step1 L_test=qwen3-coder -> T'=2402chars cache=HIT +0.22s
+2026-06-21 02:13:29,495 [INFO] [N2 s=47 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:31,486 [INFO]   written=144 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=192, misses=0)
+2026-06-21 02:13:31,486 [INFO] [N2 s=48 p1] START mbpp/380
+2026-06-21 02:13:31,486 [INFO] [N2 s=48 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:31,487 [INFO] [N2 s=48 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:33,477 [INFO]   written=145 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=192, misses=0)
+2026-06-21 02:13:33,478 [INFO] [N2 s=48 p2] START mbpp/380
+2026-06-21 02:13:33,637 [INFO] [N2 s=48 p2] step1 L_test=qwen3-coder -> T'=1299chars cache=HIT +0.16s
+2026-06-21 02:13:33,960 [INFO] [N2 s=48 p2] step2 L_code=qwen3-coder -> C'=387chars cache=HIT +0.32s
+2026-06-21 02:13:34,126 [INFO] [N2 s=48 p2] step3 ref_tests -> pass_rate=0.000 +0.17s
+2026-06-21 02:13:34,332 [INFO] [N2 s=48 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.21s
+2026-06-21 02:13:34,332 [INFO] [N2 s=48 p2] DONE elapsed=0.85s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:13:36,156 [INFO]   written=146 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=195, misses=0)
+2026-06-21 02:13:36,157 [INFO] [N2 s=48 p3] START mbpp/380
+2026-06-21 02:13:36,529 [INFO] [N2 s=48 p3] step1 L_test=qwen3-coder -> T'=1432chars cache=HIT +0.37s
+2026-06-21 02:13:36,530 [INFO] [N2 s=48 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:38,508 [INFO]   written=147 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=196, misses=0)
+2026-06-21 02:13:38,508 [INFO] [N2 s=49 p1] START mbpp/250
+2026-06-21 02:13:38,508 [INFO] [N2 s=49 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:38,508 [INFO] [N2 s=49 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:40,517 [INFO]   written=148 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=196, misses=0)
+2026-06-21 02:13:40,517 [INFO] [N2 s=49 p2] START mbpp/250
+2026-06-21 02:13:40,738 [INFO] [N2 s=49 p2] step1 L_test=qwen3-coder -> T'=1161chars cache=HIT +0.22s
+2026-06-21 02:13:40,889 [INFO] [N2 s=49 p2] step2 L_code=qwen3-coder -> C'=326chars cache=HIT +0.15s
+2026-06-21 02:13:41,054 [INFO] [N2 s=49 p2] step3 ref_tests -> pass_rate=1.000 +0.16s
+2026-06-21 02:13:41,457 [INFO] [N2 s=49 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.40s
+2026-06-21 02:13:41,457 [INFO] [N2 s=49 p2] DONE elapsed=0.94s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:13:43,494 [INFO]   written=149 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=199, misses=0)
+2026-06-21 02:13:43,494 [INFO] [N2 s=49 p3] START mbpp/250
+2026-06-21 02:13:43,733 [INFO] [N2 s=49 p3] step1 L_test=qwen3-coder -> T'=1293chars cache=HIT +0.24s
+2026-06-21 02:13:43,733 [INFO] [N2 s=49 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:45,747 [INFO]   written=150 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=200, misses=0)
+2026-06-21 02:13:45,747 [INFO] [N2 s=50 p1] START humaneval/HumanEval/72
+2026-06-21 02:13:45,747 [INFO] [N2 s=50 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:45,747 [INFO] [N2 s=50 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:47,675 [INFO]   written=151 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=200, misses=0)
+2026-06-21 02:13:47,675 [INFO] [N2 s=50 p2] START humaneval/HumanEval/72
+2026-06-21 02:13:47,848 [INFO] [N2 s=50 p2] step1 L_test=qwen3-coder -> T'=812chars cache=HIT +0.17s
+2026-06-21 02:13:48,123 [INFO] [N2 s=50 p2] step2 L_code=qwen3-coder -> C'=265chars cache=HIT +0.28s
+2026-06-21 02:13:48,312 [INFO] [N2 s=50 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-21 02:13:48,475 [INFO] [N2 s=50 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:13:48,475 [INFO] [N2 s=50 p2] DONE elapsed=0.80s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:13:50,412 [INFO]   written=152 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=203, misses=0)
+2026-06-21 02:13:50,412 [INFO] [N2 s=50 p3] START humaneval/HumanEval/72
+2026-06-21 02:13:50,602 [INFO] [N2 s=50 p3] step1 L_test=qwen3-coder -> T'=1540chars cache=HIT +0.19s
+2026-06-21 02:13:50,603 [INFO] [N2 s=50 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:52,379 [INFO]   written=153 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=204, misses=0)
+2026-06-21 02:13:52,380 [INFO] [N2 s=51 p1] START mbpp/286
+2026-06-21 02:13:52,380 [INFO] [N2 s=51 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:52,380 [INFO] [N2 s=51 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:13:54,477 [INFO]   written=154 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=204, misses=0)
+2026-06-21 02:13:54,477 [INFO] [N2 s=51 p2] START mbpp/286
+2026-06-21 02:13:54,637 [INFO] [N2 s=51 p2] step1 L_test=qwen3-coder -> T'=1963chars cache=HIT +0.16s
+2026-06-21 02:13:54,859 [INFO] [N2 s=51 p2] step2 L_code=qwen3-coder -> C'=2568chars cache=HIT +0.22s
+2026-06-21 02:13:55,054 [INFO] [N2 s=51 p2] step3 ref_tests -> pass_rate=1.000 +0.19s
+2026-06-21 02:13:55,210 [INFO] [N2 s=51 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:13:55,210 [INFO] [N2 s=51 p2] DONE elapsed=0.73s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:13:57,096 [INFO]   written=155 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=207, misses=0)
+2026-06-21 02:13:57,097 [INFO] [N2 s=51 p3] START mbpp/286
+2026-06-21 02:13:57,296 [INFO] [N2 s=51 p3] step1 L_test=qwen3-coder -> T'=1894chars cache=HIT +0.20s
+2026-06-21 02:13:57,296 [INFO] [N2 s=51 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:13:59,276 [INFO]   written=156 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=208, misses=0)
+2026-06-21 02:13:59,276 [INFO] [N2 s=52 p1] START humaneval/HumanEval/92
+2026-06-21 02:13:59,277 [INFO] [N2 s=52 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:13:59,277 [INFO] [N2 s=52 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:01,141 [INFO]   written=157 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=208, misses=0)
+2026-06-21 02:14:01,141 [INFO] [N2 s=52 p2] START humaneval/HumanEval/92
+2026-06-21 02:14:01,301 [INFO] [N2 s=52 p2] step1 L_test=qwen3-coder -> T'=1434chars cache=HIT +0.16s
+2026-06-21 02:14:01,791 [INFO] [N2 s=52 p2] step2 L_code=qwen3-coder -> C'=255chars cache=HIT +0.49s
+2026-06-21 02:14:01,952 [INFO] [N2 s=52 p2] step3 ref_tests -> pass_rate=1.000 +0.16s
+2026-06-21 02:14:02,110 [INFO] [N2 s=52 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.16s
+2026-06-21 02:14:02,111 [INFO] [N2 s=52 p2] DONE elapsed=0.97s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:14:03,986 [INFO]   written=158 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=211, misses=0)
+2026-06-21 02:14:03,986 [INFO] [N2 s=52 p3] START humaneval/HumanEval/92
+2026-06-21 02:14:04,283 [INFO] [N2 s=52 p3] step1 L_test=qwen3-coder -> T'=1488chars cache=HIT +0.30s
+2026-06-21 02:14:04,283 [INFO] [N2 s=52 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:06,303 [INFO]   written=159 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=212, misses=0)
+2026-06-21 02:14:06,304 [INFO] [N2 s=53 p1] START mbpp/31
+2026-06-21 02:14:06,304 [INFO] [N2 s=53 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:06,304 [INFO] [N2 s=53 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:08,448 [INFO]   written=160 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=212, misses=0)
+2026-06-21 02:14:08,448 [INFO] [N2 s=53 p2] START mbpp/31
+2026-06-21 02:14:08,779 [INFO] [N2 s=53 p2] step1 L_test=qwen3-coder -> T'=2009chars cache=HIT +0.33s
+2026-06-21 02:14:08,923 [INFO] [N2 s=53 p2] step2 L_code=qwen3-coder -> C'=510chars cache=HIT +0.14s
+2026-06-21 02:14:09,149 [INFO] [N2 s=53 p2] step3 ref_tests -> pass_rate=0.000 +0.23s
+2026-06-21 02:14:09,452 [INFO] [N2 s=53 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.30s
+2026-06-21 02:14:09,452 [INFO] [N2 s=53 p2] DONE elapsed=1.00s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:14:11,292 [INFO]   written=161 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=215, misses=0)
+2026-06-21 02:14:11,293 [INFO] [N2 s=53 p3] START mbpp/31
+2026-06-21 02:14:11,545 [INFO] [N2 s=53 p3] step1 L_test=qwen3-coder -> T'=1274chars cache=HIT +0.25s
+2026-06-21 02:14:11,545 [INFO] [N2 s=53 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:13,486 [INFO]   written=162 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=216, misses=0)
+2026-06-21 02:14:13,487 [INFO] [N2 s=54 p1] START mbpp/115
+2026-06-21 02:14:13,487 [INFO] [N2 s=54 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:13,487 [INFO] [N2 s=54 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:15,380 [INFO]   written=163 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=216, misses=0)
+2026-06-21 02:14:15,380 [INFO] [N2 s=54 p2] START mbpp/115
+2026-06-21 02:14:15,536 [INFO] [N2 s=54 p2] step1 L_test=qwen3-coder -> T'=1209chars cache=HIT +0.16s
+2026-06-21 02:14:15,982 [INFO] [N2 s=54 p2] step2 L_code=qwen3-coder -> C'=831chars cache=HIT +0.45s
+2026-06-21 02:14:16,149 [INFO] [N2 s=54 p2] step3 ref_tests -> pass_rate=0.000 +0.17s
+2026-06-21 02:14:16,414 [INFO] [N2 s=54 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.26s
+2026-06-21 02:14:16,415 [INFO] [N2 s=54 p2] DONE elapsed=1.03s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:14:18,370 [INFO]   written=164 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=219, misses=0)
+2026-06-21 02:14:18,370 [INFO] [N2 s=54 p3] START mbpp/115
+2026-06-21 02:14:18,527 [INFO] [N2 s=54 p3] step1 L_test=qwen3-coder -> T'=1215chars cache=HIT +0.16s
+2026-06-21 02:14:18,527 [INFO] [N2 s=54 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:20,473 [INFO]   written=165 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=220, misses=0)
+2026-06-21 02:14:20,473 [INFO] [N2 s=55 p1] START humaneval/HumanEval/116
+2026-06-21 02:14:20,473 [INFO] [N2 s=55 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:20,474 [INFO] [N2 s=55 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:22,523 [INFO]   written=166 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=220, misses=0)
+2026-06-21 02:14:22,524 [INFO] [N2 s=55 p2] START humaneval/HumanEval/116
+2026-06-21 02:14:22,704 [INFO] [N2 s=55 p2] step1 L_test=qwen3-coder -> T'=1587chars cache=HIT +0.18s
+2026-06-21 02:14:22,922 [INFO] [N2 s=55 p2] step2 L_code=qwen3-coder -> C'=724chars cache=HIT +0.22s
+2026-06-21 02:14:23,132 [INFO] [N2 s=55 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-21 02:14:23,425 [INFO] [N2 s=55 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.29s
+2026-06-21 02:14:23,425 [INFO] [N2 s=55 p2] DONE elapsed=0.90s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:14:25,293 [INFO]   written=167 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=223, misses=0)
+2026-06-21 02:14:25,293 [INFO] [N2 s=55 p3] START humaneval/HumanEval/116
+2026-06-21 02:14:25,488 [INFO] [N2 s=55 p3] step1 L_test=qwen3-coder -> T'=1916chars cache=HIT +0.19s
+2026-06-21 02:14:25,488 [INFO] [N2 s=55 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:27,574 [INFO]   written=168 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=224, misses=0)
+2026-06-21 02:14:27,574 [INFO] [N2 s=56 p1] START humaneval/HumanEval/138
+2026-06-21 02:14:27,575 [INFO] [N2 s=56 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:27,575 [INFO] [N2 s=56 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:29,472 [INFO]   written=169 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=224, misses=0)
+2026-06-21 02:14:29,473 [INFO] [N2 s=56 p2] START humaneval/HumanEval/138
+2026-06-21 02:14:29,695 [INFO] [N2 s=56 p2] step1 L_test=qwen3-coder -> T'=813chars cache=HIT +0.22s
+2026-06-21 02:14:29,862 [INFO] [N2 s=56 p2] step2 L_code=qwen3-coder -> C'=674chars cache=HIT +0.17s
+2026-06-21 02:14:30,047 [INFO] [N2 s=56 p2] step3 ref_tests -> pass_rate=1.000 +0.18s
+2026-06-21 02:14:30,272 [INFO] [N2 s=56 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.22s
+2026-06-21 02:14:30,273 [INFO] [N2 s=56 p2] DONE elapsed=0.80s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:14:32,380 [INFO]   written=170 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=227, misses=0)
+2026-06-21 02:14:32,381 [INFO] [N2 s=56 p3] START humaneval/HumanEval/138
+2026-06-21 02:14:32,569 [INFO] [N2 s=56 p3] step1 L_test=qwen3-coder -> T'=1327chars cache=HIT +0.19s
+2026-06-21 02:14:32,569 [INFO] [N2 s=56 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:34,740 [INFO]   written=171 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=228, misses=0)
+2026-06-21 02:14:34,740 [INFO] [N2 s=57 p1] START mbpp/175
+2026-06-21 02:14:34,741 [INFO] [N2 s=57 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:34,741 [INFO] [N2 s=57 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:36,581 [INFO]   written=172 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=228, misses=0)
+2026-06-21 02:14:36,581 [INFO] [N2 s=57 p2] START mbpp/175
+2026-06-21 02:14:36,796 [INFO] [N2 s=57 p2] step1 L_test=qwen3-coder -> T'=1353chars cache=HIT +0.21s
+2026-06-21 02:14:36,998 [INFO] [N2 s=57 p2] step2 L_code=qwen3-coder -> C'=757chars cache=HIT +0.20s
+2026-06-21 02:14:37,210 [INFO] [N2 s=57 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-21 02:14:37,659 [INFO] [N2 s=57 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.45s
+2026-06-21 02:14:37,659 [INFO] [N2 s=57 p2] DONE elapsed=1.08s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:14:39,527 [INFO]   written=173 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=231, misses=0)
+2026-06-21 02:14:39,527 [INFO] [N2 s=57 p3] START mbpp/175
+2026-06-21 02:14:39,816 [INFO] [N2 s=57 p3] step1 L_test=qwen3-coder -> T'=1651chars cache=HIT +0.29s
+2026-06-21 02:14:39,816 [INFO] [N2 s=57 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:41,961 [INFO]   written=174 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=232, misses=0)
+2026-06-21 02:14:41,962 [INFO] [N2 s=58 p1] START humaneval/HumanEval/100
+2026-06-21 02:14:41,962 [INFO] [N2 s=58 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:41,962 [INFO] [N2 s=58 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:44,065 [INFO]   written=175 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=232, misses=0)
+2026-06-21 02:14:44,065 [INFO] [N2 s=58 p2] START humaneval/HumanEval/100
+2026-06-21 02:14:44,213 [INFO] [N2 s=58 p2] step1 L_test=qwen3-coder -> T'=998chars cache=HIT +0.15s
+2026-06-21 02:14:44,401 [INFO] [N2 s=58 p2] step2 L_code=qwen3-coder -> C'=342chars cache=HIT +0.19s
+2026-06-21 02:14:44,604 [INFO] [N2 s=58 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-21 02:14:44,798 [INFO] [N2 s=58 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.19s
+2026-06-21 02:14:44,798 [INFO] [N2 s=58 p2] DONE elapsed=0.73s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:14:46,949 [INFO]   written=176 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=235, misses=0)
+2026-06-21 02:14:46,949 [INFO] [N2 s=58 p3] START humaneval/HumanEval/100
+2026-06-21 02:14:47,181 [INFO] [N2 s=58 p3] step1 L_test=qwen3-coder -> T'=1119chars cache=HIT +0.23s
+2026-06-21 02:14:47,182 [INFO] [N2 s=58 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:49,348 [INFO]   written=177 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=236, misses=0)
+2026-06-21 02:14:49,349 [INFO] [N2 s=59 p1] START humaneval/HumanEval/74
+2026-06-21 02:14:49,349 [INFO] [N2 s=59 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:49,349 [INFO] [N2 s=59 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:51,285 [INFO]   written=178 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=236, misses=0)
+2026-06-21 02:14:51,286 [INFO] [N2 s=59 p2] START humaneval/HumanEval/74
+2026-06-21 02:14:51,449 [INFO] [N2 s=59 p2] step1 L_test=qwen3-coder -> T'=979chars cache=HIT +0.16s
+2026-06-21 02:14:51,822 [INFO] [N2 s=59 p2] step2 L_code=qwen3-coder -> C'=334chars cache=HIT +0.37s
+2026-06-21 02:14:51,997 [INFO] [N2 s=59 p2] step3 ref_tests -> pass_rate=1.000 +0.17s
+2026-06-21 02:14:52,224 [INFO] [N2 s=59 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.23s
+2026-06-21 02:14:52,225 [INFO] [N2 s=59 p2] DONE elapsed=0.94s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:14:54,081 [INFO]   written=179 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=239, misses=0)
+2026-06-21 02:14:54,081 [INFO] [N2 s=59 p3] START humaneval/HumanEval/74
+2026-06-21 02:14:54,271 [INFO] [N2 s=59 p3] step1 L_test=qwen3-coder -> T'=1600chars cache=HIT +0.19s
+2026-06-21 02:14:54,271 [INFO] [N2 s=59 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:14:56,081 [INFO]   written=180 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=240, misses=0)
+2026-06-21 02:14:56,082 [INFO] [N2 s=60 p1] START mbpp/154
+2026-06-21 02:14:56,082 [INFO] [N2 s=60 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:14:56,082 [INFO] [N2 s=60 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:14:58,135 [INFO]   written=181 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=240, misses=0)
+2026-06-21 02:14:58,135 [INFO] [N2 s=60 p2] START mbpp/154
+2026-06-21 02:14:58,607 [INFO] [N2 s=60 p2] step1 L_test=qwen3-coder -> T'=2144chars cache=HIT +0.47s
+2026-06-21 02:14:58,797 [INFO] [N2 s=60 p2] step2 L_code=qwen3-coder -> C'=821chars cache=HIT +0.19s
+2026-06-21 02:14:59,005 [INFO] [N2 s=60 p2] step3 ref_tests -> pass_rate=1.000 +0.21s
+2026-06-21 02:14:59,176 [INFO] [N2 s=60 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.17s
+2026-06-21 02:14:59,176 [INFO] [N2 s=60 p2] DONE elapsed=1.04s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:15:01,131 [INFO]   written=182 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=243, misses=0)
+2026-06-21 02:15:01,131 [INFO] [N2 s=60 p3] START mbpp/154
+2026-06-21 02:15:01,308 [INFO] [N2 s=60 p3] step1 L_test=qwen3-coder -> T'=1606chars cache=HIT +0.18s
+2026-06-21 02:15:01,309 [INFO] [N2 s=60 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:03,267 [INFO]   written=183 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=244, misses=0)
+2026-06-21 02:15:03,267 [INFO] [N2 s=61 p1] START humaneval/HumanEval/62
+2026-06-21 02:15:03,268 [INFO] [N2 s=61 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:03,268 [INFO] [N2 s=61 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:05,165 [INFO]   written=184 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=244, misses=0)
+2026-06-21 02:15:05,165 [INFO] [N2 s=61 p2] START humaneval/HumanEval/62
+2026-06-21 02:15:05,356 [INFO] [N2 s=61 p2] step1 L_test=qwen3-coder -> T'=602chars cache=HIT +0.19s
+2026-06-21 02:15:05,729 [INFO] [N2 s=61 p2] step2 L_code=qwen3-coder -> C'=173chars cache=HIT +0.37s
+2026-06-21 02:15:06,020 [INFO] [N2 s=61 p2] step3 ref_tests -> pass_rate=1.000 +0.29s
+2026-06-21 02:15:06,188 [INFO] [N2 s=61 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.17s
+2026-06-21 02:15:06,188 [INFO] [N2 s=61 p2] DONE elapsed=1.02s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:15:08,158 [INFO]   written=185 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=247, misses=0)
+2026-06-21 02:15:08,159 [INFO] [N2 s=61 p3] START humaneval/HumanEval/62
+2026-06-21 02:15:08,399 [INFO] [N2 s=61 p3] step1 L_test=qwen3-coder -> T'=1544chars cache=HIT +0.24s
+2026-06-21 02:15:08,399 [INFO] [N2 s=61 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:10,259 [INFO]   written=186 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=248, misses=0)
+2026-06-21 02:15:10,259 [INFO] [N2 s=62 p1] START humaneval/HumanEval/118
+2026-06-21 02:15:10,259 [INFO] [N2 s=62 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:10,260 [INFO] [N2 s=62 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:12,263 [INFO]   written=187 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=248, misses=0)
+2026-06-21 02:15:12,264 [INFO] [N2 s=62 p2] START humaneval/HumanEval/118
+2026-06-21 02:15:12,447 [INFO] [N2 s=62 p2] step1 L_test=qwen3-coder -> T'=1279chars cache=HIT +0.18s
+2026-06-21 02:15:12,632 [INFO] [N2 s=62 p2] step2 L_code=qwen3-coder -> C'=570chars cache=HIT +0.19s
+2026-06-21 02:15:12,798 [INFO] [N2 s=62 p2] step3 ref_tests -> pass_rate=1.000 +0.17s
+2026-06-21 02:15:12,975 [INFO] [N2 s=62 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.18s
+2026-06-21 02:15:12,975 [INFO] [N2 s=62 p2] DONE elapsed=0.71s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:15:14,845 [INFO]   written=188 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=251, misses=0)
+2026-06-21 02:15:14,845 [INFO] [N2 s=62 p3] START humaneval/HumanEval/118
+2026-06-21 02:15:15,047 [INFO] [N2 s=62 p3] step1 L_test=qwen3-coder -> T'=1712chars cache=HIT +0.20s
+2026-06-21 02:15:15,048 [INFO] [N2 s=62 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:17,005 [INFO]   written=189 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=252, misses=0)
+2026-06-21 02:15:17,005 [INFO] [N2 s=63 p1] START mbpp/155
+2026-06-21 02:15:17,005 [INFO] [N2 s=63 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:17,005 [INFO] [N2 s=63 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:18,869 [INFO]   written=190 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=252, misses=0)
+2026-06-21 02:15:18,870 [INFO] [N2 s=63 p2] START mbpp/155
+2026-06-21 02:15:19,079 [INFO] [N2 s=63 p2] step1 L_test=qwen3-coder -> T'=1512chars cache=HIT +0.21s
+2026-06-21 02:15:19,275 [INFO] [N2 s=63 p2] step2 L_code=qwen3-coder -> C'=846chars cache=HIT +0.20s
+2026-06-21 02:15:19,457 [INFO] [N2 s=63 p2] step3 ref_tests -> pass_rate=0.000 +0.18s
+2026-06-21 02:15:19,647 [INFO] [N2 s=63 p2] step4 judge=deepseek-r1 -> rating=1 cache=HIT +0.19s
+2026-06-21 02:15:19,647 [INFO] [N2 s=63 p2] DONE elapsed=0.78s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:15:21,542 [INFO]   written=191 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=255, misses=0)
+2026-06-21 02:15:21,542 [INFO] [N2 s=63 p3] START mbpp/155
+2026-06-21 02:15:21,719 [INFO] [N2 s=63 p3] step1 L_test=qwen3-coder -> T'=1760chars cache=HIT +0.18s
+2026-06-21 02:15:21,719 [INFO] [N2 s=63 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:23,729 [INFO]   written=192 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=256, misses=0)
+2026-06-21 02:15:23,729 [INFO] [N2 s=64 p1] START humaneval/HumanEval/101
+2026-06-21 02:15:23,729 [INFO] [N2 s=64 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:23,729 [INFO] [N2 s=64 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:25,959 [INFO]   written=193 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=256, misses=0)
+2026-06-21 02:15:25,959 [INFO] [N2 s=64 p2] START humaneval/HumanEval/101
+2026-06-21 02:15:26,188 [INFO] [N2 s=64 p2] step1 L_test=qwen3-coder -> T'=1059chars cache=HIT +0.23s
+2026-06-21 02:15:26,357 [INFO] [N2 s=64 p2] step2 L_code=qwen3-coder -> C'=418chars cache=HIT +0.17s
+2026-06-21 02:15:26,647 [INFO] [N2 s=64 p2] step3 ref_tests -> pass_rate=1.000 +0.29s
+2026-06-21 02:15:26,841 [INFO] [N2 s=64 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.19s
+2026-06-21 02:15:26,841 [INFO] [N2 s=64 p2] DONE elapsed=0.88s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:15:28,713 [INFO]   written=194 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=259, misses=0)
+2026-06-21 02:15:28,714 [INFO] [N2 s=64 p3] START humaneval/HumanEval/101
+2026-06-21 02:15:28,898 [INFO] [N2 s=64 p3] step1 L_test=qwen3-coder -> T'=1531chars cache=HIT +0.18s
+2026-06-21 02:15:28,898 [INFO] [N2 s=64 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:30,786 [INFO]   written=195 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=260, misses=0)
+2026-06-21 02:15:30,786 [INFO] [N2 s=65 p1] START humaneval/HumanEval/33
+2026-06-21 02:15:30,786 [INFO] [N2 s=65 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:30,786 [INFO] [N2 s=65 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:32,639 [INFO]   written=196 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=260, misses=0)
+2026-06-21 02:15:32,639 [INFO] [N2 s=65 p2] START humaneval/HumanEval/33
+2026-06-21 02:15:32,925 [INFO] [N2 s=65 p2] step1 L_test=qwen3-coder -> T'=1213chars cache=HIT +0.29s
+2026-06-21 02:15:33,217 [INFO] [N2 s=65 p2] step2 L_code=qwen3-coder -> C'=568chars cache=HIT +0.29s
+2026-06-21 02:15:33,456 [INFO] [N2 s=65 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-21 02:15:33,644 [INFO] [N2 s=65 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.19s
+2026-06-21 02:15:33,644 [INFO] [N2 s=65 p2] DONE elapsed=1.01s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:15:35,556 [INFO]   written=197 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=263, misses=0)
+2026-06-21 02:15:35,557 [INFO] [N2 s=65 p3] START humaneval/HumanEval/33
+2026-06-21 02:15:35,828 [INFO] [N2 s=65 p3] step1 L_test=qwen3-coder -> T'=2379chars cache=HIT +0.27s
+2026-06-21 02:15:35,829 [INFO] [N2 s=65 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:38,113 [INFO]   written=198 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=264, misses=0)
+2026-06-21 02:15:38,113 [INFO] [N2 s=66 p1] START humaneval/HumanEval/69
+2026-06-21 02:15:38,113 [INFO] [N2 s=66 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:38,113 [INFO] [N2 s=66 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:40,082 [INFO]   written=199 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=264, misses=0)
+2026-06-21 02:15:40,083 [INFO] [N2 s=66 p2] START humaneval/HumanEval/69
+2026-06-21 02:15:40,315 [INFO] [N2 s=66 p2] step1 L_test=qwen3-coder -> T'=1907chars cache=HIT +0.23s
+2026-06-21 02:15:40,474 [INFO] [N2 s=66 p2] step2 L_code=qwen3-coder -> C'=345chars cache=HIT +0.16s
+2026-06-21 02:15:40,634 [INFO] [N2 s=66 p2] step3 ref_tests -> pass_rate=1.000 +0.16s
+2026-06-21 02:15:40,819 [INFO] [N2 s=66 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.18s
+2026-06-21 02:15:40,819 [INFO] [N2 s=66 p2] DONE elapsed=0.74s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:15:42,840 [INFO]   written=200 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=267, misses=0)
+2026-06-21 02:15:42,840 [INFO] [N2 s=66 p3] START humaneval/HumanEval/69
+2026-06-21 02:15:43,038 [INFO] [N2 s=66 p3] step1 L_test=qwen3-coder -> T'=1355chars cache=HIT +0.20s
+2026-06-21 02:15:43,038 [INFO] [N2 s=66 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:44,885 [INFO]   written=201 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=268, misses=0)
+2026-06-21 02:15:44,885 [INFO] [N2 s=67 p1] START mbpp/375
+2026-06-21 02:15:44,886 [INFO] [N2 s=67 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:44,886 [INFO] [N2 s=67 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:46,814 [INFO]   written=202 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=268, misses=0)
+2026-06-21 02:15:46,814 [INFO] [N2 s=67 p2] START mbpp/375
+2026-06-21 02:15:46,979 [INFO] [N2 s=67 p2] step1 L_test=qwen3-coder -> T'=1186chars cache=HIT +0.16s
+2026-06-21 02:15:47,156 [INFO] [N2 s=67 p2] step2 L_code=qwen3-coder -> C'=1046chars cache=HIT +0.18s
+2026-06-21 02:15:47,369 [INFO] [N2 s=67 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-21 02:15:47,642 [INFO] [N2 s=67 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.27s
+2026-06-21 02:15:47,642 [INFO] [N2 s=67 p2] DONE elapsed=0.83s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:15:49,720 [INFO]   written=203 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=271, misses=0)
+2026-06-21 02:15:49,721 [INFO] [N2 s=67 p3] START mbpp/375
+2026-06-21 02:15:49,909 [INFO] [N2 s=67 p3] step1 L_test=qwen3-coder -> T'=1496chars cache=HIT +0.19s
+2026-06-21 02:15:49,909 [INFO] [N2 s=67 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:52,058 [INFO]   written=204 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=272, misses=0)
+2026-06-21 02:15:52,058 [INFO] [N2 s=68 p1] START mbpp/103
+2026-06-21 02:15:52,058 [INFO] [N2 s=68 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:52,058 [INFO] [N2 s=68 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:15:54,210 [INFO]   written=205 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=272, misses=0)
+2026-06-21 02:15:54,211 [INFO] [N2 s=68 p2] START mbpp/103
+2026-06-21 02:15:54,409 [INFO] [N2 s=68 p2] step1 L_test=qwen3-coder -> T'=1620chars cache=HIT +0.20s
+2026-06-21 02:15:54,671 [INFO] [N2 s=68 p2] step2 L_code=qwen3-coder -> C'=983chars cache=HIT +0.26s
+2026-06-21 02:15:54,906 [INFO] [N2 s=68 p2] step3 ref_tests -> pass_rate=1.000 +0.24s
+2026-06-21 02:15:55,066 [INFO] [N2 s=68 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.16s
+2026-06-21 02:15:55,066 [INFO] [N2 s=68 p2] DONE elapsed=0.86s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:15:56,899 [INFO]   written=206 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=275, misses=0)
+2026-06-21 02:15:56,900 [INFO] [N2 s=68 p3] START mbpp/103
+2026-06-21 02:15:57,148 [INFO] [N2 s=68 p3] step1 L_test=qwen3-coder -> T'=1351chars cache=HIT +0.25s
+2026-06-21 02:15:57,149 [INFO] [N2 s=68 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:15:59,091 [INFO]   written=207 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=276, misses=0)
+2026-06-21 02:15:59,091 [INFO] [N2 s=69 p1] START mbpp/150
+2026-06-21 02:15:59,091 [INFO] [N2 s=69 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:15:59,091 [INFO] [N2 s=69 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:00,907 [INFO]   written=208 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=276, misses=0)
+2026-06-21 02:16:00,907 [INFO] [N2 s=69 p2] START mbpp/150
+2026-06-21 02:16:01,083 [INFO] [N2 s=69 p2] step1 L_test=qwen3-coder -> T'=2222chars cache=HIT +0.18s
+2026-06-21 02:16:01,273 [INFO] [N2 s=69 p2] step2 L_code=qwen3-coder -> C'=1237chars cache=HIT +0.19s
+2026-06-21 02:16:01,507 [INFO] [N2 s=69 p2] step3 ref_tests -> pass_rate=1.000 +0.23s
+2026-06-21 02:16:01,792 [INFO] [N2 s=69 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.28s
+2026-06-21 02:16:01,792 [INFO] [N2 s=69 p2] DONE elapsed=0.89s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:16:03,990 [INFO]   written=209 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=279, misses=0)
+2026-06-21 02:16:03,990 [INFO] [N2 s=69 p3] START mbpp/150
+2026-06-21 02:16:04,178 [INFO] [N2 s=69 p3] step1 L_test=qwen3-coder -> T'=1829chars cache=HIT +0.19s
+2026-06-21 02:16:04,178 [INFO] [N2 s=69 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:06,055 [INFO]   written=210 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=280, misses=0)
+2026-06-21 02:16:06,055 [INFO] [N2 s=70 p1] START mbpp/418
+2026-06-21 02:16:06,055 [INFO] [N2 s=70 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:16:06,055 [INFO] [N2 s=70 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:08,116 [INFO]   written=211 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=280, misses=0)
+2026-06-21 02:16:08,116 [INFO] [N2 s=70 p2] START mbpp/418
+2026-06-21 02:16:08,316 [INFO] [N2 s=70 p2] step1 L_test=qwen3-coder -> T'=1196chars cache=HIT +0.20s
+2026-06-21 02:16:08,536 [INFO] [N2 s=70 p2] step2 L_code=qwen3-coder -> C'=706chars cache=HIT +0.22s
+2026-06-21 02:16:08,733 [INFO] [N2 s=70 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-21 02:16:08,906 [INFO] [N2 s=70 p2] step4 judge=deepseek-r1 -> rating=0 cache=HIT +0.17s
+2026-06-21 02:16:08,907 [INFO] [N2 s=70 p2] DONE elapsed=0.79s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:16:10,745 [INFO]   written=212 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=283, misses=0)
+2026-06-21 02:16:10,745 [INFO] [N2 s=70 p3] START mbpp/418
+2026-06-21 02:16:10,939 [INFO] [N2 s=70 p3] step1 L_test=qwen3-coder -> T'=1184chars cache=HIT +0.19s
+2026-06-21 02:16:10,939 [INFO] [N2 s=70 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:12,868 [INFO]   written=213 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=284, misses=0)
+2026-06-21 02:16:12,868 [INFO] [N2 s=71 p1] START mbpp/349
+2026-06-21 02:16:12,868 [INFO] [N2 s=71 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:16:12,868 [INFO] [N2 s=71 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:15,009 [INFO]   written=214 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=284, misses=0)
+2026-06-21 02:16:15,010 [INFO] [N2 s=71 p2] START mbpp/349
+2026-06-21 02:16:15,222 [INFO] [N2 s=71 p2] step1 L_test=qwen3-coder -> T'=1379chars cache=HIT +0.21s
+2026-06-21 02:16:15,427 [INFO] [N2 s=71 p2] step2 L_code=qwen3-coder -> C'=580chars cache=HIT +0.20s
+2026-06-21 02:16:15,584 [INFO] [N2 s=71 p2] step3 ref_tests -> pass_rate=0.000 +0.16s
+2026-06-21 02:16:15,754 [INFO] [N2 s=71 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.17s
+2026-06-21 02:16:15,754 [INFO] [N2 s=71 p2] DONE elapsed=0.74s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:16:17,799 [INFO]   written=215 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=287, misses=0)
+2026-06-21 02:16:17,800 [INFO] [N2 s=71 p3] START mbpp/349
+2026-06-21 02:16:18,051 [INFO] [N2 s=71 p3] step1 L_test=qwen3-coder -> T'=1166chars cache=HIT +0.25s
+2026-06-21 02:16:18,051 [INFO] [N2 s=71 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:19,868 [INFO]   written=216 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=288, misses=0)
+2026-06-21 02:16:19,868 [INFO] [N2 s=72 p1] START mbpp/274
+2026-06-21 02:16:19,868 [INFO] [N2 s=72 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:16:19,868 [INFO] [N2 s=72 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:21,723 [INFO]   written=217 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=288, misses=0)
+2026-06-21 02:16:21,724 [INFO] [N2 s=72 p2] START mbpp/274
+2026-06-21 02:16:21,892 [INFO] [N2 s=72 p2] step1 L_test=qwen3-coder -> T'=1410chars cache=HIT +0.17s
+2026-06-21 02:16:22,050 [INFO] [N2 s=72 p2] step2 L_code=qwen3-coder -> C'=538chars cache=HIT +0.16s
+2026-06-21 02:16:22,254 [INFO] [N2 s=72 p2] step3 ref_tests -> pass_rate=1.000 +0.20s
+2026-06-21 02:16:22,448 [INFO] [N2 s=72 p2] step4 judge=deepseek-r1 -> rating=3 cache=HIT +0.19s
+2026-06-21 02:16:22,448 [INFO] [N2 s=72 p2] DONE elapsed=0.72s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:16:24,266 [INFO]   written=218 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=291, misses=0)
+2026-06-21 02:16:24,267 [INFO] [N2 s=72 p3] START mbpp/274
+2026-06-21 02:16:24,485 [INFO] [N2 s=72 p3] step1 L_test=qwen3-coder -> T'=2293chars cache=HIT +0.22s
+2026-06-21 02:16:24,485 [INFO] [N2 s=72 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:26,327 [INFO]   written=219 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=292, misses=0)
+2026-06-21 02:16:26,327 [INFO] [N2 s=73 p1] START mbpp/419
+2026-06-21 02:16:26,327 [INFO] [N2 s=73 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:16:26,327 [INFO] [N2 s=73 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:28,348 [INFO]   written=220 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=292, misses=0)
+2026-06-21 02:16:28,348 [INFO] [N2 s=73 p2] START mbpp/419
+2026-06-21 02:16:28,539 [INFO] [N2 s=73 p2] step1 L_test=qwen3-coder -> T'=1284chars cache=HIT +0.19s
+2026-06-21 02:16:28,731 [INFO] [N2 s=73 p2] step2 L_code=qwen3-coder -> C'=361chars cache=HIT +0.19s
+2026-06-21 02:16:28,945 [INFO] [N2 s=73 p2] step3 ref_tests -> pass_rate=0.000 +0.21s
+2026-06-21 02:16:29,129 [INFO] [N2 s=73 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.18s
+2026-06-21 02:16:29,129 [INFO] [N2 s=73 p2] DONE elapsed=0.78s pass_rate=0.000 calls=3 hits=3
+2026-06-21 02:16:31,239 [INFO]   written=221 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=295, misses=0)
+2026-06-21 02:16:31,239 [INFO] [N2 s=73 p3] START mbpp/419
+2026-06-21 02:16:31,424 [INFO] [N2 s=73 p3] step1 L_test=qwen3-coder -> T'=1749chars cache=HIT +0.19s
+2026-06-21 02:16:31,425 [INFO] [N2 s=73 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:33,444 [INFO]   written=222 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=296, misses=0)
+2026-06-21 02:16:33,444 [INFO] [N2 s=74 p1] START humaneval/HumanEval/123
+2026-06-21 02:16:33,445 [INFO] [N2 s=74 p1] step1 L_spec=SKIP (null ablation)
+2026-06-21 02:16:33,445 [INFO] [N2 s=74 p1] step2 L_test=SKIP (no docstring or null ablation)
+2026-06-21 02:16:35,282 [INFO]   written=223 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=296, misses=0)
+2026-06-21 02:16:35,282 [INFO] [N2 s=74 p2] START humaneval/HumanEval/123
+2026-06-21 02:16:35,546 [INFO] [N2 s=74 p2] step1 L_test=qwen3-coder -> T'=948chars cache=HIT +0.26s
+2026-06-21 02:16:35,706 [INFO] [N2 s=74 p2] step2 L_code=qwen3-coder -> C'=471chars cache=HIT +0.16s
+2026-06-21 02:16:35,927 [INFO] [N2 s=74 p2] step3 ref_tests -> pass_rate=1.000 +0.22s
+2026-06-21 02:16:36,189 [INFO] [N2 s=74 p2] step4 judge=deepseek-r1 -> rating=4 cache=HIT +0.26s
+2026-06-21 02:16:36,189 [INFO] [N2 s=74 p2] DONE elapsed=0.91s pass_rate=1.000 calls=3 hits=3
+2026-06-21 02:16:38,028 [INFO]   written=224 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=299, misses=0)
+2026-06-21 02:16:38,028 [INFO] [N2 s=74 p3] START humaneval/HumanEval/123
+2026-06-21 02:16:38,197 [INFO] [N2 s=74 p3] step1 L_test=qwen3-coder -> T'=1686chars cache=HIT +0.17s
+2026-06-21 02:16:38,197 [INFO] [N2 s=74 p3] step2 L_spec=SKIP (no tests)
+2026-06-21 02:16:40,012 [INFO]   written=225 skipped(resume)=0 errors=0 cache_hit_rate=100.00% (hits=300, misses=0)
+2026-06-21 02:16:42,145 [INFO] 
+=== Cell N2 complete ===
+  samples_seen          = 75
+  results_written       = 225
+  results_skipped_resume = 0
+  errors                 = 0
+  elapsed                = 530.4 s
+  cache_hits             = 300
+  cache_misses           = 0
+  cache_hit_rate         = 100.00%
+  cache_size             = 8.716 MB (12304 entries)
+2026-06-21 03:02:51,288 [INFO] === Running cell N2 [null] on core ===
+2026-06-21 03:02:51,456 [INFO]   Hypothesis: Spec-stage ablation: quantifies how much L_spec contributes.
+2026-06-21 03:02:51,458 [INFO]   L_spec = SKIP
+2026-06-21 03:02:51,460 [INFO]   L_test = qwen3-coder:30b
+2026-06-21 03:02:51,460 [INFO]   L_code = qwen3-coder:30b
+2026-06-21 03:02:51,460 [INFO]   paths = (1, 2, 3), n_samples = 75
+2026-06-21 03:02:51,460 [INFO]   results -> /content/roundtrip-closure/results/results_roundtrip.tsv
+2026-06-21 03:02:51,461 [INFO]   log     -> /content/roundtrip-closure/logs/cell_N2_core.log
+2026-06-21 03:02:51,477 [INFO]   found 4687 previously-completed (cell, sample, path) tuples
+2026-06-21 03:02:51,482 [INFO]   loaded 75 samples from core
+2026-06-21 03:02:53,327 [INFO] 
+=== Cell N2 complete ===
+  samples_seen          = 75
+  results_written       = 0
+  results_skipped_resume = 225
+  errors                 = 0
+  elapsed                = 0.0 s
+  cache_hits             = 0
+  cache_misses           = 0
+  cache_hit_rate         = 0.00%
+  cache_size             = 8.716 MB (12305 entries)
