@@ -183,12 +183,9 @@ def test_run_path_1_on_palindrome():
         f"got {result2.cache_hits} of {result2.n_llm_calls}"
     )
 
-    # Second pass should be at least 5× faster (mostly cache hits,
-    # but mutation_testing still runs)
-    if t_first > 1.0:                                              # skip if first was already very fast
-        assert t_second < t_first, (
-            f"Second pass not faster: {t_second:.2f}s vs {t_first:.2f}s"
-        )
+    # No wall-clock assertion: mutation testing dominates the runtime of
+    # both passes, so a cached second pass is not reliably faster. The
+    # cache-hit assertion above checks that the cache is used.
 
     print(f"\n  Path-1 smoke: kill_rate={result1.metric_value}, "
           f"valid={result1.valid}, calls={result1.n_llm_calls}, "
