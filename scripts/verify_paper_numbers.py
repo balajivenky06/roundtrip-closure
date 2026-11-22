@@ -310,6 +310,31 @@ def main() -> int:
     check("G3 gap max (pp)", 100 * gap.max(), 52.0, 0.06)
     check("G3 gap median (pp)", 100 * gap.median(), 25.3, 0.06)
 
+    # ---- Section 5.6: BERTScore benchmark contrast at rho = 2 and 4 (Table 23 basis) ----
+    from closure_decision import decide_validity
+    p3 = d[d.path == 3].copy()
+    p3["bench"] = p3.sample_source.str.split("/").str[0]
+    for rho, want in ((2, 302.9), (3, 368.0), (4, 323.5)):
+        lab = p3.apply(lambda r: decide_validity(None if pd.isna(r.metric_value) else r.metric_value,
+                                                 None if pd.isna(r.judge_rating) else r.judge_rating,
+                                                 path=3, rho=rho)[1], axis=1)
+        tab = pd.crosstab(p3.bench, lab)[["false_closure_candidate", "metric_false_negative"]].values
+        check(f"5.6 BERTScore chi2 at rho={rho}", stats.chi2_contingency(tab, correction=False)[0], want, 0.05)
+
+    # ---- Table 10: every kill rate, interval and mutant count ----
+    from scripts.build_per_operator_ci import main as t10
+    with contextlib.redirect_stdout(io.StringIO()):
+        t10tab = t10()
+    paper_t10 = {("H1", "arithmetic"): (0.939, 0.80, 0.99, 33), ("H1", "negate_bool"): (1.000, 0.16, 1.00, 2),
+                 ("M3", "boundary"): (0.748, 0.69, 0.80, 290), ("H10", "arithmetic"): (0.351, 0.20, 0.53, 37),
+                 ("M1", "arithmetic"): (0.319, 0.26, 0.38, 229), ("H6", "return_none"): (0.976, 0.92, 1.00, 83)}
+    for (c_, op), (r_, lo_, hi_, n_) in paper_t10.items():
+        row = t10tab[(t10tab.cell == c_) & (t10tab.operator == op)].iloc[0]
+        check(f"Table 10 {c_} {op} rate", row.kill_rate, r_, 0.0006)
+        check(f"Table 10 {c_} {op} CI lower", round(row.lo, 2), lo_, 0.0051)
+        check(f"Table 10 {c_} {op} CI upper", round(row.hi, 2), hi_, 0.0051)
+        check(f"Table 10 {c_} {op} mutants", row.mutants, n_, 0)
+
     def alpha(X: np.ndarray) -> float:
         X = np.asarray(X, int)
         O = np.zeros((5, 5))

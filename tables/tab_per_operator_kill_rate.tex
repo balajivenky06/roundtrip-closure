@@ -1,7 +1,7 @@
 \begin{table*}[!htbp]
 \centering
 \scriptsize
-\caption{Per-mutation-operator kill rate with 95\% \emph{Clopper--Pearson exact} binomial confidence intervals and total mutants $n$. Each cell shows kill rate followed by [95\% CI] and $(n)$ mutants. \textbf{Bold} marks the highest point-estimate per operator column: H1 leads on 4 of 5 operators (arithmetic, boundary, comparison, negate\_bool); H6 leads on return\_none. Cells with $n < 20$ mutants on an operator produce wide intervals; the H1 negate\_bool entry ($n = 2$) spans [0.16, 1.00] under Clopper--Pearson and is reported for completeness but should not be interpreted as evidence of dominance. Pairwise H1-vs-mono dominance claims accounting for clustering by sample and multiple mutants per sample are tested by the paired bootstrap in Section~\ref{sec:results_per_operator}. Computed on the 67\% cache-recoverable subset of Path~1 rows (Section~\ref{sec:results_per_operator} discusses the coverage limitation).}
+\caption{Per-mutation-operator kill rate with 95\% \emph{Clopper--Pearson exact} binomial confidence intervals and total mutants $n$. Each cell shows kill rate followed by [95\% CI] and $(n)$ mutants. \textbf{Bold} marks the highest point-estimate per operator column: H1 is highest or joint-highest on 4 of 5 operators (arithmetic, boundary, comparison, negate\_bool; tied at $1.000$ with H4 on comparison and with H4 and H8 on negate\_bool); H6 is highest on return\_none. Intervals are computed by \texttt{scripts/build\_per\_operator\_ci.py}. Cells with $n < 20$ mutants on an operator produce wide intervals; the H1 negate\_bool entry ($n = 2$) spans [0.16, 1.00] under Clopper--Pearson and is reported for completeness but should not be interpreted as evidence of dominance. Pairwise H1-vs-mono dominance claims accounting for clustering by sample and multiple mutants per sample are tested by the paired bootstrap in Section~\ref{sec:results_per_operator}. Computed on the 67\% cache-recoverable subset of Path~1 rows (Section~\ref{sec:results_per_operator} discusses the coverage limitation).}
 \label{tab:per_operator_kill_rate}
 \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccccc@{}}
 \toprule
@@ -16,11 +16,11 @@ M6 & $0.684$ [0.60,0.76] (136) & $0.663$ [0.59,0.73] (178) & $0.882$ [0.78,0.95]
 H1 & $\mathbf{0.939}$ [0.80,0.99] (33) & $\mathbf{0.844}$ [0.73,0.92] (64) & $\mathbf{1.000}$ [0.79,1.00] (16) & $\mathbf{1.000}$ [0.16,1.00] (2) & $0.970$ [0.84,1.00] (33) \\
 H2 & $0.750$ [0.60,0.87] (44) & $0.557$ [0.42,0.68] (61) & $0.815$ [0.62,0.94] (27) & $0.824$ [0.57,0.96] (17) & $0.891$ [0.78,0.96] (55) \\
 H3 & $0.542$ [0.44,0.64] (107) & $0.591$ [0.51,0.67] (149) & $0.754$ [0.62,0.86] (57) & $0.750$ [0.53,0.90] (24) & $0.851$ [0.76,0.92] (87) \\
-H4 & $0.448$ [0.26,0.64] (29) & $0.600$ [0.42,0.76] (35) & $1.000$ [0.83,1.00] (20) & $1.000$ [0.54,1.00] (6) & $0.964$ [0.82,1.00] (28) \\
+H4 & $0.448$ [0.26,0.64] (29) & $0.600$ [0.42,0.76] (35) & $\mathbf{1.000}$ [0.83,1.00] (20) & $\mathbf{1.000}$ [0.54,1.00] (6) & $0.964$ [0.82,1.00] (28) \\
 H5 & $0.505$ [0.40,0.61] (95) & $0.630$ [0.54,0.71] (127) & $0.857$ [0.73,0.94] (49) & $0.875$ [0.68,0.97] (24) & $0.881$ [0.79,0.94] (84) \\
 H6 & $0.745$ [0.65,0.82] (110) & $0.740$ [0.66,0.81] (154) & $0.923$ [0.81,0.98] (52) & $0.941$ [0.71,1.00] (17) & $\mathbf{0.976}$ [0.92,1.00] (83) \\
 H7 & $0.769$ [0.68,0.85] (104) & $0.741$ [0.66,0.81] (147) & $0.964$ [0.87,1.00] (55) & $0.889$ [0.65,0.99] (18) & $0.919$ [0.84,0.97] (86) \\
-H8 & $0.686$ [0.59,0.77] (102) & $0.646$ [0.56,0.72] (144) & $0.930$ [0.83,0.98] (57) & $1.000$ [0.85,1.00] (23) & $0.954$ [0.89,0.99] (87) \\
+H8 & $0.686$ [0.59,0.77] (102) & $0.646$ [0.56,0.72] (144) & $0.930$ [0.83,0.98] (57) & $\mathbf{1.000}$ [0.85,1.00] (23) & $0.954$ [0.89,0.99] (87) \\
 H9 & $0.769$ [0.68,0.85] (104) & $0.741$ [0.66,0.81] (147) & $0.964$ [0.87,1.00] (55) & $0.889$ [0.65,0.99] (18) & $0.919$ [0.84,0.97] (86) \\
 H10 & $0.351$ [0.20,0.53] (37) & $0.449$ [0.33,0.57] (69) & $0.864$ [0.65,0.97] (22) & $0.875$ [0.62,0.98] (16) & $0.761$ [0.61,0.87] (46) \\
 H11 & $0.772$ [0.69,0.84] (123) & $0.746$ [0.67,0.81] (177) & $0.908$ [0.81,0.97] (65) & $0.885$ [0.70,0.98] (26) & $0.939$ [0.87,0.98] (99) \\

@@ -155,6 +155,9 @@ def anova_type3(df: pd.DataFrame,
     if work.empty or work["cell_id"].nunique() < 2:
         return pd.DataFrame(columns=["factor", "sum_sq", "df", "F", "p", "sig"])
     work = work.dropna(subset=[response])
+    # As in the paper (Tables 7 and 32): rows whose judge output failed to
+    # parse (judge_rating == -1) are excluded, giving n = 5,071 on the core TSV.
+    work = work[work["judge_rating"].notna() & (work["judge_rating"] >= 0)]
 
     formula = f"{response} ~ C(cell_id) + C(sample_idx)"
     try:
@@ -328,8 +331,10 @@ def per_benchmark_slice(df: pd.DataFrame) -> dict:
     out = {}
     for bench in df["benchmark"].dropna().unique():
         sub = df[df["benchmark"] == bench]
+        used = filter_valid(sub)
+        used = used[used["metric_value"].notna() & used["judge_rating"].notna() & (used["judge_rating"] >= 0)]
         out[bench] = {
-            "n": int(len(sub)),
+            "n": int(len(used)),
             "anova": anova_type3(sub),
             "tukey": tukey_hsd(sub),
         }

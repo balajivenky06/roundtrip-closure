@@ -1,10 +1,11 @@
-"""M5a + M5e + M6: Type-III ANOVA, Wilson intervals, judge-leniency check.
+"""M5a + M5e + M6: Type-III ANOVA, Clopper-Pearson intervals, judge-leniency check.
 
 Regenerates:
   - tables/tab_anova.tex             (Type-III ANOVA on cell + sample)
   - tables/tab_anova_interaction.tex (Type-III interaction ANOVA)
   - tables/tab_judge_leniency.tex    (per-cell mean judge rating stratified by metric bin; M6)
-  - Adds per-operator Wilson 95% CIs to tables/tab_per_operator_kill_rate.tex (M5e)
+  - Per-operator Clopper-Pearson 95% CIs (Table 10) are written by
+    scripts/build_per_operator_ci.py; M5e below only inspects the input CSV.
 """
 
 import sys
@@ -20,8 +21,10 @@ TSV = REPO / "results/results_roundtrip.tsv"
 TABLES = REPO / "tables"
 
 
-def wilson_ci(k: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
-    """Two-sided Wilson score interval for a binomial proportion."""
+def clopper_pearson_ci(k: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
+    """Two-sided Clopper-Pearson (exact, beta-quantile) interval for a binomial proportion.
+
+    (Previously misnamed `wilson_ci`; the computation was always Clopper-Pearson.)"""
     if n == 0:
         return (float("nan"), float("nan"))
     lo = beta_dist.ppf(alpha / 2, k, n - k + 1) if k > 0 else 0.0
@@ -71,6 +74,30 @@ def m5a_type3_anova(df: pd.DataFrame) -> None:
     # Interaction ANOVA on stacked responses (path × cell)
     m2 = smf.ols("metric_num ~ C(cell_id) * C(path) + C(sample_idx)", data=sub).fit()
     anova3_int = anova_lm(m2, typ=3)
+    # N2 has rows on Path 2 only, so the design matrix is rank-deficient and
+    # anova_lm counts non-estimable columns in the degrees of freedom. Use the
+    # rank of each term instead, and for the interaction use the nested
+    # sum of squares RSS(without interaction) - RSS(full).
+    import numpy as np
+    from scipy.stats import f as f_dist
+    X, y, names = m2.model.exog, m2.model.endog, m2.model.exog_names
+    rk = np.linalg.matrix_rank
+    rss = lambda A: float(np.sum((y - A @ np.linalg.lstsq(A, y, rcond=None)[0]) ** 2))
+    rank_full, rss_full = rk(X), rss(X)
+    df_res = len(y) - rank_full
+    groups = {"C(cell_id)": [i for i, n in enumerate(names) if n.startswith("C(cell_id)[") and ":" not in n],
+              "C(path)": [i for i, n in enumerate(names) if n.startswith("C(path)[")],
+              "C(cell_id):C(path)": [i for i, n in enumerate(names) if ":" in n],
+              "C(sample_idx)": [i for i, n in enumerate(names) if n.startswith("C(sample_idx)[")]}
+    for term, cols in groups.items():
+        keep = [i for i in range(X.shape[1]) if i not in cols]
+        df_t = rank_full - rk(X[:, keep])
+        if term == "C(cell_id):C(path)":
+            anova3_int.loc[term, "sum_sq"] = rss(X[:, keep]) - rss_full
+        anova3_int.loc[term, "df"] = df_t
+        F = (anova3_int.loc[term, "sum_sq"] / df_t) / (rss_full / df_res)
+        anova3_int.loc[term, "F"], anova3_int.loc[term, "PR(>F)"] = F, f_dist.sf(F, df_t, df_res)
+    anova3_int.loc["Residual", ["sum_sq", "df"]] = [rss_full, df_res]
     print(anova3_int)
 
     with (TABLES / "tab_anova_interaction.tex").open("w") as f:
@@ -145,17 +172,17 @@ def m6_judge_leniency(df: pd.DataFrame) -> None:
     print(f"Wrote {TABLES / 'tab_judge_leniency.tex'}")
 
 
-def m5e_wilson_intervals() -> None:
-    """M5e: Add Wilson 95% CIs to per-operator table.
+def m5e_inspect_per_operator_input() -> None:
+    """M5e: inspect the per-operator input CSV (Table 10 is built by build_per_operator_ci.py).
 
     Reads results/tab_per_operator_long.csv which has per-cell-per-operator
     kills and mutants. Rewrites tab_per_operator_kill_rate.tex to include
-    n_mutants and 95% Wilson CIs alongside each kill rate.
+    n_mutants and 95% Clopper-Pearson CIs alongside each kill rate.
     """
-    print("=== M5e: Wilson intervals on per-operator table ===")
+    print("=== M5e: per-operator input (Clopper-Pearson table: scripts/build_per_operator_ci.py) ===")
     long_csv = REPO / "results/tab_per_operator_long.csv"
     if not long_csv.exists():
-        print(f"WARN: {long_csv} not found; skipping Wilson-CI addition (would need G2 regen).", file=sys.stderr)
+        print(f"WARN: {long_csv} not found; skipping (would need G2 regen).", file=sys.stderr)
         return
 
     per_op = pd.read_csv(long_csv)
@@ -169,7 +196,7 @@ def main() -> int:
     print(f"Loaded {len(df)} rows.")
     m5a_type3_anova(df)
     m6_judge_leniency(df)
-    m5e_wilson_intervals()
+    m5e_inspect_per_operator_input()
     return 0
 
 

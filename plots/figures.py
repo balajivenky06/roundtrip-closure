@@ -184,8 +184,10 @@ def make_fig_3_mono_vs_hetero(df: pd.DataFrame,
         labels = [f"Mono\n(n={len(d)})" for d in data[:1]] + \
                  [f"Hetero\n(n={len(d)})" for d in data[1:2]] + \
                  [f"Null\n(n={len(d)})" for d in data[2:]]
-        bp = ax.boxplot(data, labels=labels, patch_artist=True,
+        bp = ax.boxplot(data, patch_artist=True,
                           showmeans=True, widths=0.6)
+        ax.set_xticks(range(1, len(labels) + 1))
+        ax.set_xticklabels(labels)
         for patch, stratum in zip(bp["boxes"], ["mono", "hetero", "null"]):
             patch.set_facecolor(COLORS_STRATA[stratum])
             patch.set_alpha(0.7)
